@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Shield, Sun, Server, PhoneCall, Cpu, Network, Search, ShoppingCart, ArrowRight, Menu, X, User, ChevronDown, Check, Coins } from "lucide-react";
 import { Product, Category, UserSession, CartItem } from "../types";
+import { safeFetch } from "../lib/dataService";
 
 interface HeaderProps {
   currentView: string;
@@ -110,7 +111,7 @@ export default function Header({
   // Fetch quick search results from our Express backend
   useEffect(() => {
     if (searchQuery.trim().length > 1) {
-      fetch(`/api/products?search=${encodeURIComponent(searchQuery)}`)
+      safeFetch(`/api/products?search=${encodeURIComponent(searchQuery)}`)
         .then(res => res.json())
         .then(data => setSearchResults(data.slice(0, 5)))
         .catch(err => console.error("Search fetch failed", err));

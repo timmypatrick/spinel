@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ShieldAlert, Cpu, Layers, DollarSign, FileCheck, CheckCircle, Trash, Plus, FileText, Send, UserCheck, RefreshCw } from "lucide-react";
 import { Product, QuoteRequest, Order, ContactMessage, UserSession } from "../types";
+import { safeFetch } from "../lib/dataService";
 
 interface AdminDashboardProps {
   user: UserSession | null;
@@ -69,10 +70,10 @@ export default function AdminDashboard({
       const headers = { "Authorization": token };
       
       const [prodRes, quoteRes, orderRes, msgRes] = await Promise.all([
-        fetch("/api/products"),
-        fetch("/api/quotes", { headers }),
-        fetch("/api/orders", { headers }),
-        fetch("/api/contact", { headers })
+        safeFetch("/api/products"),
+        safeFetch("/api/quotes", { headers }),
+        safeFetch("/api/orders", { headers }),
+        safeFetch("/api/contact", { headers })
       ]);
 
       if (prodRes.ok) setProducts(await prodRes.json());
@@ -93,7 +94,7 @@ export default function AdminDashboard({
     setAuthLoading(true);
 
     try {
-      const res = await fetch("/api/auth/admin/login", {
+      const res = await safeFetch("/api/auth/admin/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email.trim(), password })
@@ -175,7 +176,7 @@ export default function AdminDashboard({
     const url = isEditMode ? `/api/products/${editingProductId}` : "/api/products";
 
     try {
-      const res = await fetch(url, {
+      const res = await safeFetch(url, {
         method,
         headers: {
           "Content-Type": "application/json",
@@ -200,7 +201,7 @@ export default function AdminDashboard({
     const token = localStorage.getItem("spinel_token") || "";
 
     try {
-      const res = await fetch(`/api/products/${id}`, {
+      const res = await safeFetch(`/api/products/${id}`, {
         method: "DELETE",
         headers: { "Authorization": token }
       });

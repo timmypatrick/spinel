@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { X, Send, Bot, User, Check, ShoppingBag, ArrowRight } from "lucide-react";
 import { Product, CartItem } from "../types";
+import { safeFetch } from "../lib/dataService";
 
 interface AIConsultantProps {
   isOpen: boolean;
@@ -57,7 +58,7 @@ export default function AIConsultant({
     setLoading(true);
 
     try {
-      const res = await fetch("/api/ai-recommend", {
+      const res = await safeFetch("/api/ai-recommend", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: userText })
@@ -72,7 +73,7 @@ export default function AIConsultant({
       // Fetch actual recommended products from catalog
       let matchedProducts: Product[] = [];
       if (data.recommendedIds && Array.isArray(data.recommendedIds)) {
-        const prodRes = await fetch("/api/products");
+        const prodRes = await safeFetch("/api/products");
         if (prodRes.ok) {
           const allProducts: Product[] = await prodRes.json();
           matchedProducts = allProducts.filter(p => data.recommendedIds.includes(p.id));

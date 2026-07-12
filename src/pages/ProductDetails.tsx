@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ChevronRight, ShoppingCart, Download, Star, Share2, Shield, Settings, Heart, Box, CheckCircle } from "lucide-react";
 import { Product } from "../types";
+import { safeFetch } from "../lib/dataService";
 
 interface ProductDetailsProps {
   productId: string;
@@ -31,7 +32,7 @@ export default function ProductDetails({
 
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/products/${productId}`)
+    safeFetch(`/api/products/${productId}`)
       .then(res => res.json())
       .then((data: Product) => {
         setProduct(data);
@@ -39,7 +40,7 @@ export default function ProductDetails({
         setReviews(data.reviews || []);
 
         // Load related products in the same category
-        fetch("/api/products")
+        safeFetch("/api/products")
           .then(r => r.json())
           .then((all: Product[]) => {
             const rel = all.filter(p => p.category === data.category && p.id !== data.id).slice(0, 3);

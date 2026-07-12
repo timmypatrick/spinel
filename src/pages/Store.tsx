@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Grid, List, SlidersHorizontal, Search, RefreshCw, ShoppingCart, Plus, Check, Trash } from "lucide-react";
 import { Product, Category } from "../types";
+import { safeFetch } from "../lib/dataService";
 
 interface StoreProps {
   currentView: string;
@@ -45,7 +46,7 @@ export default function Store({
     if (selectedType) url += `&productType=${encodeURIComponent(selectedType)}`;
     if (searchQuery) url += `&search=${encodeURIComponent(searchQuery)}`;
 
-    fetch(url)
+    safeFetch(url)
       .then(res => res.json())
       .then((data: Product[]) => {
         // Client side filter for price
@@ -58,7 +59,7 @@ export default function Store({
 
   // Fetch Category lists
   useEffect(() => {
-    fetch("/api/products")
+    safeFetch("/api/products")
       .then(res => res.json())
       .then((data: Product[]) => {
         // Derive unique categories from product catalog

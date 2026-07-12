@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Shield, Sun, Server, Cpu, Network, ArrowRight, Zap, Award, Star, BookOpen, Clock, Globe } from "lucide-react";
+import { Shield, Sun, Server, Cpu, Network, ArrowRight, Zap, Award, Star, BookOpen, Clock, Globe, ChevronLeft, ChevronRight, CheckCircle2 } from "lucide-react";
 import { Product, BlogArticle } from "../types";
+import { safeFetch } from "../lib/dataService";
 
 interface HomeProps {
   setCurrentView: (view: string) => void;
@@ -16,10 +17,94 @@ export default function Home({
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [articles, setArticles] = useState<BlogArticle[]>([]);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Auto-rotate background carousel of 8 flyers every 5 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % 8);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const flyers = [
+    {
+      title: "Advanced CCTV Cameras",
+      subtitle: "Enterprise-Grade Intelligent Optical Security",
+      badge: "CCTV Cameras & Thermal Optics",
+      description: "ATEX & IECEx certified Zone 1 & 2 explosion-proof and standard dome, bullet, and PTZ cameras. AISI 316L stainless steel for marine & refinery environments.",
+      image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=1200&auto=format&fit=crop",
+      features: ["Zone 1 & 2 ATEX Certified", "AISI 316L Stainless Steel", "4K UHD with Starlight Low-light"],
+      cta: "Explore Security Cameras"
+    },
+    {
+      title: "Network Video Recorders",
+      subtitle: "Fail-Safe, High-Throughput Network Recording (NVR)",
+      badge: "NVR Storage Solutions",
+      description: "Heavy-duty server-grade video recorders supporting high bandwidth, continuous RAID redundancy, and remote SCADA control room integration.",
+      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1200&auto=format&fit=crop",
+      features: ["Up to 128 Channels RAID 5/6", "4K Synchronous Local Outputs", "Failover Hot-Spare Integration"],
+      cta: "View Storage Systems"
+    },
+    {
+      title: "Smart Hybrid Inverters",
+      subtitle: "High-Yield Three-Phase Grid Sync Systems",
+      badge: "Solar Inverters",
+      description: "Enterprise-grade solar hybrid inverters from 15kW to 500kW+. Seamless transition times (<4ms) with dual high-voltage MPPT efficiency.",
+      image: "https://images.unsplash.com/photo-1620000617482-821324eb9a14?q=80&w=1200&auto=format&fit=crop",
+      features: ["98.4% Peak Conversion Yield", "Dual HV MPPT Controllers", "Active Grid Peak Shaving"],
+      cta: "Explore Hybrid Inverters"
+    },
+    {
+      title: "High-Yield Solar Panels",
+      subtitle: "Industrial-Grade Monocrystalline Modules",
+      badge: "Solar PV Panels",
+      description: "Highest conversion rate solar panels engineered for extreme tropical climates, salt-mist coastal deployment, and heavy industrial load demands.",
+      image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=1200&auto=format&fit=crop",
+      features: ["Premium N-Type Mono Cells", "PID-free / Salt-Mist Resistant", "25-Year Linear Warranty"],
+      cta: "View Solar Panels"
+    },
+    {
+      title: "Heavy-Duty Server Racks",
+      subtitle: "IP65/IP66 Weatherproof and Seismic Enclosures",
+      badge: "Server Racks & Cabinets",
+      description: "Premium wall-mounted and floor-standing network cabinets and outdoor server enclosures with active thermostat ventilation.",
+      image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=1200&auto=format&fit=crop",
+      features: ["IP65/IP66 Outdoor Dust-Waterproof", "Seismic Load Rated Structures", "Integrated Smart Thermostat Fans"],
+      cta: "View Racks & Cabinets"
+    },
+    {
+      title: "Industrial Junction Boxes",
+      subtitle: "Flameproof and Weatherproof Distribution Hubs",
+      badge: "Junction Boxes & Panels",
+      description: "ATEX explosion-proof and standard IP68 weatherproof junction boxes. Solid impact-resistant GRP and electro-polished stainless steel structures.",
+      image: "https://images.unsplash.com/photo-1581092334247-44f23bc37315?q=80&w=1200&auto=format&fit=crop",
+      features: ["Zone 1 ATEX Ex-d & Ex-e", "Silicone Gasket IP68 Waterproof", "Pre-machined Custom Cable Entries"],
+      cta: "View Junction Boxes"
+    },
+    {
+      title: "Hybrid Composite Cables",
+      subtitle: "Long-Range Fibre Optic & Armoured Power Cabling",
+      badge: "Hybrid Composite & Armoured Cables",
+      description: "High-durability combined data and high-voltage composite cables designed for subsea, offshore drilling, and cross-site industrial networks.",
+      image: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=1200&auto=format&fit=crop",
+      features: ["Simultaneous Data + Power", "ATEX / Oil-Resistant Sheathing", "Crush-Proof Steel-Wire Armour"],
+      cta: "Explore Custom Cables"
+    },
+    {
+      title: "Active PoE+ Network Switches",
+      subtitle: "High-Throughput Ruggedized Telecom Backbone",
+      badge: "Industrial PoE Network Switches",
+      description: "Industrial layer 2/3 active network switches engineered for extreme temperature tolerance and rapid redundant ring failovers.",
+      image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1200&auto=format&fit=crop",
+      features: ["IEEE 802.3bt Ultra PoE 90W", "-40°C to 75°C Industrial Grade", "ERPS Ring Recovery <20ms"],
+      cta: "View Network Switches"
+    }
+  ];
 
   useEffect(() => {
     // Load products and filter featured
-    fetch("/api/products")
+    safeFetch("/api/products")
       .then((res) => res.json())
       .then((data: Product[]) => {
         setFeaturedProducts(data.filter((p) => p.featured).slice(0, 3));
@@ -86,57 +171,120 @@ export default function Home({
 
   return (
     <div className="w-full flex flex-col bg-white" id="home-view">
-      {/* 1. Stunning Hero Banner */}
-      <section className="relative w-full bg-[#151515] text-white overflow-hidden py-24 px-4 lg:px-8 border-b border-gray-800" id="hero-banner">
-        {/* Subtle grid lines background overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
-        <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-[#FF7A20] opacity-10 blur-3xl animate-pulse" />
-        <div className="absolute -bottom-40 -right-40 w-96 h-96 rounded-full bg-slate-600 opacity-25 blur-3xl animate-pulse" />
+      {/* 1. Stunning Background Carousel of 8 Flyers */}
+      <section className="relative w-full bg-[#0a0a0a] text-white overflow-hidden min-h-[580px] flex items-center border-b border-gray-800" id="hero-banner">
+        {/* Background slide image with transitions */}
+        <div className="absolute inset-0 transition-all duration-1000 ease-in-out">
+          <img
+            src={flyers[currentSlide].image}
+            alt={flyers[currentSlide].title}
+            className="w-full h-full object-cover scale-105 filter brightness-[0.22] contrast-[1.1]"
+            referrerPolicy="no-referrer"
+          />
+          {/* Custom tech scanline gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-transparent" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0)_95%,rgba(0,0,0,0.85)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:32px_32px]" />
+        </div>
 
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
-          <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center space-x-2 bg-gray-900 border border-gray-800 px-3 py-1.5 rounded-full text-xs text-gray-300">
+        <div className="max-w-7xl mx-auto w-full px-4 lg:px-8 py-20 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* Main content pane */}
+          <div className="lg:col-span-8 space-y-6">
+            <div className="inline-flex items-center space-x-2 bg-black/60 border border-gray-800 px-3.5 py-1.5 rounded-full text-[11px] text-gray-300 font-mono tracking-wide uppercase">
               <span className="w-2 h-2 rounded-full bg-[#FF7A20] animate-ping" />
-              <span>Enterprise Distributor & Systems Integrator</span>
+              <span>{flyers[currentSlide].badge}</span>
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight" id="hero-title">
-              Enterprise ICT <span className="text-[#FF7A20]">Distribution</span> & Engineering Systems
-            </h1>
-            <p className="text-gray-400 text-sm sm:text-base leading-relaxed max-w-xl">
-              Spinel Distribution is a world-class ICT partner supplying high-performance hardware and critical infrastructures to oil rigs, cell sites, and manufacturing complexes. We are the certified bridge between premium global OEMs and local telecom/engineering majors.
+
+            <div className="space-y-2">
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight uppercase font-sans">
+                {flyers[currentSlide].title.split(" ").map((word, idx) => (
+                  <span key={idx} className={idx === flyers[currentSlide].title.split(" ").length - 1 ? "text-[#FF7A20]" : ""}>
+                    {word}{" "}
+                  </span>
+                ))}
+              </h1>
+              <p className="text-[#FF7A20] text-sm sm:text-lg font-bold tracking-wide uppercase font-mono">
+                {flyers[currentSlide].subtitle}
+              </p>
+            </div>
+
+            <p className="text-gray-300 text-xs sm:text-sm leading-relaxed max-w-2xl">
+              {flyers[currentSlide].description}
             </p>
+
+            {/* Flyer Specifications Checklist */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+              {flyers[currentSlide].features.map((feature, fIdx) => (
+                <div key={fIdx} className="flex items-center space-x-2 bg-black/40 border border-gray-800/60 p-2.5 rounded-lg backdrop-blur-xs">
+                  <CheckCircle2 className="w-4 h-4 text-[#FF7A20] shrink-0" />
+                  <span className="text-xs text-gray-200 font-medium font-mono">{feature}</span>
+                </div>
+              ))}
+            </div>
+
             <div className="flex flex-wrap gap-4 pt-4">
               <button
                 onClick={() => setCurrentView("store")}
-                className="bg-[#FF7A20] text-white hover:bg-[#e06512] font-bold text-xs px-6 py-3 rounded-xl transition cursor-pointer flex items-center space-x-1.5"
+                className="bg-[#FF7A20] text-white hover:bg-[#e06512] font-black text-xs px-6 py-3.5 rounded-xl transition cursor-pointer flex items-center space-x-1.5 uppercase tracking-wider shadow-lg shadow-orange-500/10"
                 id="hero-btn-browse"
               >
-                <span>Browse Products Catalogue</span>
+                <span>Browse Catalog</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setCurrentView("request-quote")}
-                className="bg-transparent border border-gray-700 text-white hover:bg-gray-800 font-semibold text-xs px-6 py-3 rounded-xl transition cursor-pointer"
+                className="bg-black/50 border border-gray-700 text-white hover:bg-gray-950 font-bold text-xs px-6 py-3.5 rounded-xl transition cursor-pointer uppercase tracking-wider"
                 id="hero-btn-quote"
               >
-                Request Systems Quote
+                Request Custom Quote
               </button>
             </div>
           </div>
-          <div className="lg:col-span-5 relative hidden lg:block" id="hero-image-pane">
-            <div className="relative border border-gray-800 p-3 rounded-2xl bg-gray-900/40 backdrop-blur-xs">
-              <img
-                src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=600&auto=format&fit=crop"
-                alt="ICT Core Server Distribution Hub"
-                className="rounded-xl object-cover w-full h-[320px] grayscale brightness-90 hover:grayscale-0 transition duration-500"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute top-6 left-6 bg-gray-950/90 border border-gray-800 text-xs px-3 py-2 rounded-lg font-mono flex items-center space-x-1.5">
-                <Zap className="w-3.5 h-3.5 text-[#FF7A20]" />
-                <span>Zone 1 & 2 ATEX Compliant</span>
+
+          {/* Interactive flyer status pane */}
+          <div className="lg:col-span-4 relative hidden lg:flex flex-col items-end space-y-4">
+            <div className="bg-black/80 border border-gray-800 p-5 rounded-2xl max-w-[280px] text-right font-mono space-y-3 shadow-2xl">
+              <p className="text-[10px] text-gray-500 uppercase tracking-widest">Active Advertising Campaign</p>
+              <p className="text-2xl font-black text-gray-100">0{currentSlide + 1} <span className="text-gray-600">/ 08</span></p>
+              <div className="w-full bg-gray-900 h-1 rounded-full overflow-hidden">
+                <div
+                  className="bg-[#FF7A20] h-full transition-all duration-500"
+                  style={{ width: `${((currentSlide + 1) / 8) * 100}%` }}
+                />
               </div>
+              <p className="text-[10px] text-gray-400">Exclusive distribution and technical commissioning across West Africa.</p>
             </div>
           </div>
+        </div>
+
+        {/* Previous / Next Arrow Controls */}
+        <button
+          onClick={() => setCurrentSlide((prev) => (prev - 1 + 8) % 8)}
+          className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-[#FF7A20] text-white border border-gray-800 hover:border-[#FF7A20] w-10 h-10 rounded-full flex items-center justify-center transition cursor-pointer z-20"
+          aria-label="Previous Campaign"
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+        <button
+          onClick={() => setCurrentSlide((prev) => (prev + 1) % 8)}
+          className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-[#FF7A20] text-white border border-gray-800 hover:border-[#FF7A20] w-10 h-10 rounded-full flex items-center justify-center transition cursor-pointer z-20"
+          aria-label="Next Campaign"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
+
+        {/* Selection Dots */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-2 z-20">
+          {flyers.map((_, sIdx) => (
+            <button
+              key={sIdx}
+              onClick={() => setCurrentSlide(sIdx)}
+              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                currentSlide === sIdx ? "bg-[#FF7A20] w-6" : "bg-gray-600/60 hover:bg-gray-400"
+              }`}
+              aria-label={`Go to Slide ${sIdx + 1}`}
+            />
+          ))}
         </div>
       </section>
 
