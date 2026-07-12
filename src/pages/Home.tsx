@@ -1,106 +1,133 @@
 import { useState, useEffect } from "react";
-import { Shield, Sun, Server, Cpu, Network, ArrowRight, Zap, Award, Star, BookOpen, Clock, Globe, ChevronLeft, ChevronRight, CheckCircle2 } from "lucide-react";
+import { Shield, Sun, Server, Cpu, Network, ArrowRight, Zap, Award, Star, BookOpen, Clock, Globe, ChevronLeft, ChevronRight, CheckCircle2, ShoppingCart } from "lucide-react";
 import { Product, BlogArticle } from "../types";
 import { safeFetch } from "../lib/dataService";
+
+const STATIC_FLYERS = [
+  {
+    title: "Advanced CCTV Cameras",
+    subtitle: "Enterprise-Grade Intelligent Optical Security",
+    badge: "CCTV Cameras & Thermal Optics",
+    description: "ATEX & IECEx certified Zone 1 & 2 explosion-proof and standard dome, bullet, and PTZ cameras. AISI 316L stainless steel for marine & refinery environments.",
+    image: "https://i.ibb.co/BVk0bN2t/9e4bdef3-3007-4a0b-8117-9ea6305be664.png",
+    features: ["Zone 1 & 2 ATEX Certified", "AISI 316L Stainless Steel", "4K UHD with Starlight Low-light"],
+    cta: "Explore Security Cameras"
+  },
+  {
+    title: "Network Video Recorders",
+    subtitle: "Fail-Safe, High-Throughput Network Recording (NVR)",
+    badge: "NVR Storage Solutions",
+    description: "Heavy-duty server-grade video recorders supporting high bandwidth, continuous RAID redundancy, and remote SCADA control room integration.",
+    image: "https://i.ibb.co/ktYSJd0/e4868fd7-d32e-4214-8de2-c1fc8a694adb.png",
+    features: ["Up to 128 Channels RAID 5/6", "4K Synchronous Local Outputs", "Failover Hot-Spare Integration"],
+    cta: "View Storage Systems"
+  },
+  {
+    title: "Smart Hybrid Inverters",
+    subtitle: "High-Yield Three-Phase Grid Sync Systems",
+    badge: "Solar Inverters",
+    description: "Enterprise-grade solar hybrid inverters from 15kW to 500kW+. Seamless transition times (<4ms) with dual high-voltage MPPT efficiency.",
+    image: "https://i.ibb.co/HfTqzX2F/e4b2d89a-614a-4aa3-ae1d-5a6fce9b41a8.png",
+    features: ["98.4% Peak Conversion Yield", "Dual HV MPPT Controllers", "Active Grid Peak Shaving"],
+    cta: "Explore Hybrid Inverters"
+  },
+  {
+    title: "High-Yield Solar Panels",
+    subtitle: "Industrial-Grade Monocrystalline Modules",
+    badge: "Solar PV Panels",
+    description: "Highest conversion rate solar panels engineered for extreme tropical climates, salt-mist coastal deployment, and heavy industrial load demands.",
+    image: "https://i.ibb.co/r2my2CSV/280f3ec5-82a7-449a-8e16-e98cbfcc54cf.png",
+    features: ["Premium N-Type Mono Cells", "PID-free / Salt-Mist Resistant", "25-Year Linear Warranty"],
+    cta: "View Solar Panels"
+  },
+  {
+    title: "Heavy-Duty Server Racks",
+    subtitle: "IP65/IP66 Weatherproof and Seismic Enclosures",
+    badge: "Server Racks & Cabinets",
+    description: "Premium wall-mounted and floor-standing network cabinets and outdoor server enclosures with active thermostat ventilation.",
+    image: "https://i.ibb.co/5hsJkdQn/8904010b-d092-473f-af00-8ff01e3de2eb.png",
+    features: ["IP65/IP66 Outdoor Dust-Waterproof", "Seismic Load Rated Structures", "Integrated Smart Thermostat Fans"],
+    cta: "View Racks & Cabinets"
+  },
+  {
+    title: "Industrial Junction Boxes",
+    subtitle: "Flameproof and Weatherproof Distribution Hubs",
+    badge: "Junction Boxes & Panels",
+    description: "ATEX explosion-proof and standard IP68 weatherproof junction boxes. Solid impact-resistant GRP and electro-polished stainless steel structures.",
+    image: "https://i.ibb.co/rRw0xbjc/60e4e232-1282-49d7-be3c-524b598bbcee.png",
+    features: ["Zone 1 ATEX Ex-d & Ex-e", "Silicone Gasket IP68 Waterproof", "Pre-machined Custom Cable Entries"],
+    cta: "View Junction Boxes"
+  },
+  {
+    title: "Hybrid Composite Cables",
+    subtitle: "Long-Range Fibre Optic & Armoured Power Cabling",
+    badge: "Hybrid Composite & Armoured Cables",
+    description: "High-durability combined data and high-voltage composite cables designed for subsea, offshore drilling, and cross-site industrial networks.",
+    image: "https://i.ibb.co/yn19C6Tb/5a45d505-065e-4482-8a37-1d12aeb79b2f.png",
+    features: ["Simultaneous Data + Power", "ATEX / Oil-Resistant Sheathing", "Crush-Proof Steel-Wire Armour"],
+    cta: "Explore Custom Cables"
+  },
+  {
+    title: "Active PoE+ Network Switches",
+    subtitle: "High-Throughput Ruggedized Telecom Backbone",
+    badge: "Industrial PoE Network Switches",
+    description: "Industrial layer 2/3 active network switches engineered for extreme temperature tolerance and rapid redundant ring failovers.",
+    image: "https://i.ibb.co/whSbjCv9/0b703286-756a-4685-98ab-d265e609242b.png",
+    features: ["IEEE 802.3bt Ultra PoE 90W", "-40°C to 75°C Industrial Grade", "ERPS Ring Recovery <20ms"],
+    cta: "View Network Switches"
+  },
+  {
+    title: "LiFePO4 Energy Storage",
+    subtitle: "High-Density Smart Modular Battery Racks",
+    badge: "Lithium Battery Systems",
+    description: "Heavy-duty smart energy storage banks built for heavy-duty industrial backup power, grid stability, and deep daily cycles.",
+    image: "https://i.ibb.co/vC0RMT4Y/3b427c80-aac2-4909-8394-f5df335427b8.png",
+    features: ["6000+ Deep Charge Cycles", "Built-in Smart BMS Protection", "Modular Scalable Rack Design"],
+    cta: "View Lithium Storage"
+  },
+  {
+    title: "Explosion-Proof Comms",
+    subtitle: "ATEX Zone 1 Intrinsically Safe VoIP Phones",
+    badge: "Hazardous Communication",
+    description: "Heavy-duty, weather-resistant, flameproof communications equipment engineered for hazardous industries, offshore platforms, and mines.",
+    image: "https://i.ibb.co/rYdWyVy/1e9363de-2e5d-4f8f-8ad0-c74b346660f2.png",
+    features: ["Zone 1 ATEX Ex-d certified", "IP66 Weatherproof Enclosure", "Intrinsically Safe Handsets"],
+    cta: "Explore Comms Panels"
+  }
+];
 
 interface HomeProps {
   setCurrentView: (view: string) => void;
   setSelectedProductId: (id: string | null) => void;
   currency: "USD" | "NGN";
+  addToCart: (product: Product, quantity?: number) => void;
 }
 
 export default function Home({
   setCurrentView,
   setSelectedProductId,
-  currency
+  currency,
+  addToCart
 }: HomeProps) {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+  const [shopMoreProducts, setShopMoreProducts] = useState<Product[]>([]);
   const [articles, setArticles] = useState<BlogArticle[]>([]);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Auto-rotate background carousel of 8 flyers every 5 seconds
+  // Randomly shuffle the 10 flyer images on load
+  const [shuffledFlyers] = useState(() => {
+    return [...STATIC_FLYERS].sort(() => Math.random() - 0.5);
+  });
+
+  // Auto-rotate background carousel of flyers every 5 seconds
   useEffect(() => {
+    if (shuffledFlyers.length === 0) return;
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % 8);
+      setCurrentSlide((prev) => (prev + 1) % shuffledFlyers.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, []);
-
-  const flyers = [
-    {
-      title: "Advanced CCTV Cameras",
-      subtitle: "Enterprise-Grade Intelligent Optical Security",
-      badge: "CCTV Cameras & Thermal Optics",
-      description: "ATEX & IECEx certified Zone 1 & 2 explosion-proof and standard dome, bullet, and PTZ cameras. AISI 316L stainless steel for marine & refinery environments.",
-      image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=1200&auto=format&fit=crop",
-      features: ["Zone 1 & 2 ATEX Certified", "AISI 316L Stainless Steel", "4K UHD with Starlight Low-light"],
-      cta: "Explore Security Cameras"
-    },
-    {
-      title: "Network Video Recorders",
-      subtitle: "Fail-Safe, High-Throughput Network Recording (NVR)",
-      badge: "NVR Storage Solutions",
-      description: "Heavy-duty server-grade video recorders supporting high bandwidth, continuous RAID redundancy, and remote SCADA control room integration.",
-      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1200&auto=format&fit=crop",
-      features: ["Up to 128 Channels RAID 5/6", "4K Synchronous Local Outputs", "Failover Hot-Spare Integration"],
-      cta: "View Storage Systems"
-    },
-    {
-      title: "Smart Hybrid Inverters",
-      subtitle: "High-Yield Three-Phase Grid Sync Systems",
-      badge: "Solar Inverters",
-      description: "Enterprise-grade solar hybrid inverters from 15kW to 500kW+. Seamless transition times (<4ms) with dual high-voltage MPPT efficiency.",
-      image: "https://images.unsplash.com/photo-1620000617482-821324eb9a14?q=80&w=1200&auto=format&fit=crop",
-      features: ["98.4% Peak Conversion Yield", "Dual HV MPPT Controllers", "Active Grid Peak Shaving"],
-      cta: "Explore Hybrid Inverters"
-    },
-    {
-      title: "High-Yield Solar Panels",
-      subtitle: "Industrial-Grade Monocrystalline Modules",
-      badge: "Solar PV Panels",
-      description: "Highest conversion rate solar panels engineered for extreme tropical climates, salt-mist coastal deployment, and heavy industrial load demands.",
-      image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=1200&auto=format&fit=crop",
-      features: ["Premium N-Type Mono Cells", "PID-free / Salt-Mist Resistant", "25-Year Linear Warranty"],
-      cta: "View Solar Panels"
-    },
-    {
-      title: "Heavy-Duty Server Racks",
-      subtitle: "IP65/IP66 Weatherproof and Seismic Enclosures",
-      badge: "Server Racks & Cabinets",
-      description: "Premium wall-mounted and floor-standing network cabinets and outdoor server enclosures with active thermostat ventilation.",
-      image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=1200&auto=format&fit=crop",
-      features: ["IP65/IP66 Outdoor Dust-Waterproof", "Seismic Load Rated Structures", "Integrated Smart Thermostat Fans"],
-      cta: "View Racks & Cabinets"
-    },
-    {
-      title: "Industrial Junction Boxes",
-      subtitle: "Flameproof and Weatherproof Distribution Hubs",
-      badge: "Junction Boxes & Panels",
-      description: "ATEX explosion-proof and standard IP68 weatherproof junction boxes. Solid impact-resistant GRP and electro-polished stainless steel structures.",
-      image: "https://images.unsplash.com/photo-1581092334247-44f23bc37315?q=80&w=1200&auto=format&fit=crop",
-      features: ["Zone 1 ATEX Ex-d & Ex-e", "Silicone Gasket IP68 Waterproof", "Pre-machined Custom Cable Entries"],
-      cta: "View Junction Boxes"
-    },
-    {
-      title: "Hybrid Composite Cables",
-      subtitle: "Long-Range Fibre Optic & Armoured Power Cabling",
-      badge: "Hybrid Composite & Armoured Cables",
-      description: "High-durability combined data and high-voltage composite cables designed for subsea, offshore drilling, and cross-site industrial networks.",
-      image: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=1200&auto=format&fit=crop",
-      features: ["Simultaneous Data + Power", "ATEX / Oil-Resistant Sheathing", "Crush-Proof Steel-Wire Armour"],
-      cta: "Explore Custom Cables"
-    },
-    {
-      title: "Active PoE+ Network Switches",
-      subtitle: "High-Throughput Ruggedized Telecom Backbone",
-      badge: "Industrial PoE Network Switches",
-      description: "Industrial layer 2/3 active network switches engineered for extreme temperature tolerance and rapid redundant ring failovers.",
-      image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1200&auto=format&fit=crop",
-      features: ["IEEE 802.3bt Ultra PoE 90W", "-40°C to 75°C Industrial Grade", "ERPS Ring Recovery <20ms"],
-      cta: "View Network Switches"
-    }
-  ];
+  }, [shuffledFlyers]);
 
   useEffect(() => {
     // Load products and filter featured
@@ -108,8 +135,11 @@ export default function Home({
       .then((res) => res.json())
       .then((data: Product[]) => {
         setFeaturedProducts(data.filter((p) => p.featured).slice(0, 3));
+        // Shuffle and take 50 products randomly
+        const shuffled = [...data].sort(() => Math.random() - 0.5).slice(0, 50);
+        setShopMoreProducts(shuffled);
       })
-      .catch((err) => console.error("Error loading featured products", err));
+      .catch((err) => console.error("Error loading products", err));
 
     // Simulation of blog articles
     setArticles([
@@ -171,116 +201,44 @@ export default function Home({
 
   return (
     <div className="w-full flex flex-col bg-white" id="home-view">
-      {/* 1. Stunning Background Carousel of 8 Flyers */}
-      <section className="relative w-full bg-[#0a0a0a] text-white overflow-hidden min-h-[580px] flex items-center border-b border-gray-800" id="hero-banner">
-        {/* Background slide image with transitions */}
-        <div className="absolute inset-0 transition-all duration-1000 ease-in-out">
-          <img
-            src={flyers[currentSlide].image}
-            alt={flyers[currentSlide].title}
-            className="w-full h-full object-cover scale-105 filter brightness-[0.22] contrast-[1.1]"
-            referrerPolicy="no-referrer"
-          />
-          {/* Custom tech scanline gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-transparent" />
-          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0)_95%,rgba(0,0,0,0.85)_100%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:32px_32px]" />
-        </div>
-
-        <div className="max-w-7xl mx-auto w-full px-4 lg:px-8 py-20 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Main content pane */}
-          <div className="lg:col-span-8 space-y-6">
-            <div className="inline-flex items-center space-x-2 bg-black/60 border border-gray-800 px-3.5 py-1.5 rounded-full text-[11px] text-gray-300 font-mono tracking-wide uppercase">
-              <span className="w-2 h-2 rounded-full bg-[#FF7A20] animate-ping" />
-              <span>{flyers[currentSlide].badge}</span>
-            </div>
-
-            <div className="space-y-2">
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight uppercase font-sans">
-                {flyers[currentSlide].title.split(" ").map((word, idx) => (
-                  <span key={idx} className={idx === flyers[currentSlide].title.split(" ").length - 1 ? "text-[#FF7A20]" : ""}>
-                    {word}{" "}
-                  </span>
-                ))}
-              </h1>
-              <p className="text-[#FF7A20] text-sm sm:text-lg font-bold tracking-wide uppercase font-mono">
-                {flyers[currentSlide].subtitle}
-              </p>
-            </div>
-
-            <p className="text-gray-300 text-xs sm:text-sm leading-relaxed max-w-2xl">
-              {flyers[currentSlide].description}
-            </p>
-
-            {/* Flyer Specifications Checklist */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-              {flyers[currentSlide].features.map((feature, fIdx) => (
-                <div key={fIdx} className="flex items-center space-x-2 bg-black/40 border border-gray-800/60 p-2.5 rounded-lg backdrop-blur-xs">
-                  <CheckCircle2 className="w-4 h-4 text-[#FF7A20] shrink-0" />
-                  <span className="text-xs text-gray-200 font-medium font-mono">{feature}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="flex flex-wrap gap-4 pt-4">
-              <button
-                onClick={() => setCurrentView("store")}
-                className="bg-[#FF7A20] text-white hover:bg-[#e06512] font-black text-xs px-6 py-3.5 rounded-xl transition cursor-pointer flex items-center space-x-1.5 uppercase tracking-wider shadow-lg shadow-orange-500/10"
-                id="hero-btn-browse"
-              >
-                <span>Browse Catalog</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => setCurrentView("request-quote")}
-                className="bg-black/50 border border-gray-700 text-white hover:bg-gray-950 font-bold text-xs px-6 py-3.5 rounded-xl transition cursor-pointer uppercase tracking-wider"
-                id="hero-btn-quote"
-              >
-                Request Custom Quote
-              </button>
-            </div>
-          </div>
-
-          {/* Interactive flyer status pane */}
-          <div className="lg:col-span-4 relative hidden lg:flex flex-col items-end space-y-4">
-            <div className="bg-black/80 border border-gray-800 p-5 rounded-2xl max-w-[280px] text-right font-mono space-y-3 shadow-2xl">
-              <p className="text-[10px] text-gray-500 uppercase tracking-widest">Active Advertising Campaign</p>
-              <p className="text-2xl font-black text-gray-100">0{currentSlide + 1} <span className="text-gray-600">/ 08</span></p>
-              <div className="w-full bg-gray-900 h-1 rounded-full overflow-hidden">
-                <div
-                  className="bg-[#FF7A20] h-full transition-all duration-500"
-                  style={{ width: `${((currentSlide + 1) / 8) * 100}%` }}
-                />
-              </div>
-              <p className="text-[10px] text-gray-400">Exclusive distribution and technical commissioning across West Africa.</p>
-            </div>
-          </div>
+      {/* 1. Pure Image High-Visibility Carousel of Shuffled Flyers */}
+      <section className="relative w-full bg-slate-100/90 overflow-hidden h-[240px] sm:h-[380px] md:h-[500px] lg:h-[600px] flex items-center justify-center border-b border-gray-200" id="hero-banner">
+        {/* Background slide image - fully bright and clear */}
+        <div className="absolute inset-0 w-full h-full flex items-center justify-center transition-all duration-1000 ease-in-out">
+          {shuffledFlyers[currentSlide] && (
+            <img
+              src={shuffledFlyers[currentSlide].image}
+              alt={shuffledFlyers[currentSlide].title}
+              className="w-full h-full object-contain max-h-full mx-auto select-none"
+              referrerPolicy="no-referrer"
+            />
+          )}
         </div>
 
         {/* Previous / Next Arrow Controls */}
         <button
-          onClick={() => setCurrentSlide((prev) => (prev - 1 + 8) % 8)}
-          className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-[#FF7A20] text-white border border-gray-800 hover:border-[#FF7A20] w-10 h-10 rounded-full flex items-center justify-center transition cursor-pointer z-20"
+          onClick={() => setCurrentSlide((prev) => (prev - 1 + shuffledFlyers.length) % shuffledFlyers.length)}
+          className="absolute left-10 sm:left-20 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-[#FF7A20] text-white border border-white/20 hover:border-[#FF7A20] w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition cursor-pointer z-20 shadow-lg"
           aria-label="Previous Campaign"
         >
-          <ChevronLeft className="w-5 h-5" />
+          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
         <button
-          onClick={() => setCurrentSlide((prev) => (prev + 1) % 8)}
-          className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-[#FF7A20] text-white border border-gray-800 hover:border-[#FF7A20] w-10 h-10 rounded-full flex items-center justify-center transition cursor-pointer z-20"
+          onClick={() => setCurrentSlide((prev) => (prev + 1) % shuffledFlyers.length)}
+          className="absolute right-10 sm:right-20 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-[#FF7A20] text-white border border-white/20 hover:border-[#FF7A20] w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition cursor-pointer z-20 shadow-lg"
           aria-label="Next Campaign"
         >
-          <ChevronRight className="w-5 h-5" />
+          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
 
         {/* Selection Dots */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-2 z-20">
-          {flyers.map((_, sIdx) => (
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-20 bg-black/20 px-3.5 py-1.5 rounded-full backdrop-blur-md border border-white/10">
+          {shuffledFlyers.map((_, sIdx) => (
             <button
               key={sIdx}
               onClick={() => setCurrentSlide(sIdx)}
-              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                currentSlide === sIdx ? "bg-[#FF7A20] w-6" : "bg-gray-600/60 hover:bg-gray-400"
+              className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                currentSlide === sIdx ? "bg-[#FF7A20] w-5" : "bg-gray-500/60 hover:bg-black"
               }`}
               aria-label={`Go to Slide ${sIdx + 1}`}
             />
@@ -288,169 +246,64 @@ export default function Home({
         </div>
       </section>
 
-      {/* 2. Interactive Statistics Dashboard */}
-      <section className="w-full py-8 bg-gray-50 border-b border-gray-100" id="statistics-dashboard">
-        <div className="max-w-7xl mx-auto px-4 lg:px-8 grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {stats.map((s, idx) => (
-            <div key={idx} className="bg-white border border-gray-200/60 p-5 rounded-xl shadow-xs flex flex-col justify-center">
-              <span className="text-3xl font-black text-[#FF7A20] font-mono leading-none">{s.value}</span>
-              <span className="text-xs text-gray-500 font-semibold mt-2">{s.label}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 3. Core Product Categories Grid */}
-      <section className="max-w-7xl mx-auto px-4 lg:px-8 py-20 space-y-12" id="featured-categories">
-        <div className="text-center space-y-2">
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">Featured Business Domains</h2>
-          <p className="text-gray-500 text-xs sm:text-sm max-w-lg mx-auto">Supply, integration and certification services for critical engineering systems.</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {categories.map((cat, idx) => {
-            const IconComponent = cat.icon;
-            return (
-              <div
-                key={idx}
-                onClick={() => setCurrentView("store")}
-                className="bg-white border border-gray-100 rounded-xl p-6 shadow-xs hover:shadow-lg hover:border-orange-200 cursor-pointer transition duration-200 group"
-              >
-                <div className="bg-orange-50 w-12 h-12 rounded-lg flex items-center justify-center text-[#FF7A20] group-hover:bg-[#FF7A20] group-hover:text-white transition duration-200 mb-4">
-                  <IconComponent className="w-6 h-6" />
-                </div>
-                <h3 className="font-bold text-sm text-gray-900 group-hover:text-[#FF7A20] transition">{cat.title}</h3>
-                <p className="text-xs text-gray-500 mt-2 leading-relaxed">{cat.desc}</p>
-                <div className="flex items-center space-x-1 text-xs font-semibold text-[#FF7A20] mt-4 opacity-0 group-hover:opacity-100 transition">
-                  <span>Enter Store Catalog</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* 4. Featured Core Hardware Showcase */}
-      <section className="w-full bg-gray-50 border-t border-b border-gray-100 py-20" id="featured-products">
-        <div className="max-w-7xl mx-auto px-4 lg:px-8 space-y-12">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <div>
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">Featured Core Hardware</h2>
-              <p className="text-gray-500 text-xs sm:text-sm">In-stock systems from our certified global engineering OEM lines.</p>
-            </div>
-            <button
+      {/* 2. Shop More Products (50 random items) - Inserted as requested */}
+      <section className="max-w-7xl mx-auto px-4 lg:px-8 py-16 space-y-8" id="shop-more-products">
+        <div className="flex justify-between items-center border-b border-gray-100 pb-4">
+          <div className="flex items-center space-x-2">
+            <h2 
               onClick={() => setCurrentView("store")}
-              className="text-[#FF7A20] text-xs font-bold hover:underline flex items-center space-x-1"
+              className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 hover:text-[#FF7A20] cursor-pointer transition flex items-center gap-2"
             >
-              <span>View Entire Hardware Store</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
+              <span>Shop More Products</span>
+              <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF7A20]" />
+            </h2>
           </div>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {featuredProducts.map((p) => (
-              <div
-                key={p.id}
-                className="bg-white border border-gray-100 rounded-2xl shadow-xs overflow-hidden hover:shadow-xl transition duration-300 flex flex-col justify-between"
-              >
-                <div>
-                  <div className="relative aspect-video bg-gray-50">
-                    <img src={p.images[0]} alt={p.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-                    <span className="absolute top-3 left-3 bg-gray-900/90 text-white font-semibold font-mono text-[9px] px-2 py-0.5 rounded-sm">
-                      {p.productType}
-                    </span>
-                  </div>
-                  <div className="p-5 space-y-2">
-                    <div className="flex items-center justify-between text-[10px] text-gray-400">
-                      <span className="font-mono bg-gray-100 px-1 py-0.5 rounded">{p.sku}</span>
-                      <span>OEM: {p.brand}</span>
-                    </div>
-                    <h3
-                      onClick={() => handleProductDetails(p.id)}
-                      className="font-bold text-sm text-gray-900 hover:text-[#FF7A20] cursor-pointer line-clamp-1"
-                    >
-                      {p.name}
-                    </h3>
-                    <p className="text-xs text-gray-500 line-clamp-2 leading-relaxed">{p.description}</p>
-                  </div>
-                </div>
-                <div className="p-5 border-t border-gray-50 bg-gray-50/50 flex justify-between items-center">
-                  <span className="font-black text-[#FF7A20] text-sm">
-                    {currency === "USD" ? `$${p.priceUSD.toLocaleString()}` : `₦${p.priceNGN.toLocaleString()}`}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+          {shopMoreProducts.map((p) => (
+            <div
+              key={p.id}
+              onClick={() => handleProductDetails(p.id)}
+              className="group bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl hover:border-gray-300 hover:scale-[1.03] transition-all duration-300 transform flex flex-col justify-between cursor-pointer"
+            >
+              <div>
+                <div className="relative aspect-square bg-gray-50/50 flex items-center justify-center p-2 overflow-hidden">
+                  <img 
+                    src={p.images[0]} 
+                    alt={p.name} 
+                    className="max-h-full max-w-full object-contain mx-auto group-hover:scale-105 transition-transform duration-300" 
+                    referrerPolicy="no-referrer" 
+                  />
+                  <span className="absolute top-2 left-2 bg-slate-900/85 text-white font-mono text-[10px] sm:text-xs px-2 py-0.5 rounded-sm">
+                    {p.productType}
                   </span>
-                  <button
-                    onClick={() => handleProductDetails(p.id)}
-                    className="border border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white px-3.5 py-1.5 rounded-lg text-xs font-semibold transition"
+                </div>
+                <div className="p-4 space-y-2">
+                  <span className="text-[10px] sm:text-xs font-mono text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded inline-block">
+                    {p.sku}
+                  </span>
+                  <h3
+                    className="font-bold text-sm sm:text-base text-gray-900 group-hover:text-[#FF7A20] transition-colors line-clamp-2 leading-snug min-h-[2.5rem]"
                   >
-                    View Specs
-                  </button>
+                    {p.name}
+                  </h3>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 5. Industries Served Bento Grid */}
-      <section className="max-w-7xl mx-auto px-4 lg:px-8 py-20 space-y-12" id="industries-served">
-        <div className="text-center space-y-2">
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">Key Sectors Served</h2>
-          <p className="text-gray-500 text-xs sm:text-sm max-w-md mx-auto">We construct systems that survive the most challenging regulatory and physical environments.</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {industries.map((ind, idx) => (
-            <div key={idx} className="relative aspect-3/4 rounded-2xl overflow-hidden group border border-gray-100 shadow-xs">
-              <img src={ind.img} alt={ind.title} className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-500" referrerPolicy="no-referrer" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6 space-y-1">
-                <span className="text-[10px] text-[#FF7A20] font-mono uppercase tracking-widest font-bold">{ind.tag}</span>
-                <h3 className="text-white font-bold text-sm sm:text-base">{ind.title}</h3>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 6. Partner Brands Marquee */}
-      <section className="w-full py-12 border-t border-b border-gray-100 bg-gray-50" id="partner-marquee">
-        <div className="max-w-7xl mx-auto px-4 lg:px-8 space-y-6">
-          <p className="text-center text-[10px] uppercase tracking-widest text-gray-400 font-bold">Representing World-Class Technology Leaders</p>
-          <div className="flex flex-wrap items-center justify-around gap-6 grayscale opacity-60">
-            <span className="font-mono font-black text-gray-600 text-base">🛡️ HexaShield Security</span>
-            <span className="font-mono font-black text-gray-600 text-base">🔋 Vantage Power Systems</span>
-            <span className="font-mono font-black text-gray-600 text-base">📞 CommsTect Rugged</span>
-            <span className="font-mono font-black text-gray-600 text-base">🗄️ DuraRack Cabinets</span>
-          </div>
-        </div>
-      </section>
-
-      {/* 7. Latest Technical Articles Section */}
-      <section className="max-w-7xl mx-auto px-4 lg:px-8 py-20 space-y-12" id="technical-articles">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">Knowledge Hub & Case Studies</h2>
-            <p className="text-gray-500 text-xs sm:text-sm">Technical writeups authored by Spinel's field systems design architects.</p>
-          </div>
-          <button onClick={() => setCurrentView("about")} className="text-gray-900 text-xs font-bold hover:underline flex items-center space-x-1">
-            <span>Enter Knowledge Base</span>
-            <BookOpen className="w-4 h-4" />
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {articles.map((art) => (
-            <div key={art.id} className="bg-white border border-gray-100 rounded-2xl shadow-xs overflow-hidden hover:shadow-md transition flex flex-col sm:flex-row">
-              <img src={art.image} alt={art.title} className="w-full sm:w-48 h-48 object-cover" referrerPolicy="no-referrer" />
-              <div className="p-6 flex-1 flex flex-col justify-between">
-                <div className="space-y-2">
-                  <span className="text-[10px] text-[#FF7A20] uppercase font-mono font-bold">{art.category}</span>
-                  <h3 className="font-bold text-sm text-gray-900 line-clamp-1">{art.title}</h3>
-                  <p className="text-xs text-gray-500 line-clamp-2 leading-relaxed">{art.summary}</p>
-                </div>
-                <div className="flex items-center justify-between text-[10px] text-gray-400 mt-4 border-t border-gray-50 pt-3">
-                  <span>{art.author}</span>
-                  <span>{art.date}</span>
-                </div>
+              <div className="p-4 border-t border-gray-100 bg-gray-50/40 flex justify-between items-center">
+                <span className="font-extrabold text-[#FF7A20] text-sm sm:text-base">
+                  {currency === "USD" ? `$${p.priceUSD.toLocaleString()}` : `₦${p.priceNGN.toLocaleString()}`}
+                </span>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    addToCart(p);
+                  }}
+                  className="bg-[#FF7A20] hover:bg-orange-600 text-white p-2.5 rounded-lg transition-all duration-200 shadow-sm flex items-center justify-center"
+                  title="Add to Quote Cart"
+                >
+                  <ShoppingCart className="w-4 h-4" />
+                </button>
               </div>
             </div>
           ))}
@@ -458,23 +311,23 @@ export default function Home({
       </section>
 
       {/* 8. FAQ Accordion Grid */}
-      <section className="max-w-7xl mx-auto px-4 lg:px-8 py-20 space-y-12 border-t border-gray-100" id="faqs">
+      <section className="max-w-7xl mx-auto px-4 lg:px-8 py-20 space-y-12" id="faqs">
         <div className="text-center space-y-2">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">Technical FAQ Desk</h2>
-          <p className="text-gray-500 text-xs sm:text-sm max-w-sm mx-auto">Get instant clarifications regarding logistics, certifications and specifications.</p>
+          <p className="text-gray-500 text-sm sm:text-base max-w-md mx-auto">Get instant clarifications regarding logistics, certifications and specifications.</p>
         </div>
         <div className="max-w-2xl mx-auto space-y-3">
           {faqs.map((faq, idx) => (
             <div key={idx} className="border border-gray-200 rounded-xl overflow-hidden">
               <button
                 onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
-                className="w-full text-left p-4 bg-gray-50/50 hover:bg-gray-50 flex items-center justify-between font-semibold text-xs sm:text-sm text-gray-900 focus:outline-none cursor-pointer"
+                className="w-full text-left p-4 bg-gray-50/50 hover:bg-gray-50 flex items-center justify-between font-semibold text-sm sm:text-base text-gray-900 focus:outline-none cursor-pointer"
               >
                 <span>{faq.q}</span>
-                <span className="text-[#FF7A20] text-sm">{activeFaq === idx ? "−" : "+"}</span>
+                <span className="text-[#FF7A20] text-sm sm:text-base">{activeFaq === idx ? "−" : "+"}</span>
               </button>
               {activeFaq === idx && (
-                <div className="p-4 text-xs text-gray-600 bg-white border-t border-gray-200 leading-relaxed">
+                <div className="p-4 text-sm text-gray-600 bg-white border-t border-gray-200 leading-relaxed">
                   {faq.a}
                 </div>
               )}

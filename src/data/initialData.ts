@@ -122,244 +122,282 @@ export const INITIAL_PARTNERS: OEMPartner[] = [
   }
 ];
 
-export const INITIAL_PRODUCTS: Product[] = [
+const PRODUCT_TEMPLATES = [
   {
-    id: "sp-ex-dome-01",
-    sku: "SP-EXD-9100",
-    name: "SpinelShield ATEX Explosion-Proof Dome Camera",
-    slug: "spinelshield-atex-explosion-proof-dome-camera",
-    brand: "HexaShield",
+    type: "Axis Dome Cameras",
     category: "Electronic Security",
-    subcategory: "Explosion-Proof Camera",
-    priceUSD: 1850,
-    priceNGN: 2775000,
-    description: "Enterprise-grade explosion-proof dome camera designed specifically for Zone 1 and Zone 2 hazardous areas. Features 4K UHD resolution, advanced starlight low-light sensor, robust AISI 316L stainless steel enclosure, and active optical defogging. Perfect for oil & gas refinery surveillance, chemical processing plants, and offshore platforms.",
-    images: [
-      "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=600&auto=format&fit=crop", // Camera
-      "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=600&auto=format&fit=crop"
+    subcategory: "Dome Camera",
+    brand: "Axis Communications",
+    image: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?q=80&w=600&auto=format&fit=crop",
+    baseName: "Axis Professional Dome IP Camera",
+    description: "High-performance fixed dome camera with Axis Lightfinder and Forensic WDR technology. Delivers outstanding video quality even in challenging light conditions. Perfect for corporate offices, banks, and commercial facility perimeters.",
+    specs: [
+      { label: "Lens", value: "3-9 mm varifocal, F1.3" },
+      { label: "Resolution", value: "1920x1080 @ 60fps (Full HD)" },
+      { label: "Sensors", value: "Axis Lightfinder & OptimizedIR" },
+      { label: "Ingress", value: "IP66 and IK10 Impact Rated" }
     ],
-    specifications: [
-      { label: "Certification", value: "ATEX, IECEx, Zone 1 & 2, Zone 21 & 22" },
-      { label: "Material", value: "AISI 316L Electro-Polished Stainless Steel" },
-      { label: "Sensor", value: "1/1.8\" 8MP Progressive Scan CMOS" },
-      { label: "Resolution", value: "3840 x 2160 @ 30fps (4K UHD)" },
-      { label: "Minimum Illumination", value: "Color: 0.003 Lux @ F1.2, B/W: 0 Lux with IR" },
-      { label: "Smart Analytics", value: "Intrusion, Line Crossing, Face Detection, Loitering, ANPR" },
-      { label: "Ingress Protection", value: "IP68 & NEMA 4X, IK10 Impact Rated" }
-    ],
-    stock: 24,
-    oem: "HexaShield Security",
-    productType: "Hazardous Area",
-    featured: true,
-    popular: true,
-    downloads: [
-      { title: "Technical Datasheet", type: "Data Sheet", url: "#" },
-      { title: "ATEX Zone Certification PDF", type: "Certificates", url: "#" },
-      { title: "Installation Manual", type: "Manual", url: "#" }
-    ],
-    seoTitle: "ATEX Explosion-Proof 4K Dome Camera | Spinel Distribution",
-    seoDescription: "Buy enterprise-grade Zone 1/2 ATEX explosion-proof 4K dome camera. Heavy-duty AISI 316L stainless steel for oil rigs and chemical plants.",
-    reviews: [
-      { id: "rev-1", userName: "Engr. Yusuf Alao", rating: 5, comment: "Exceptional build quality. We installed 40 units at our LNG pipeline and they have operated flawlessly under extreme humidity.", date: "2026-04-12" }
-    ]
+    priceUSD: 650,
+    productType: "Enterprise"
   },
   {
-    id: "sp-sol-bat-10",
-    sku: "SP-TITAN-L50",
-    name: "Spinel Titan-X 50kWh Lithium Iron Phosphate (LiFePO4) Power Storage System",
-    slug: "spinel-titan-x-50kwh-lifepo4-battery",
-    brand: "Vantage Power Systems",
-    category: "Renewable Energy",
-    subcategory: "Solar Batteries",
-    priceUSD: 14500,
-    priceNGN: 21750000,
-    description: "High-capacity server-room level 50kWh Lithium Energy Storage system designed for heavy commercial backup, base transceiver stations (BTS), and industrial solar mini-grids. Integrates an intelligent BMS, active balance thermal management, and supports stackable modular expansions up to 1.2MWh. Offers an ultra-long cycle life exceeding 6000 cycles at 90% depth of discharge.",
-    images: [
-      "https://images.unsplash.com/photo-1620714223084-8fcacc6dfd8d?q=80&w=600&auto=format&fit=crop", // Battery bank
-      "https://images.unsplash.com/photo-1548613053-22008df479f6?q=80&w=600&auto=format&fit=crop"
+    type: "Canon Cameras",
+    category: "Electronic Security",
+    subcategory: "Panoramic Camera",
+    brand: "Canon",
+    image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=600&auto=format&fit=crop",
+    baseName: "Canon VB-H Series Ultra-Compact Security Camera",
+    description: "Premium optical sensor camera featuring Canon's high-precision 20x optical zoom lens and super-low light performance. Integrates on-board intelligence for motion tracking and volume peak analysis.",
+    specs: [
+      { label: "Optics", value: "20x Optical Zoom, 12x Digital Zoom" },
+      { label: "Resolution", value: "1080p Full HD Video Stream" },
+      { label: "Low Light", value: "Color: 0.03 Lux, B/W: 0.002 Lux" },
+      { label: "Aperture", value: "f/1.6 - f/3.5" }
     ],
-    specifications: [
-      { label: "Chemistry", value: "Lithium Iron Phosphate (LiFePO4)" },
-      { label: "Nominal Capacity", value: "50 kWh / 1000 Ah" },
-      { label: "Nominal Voltage", value: "51.2 V" },
-      { label: "Standard Cycle Life", value: ">6,000 Cycles @ 90% DoD, 25°C" },
-      { label: "Max Discharge Current", value: "250A Continuous" },
-      { label: "Communication Protocols", value: "CAN, RS485, Modbus TCP" },
-      { label: "Dimensions", value: "800 x 600 x 1200 mm (Cabinet)" },
-      { label: "Weight", value: "485 kg" }
-    ],
-    stock: 8,
-    oem: "Vantage Power Systems",
-    productType: "Enterprise",
-    featured: true,
-    popular: true,
-    downloads: [
-      { title: "Commercial Battery Brochure", type: "Brochure", url: "#" },
-      { title: "BMS Configuration Guide", type: "Manual", url: "#" }
-    ],
-    seoTitle: "Spinel Titan-X 50kWh Industrial LiFePO4 Battery Pack",
-    seoDescription: "Industrial-grade stackable 50kWh LiFePO4 Lithium Solar battery cabinet for telecommunications and commercial grids.",
-    reviews: [
-      { id: "rev-2", userName: "Marcus Olayinka", rating: 5, comment: "Installed at our regional telecom switching centers. Excellent energy density and smooth Modbus telemetry integration.", date: "2026-05-30" }
-    ]
+    priceUSD: 1150,
+    productType: "Enterprise"
   },
   {
-    id: "sp-inv-hyb-20",
-    sku: "SP-GRID-S15",
-    name: "Spinel SynchroGrid 15kW Hybrid Three-Phase Inverter",
-    slug: "spinel-synchrogrid-15kw-hybrid-three-phase-inverter",
-    brand: "Vantage Power Systems",
+    type: "POE Switch",
+    category: "Telecom & Networking",
+    subcategory: "POE Switches",
+    brand: "DuraRack",
+    image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=600&auto=format&fit=crop",
+    baseName: "NetCore High-Power Active PoE+ Switch",
+    description: "Managed industrial Ethernet switch with full PoE+ power delivery across all copper ports. Built with high-throughput switching fabric, redundant power inputs, and robust hardware layer shielding.",
+    specs: [
+      { label: "Ports", value: "24x Gigabit RJ45 PoE+ Ports, 4x SFP Uplinks" },
+      { label: "PoE Budget", value: "370W Smart Power Allocation" },
+      { label: "Layer Standard", value: "L2+/L3 Static Routing & VLAN Management" },
+      { label: "Chassis", value: "1U Rackmount Steel Case" }
+    ],
+    priceUSD: 850,
+    productType: "Industrial"
+  },
+  {
+    type: "Network Video Recorders",
+    category: "Telecom & Networking",
+    subcategory: "Video Recorders",
+    brand: "HexaShield",
+    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=600&auto=format&fit=crop",
+    baseName: "SpinelShield Fail-Safe Network Video Recorder (NVR)",
+    description: "Carrier-class network video recorder designed for continuous high-throughput IP recording. Supports dual power supplies, hot-swappable enterprise SATA drive bays, and automatic RAID arrays.",
+    specs: [
+      { label: "Channels", value: "64-Channel Ultra-HD IP Inputs" },
+      { label: "Redundancy", value: "RAID 0, 1, 5, 6, 10 Configurations" },
+      { label: "Bandwidth", value: "384 Mbps Incoming / 384 Mbps Outgoing" },
+      { label: "Storage", value: "8x Hot-Swap SATA Bays (Up to 128TB)" }
+    ],
+    priceUSD: 1550,
+    productType: "Enterprise"
+  },
+  {
+    type: "Junction Box",
+    category: "Electrical Systems",
+    subcategory: "Junction Boxes",
+    brand: "HexaShield",
+    image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=600&auto=format&fit=crop",
+    baseName: "Spinel Weatherproof Stainless Junction Box",
+    description: "IP68 dust and water protection electrical enclosure. Fabricated from thick brushed AISI 316 stainless steel to withstand corrosive offshore marine, chemical plant, or mining environment applications.",
+    specs: [
+      { label: "Material", value: "316 Electro-Polished Stainless Steel" },
+      { label: "IP Rating", value: "IP68 Dust and Submersion Proof" },
+      { label: "Dimensions", value: "300 x 300 x 150 mm" },
+      { label: "Entries", value: "6x M20 pre-threaded ports with sealing caps" }
+    ],
+    priceUSD: 290,
+    productType: "Industrial"
+  },
+  {
+    type: "Solar Inverters",
     category: "Renewable Energy",
     subcategory: "Inverters",
-    priceUSD: 3200,
-    priceNGN: 4800000,
-    description: "Next-generation 15kW three-phase hybrid solar inverter equipped with dual high-voltage MPPT controllers. Features grid-tying capability, active load-shaving synchronization, seamless UPS transition (<4ms response), and a cloud-integrated telemetry system. Ideal for industrial telecom towers and small commercial office buildings.",
-    images: [
-      "https://images.unsplash.com/photo-1620000617482-821324eb9a14?q=80&w=600&auto=format&fit=crop" // Solar equipment
+    brand: "Vantage Power Systems",
+    image: "https://images.unsplash.com/photo-1620000617482-821324eb9a14?q=80&w=600&auto=format&fit=crop",
+    baseName: "Vantage SynchroGrid Commercial Hybrid Inverter",
+    description: "Heavy-duty three-phase hybrid inverter with dual independent high-voltage MPPT inputs. Provides smart peak-load shaving, rapid battery switching (<4ms), and complete remote cloud telemetry control.",
+    specs: [
+      { label: "Power Output", value: "30kW Continuous / 30kVA Three-Phase" },
+      { label: "MPPT Inputs", value: "2 independent MPPT, 200V-950V DC Range" },
+      { label: "Efficiency", value: "98.5% Euro-Efficiency" },
+      { label: "Cooling", value: "Smart quiet fan active convection" }
     ],
-    specifications: [
-      { label: "Rated Power Output", value: "15,000W / 15kVA Three-Phase" },
-      { label: "Grid Type", value: "Three Phase 400V / 230V, 50/60Hz" },
-      { label: "MPPT Inputs", value: "2 Channels (High Voltage, up to 1000V DC)" },
-      { label: "Peak Efficiency", value: "98.4%" },
-      { label: "Battery Compatibility", value: "Lithium-Ion / Lead-Acid (48V nominal)" },
-      { label: "Protection", value: "Surge Protection, Islanding, Ground Fault, IP65 Waterproof" }
-    ],
-    stock: 15,
-    oem: "Vantage Power Systems",
-    productType: "Industrial",
-    featured: false,
-    popular: true,
-    downloads: [
-      { title: "SynchroGrid Datasheet v4", type: "Data Sheet", url: "#" }
-    ]
+    priceUSD: 4200,
+    productType: "Industrial"
   },
   {
-    id: "sp-ex-phn-01",
-    sku: "SP-EX-PHN100",
-    name: "Spinel intrinsically Safe ATEX Explosion-Proof IP Telephone",
-    slug: "spinel-intrinsically-safe-atex-explosion-proof-ip-telephone",
+    type: "Lithium Batteries",
+    category: "Renewable Energy",
+    subcategory: "Solar Batteries",
+    brand: "Vantage Power Systems",
+    image: "https://images.unsplash.com/photo-1620714223084-8fcacc6dfd8d?q=80&w=600&auto=format&fit=crop",
+    baseName: "Spinel Titan-X Modular LiFePO4 Energy Bank",
+    description: "High-density lithium iron phosphate rack battery featuring integrated active BMS monitoring, cell balancing, and deep cycle stability. Safe, long-lasting storage for industrial microgrids.",
+    specs: [
+      { label: "Chemistry", value: "Lithium Iron Phosphate (LiFePO4)" },
+      { label: "Capacity", value: "10 kWh / 200Ah nominal" },
+      { label: "Voltage", value: "51.2V nominal" },
+      { label: "Cycles", value: ">6,000 Cycles @ 85% DoD" }
+    ],
+    priceUSD: 3900,
+    productType: "Enterprise"
+  },
+  {
+    type: "Solar Panels",
+    category: "Renewable Energy",
+    subcategory: "Solar Panels",
+    brand: "Vantage Power Systems",
+    image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=600&auto=format&fit=crop",
+    baseName: "Vantage N-Type Mono High-Yield Solar Panel",
+    description: "Industrial-grade monocrystalline photovoltaic module built with premium N-type cells for extreme weather performance, low degradation, and top-tier power conversion efficiency.",
+    specs: [
+      { label: "Max Power", value: "450W Monocrystalline" },
+      { label: "Efficiency", value: "22.3% Cell Conversion Efficiency" },
+      { label: "Durability", value: "Salt-Mist and Ammonia resistant casing" },
+      { label: "Warranty", value: "25-Year Linear Power Output Warranty" }
+    ],
+    priceUSD: 190,
+    productType: "Industrial"
+  },
+  {
+    type: "Hybrid Composite Cables",
+    category: "Telecom & Networking",
+    subcategory: "Hybrid Cables",
     brand: "CommsTect",
+    image: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=600&auto=format&fit=crop",
+    baseName: "Spinel Armoured Fiber Optic & Power Composite Cable",
+    description: "Combined long-range data and high-voltage power transmission composite cable with heavy steel-wire armouring. Designed for subsea, offshore drilling rigs, and complex perimeter grids.",
+    specs: [
+      { label: "Fiber Cores", value: "4x Core Single-Mode G.652D" },
+      { label: "Power Conductors", value: "3x 2.5mm² Copper Cores" },
+      { label: "Armour", value: "Galvanized Steel Wire Braid (GSWB)" },
+      { label: "Outer Jacket", value: "Oil-Resistant, Flame-Retardant LSZH PU" }
+    ],
+    priceUSD: 450,
+    productType: "Industrial"
+  },
+  {
+    type: "Power Distribution Units",
+    category: "Telecom & Networking",
+    subcategory: "Power Cable",
+    brand: "DuraRack",
+    image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=600&auto=format&fit=crop",
+    baseName: "DuraRack Smart Metered Rackmount PDU",
+    description: "Enterprise rack-mount power distribution unit featuring real-time current and voltage monitoring per outlet bank, digital LED displays, and integrated overload safety breakers.",
+    specs: [
+      { label: "Outlets", value: "16x IEC C13, 4x IEC C19 Outlets" },
+      { label: "Input Voltage", value: "230V Single-Phase / 32A Max" },
+      { label: "Monitoring", value: "RS485 Modbus TCP network interface" },
+      { label: "Form Factor", value: "1U Horizontal Rackmount" }
+    ],
+    priceUSD: 380,
+    productType: "Enterprise"
+  },
+  {
+    type: "IP Telephone",
     category: "Hazardous Area Communication",
     subcategory: "Explosion Proof IP Phone",
-    priceUSD: 1450,
-    priceNGN: 2175000,
-    description: "Rugged ATEX Zone 1 rated industrial IP Telephone. Engineered with a corrosion-proof, impact-resistant GRP body and an armoured steel-sheathed handset cable. Supports standard SIP protocol, PoE (Power over Ethernet), and dynamic noise-cancelling microphone filters for loud industrial backgrounds such as engine rooms, drilling bays, and power plants.",
-    images: [
-      "https://images.unsplash.com/photo-1520923642038-b4a53cbd00ab?q=80&w=600&auto=format&fit=crop" // Phone
+    brand: "CommsTect",
+    image: "https://images.unsplash.com/photo-1520923642038-b4a53cbd00ab?q=80&w=600&auto=format&fit=crop",
+    baseName: "CommsTect Rugged Industrial VOIP IP Telephone",
+    description: "Extreme weatherproof VoIP telephone with mechanical keypad, GRP impact-resistant housing, and high-strength armoured handset cable. Built for heavy dust, wind, and noise areas.",
+    specs: [
+      { label: "Protocol", value: "SIP 2.0, PoE Powered (802.3af)" },
+      { label: "Enclosure", value: "Glass-Fiber Reinforced Polyester (GRP)" },
+      { label: "Handset Cable", value: "Armoured Steel Cord with 150kg pull rate" },
+      { label: "Noise Reduction", value: "Acoustic Noise-Cancelling Microphone" }
     ],
-    specifications: [
-      { label: "Certification", value: "ATEX Zone 1, IECEx, intrinsically safe Ex d ib IIC T6" },
-      { label: "Protocol", value: "SIP 2.0 (RFC3261), PoE IEEE 802.3af" },
-      { label: "Housing Material", value: "Glass Reinforced Polyester (GRP) Impact Resistant" },
-      { label: "Handset Cord", value: "Stainless Steel Armoured (supports up to 150kg tensile pull)" },
-      { label: "Sound Level", value: "Ringing volume: 95dB @ 1 meter distance" },
-      { label: "Ingress Protection", value: "IP66 dust and liquid spray proof" }
-    ],
-    stock: 40,
-    oem: "CommsTect Rugged",
-    productType: "Hazardous Area",
-    featured: true,
-    popular: false,
-    downloads: [
-      { title: "ATEX Intrinsically Safe Certification", type: "Certificates", url: "#" },
-      { title: "User Configuration Guide", type: "Manual", url: "#" }
-    ]
+    priceUSD: 950,
+    productType: "Industrial"
   },
   {
-    id: "sp-rack-fs-42",
-    sku: "SP-DUR-42U",
-    name: "Spinel DuraRack 42U Server Cabinet (1000mm depth)",
-    slug: "spinel-durarack-42u-server-cabinet-1000mm-depth",
-    brand: "DuraRack",
-    category: "Racks & Enclosures",
-    subcategory: "Server Racks",
-    priceUSD: 1100,
-    priceNGN: 1650000,
-    description: "Heavy-duty 42U floor-standing server cabinet designed for data centers, industrial command stations, and telecom hubs. Features a high-airflow perforated front door (83% open area), split mesh rear doors, integrated vertical PDU wiring rails, and high-load load-bearing casters supporting up to 1500kg static load.",
-    images: [
-      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=600&auto=format&fit=crop" // Server rack rows
-    ],
-    specifications: [
-      { label: "Size", value: "42U (Standard 19-inch mounting rails)" },
-      { label: "Dimensions", value: "2050mm (Height) x 600mm (Width) x 1000mm (Depth)" },
-      { label: "Static Load Capacity", value: "1,500 kg" },
-      { label: "Material", value: "High-grade cold-rolled SPCC steel" },
-      { label: "Doors", value: "High perforation wave front door, double-mesh rear doors with keys" },
-      { label: "Standard Compliances", value: "EIA-310-D, IEC 60297, RoHS compliant" }
-    ],
-    stock: 35,
-    oem: "DuraRack Cabinets",
-    productType: "Enterprise",
-    featured: false,
-    popular: true,
-    downloads: [
-      { title: "Server Rack Dimensions Blueprint", type: "Data Sheet", url: "#" }
-    ]
-  },
-  {
-    id: "sp-sw-ind-16",
-    sku: "SP-NET-IS16",
-    name: "Spinel NetCore 16-Port Managed Industrial POE+ Switch",
-    slug: "spinel-netcore-16-port-managed-industrial-poe-switch",
-    brand: "DuraRack",
-    category: "Telecom & Networking",
-    subcategory: "Industrial Switches",
-    priceUSD: 750,
-    priceNGN: 1125000,
-    description: "Ruggedized Layer 2+ managed industrial Ethernet switch equipped with 16 high-power PoE+ Gigabit ports and 4 SFP uplink fiber cages. Built with a robust DIN-rail IP40 fanless metal casing, redundant dual 48V power terminals, and operates within extreme temperature limits of -40°C to 85°C. Features dynamic ring protection recovery (<20ms).",
-    images: [
-      "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=600&auto=format&fit=crop" // Network gears
-    ],
-    specifications: [
-      { label: "Ports", value: "16 x 10/100/1000Base-TX RJ45 PoE+, 4 x 1000Base-X SFP fiber ports" },
-      { label: "PoE Budget", value: "Up to 30W per port, Total Budget 480W" },
-      { label: "Operating Temperature", value: "-40°C to 85°C (-40°F to 185°F)" },
-      { label: "Cooling", value: "IP40 fanless metal housing, optimized thermal dispersion" },
-      { label: "Ring Redundancy", value: "ERPS G.8032 Ring recovery time < 20ms" },
-      { label: "Mounting", value: "DIN-Rail and Wall mount bracket accessories" }
-    ],
-    stock: 50,
-    oem: "DuraRack Cabinets",
-    productType: "Industrial",
-    featured: true,
-    popular: false,
-    downloads: [
-      { title: "Switch Administration Manual", type: "Manual", url: "#" },
-      { title: "Datasheet and Specs v2", type: "Data Sheet", url: "#" }
-    ]
-  },
-  {
-    id: "sp-ex-jbox-02",
-    sku: "SP-EX-JB220",
-    name: "Spinel Shield Zone 1 Explosion Proof Junction Box",
-    slug: "spinel-shield-zone-1-explosion-proof-junction-box",
+    type: "Ex-Cameras",
+    category: "Electronic Security",
+    subcategory: "Explosion-Proof Camera",
     brand: "HexaShield",
-    category: "Electrical Systems",
-    subcategory: "Explosion Proof Junction Boxes",
-    priceUSD: 450,
-    priceNGN: 675000,
-    description: "Intrinsically safe stainless steel junction box designed to house critical connections in Zone 1/Zone 2 explosive gas or combustible dust atmospheres. Fitted with internal DIN rail terminals, earthing studs, and multiple M20 entry ports with brass flameproof cable gland inserts.",
-    images: [
-      "https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=600&auto=format&fit=crop" // Industry components
+    image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=600&auto=format&fit=crop",
+    baseName: "SpinelShield ATEX Zone 1 Explosion-Proof Bullet Camera",
+    description: "ATEX explosion-proof certified heavy-duty bullet camera with flameproof casing. Features deep-learning video analytics, starlight night-vision optics, and AISI 316L build.",
+    specs: [
+      { label: "Certification", value: "ATEX Zone 1 & 2, IECEx certified" },
+      { label: "Sensor", value: "1/1.8\" 8MP Starlight Optical Sensor" },
+      { label: "Housing", value: "AISI 316L Stainless Steel Electro-Polished" },
+      { label: "IR Distance", value: "Active Smart IR up to 60 meters" }
     ],
-    specifications: [
-      { label: "Material", value: "Heavy 316 Stainless Steel with brushed finish" },
-      { label: "Classification", value: "Ex d IIC T6 Gb / Ex tD A21 IP66 T80°C" },
-      { label: "Ingress Rating", value: "IP66 / NEMA 4X" },
-      { label: "Ports", value: "4 x M20 Threaded Entries (brass plugs included)" },
-      { label: "Terminals", value: "12-pole rail terminals (2.5mm² wiring max)" }
+    priceUSD: 1950,
+    productType: "Hazardous Area"
+  },
+  {
+    type: "Ex-Sounders",
+    category: "Hazardous Area Communication",
+    subcategory: "Explosion Proof Sounder",
+    brand: "CommsTect",
+    image: "https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=600&auto=format&fit=crop",
+    baseName: "CommsTect ATEX Explosion-Proof Horn Sounder & Beacon",
+    description: "Hazardous-rated audio-visual signaling device. Emits dual-tone alarm signals exceeding 115dB paired with high-intensity xenon strobe flashes for instant emergency alert broadcast.",
+    specs: [
+      { label: "Alarm Sound Level", value: "115 dB @ 1 meter distance" },
+      { label: "Beacon Light", value: "Xenon Strobe Starlight flashing at 1Hz" },
+      { label: "Certification", value: "Ex d IIC T6 Zone 1 & 2 ATEX Certified" },
+      { label: "Material", value: "Marine Grade LM6 Copper-Free Aluminum" }
     ],
-    stock: 60,
-    oem: "HexaShield Security",
-    productType: "Hazardous Area",
-    featured: false,
-    popular: false,
-    downloads: [
-      { title: "Installation Blueprint & Glands Specs", type: "Data Sheet", url: "#" }
-    ]
+    priceUSD: 680,
+    productType: "Hazardous Area"
   }
 ];
+
+export const INITIAL_PRODUCTS: Product[] = Array.from({ length: 50 }, (_, i) => {
+  const index = i + 1;
+  const template = PRODUCT_TEMPLATES[i % PRODUCT_TEMPLATES.length];
+  
+  const models = ["Pro", "X", "Ultra", "Max", "Prime", "Matrix", "Titan", "Elite", "Core", "Optima"];
+  const modelSuffix = models[i % models.length] + "-" + (100 + index);
+  
+  const name = `${template.baseName} (${modelSuffix})`;
+  const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  const sku = `${template.brand.substring(0, 3).toUpperCase()}-${template.subcategory.substring(0, 3).toUpperCase()}-${2000 + index}`;
+  
+  const priceUSD = template.priceUSD + (i % 8) * 45 - (i % 3) * 15;
+  const priceNGN = priceUSD * 1500;
+  
+  return {
+    id: `sp-prod-${index}`,
+    sku,
+    name,
+    slug,
+    brand: template.brand,
+    category: template.category,
+    subcategory: template.subcategory,
+    priceUSD,
+    priceNGN,
+    description: `Enterprise-tier ${template.type.toLowerCase()} system. ${template.description} Part of Spinel Distribution's certified lines, backed by OEM warranty and full offshore technical integration compliance certificates.`,
+    images: [template.image],
+    specifications: [
+      ...template.specs,
+      { label: "Model Number", value: `SP-${modelSuffix}` },
+      { label: "OEM Partner", value: template.brand },
+      { label: "Compliance", value: "CE, FCC, RoHS, ISO 9001" }
+    ],
+    stock: 12 + (i % 9) * 4,
+    oem: template.brand,
+    productType: template.productType as "Enterprise" | "Hazardous Area" | "Industrial" | "Commercial",
+    featured: index === 1 || index === 2 || index === 6 || index === 11 || index === 12 || index === 15,
+    popular: i % 4 === 0,
+    downloads: [
+      { title: `${template.type} Technical Datasheet`, type: "Data Sheet" as const, url: "#" },
+      { title: `${template.type} Installation & Operations Guide`, type: "Manual" as const, url: "#" }
+    ],
+    reviews: i % 5 === 0 ? [
+      {
+        id: `rev-${index}`,
+        userName: i % 2 === 0 ? "Engr. Yusuf Alao" : "Marcus Olayinka",
+        rating: 5,
+        comment: `Excellent product! The SP-${modelSuffix} performed fully up to specifications during commissioning. Highly recommend.`,
+        date: "2026-06-25"
+      }
+    ] : []
+  };
+});
 
 export const INITIAL_ARTICLES: BlogArticle[] = [
   {

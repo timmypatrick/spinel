@@ -160,6 +160,7 @@ export default function App() {
             setCurrentView={setCurrentView}
             setSelectedProductId={setSelectedProductId}
             currency={currency}
+            addToCart={handleAddToCart}
           />
         )}
 

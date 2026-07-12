@@ -47,13 +47,13 @@ export default function Footer({
       <div className="w-full border-b border-gray-800 py-10 bg-gradient-to-r from-gray-900 to-gray-800">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-6">
-            <h3 className="text-white font-bold text-lg leading-tight">Subscribe to Spinel Distribution Briefings</h3>
-            <p className="text-gray-400 text-xs mt-1.5">Get technical datasheets, ATEX regulation guides, and OEM product additions directly to your inbox.</p>
+            <h3 className="text-white font-extrabold text-xl sm:text-2xl leading-tight">Subscribe to Spinel Distribution Briefings</h3>
+            <p className="text-gray-300 text-sm sm:text-base mt-2">Get technical datasheets, ATEX regulation guides, and OEM product additions directly to your inbox.</p>
           </div>
           <div className="lg:col-span-6">
             {subscribed ? (
-              <div className="bg-emerald-950/40 border border-emerald-800/60 p-4 rounded-lg flex items-center space-x-3 text-emerald-300 text-xs">
-                <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
+              <div className="bg-emerald-950/40 border border-emerald-800/60 p-4 rounded-lg flex items-center space-x-3 text-emerald-300 text-sm">
+                <ShieldCheck className="w-6 h-6 text-emerald-400 shrink-0" />
                 <span>Thank you! Your email is enrolled in our technical mailing database.</span>
               </div>
             ) : (
@@ -63,13 +63,13 @@ export default function Footer({
                   placeholder="Enter your enterprise email address..."
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-gray-950 border border-gray-700 text-white placeholder-gray-500 rounded-lg px-4 py-2.5 text-xs flex-1 focus:outline-none focus:ring-2 focus:ring-[#FF7A20] focus:border-transparent"
+                  className="bg-gray-950 border border-gray-700 text-white placeholder-gray-500 rounded-lg px-4 py-3 text-sm flex-1 focus:outline-none focus:ring-2 focus:ring-[#FF7A20] focus:border-transparent"
                   required
                 />
                 <button
                   type="submit"
                   disabled={loading}
-                  className="bg-[#FF7A20] hover:bg-[#e06512] disabled:opacity-50 text-white font-bold text-xs px-6 py-2.5 rounded-lg transition duration-200 cursor-pointer shadow-md"
+                  className="bg-[#FF7A20] hover:bg-[#e06512] disabled:opacity-50 text-white font-bold text-sm px-6 py-3 rounded-lg transition duration-200 cursor-pointer shadow-md whitespace-nowrap"
                 >
                   {loading ? "Registering..." : "Join Catalog"}
                 </button>
@@ -88,11 +88,14 @@ export default function Footer({
               src="https://i.ibb.co/Q3CC5Rqd/Spinel-Only-Logo.jpg"
               alt="Spinel Only Logo"
               referrerPolicy="no-referrer"
-              className="w-8 h-8 object-contain rounded border border-gray-800"
+              className="w-14 h-14 object-contain rounded-md border border-gray-700"
             />
-            <span className="text-white font-bold text-base tracking-tight">SPINEL DISTRIBUTION</span>
+            <div className="flex flex-col">
+              <span className="text-[#FF7A20] font-extrabold text-2xl tracking-tight leading-none">SPINEL</span>
+              <span className="text-gray-300 font-bold text-xs tracking-[0.25em] leading-none mt-1">DISTRIBUTION</span>
+            </div>
           </div>
-          <p className="text-xs text-gray-500 leading-relaxed">
+          <p className="text-sm text-gray-400 leading-relaxed">
             Spinel Distribution is a global ICT Distribution and Engineering Solutions company. We represent premier OEMs in hazardous area communication, grid solar back up systems, and high-security CCTV video matrix grids.
           </p>
           <div className="flex flex-wrap gap-2">
@@ -118,8 +121,8 @@ export default function Footer({
 
         {/* Navigation Categories */}
         <div className="lg:col-span-2 space-y-4">
-          <h4 className="text-white font-bold text-xs uppercase tracking-wider">Product Center</h4>
-          <ul className="space-y-2 text-xs text-gray-500">
+          <h4 className="text-white font-extrabold text-sm uppercase tracking-wider">Product Center</h4>
+          <ul className="space-y-2 text-sm text-gray-400">
             <li><button onClick={() => setCurrentView("store")} className="hover:text-white block py-0.5">Explosion-Proof CCTV</button></li>
             <li><button onClick={() => setCurrentView("store")} className="hover:text-white block py-0.5">Commercial Solar Panels</button></li>
             <li><button onClick={() => setCurrentView("store")} className="hover:text-white block py-0.5">Lithium Energy Vaults</button></li>
@@ -129,8 +132,8 @@ export default function Footer({
         </div>
 
         <div className="lg:col-span-2 space-y-4">
-          <h4 className="text-white font-bold text-xs uppercase tracking-wider">Solutions Eng</h4>
-          <ul className="space-y-2 text-xs text-gray-500">
+          <h4 className="text-white font-extrabold text-sm uppercase tracking-wider">Solutions Eng</h4>
+          <ul className="space-y-2 text-sm text-gray-400">
             <li><button onClick={() => setCurrentView("about")} className="hover:text-white block py-0.5">Video Surveillance</button></li>
             <li><button onClick={() => setCurrentView("about")} className="hover:text-white block py-0.5">Off-Grid Microgrids</button></li>
             <li><button onClick={() => setCurrentView("about")} className="hover:text-white block py-0.5">Refinery PA/GA Grids</button></li>
@@ -139,8 +142,8 @@ export default function Footer({
         </div>
 
         <div className="lg:col-span-2 space-y-4">
-          <h4 className="text-white font-bold text-xs uppercase tracking-wider">Enterprise info</h4>
-          <ul className="space-y-2 text-xs text-gray-500">
+          <h4 className="text-white font-extrabold text-sm uppercase tracking-wider">Enterprise info</h4>
+          <ul className="space-y-2 text-sm text-gray-400">
             <li><button onClick={() => setCurrentView("about")} className="hover:text-white block py-0.5">Our Story & History</button></li>
             <li><button onClick={() => setCurrentView("about")} className="hover:text-white block py-0.5">Leadership Team</button></li>
             <li><button onClick={() => setCurrentView("contact")} className="hover:text-white block py-0.5">Locations & Support</button></li>
@@ -150,18 +153,18 @@ export default function Footer({
 
         {/* Regulatory & Safety Badges */}
         <div className="lg:col-span-2 space-y-4">
-          <h4 className="text-white font-bold text-xs uppercase tracking-wider">Certifications</h4>
-          <div className="space-y-2 text-[11px] text-gray-500">
+          <h4 className="text-white font-extrabold text-sm uppercase tracking-wider">Certifications</h4>
+          <div className="space-y-2 text-xs text-gray-400">
             <div className="flex items-center space-x-1.5 font-mono">
-              <ShieldCheck className="w-4 h-4 text-[#FF7A20]" />
+              <ShieldCheck className="w-5 h-5 text-[#FF7A20]" />
               <span>ATEX ZONE 1 STANDARD</span>
             </div>
             <div className="flex items-center space-x-1.5 font-mono">
-              <FileCheck className="w-4 h-4 text-[#FF7A20]" />
+              <FileCheck className="w-5 h-5 text-[#FF7A20]" />
               <span>ISO 9001:2015 SYSTEM</span>
             </div>
             <div className="flex items-center space-x-1.5 font-mono">
-              <Globe className="w-4 h-4 text-[#FF7A20]" />
+              <Globe className="w-5 h-5 text-[#FF7A20]" />
               <span>IECEx HARZARDOUS</span>
             </div>
           </div>

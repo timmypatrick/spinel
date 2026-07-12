@@ -170,11 +170,11 @@ export default function Header({
               src="https://i.ibb.co/Q3CC5Rqd/Spinel-Only-Logo.jpg"
               alt="Spinel Only Logo"
               referrerPolicy="no-referrer"
-              className="w-10 h-10 object-contain rounded-md border border-gray-100"
+              className="w-14 h-14 object-contain rounded-md border border-gray-100"
             />
             <div className="flex flex-col">
-              <span className="text-[#FF7A20] font-bold text-lg tracking-tight leading-none">SPINEL</span>
-              <span className="text-[#404040] font-medium text-[9px] tracking-[0.25em] leading-none mt-0.5">DISTRIBUTION</span>
+              <span className="text-[#FF7A20] font-extrabold text-2xl sm:text-3xl tracking-tight leading-none">SPINEL</span>
+              <span className="text-[#404040] font-bold text-xs tracking-[0.25em] leading-none mt-1">DISTRIBUTION</span>
             </div>
           </div>
         </div>
@@ -227,25 +227,25 @@ export default function Header({
         </form>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center space-x-6 text-sm font-medium text-gray-700" id="desktop-nav">
+        <nav className="hidden lg:flex items-center space-x-8 text-base font-semibold text-gray-700" id="desktop-nav">
           <div
             className="relative"
             onMouseEnter={() => setIsProductsMenuOpen(true)}
             onMouseLeave={() => setIsProductsMenuOpen(false)}
           >
-            <button className="hover:text-[#FF7A20] flex items-center space-x-1 py-2 cursor-pointer">
+            <button className="hover:text-[#FF7A20] flex items-center space-x-1 py-2 cursor-pointer text-base font-semibold">
               <span>Products</span>
               <ChevronDown className="w-4 h-4" />
             </button>
             {/* Products Mega Menu */}
             {isProductsMenuOpen && (
-              <div className="absolute top-8 left-1/2 -translate-x-1/2 w-[720px] bg-white border border-gray-100 rounded-xl shadow-2xl z-50 p-6 grid grid-cols-3 gap-6" id="products-mega-menu">
+              <div className="absolute top-8 left-1/2 -translate-x-1/2 w-[780px] bg-white border border-gray-100 rounded-xl shadow-2xl z-50 p-6 grid grid-cols-3 gap-6" id="products-mega-menu">
                 <div>
-                  <div className="flex items-center space-x-2 text-gray-900 font-semibold text-sm border-b border-gray-100 pb-2 mb-3">
-                    <Shield className="w-4 h-4 text-[#FF7A20]" />
+                  <div className="flex items-center space-x-2 text-gray-900 font-bold text-base border-b border-gray-100 pb-2 mb-3">
+                    <Shield className="w-5 h-5 text-[#FF7A20]" />
                     <span>Electronic Security</span>
                   </div>
-                  <ul className="space-y-1 text-xs text-gray-500">
+                  <ul className="space-y-2 text-sm text-gray-600">
                     <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Explosion-Proof Cameras</button></li>
                     <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">PTZ Thermal Optics</button></li>
                     <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">ANPR License Readers</button></li>
@@ -253,11 +253,11 @@ export default function Header({
                   </ul>
                 </div>
                 <div>
-                  <div className="flex items-center space-x-2 text-gray-900 font-semibold text-sm border-b border-gray-100 pb-2 mb-3">
-                    <Sun className="w-4 h-4 text-[#FF7A20]" />
+                  <div className="flex items-center space-x-2 text-gray-900 font-bold text-base border-b border-gray-100 pb-2 mb-3">
+                    <Sun className="w-5 h-5 text-[#FF7A20]" />
                     <span>Renewable Energy</span>
                   </div>
-                  <ul className="space-y-1 text-xs text-gray-500">
+                  <ul className="space-y-2 text-sm text-gray-600">
                     <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Industrial Solar Panels</button></li>
                     <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Lithium LiFePO4 Storage</button></li>
                     <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Smart Hybrid Inverters</button></li>
@@ -265,11 +265,11 @@ export default function Header({
                   </ul>
                 </div>
                 <div>
-                  <div className="flex items-center space-x-2 text-gray-900 font-semibold text-sm border-b border-gray-100 pb-2 mb-3">
-                    <Server className="w-4 h-4 text-[#FF7A20]" />
+                  <div className="flex items-center space-x-2 text-gray-900 font-bold text-base border-b border-gray-100 pb-2 mb-3">
+                    <Server className="w-5 h-5 text-[#FF7A20]" />
                     <span>Critical Telecoms & Racks</span>
                   </div>
-                  <ul className="space-y-1 text-xs text-gray-500">
+                  <ul className="space-y-2 text-sm text-gray-600">
                     <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Managed Industrial Switches</button></li>
                     <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">ATEX Rugged VoIP Phones</button></li>
                     <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">42U Seismic Server Racks</button></li>
@@ -285,42 +285,42 @@ export default function Header({
             onMouseEnter={() => setIsSolutionsMenuOpen(true)}
             onMouseLeave={() => setIsSolutionsMenuOpen(false)}
           >
-            <button className="hover:text-[#FF7A20] flex items-center space-x-1 py-2 cursor-pointer">
+            <button className="hover:text-[#FF7A20] flex items-center space-x-1 py-2 cursor-pointer text-base font-semibold">
               <span>Solutions</span>
               <ChevronDown className="w-4 h-4" />
             </button>
             {/* Solutions Mega Menu */}
             {isSolutionsMenuOpen && (
-              <div className="absolute top-8 left-0 w-80 bg-white border border-gray-100 rounded-xl shadow-2xl z-50 p-4 space-y-3" id="solutions-mega-menu">
+              <div className="absolute top-8 left-0 w-88 bg-white border border-gray-100 rounded-xl shadow-2xl z-50 p-5 space-y-4" id="solutions-mega-menu">
                 <div
                   onClick={() => { handleNavigate("about"); setIsSolutionsMenuOpen(false); }}
-                  className="p-2 hover:bg-orange-50 rounded-lg cursor-pointer transition"
+                  className="p-3 hover:bg-orange-50 rounded-lg cursor-pointer transition"
                 >
-                  <p className="text-xs font-semibold text-gray-900">Perimeter & Video Security</p>
-                  <p className="text-[10px] text-gray-500">Defense-tier AI threat scanning</p>
+                  <p className="text-sm font-bold text-gray-900">Perimeter & Video Security</p>
+                  <p className="text-xs text-gray-500 mt-0.5">Defense-tier AI threat scanning</p>
                 </div>
                 <div
                   onClick={() => { handleNavigate("about"); setIsSolutionsMenuOpen(false); }}
-                  className="p-2 hover:bg-orange-50 rounded-lg cursor-pointer transition"
+                  className="p-3 hover:bg-orange-50 rounded-lg cursor-pointer transition"
                 >
-                  <p className="text-xs font-semibold text-gray-900">Hazardous Area Comms</p>
-                  <p className="text-[10px] text-gray-500">Zone 1/Zone 2 intrinsically safe intercoms</p>
+                  <p className="text-sm font-bold text-gray-900">Hazardous Area Comms</p>
+                  <p className="text-xs text-gray-500 mt-0.5">Zone 1/Zone 2 intrinsically safe intercoms</p>
                 </div>
                 <div
                   onClick={() => { handleNavigate("about"); setIsSolutionsMenuOpen(false); }}
-                  className="p-2 hover:bg-orange-50 rounded-lg cursor-pointer transition"
+                  className="p-3 hover:bg-orange-50 rounded-lg cursor-pointer transition"
                 >
-                  <p className="text-xs font-semibold text-gray-900">Off-Grid Solar Microgrids</p>
-                  <p className="text-[10px] text-gray-500">Continuous 48V power backup for Telecoms</p>
+                  <p className="text-sm font-bold text-gray-900">Off-Grid Solar Microgrids</p>
+                  <p className="text-xs text-gray-500 mt-0.5">Continuous 48V power backup for Telecoms</p>
                 </div>
               </div>
             )}
           </div>
 
-          <button onClick={() => handleNavigate("store")} className="hover:text-[#FF7A20] cursor-pointer">Store</button>
-          <button onClick={() => handleNavigate("oems")} className="hover:text-[#FF7A20] cursor-pointer">OEMs</button>
-          <button onClick={() => handleNavigate("about")} className="hover:text-[#FF7A20] cursor-pointer">About</button>
-          <button onClick={() => handleNavigate("contact")} className="hover:text-[#FF7A20] cursor-pointer">Contact</button>
+          <button onClick={() => handleNavigate("store")} className="hover:text-[#FF7A20] cursor-pointer text-base font-semibold">Store</button>
+          <button onClick={() => handleNavigate("oems")} className="hover:text-[#FF7A20] cursor-pointer text-base font-semibold">OEMs</button>
+          <button onClick={() => handleNavigate("about")} className="hover:text-[#FF7A20] cursor-pointer text-base font-semibold">About</button>
+          <button onClick={() => handleNavigate("contact")} className="hover:text-[#FF7A20] cursor-pointer text-base font-semibold">Contact</button>
         </nav>
 
         {/* Header Action Buttons */}
