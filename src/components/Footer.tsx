@@ -42,9 +42,9 @@ export default function Footer({
   };
 
   return (
-    <footer className="w-full bg-[#1A1A1A] text-gray-400 text-sm border-t border-gray-800" id="main-footer">
+    <footer className="w-full bg-gradient-to-r from-gray-900 to-gray-800 text-gray-400 text-sm border-t border-gray-800" id="main-footer">
       {/* Newsletter signup top band */}
-      <div className="w-full border-b border-gray-800 py-10 bg-gradient-to-r from-gray-900 to-gray-800">
+      <div className="w-full border-gray-800 py-10">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-6">
             <h3 className="text-white font-extrabold text-xl sm:text-2xl leading-tight">Subscribe to Spinel Distribution Briefings</h3>
@@ -54,7 +54,7 @@ export default function Footer({
             {subscribed ? (
               <div className="bg-emerald-950/40 border border-emerald-800/60 p-4 rounded-lg flex items-center space-x-3 text-emerald-300 text-sm">
                 <ShieldCheck className="w-6 h-6 text-emerald-400 shrink-0" />
-                <span>Thank you! Your email is enrolled in our technical mailing database.</span>
+                <span>Thank you! Your email is enrolled in our Catalog.</span>
               </div>
             ) : (
               <form onSubmit={handleSubscribe} className="flex gap-2">
@@ -88,7 +88,7 @@ export default function Footer({
               src="https://i.ibb.co/Q3CC5Rqd/Spinel-Only-Logo.jpg"
               alt="Spinel Only Logo"
               referrerPolicy="no-referrer"
-              className="w-14 h-14 object-contain rounded-md border border-gray-700"
+              className="w-16 h-16 object-contain rounded-[10px]"
             />
             <div className="flex flex-col">
               <span className="text-[#FF7A20] font-extrabold text-2xl tracking-tight leading-none">SPINEL</span>
@@ -121,7 +121,7 @@ export default function Footer({
 
         {/* Navigation Categories */}
         <div className="lg:col-span-2 space-y-4">
-          <h4 className="text-white font-extrabold text-sm uppercase tracking-wider">Product Center</h4>
+          <h4 className="text-white font-extrabold text-sm uppercase tracking-wider">Our Product</h4>
           <ul className="space-y-2 text-sm text-gray-400">
             <li><button onClick={() => setCurrentView("store")} className="hover:text-white block py-0.5">Explosion-Proof CCTV</button></li>
             <li><button onClick={() => setCurrentView("store")} className="hover:text-white block py-0.5">Commercial Solar Panels</button></li>
@@ -132,7 +132,7 @@ export default function Footer({
         </div>
 
         <div className="lg:col-span-2 space-y-4">
-          <h4 className="text-white font-extrabold text-sm uppercase tracking-wider">Solutions Eng</h4>
+          <h4 className="text-white font-extrabold text-sm uppercase tracking-wider">Our Solutions</h4>
           <ul className="space-y-2 text-sm text-gray-400">
             <li><button onClick={() => setCurrentView("about")} className="hover:text-white block py-0.5">Video Surveillance</button></li>
             <li><button onClick={() => setCurrentView("about")} className="hover:text-white block py-0.5">Off-Grid Microgrids</button></li>
@@ -142,12 +142,12 @@ export default function Footer({
         </div>
 
         <div className="lg:col-span-2 space-y-4">
-          <h4 className="text-white font-extrabold text-sm uppercase tracking-wider">Enterprise info</h4>
+          <h4 className="text-white font-extrabold text-sm uppercase tracking-wider">Quick Links</h4>
           <ul className="space-y-2 text-sm text-gray-400">
-            <li><button onClick={() => setCurrentView("about")} className="hover:text-white block py-0.5">Our Story & History</button></li>
-            <li><button onClick={() => setCurrentView("about")} className="hover:text-white block py-0.5">Leadership Team</button></li>
-            <li><button onClick={() => setCurrentView("contact")} className="hover:text-white block py-0.5">Locations & Support</button></li>
-            <li><button onClick={() => setCurrentView("request-quote")} className="hover:text-white block py-0.5">Project Tendering</button></li>
+            <li><button onClick={() => setCurrentView("store")} className="hover:text-white block py-0.5">Enterprise Store</button></li>
+            <li><button onClick={() => setCurrentView("about")} className="hover:text-white block py-0.5">About Us</button></li>
+            <li><button onClick={() => setCurrentView("request-quote")} className="hover:text-white block py-0.5">Request Quote</button></li>
+            <li><button onClick={() => setCurrentView("contact")} className="hover:text-white block py-0.5">Contact Us</button></li>
           </ul>
         </div>
 
@@ -172,9 +172,9 @@ export default function Footer({
       </div>
 
       {/* Compliance & Copyright Bottom */}
-      <div className="w-full border-t border-gray-800 py-6 bg-gray-950">
+      <div className="w-full border-gray-800 py-6 bg-gray-950">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 flex items-center justify-center text-xs text-gray-500">
-          <span className="text-center">© 2026 Spinel Distribution Limited. All Rights Reserved</span>
+          <span className="text-center text-sm">© 2026 Spinel Distribution Limited. All Rights Reserved.</span>
         </div>
       </div>
 
