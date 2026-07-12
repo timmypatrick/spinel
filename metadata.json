@@ -1,0 +1,6 @@
+{
+  "name": "Spinel Distribution",
+  "description": "Enterprise ICT Distribution and Engineering Solutions Portal for security, renewable energy, and critical telecoms.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
