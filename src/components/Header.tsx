@@ -168,9 +168,9 @@ export default function Header({
           <div className="flex items-center space-x-2">
             <img
               src="https://i.ibb.co/Q3CC5Rqd/Spinel-Only-Logo.jpg"
-              alt="Spinel Only Logo"
+              alt="Spinel Logo"
               referrerPolicy="no-referrer"
-              className="w-14 h-14 object-contain rounded-md border border-gray-100"
+              className="w-14 h-14 object-contain rounded-md"
             />
             <div className="flex flex-col">
               <span className="text-[#FF7A20] font-extrabold text-2xl sm:text-3xl tracking-tight leading-none">SPINEL</span>
