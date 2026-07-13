@@ -9,7 +9,12 @@ export function getLocalProducts(): Product[] {
     return INITIAL_PRODUCTS;
   }
   try {
-    return JSON.parse(stored);
+    const parsed = JSON.parse(stored);
+    if (!Array.isArray(parsed) || parsed.length < INITIAL_PRODUCTS.length) {
+      localStorage.setItem("spinel_products", JSON.stringify(INITIAL_PRODUCTS));
+      return INITIAL_PRODUCTS;
+    }
+    return parsed;
   } catch (e) {
     return INITIAL_PRODUCTS;
   }
@@ -193,11 +198,21 @@ export async function safeFetch(input: RequestInfo | URL, init?: RequestInit): P
     // 2. AUTH ADMIN LOGIN ROUTE
     if (urlStr.includes("/api/auth/admin/login")) {
       const payload = JSON.parse(init?.body as string || "{}");
+      const emailLower = (payload.email || "").toLowerCase().trim();
+      const password = payload.password || "";
+
+      if (emailLower !== "engineering@spineldistribution.com" || password !== "spineldistribution@123") {
+        return new Response(JSON.stringify({ error: "Invalid engineering credentials" }), {
+          status: 401,
+          headers: { "Content-Type": "application/json" }
+        });
+      }
+
       return new Response(JSON.stringify({
         success: true,
         user: {
           name: "Engr. Patrick Timi",
-          email: payload.email || "admin@spineldistribution.com",
+          email: "engineering@spineldistribution.com",
           role: "admin",
           companyName: "Spinel Distribution"
         },

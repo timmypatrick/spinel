@@ -381,7 +381,7 @@ const db = {
     {
       id: "user-admin",
       name: "Engr. Patrick Timi",
-      email: "timmypatrick999@gmail.com",
+      email: "engineering@spineldistribution.com",
       password: "spineldistribution@123",
       role: "admin",
       companyName: "Spinel Distribution"
@@ -886,7 +886,7 @@ app.post("/api/auth/admin/login", async (req, res) => {
   }
 
   const emailLower = email.toLowerCase().trim();
-  if (emailLower !== "timmypatrick999@gmail.com" || password !== "spineldistribution@123") {
+  if (emailLower !== "engineering@spineldistribution.com" || password !== "spineldistribution@123") {
     return res.status(401).json({ error: "Invalid engineering credentials" });
   }
 

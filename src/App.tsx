@@ -21,7 +21,9 @@ export default function App() {
     if (typeof window !== "undefined") {
       const path = window.location.pathname.toLowerCase();
       const hash = window.location.hash.toLowerCase();
-      if (path.endsWith("/admin") || hash === "#admin" || hash.endsWith("/admin") || hash.includes("admin")) {
+      const isCleanAdmin = path === "/admin" || path === "/admin/" || path.endsWith("/admin") || path.endsWith("/admin/") || path.includes("/admin");
+      const isHashAdmin = hash === "#admin" || hash === "admin" || hash.includes("admin");
+      if (isCleanAdmin || isHashAdmin) {
         return "admin";
       }
     }
@@ -49,7 +51,9 @@ export default function App() {
     const handleLocationChange = () => {
       const path = window.location.pathname.toLowerCase();
       const hash = window.location.hash.toLowerCase();
-      if (path.endsWith("/admin") || hash === "#admin" || hash.endsWith("/admin") || hash.includes("admin")) {
+      const isCleanAdmin = path === "/admin" || path === "/admin/" || path.endsWith("/admin") || path.endsWith("/admin/") || path.includes("/admin");
+      const isHashAdmin = hash === "#admin" || hash === "admin" || hash.includes("admin");
+      if (isCleanAdmin || isHashAdmin) {
         setCurrentView("admin");
       } else {
         // Only reset to home if currently viewing admin (other views are virtual in-memory)
@@ -70,7 +74,7 @@ export default function App() {
 
     const isGitHubPages = window.location.hostname.endsWith("github.io") || window.location.pathname.split("/").filter(Boolean).length > 1;
     const currentPath = window.location.pathname;
-    const endsWithAdmin = currentPath.toLowerCase().endsWith("/admin");
+    const endsWithAdmin = currentPath.toLowerCase().endsWith("/admin") || currentPath.toLowerCase().endsWith("/admin/");
 
     if (currentView === "admin") {
       if (isGitHubPages) {
@@ -92,7 +96,8 @@ export default function App() {
         }
       } else {
         if (endsWithAdmin) {
-          const base = currentPath.substring(0, currentPath.length - 6);
+          const cleanedPath = currentPath.endsWith("/") ? currentPath.slice(0, -1) : currentPath;
+          const base = cleanedPath.substring(0, cleanedPath.length - 6);
           window.history.pushState(null, "", base || "/");
         }
       }

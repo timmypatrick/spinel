@@ -261,7 +261,7 @@ export default function AdminDashboard({
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                placeholder="admin@spineldistribution.com"
+                placeholder="engineering@spineldistribution.com"
                 className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:border-[#FF7A20]"
               />
             </div>
