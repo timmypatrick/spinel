@@ -1037,7 +1037,7 @@ app.post("/api/auth/login", async (req, res) => {
   const emailLower = email.toLowerCase().trim();
 
   // Block administrative credentials on general customer login
-  if (emailLower === "timmypatrick999@gmail.com" || emailLower === "timi.patrick@dataset.ng") {
+  if (emailLower === "engineering@spineldistribution.com" || emailLower === "timmypatrick999@gmail.com" || emailLower === "timi.patrick@dataset.ng") {
     return res.status(403).json({ error: "Administrative logins must go through the secure Admin Portal at /admin" });
   }
 

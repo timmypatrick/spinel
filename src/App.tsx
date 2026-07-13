@@ -29,6 +29,17 @@ export default function App() {
     }
     return "home";
   });
+
+  // Persistent session states
+  const [user, setUser] = useState<UserSession | null>(() => {
+    try {
+      const cached = localStorage.getItem("spinel_user");
+      return cached ? JSON.parse(cached) : null;
+    } catch (e) {
+      console.error("Failed to parse user session", e);
+      return null;
+    }
+  });
   const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   
@@ -68,55 +79,36 @@ export default function App() {
     };
   }, []);
 
-  // Sync currentView changes to URL to support manual navigation back and forth cleanly
+  // Sync currentView changes and user auth state to URL to support manual navigation, bookmarks, and refresh
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const isGitHubPages = window.location.hostname.endsWith("github.io") || window.location.pathname.split("/").filter(Boolean).length > 1;
-    const currentPath = window.location.pathname;
-    const endsWithAdmin = currentPath.toLowerCase().endsWith("/admin") || currentPath.toLowerCase().endsWith("/admin/");
+    const currentPath = window.location.pathname.toLowerCase();
+    const isAdminView = currentView === "admin";
+    const isLoggedIn = user && user.role === "admin";
 
-    if (currentView === "admin") {
-      if (isGitHubPages) {
-        // Under subdirectories or GitHub Pages, use hash-routing to prevent 404s on browser reload
-        if (window.location.hash !== "#admin") {
-          window.location.hash = "admin";
+    if (isAdminView) {
+      if (isLoggedIn) {
+        // Admin is logged in, path should be /admin/dashboard
+        if (currentPath !== "/admin/dashboard" && currentPath !== "/admin/dashboard/") {
+          window.history.pushState(null, "", "/admin/dashboard");
         }
       } else {
-        // For clean-URL platforms like Vercel or localhost, push /admin path
-        if (!endsWithAdmin) {
-          const base = currentPath.endsWith("/") ? currentPath.slice(0, -1) : currentPath;
-          window.history.pushState(null, "", base + "/admin");
+        // Admin is not logged in, path should be /admin
+        if (currentPath !== "/admin" && currentPath !== "/admin/") {
+          window.history.pushState(null, "", "/admin");
         }
       }
     } else {
-      if (isGitHubPages) {
-        if (window.location.hash === "#admin" || window.location.hash === "admin") {
-          window.location.hash = "";
-        }
-      } else {
-        if (endsWithAdmin) {
-          const cleanedPath = currentPath.endsWith("/") ? currentPath.slice(0, -1) : currentPath;
-          const base = cleanedPath.substring(0, cleanedPath.length - 6);
-          window.history.pushState(null, "", base || "/");
-        }
+      // Non-admin virtual view. If the URL contains /admin, reset to root /
+      if (currentPath.includes("/admin")) {
+        window.history.pushState(null, "", "/");
       }
     }
-  }, [currentView]);
+  }, [currentView, user]);
 
   // Persistent currency state
   const [currency, setCurrency] = useState<"USD" | "NGN">("USD");
-
-  // Persistent session states
-  const [user, setUser] = useState<UserSession | null>(() => {
-    try {
-      const cached = localStorage.getItem("spinel_user");
-      return cached ? JSON.parse(cached) : null;
-    } catch (e) {
-      console.error("Failed to parse user session", e);
-      return null;
-    }
-  });
 
   // Completed invoice parameters holding
   const [lastOrderDetails, setLastOrderDetails] = useState<any | null>(null);
