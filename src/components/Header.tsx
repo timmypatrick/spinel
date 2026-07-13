@@ -239,17 +239,36 @@ export default function Header({
             </button>
             {/* Products Mega Menu */}
             {isProductsMenuOpen && (
-              <div className="absolute top-8 left-1/2 -translate-x-1/2 w-[780px] bg-white border border-gray-100 rounded-xl shadow-2xl z-50 p-6 grid grid-cols-3 gap-6" id="products-mega-menu">
+              <div className="absolute top-10 left-[60%] -translate-x-1/2 w-[1200px] bg-white border border-gray-100 rounded-xl shadow-2xl z-50 p-5 grid grid-cols-5 gap-5" id="products-mega-menu">
                 <div>
                   <div className="flex items-center space-x-2 text-gray-900 font-bold text-base border-b border-gray-100 pb-2 mb-3">
                     <Shield className="w-5 h-5 text-[#FF7A20]" />
-                    <span>Electronic Security</span>
+                    <span>CCTV Surveillance</span>
                   </div>
                   <ul className="space-y-2 text-sm text-gray-600">
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Explosion-Proof Cameras</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">PTZ Thermal Optics</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">ANPR License Readers</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Biometric Access Hubs</button></li>
+                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Box Camera</button></li>
+                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Dome Camera</button></li>
+                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Bullet Camera</button></li>
+                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">PTZ Camera</button></li>
+                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Panoramic Camera</button></li>
+                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Thermal Camera</button></li>
+                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Fisheye Camera</button></li>
+                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Multi-Sensor Camera</button></li>
+                  </ul>
+                </div>
+                <div>
+                  <div className="flex items-center space-x-2 text-gray-900 font-bold text-base border-b border-gray-100 pb-2 mb-3">
+                    <Server className="w-5 h-5 text-[#FF7A20]" />
+                    <span>Electrical Systems</span>
+                  </div>
+                  <ul className="space-y-2 text-sm text-gray-600">
+                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Industrial Switches</button></li>
+                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Junction Box</button></li>
+                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Network Video Recorders</button></li>
+                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Electrical Workstation</button></li>
+                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">UPS & PDU</button></li>
+                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">PAGA System</button></li>
+                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Hybrid Composite Cable</button></li>
                   </ul>
                 </div>
                 <div>
@@ -259,21 +278,32 @@ export default function Header({
                   </div>
                   <ul className="space-y-2 text-sm text-gray-600">
                     <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Industrial Solar Panels</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Lithium LiFePO4 Storage</button></li>
+                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Lithium LiFePO4 Batteries</button></li>
                     <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Smart Hybrid Inverters</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">MPPT Controllers</button></li>
                   </ul>
                 </div>
                 <div>
                   <div className="flex items-center space-x-2 text-gray-900 font-bold text-base border-b border-gray-100 pb-2 mb-3">
                     <Server className="w-5 h-5 text-[#FF7A20]" />
-                    <span>Critical Telecoms & Racks</span>
+                    <span>Rack & Enclosures</span>
                   </div>
                   <ul className="space-y-2 text-sm text-gray-600">
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Managed Industrial Switches</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">ATEX Rugged VoIP Phones</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">42U Seismic Server Racks</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Armoured Core Fiber Cables</button></li>
+                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Small Enclosures</button></li>
+                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">IT Enclosures</button></li>
+                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Wall-Mounted Enclosures</button></li>
+                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Server Racks</button></li>
+                  </ul>
+                </div>
+                <div>
+                  <div className="flex items-center space-x-2 text-gray-900 font-bold text-base border-b border-gray-100 pb-2 mb-3">
+                    <Server className="w-5 h-5 text-[#FF7A20]" />
+                    <span>Ex-Proof Equipments</span>
+                  </div>
+                  <ul className="space-y-2 text-sm text-gray-600">
+                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">EX-Telephone</button></li>
+                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Ex-Sounder</button></li>
+                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Ex-CCTV Camera</button></li>
+                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">EX-Junction Box</button></li>
                   </ul>
                 </div>
               </div>
@@ -291,27 +321,27 @@ export default function Header({
             </button>
             {/* Solutions Mega Menu */}
             {isSolutionsMenuOpen && (
-              <div className="absolute top-8 left-0 w-88 bg-white border border-gray-100 rounded-xl shadow-2xl z-50 p-5 space-y-4" id="solutions-mega-menu">
+              <div className="absolute top-10 left-0 w-88 bg-white border border-gray-100 rounded-xl shadow-2xl z-50 p-5 space-y-4" id="solutions-mega-menu">
                 <div
                   onClick={() => { handleNavigate("about"); setIsSolutionsMenuOpen(false); }}
                   className="p-3 hover:bg-orange-50 rounded-lg cursor-pointer transition"
                 >
-                  <p className="text-sm font-bold text-gray-900">Perimeter & Video Security</p>
-                  <p className="text-xs text-gray-500 mt-0.5">Defense-tier AI threat scanning</p>
+                  <p className="text-sm font-bold text-gray-900">Security Solutions</p>
+                  <p className="text-xs text-gray-500 mt-0.5">CCTV, Access Control, Intrusion Detection, Fire Detection </p>
                 </div>
                 <div
                   onClick={() => { handleNavigate("about"); setIsSolutionsMenuOpen(false); }}
                   className="p-3 hover:bg-orange-50 rounded-lg cursor-pointer transition"
                 >
-                  <p className="text-sm font-bold text-gray-900">Hazardous Area Comms</p>
-                  <p className="text-xs text-gray-500 mt-0.5">Zone 1/Zone 2 intrinsically safe intercoms</p>
+                  <p className="text-sm font-bold text-gray-900">Telecommunication</p>
+                  <p className="text-xs text-gray-500 mt-0.5">Wireless Solution, Microwave & Radio</p>
                 </div>
                 <div
                   onClick={() => { handleNavigate("about"); setIsSolutionsMenuOpen(false); }}
                   className="p-3 hover:bg-orange-50 rounded-lg cursor-pointer transition"
                 >
-                  <p className="text-sm font-bold text-gray-900">Off-Grid Solar Microgrids</p>
-                  <p className="text-xs text-gray-500 mt-0.5">Continuous 48V power backup for Telecoms</p>
+                  <p className="text-sm font-bold text-gray-900">Multimedia Solutions</p>
+                  <p className="text-xs text-gray-500 mt-0.5">PAGA, Audio/Video Solution</p>
                 </div>
               </div>
             )}
