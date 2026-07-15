@@ -265,7 +265,7 @@ export default function Home({
       </section>
 
       {/* 2. Shop More Products (50 random items) - Inserted as requested */}
-      <section className="max-w-[1536px] mx-auto px-4 lg:px-[47px] py-16 space-y-8" id="shop-more-products">
+      <section className="max-w-[1536px] mx-auto px-4 lg:px-[52px] py-16 space-y-8" id="shop-more-products">
         <div className="flex justify-between items-center border-b border-gray-100 pb-4">
           <div className="flex items-center space-x-2">
             <h2 
@@ -329,7 +329,7 @@ export default function Home({
       </section>
 
       {/* 8. FAQ Accordion Grid */}
-      <section className="max-w-[1536px] mx-auto px-4 lg:px-[47px] py-20 space-y-12" id="faqs">
+      <section className="max-w-[1536px] mx-auto px-4 lg:px-[52px] py-20 space-y-12" id="faqs">
         <div className="text-center space-y-2">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">Technical FAQ Desk</h2>
           <p className="text-gray-500 text-sm sm:text-base max-w-md mx-auto">Get instant clarifications regarding logistics, certifications and specifications.</p>

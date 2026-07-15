@@ -6,7 +6,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     name: "Electronic Security",
     slug: "electronic-security",
     iconName: "Shield",
-    subcategories: ["Dome Camera", "Bullet Camera", "PTZ Camera", "Box Camera", "Panoramic Camera", "Thermal Camera", "Explosion-Proof Camera", "ANPR Camera", "Fisheye Camera"]
+    subcategories: ["Dome Camera", "Bullet Camera", "PTZ Camera", "Box Camera", "Panoramic Camera", "Thermal Camera", "Explosion-Proof Camera", "ANPR Camera", "Fisheye Camera", "Special Camera"]
   },
   {
     id: "renewable-energy",

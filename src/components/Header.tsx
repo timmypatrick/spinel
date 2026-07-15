@@ -161,7 +161,7 @@ export default function Header({
   return (
     <header className="w-full bg-white border-b border-gray-100 sticky top-0 z-50 shadow-xs" id="main-header">
       {/* Main Navbar */}
-      <div className="max-w-[1536px] mx-auto px-4 lg:px-[47px] py-3 flex items-center justify-between relative" id="navbar-container">
+      <div className="max-w-[1536px] mx-auto px-4 lg:px-[52px] py-3 flex items-center justify-between relative" id="navbar-container">
         {/* Logo Section (SVG mirroring orange/dark grey interlaced logo) */}
         <div
           onClick={() => handleNavigate("home")}
@@ -250,7 +250,7 @@ export default function Header({
             </button>
             {/* Products Mega Menu */}
             {isProductsMenuOpen && (
-              <div className="absolute top-[75%] left-0 right-0 bg-white border border-gray-100 rounded-xl shadow-2xl z-50 p-6 grid grid-cols-5 gap-6 before:content-[''] before:absolute before:-top-6 before:left-0 before:right-0 before:h-6" id="products-mega-menu">
+              <div className="absolute top-[75%] left-4 lg:left-[52px] right-4 lg:right-[52px] bg-white border border-gray-100 rounded-xl shadow-2xl z-50 p-6 grid grid-cols-5 gap-6 before:content-[''] before:absolute before:-top-6 before:left-0 before:right-0 before:h-6" id="products-mega-menu">
                 <div>
                   <div className="flex items-center space-x-2 text-gray-900 font-bold text-base border-b border-gray-100 pb-2 mb-3">
                     <Shield className="w-5 h-5 text-[#FF7A20]" />
@@ -264,6 +264,7 @@ export default function Header({
                     <li><button onClick={() => { handleNavigate("category-Panoramic Camera"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Panoramic Camera</button></li>
                     <li><button onClick={() => { handleNavigate("category-Thermal Camera"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Thermal Camera</button></li>
                     <li><button onClick={() => { handleNavigate("category-Fisheye Camera"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Fisheye Camera</button></li>
+                    <li><button onClick={() => { handleNavigate("category-Special Camera"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Special Camera</button></li>
                     <li><button onClick={() => { handleNavigate("category-Multi-Sensor Camera"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Multi-Sensor Camera</button></li>
                   </ul>
                 </div>
@@ -502,6 +503,7 @@ export default function Header({
                         <button onClick={() => { handleNavigate("category-Panoramic Camera"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Panoramic Camera</button>
                         <button onClick={() => { handleNavigate("category-Thermal Camera"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Thermal Camera</button>
                         <button onClick={() => { handleNavigate("category-Fisheye Camera"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Fisheye Camera</button>
+                        <button onClick={() => { handleNavigate("category-Special Camera"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Special Camera</button>
                         <button onClick={() => { handleNavigate("category-Multi-Sensor Camera"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Multi-Sensor Camera</button>
                       </div>
                     )}

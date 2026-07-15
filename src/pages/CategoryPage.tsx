@@ -44,6 +44,7 @@ export default function CategoryPage({
     if (nameLower === "panoramic camera" && (subcatLower.includes("panoramic") || prodNameLower.includes("panoramic"))) return true;
     if (nameLower === "thermal camera" && (subcatLower.includes("thermal") || prodNameLower.includes("thermal"))) return true;
     if (nameLower === "fisheye camera" && (subcatLower.includes("fisheye") || prodNameLower.includes("fisheye"))) return true;
+    if (nameLower === "special camera" && (subcatLower.includes("special") || prodNameLower.includes("special"))) return true;
     if (nameLower === "multi-sensor camera" && (subcatLower.includes("sensor") || prodNameLower.includes("sensor"))) return true;
 
     if (nameLower === "industrial switches" && (subcatLower.includes("switch") || catLower.includes("telecom") || prodNameLower.includes("switch"))) return true;
@@ -109,7 +110,7 @@ export default function CategoryPage({
   const paginatedProducts = filteredProducts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
-    <div className="max-w-[1536px] mx-auto px-4 lg:px-[47px] py-10 space-y-8" id="category-page">
+    <div className="max-w-[1536px] mx-auto px-4 lg:px-[52px] py-10 space-y-8" id="category-page">
       {/* Back button & SEO title section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <button

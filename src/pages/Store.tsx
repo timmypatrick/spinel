@@ -14,6 +14,7 @@ const STORE_DIVISIONS = [
       "Panoramic Camera",
       "Thermal Camera",
       "Fisheye Camera",
+      "Special Camera",
       "Multi-Sensor Camera"
     ]
   },
@@ -185,7 +186,7 @@ export default function Store({
   const paginatedProducts = filteredProducts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
-    <div className="max-w-[1536px] mx-auto px-4 lg:px-[47px] py-12 flex flex-col lg:flex-row gap-10" id="store-view">
+    <div className="max-w-[1536px] mx-auto px-4 lg:px-[52px] py-12 flex flex-col lg:flex-row gap-10" id="store-view">
       {/* 1. Left Sidebar Filter Pane */}
       <aside className="w-full lg:w-64 shrink-0 space-y-6" id="store-sidebar">
         <div className="flex items-center justify-between border-b border-gray-100 pb-4">
@@ -511,7 +512,7 @@ export default function Store({
       {/* Compare Specification Comparison Overlay Drawer */}
       {compareList.length > 0 && (
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-[#FF7A20] shadow-2xl z-40 p-4 transition duration-300" id="compare-tray">
-          <div className="max-w-[1536px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4 px-4 lg:px-[47px]">
+          <div className="max-w-[1536px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4 px-4 lg:px-[52px]">
             <div className="flex items-center space-x-4">
               <span className="text-xs font-bold text-gray-900">Comparing Products ({compareList.length}/3)</span>
               <div className="flex space-x-3">

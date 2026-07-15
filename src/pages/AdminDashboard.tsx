@@ -20,6 +20,7 @@ const CATEGORY_SECTIONS = [
   "Panoramic Camera",
   "Thermal Camera",
   "Fisheye Camera",
+  "Special Camera",
   "Multi-Sensor Camera",
   "Industrial Switches",
   "Junction Box",
@@ -766,7 +767,7 @@ export default function AdminDashboard({
   }
 
   return (
-    <div className="max-w-[1536px] mx-auto px-4 lg:px-[47px] py-10 space-y-10" id="admin-cockpit-view">
+    <div className="max-w-[1536px] mx-auto px-4 lg:px-[52px] py-10 space-y-10" id="admin-cockpit-view">
       {/* Cockpit Title Banner */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-gray-950 text-white p-6 rounded-2xl">
         <div className="flex items-center space-x-3">
