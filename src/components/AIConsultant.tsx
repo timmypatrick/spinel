@@ -168,7 +168,15 @@ export default function AIConsultant({
                         className="bg-gray-50 p-2.5 rounded-xl border border-gray-200/60 hover:border-orange-200 transition flex items-center justify-between"
                       >
                         <div className="flex items-center space-x-2.5 min-w-0 flex-1 cursor-pointer" onClick={() => handleProductClick(p)}>
-                          <img src={p.images[0]} alt={p.name} className="w-10 h-10 object-cover rounded bg-white border border-gray-100" referrerPolicy="no-referrer" />
+                          <img
+                            src={p.images[0]}
+                            alt={p.name}
+                            className="w-10 h-10 object-cover rounded bg-white border border-gray-100"
+                            referrerPolicy="no-referrer"
+                            onError={(e) => {
+                              e.currentTarget.src = "https://i.ibb.co/5WPKmPXS/Avigilon-Generic-500x500-1.png";
+                            }}
+                          />
                           <div className="min-w-0">
                             <p className="font-semibold text-[11px] text-gray-900 truncate">{p.name}</p>
                             <span className="font-mono text-[9px] bg-gray-200 text-gray-600 px-1 py-0.5 rounded mr-1.5">{p.sku}</span>

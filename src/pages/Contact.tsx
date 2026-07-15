@@ -48,7 +48,7 @@ export default function Contact() {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 lg:px-8 py-12 space-y-12" id="contact-view">
+    <div className="max-w-[1536px] mx-auto px-4 lg:px-[47px] py-12 space-y-12" id="contact-view">
       <div className="text-center space-y-2">
         <h1 className="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight uppercase">Contact our Systems Hubs</h1>
         <p className="text-gray-500 text-xs sm:text-sm max-w-sm mx-auto">Get in direct communication with regional engineers and delivery officers.</p>

@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
-import { Shield, Sun, Server, Cpu, Network, ArrowRight, Zap, Award, Star, BookOpen, Clock, Globe, ChevronLeft, ChevronRight, CheckCircle2, ShoppingCart } from "lucide-react";
+import { Shield, Sun, Server, Cpu, Network, ArrowRight, Zap, Award, Star, BookOpen, Clock, Globe, CheckCircle2, ShoppingCart } from "lucide-react";
 import { Product, BlogArticle } from "../types";
 import { safeFetch } from "../lib/dataService";
+import { VortexParticlesCanvas } from "../components/VortexParticlesCanvas";
+import { motion, AnimatePresence } from "motion/react";
 
 const STATIC_FLYERS = [
   {
@@ -202,43 +204,59 @@ export default function Home({
   return (
     <div className="w-full flex flex-col bg-white" id="home-view">
       {/* 1. Pure Image High-Visibility Carousel of Shuffled Flyers */}
-      <section className="relative w-full bg-slate-100/90 overflow-hidden h-[240px] sm:h-[380px] md:h-[500px] lg:h-[600px] flex items-center justify-center border-b border-gray-200" id="hero-banner">
-        {/* Background slide image - fully bright and clear */}
-        <div className="absolute inset-0 w-full h-full flex items-center justify-center transition-all duration-1000 ease-in-out">
-          {shuffledFlyers[currentSlide] && (
-            <img
-              src={shuffledFlyers[currentSlide].image}
-              alt={shuffledFlyers[currentSlide].title}
-              className="w-full h-full object-contain max-h-full mx-auto select-none"
-              referrerPolicy="no-referrer"
-            />
-          )}
+      <section className="relative w-full bg-[#0A0F1A] overflow-hidden h-[240px] sm:h-[380px] md:h-[500px] lg:h-[600px] flex items-center justify-center border-b border-gray-900" id="hero-banner">
+        {/* Glowing Orange Vortex Particles Canvas Background */}
+        <VortexParticlesCanvas />
+
+        {/* Center Carousel Slide Image with Professional Animation */}
+        <div className="absolute inset-0 w-full h-full flex items-center justify-center z-10">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentSlide}
+              initial={{ opacity: 0, scale: 0.94, rotate: -1.5 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              exit={{ opacity: 0, scale: 1.06, rotate: 1.5 }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute inset-0 w-full h-full flex items-center justify-center p-4 md:p-8 select-none"
+            >
+              {shuffledFlyers[currentSlide] && (
+                <div className="relative w-full h-full grid grid-cols-1 md:grid-cols-12 items-center gap-6 md:gap-12 max-w-6xl mx-auto px-6 md:px-12">
+                  {/* Left Column: Campaign / Product Text floating over vortex */}
+                  <div className="hidden md:flex md:col-span-5 text-left space-y-3 md:space-y-4 select-none pointer-events-none drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] flex-col justify-center items-start">
+                    <span className="inline-block bg-[#FF7A20] text-white text-[9px] md:text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1 rounded-full">
+                      {shuffledFlyers[currentSlide].badge}
+                    </span>
+                    <h2 className="text-lg sm:text-xl md:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight font-sans">
+                      {shuffledFlyers[currentSlide].title}
+                    </h2>
+                    <p className="text-xs md:text-sm text-gray-300 leading-relaxed font-medium">
+                      {shuffledFlyers[currentSlide].description}
+                    </p>
+                  </div>
+
+                  {/* Right Column: Product Image with beautiful dropshadow */}
+                  <div className="col-span-1 md:col-span-7 h-full w-full flex items-center justify-center max-h-[90%] md:max-h-[95%]">
+                    <img
+                      src={shuffledFlyers[currentSlide].image}
+                      alt={shuffledFlyers[currentSlide].title}
+                      className="max-h-full max-w-full scale-120 md:scale-115 object-contain mx-auto select-none filter drop-shadow-[0_15px_40px_rgba(255,122,32,0.35)] transition-transform duration-300"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          </AnimatePresence>
         </div>
 
-        {/* Previous / Next Arrow Controls */}
-        <button
-          onClick={() => setCurrentSlide((prev) => (prev - 1 + shuffledFlyers.length) % shuffledFlyers.length)}
-          className="absolute left-10 sm:left-20 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-[#FF7A20] text-white border border-white/20 hover:border-[#FF7A20] w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition cursor-pointer z-20 shadow-lg"
-          aria-label="Previous Campaign"
-        >
-          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
-        </button>
-        <button
-          onClick={() => setCurrentSlide((prev) => (prev + 1) % shuffledFlyers.length)}
-          className="absolute right-10 sm:right-20 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-[#FF7A20] text-white border border-white/20 hover:border-[#FF7A20] w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition cursor-pointer z-20 shadow-lg"
-          aria-label="Next Campaign"
-        >
-          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
-        </button>
-
         {/* Selection Dots */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-20 bg-black/20 px-3.5 py-1.5 rounded-full backdrop-blur-md border border-white/10">
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-2 z-20 bg-black/40 px-3.5 py-1.5 rounded-full backdrop-blur-md border border-white/10">
           {shuffledFlyers.map((_, sIdx) => (
             <button
               key={sIdx}
               onClick={() => setCurrentSlide(sIdx)}
               className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                currentSlide === sIdx ? "bg-[#FF7A20] w-5" : "bg-gray-500/60 hover:bg-black"
+                currentSlide === sIdx ? "bg-[#FF7A20] w-5" : "bg-gray-500/60 hover:bg-white"
               }`}
               aria-label={`Go to Slide ${sIdx + 1}`}
             />
@@ -247,12 +265,12 @@ export default function Home({
       </section>
 
       {/* 2. Shop More Products (50 random items) - Inserted as requested */}
-      <section className="max-w-7xl mx-auto px-4 lg:px-8 py-16 space-y-8" id="shop-more-products">
+      <section className="max-w-[1536px] mx-auto px-4 lg:px-[47px] py-16 space-y-8" id="shop-more-products">
         <div className="flex justify-between items-center border-b border-gray-100 pb-4">
           <div className="flex items-center space-x-2">
             <h2 
               onClick={() => setCurrentView("store")}
-              className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 hover:text-[#FF7A20] cursor-pointer transition flex items-center gap-2"
+              className="text-lg sm:text-xl font-bold tracking-tight text-gray-900 hover:text-[#FF7A20] cursor-pointer transition flex items-center gap-2"
             >
               <span>Shop More Products</span>
               <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF7A20]" />
@@ -274,10 +292,10 @@ export default function Home({
                     alt={p.name} 
                     className="max-h-full max-w-full object-contain mx-auto group-hover:scale-105 transition-transform duration-300" 
                     referrerPolicy="no-referrer" 
+                    onError={(e) => {
+                      e.currentTarget.src = "https://i.ibb.co/5WPKmPXS/Avigilon-Generic-500x500-1.png";
+                    }}
                   />
-                  <span className="absolute top-2 left-2 bg-slate-900/85 text-white font-mono text-[10px] sm:text-xs px-2 py-0.5 rounded-sm">
-                    {p.productType}
-                  </span>
                 </div>
                 <div className="p-4 space-y-2">
                   <span className="text-[10px] sm:text-xs font-mono text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded inline-block">
@@ -311,7 +329,7 @@ export default function Home({
       </section>
 
       {/* 8. FAQ Accordion Grid */}
-      <section className="max-w-7xl mx-auto px-4 lg:px-8 py-20 space-y-12" id="faqs">
+      <section className="max-w-[1536px] mx-auto px-4 lg:px-[47px] py-20 space-y-12" id="faqs">
         <div className="text-center space-y-2">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">Technical FAQ Desk</h2>
           <p className="text-gray-500 text-sm sm:text-base max-w-md mx-auto">Get instant clarifications regarding logistics, certifications and specifications.</p>

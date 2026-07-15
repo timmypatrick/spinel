@@ -105,7 +105,7 @@ export default function Checkout({
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 lg:px-8 py-12 space-y-10" id="checkout-view">
+    <div className="max-w-[1536px] mx-auto px-4 lg:px-[47px] py-12 space-y-10" id="checkout-view">
       <div className="flex items-center space-x-3">
         <CreditCard className="w-6 h-6 text-[#FF7A20]" />
         <h1 className="text-2xl font-black text-gray-900 tracking-tight uppercase">Corporate Site Checkout</h1>

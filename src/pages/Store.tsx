@@ -3,6 +3,110 @@ import { Grid, List, SlidersHorizontal, Search, RefreshCw, ShoppingCart, Plus, C
 import { Product, Category } from "../types";
 import { safeFetch } from "../lib/dataService";
 
+const STORE_DIVISIONS = [
+  {
+    category: "CCTV Surveillance",
+    subcategories: [
+      "Box Camera",
+      "Dome Camera",
+      "Bullet Camera",
+      "PTZ Camera",
+      "Panoramic Camera",
+      "Thermal Camera",
+      "Fisheye Camera",
+      "Multi-Sensor Camera"
+    ]
+  },
+  {
+    category: "Electrical Systems",
+    subcategories: [
+      "Industrial Switches",
+      "Junction Box",
+      "Network Video Recorders",
+      "Electrical Workstation",
+      "UPS & PDU",
+      "PAGA System",
+      "Hybrid Composite Cable",
+      "Accessories"
+    ]
+  },
+  {
+    category: "Renewable Energy",
+    subcategories: [
+      "Industrial Solar Panels",
+      "Lithium LiFePO4 Batteries",
+      "Smart Hybrid Inverters"
+    ]
+  },
+  {
+    category: "Rack & Enclosures",
+    subcategories: [
+      "Small Enclosures",
+      "IT Enclosures",
+      "Wall-Mounted Enclosures",
+      "Server Racks"
+    ]
+  },
+  {
+    category: "Ex-Proof Equipments",
+    subcategories: [
+      "EX-Telephone",
+      "Ex-Sounder",
+      "Ex-CCTV Camera",
+      "EX-Junction Box"
+    ]
+  }
+];
+
+const matchProduct = (p: Product, subName: string) => {
+  if (!subName) return true;
+  const nameLower = subName.toLowerCase().trim();
+  const catLower = p.category ? p.category.toLowerCase() : "";
+  const subcatLower = p.subcategory ? p.subcategory.toLowerCase() : "";
+  const prodNameLower = p.name ? p.name.toLowerCase() : "";
+
+  // Direct exact match
+  if (catLower === nameLower || subcatLower === nameLower) return true;
+
+  // Partial match of subcategory/category
+  if (subcatLower.includes(nameLower) || nameLower.includes(subcatLower)) return true;
+  if (catLower.includes(nameLower) || nameLower.includes(catLower)) return true;
+
+  // Specific mapping helpers
+  if (nameLower === "box camera" && (subcatLower.includes("box") || prodNameLower.includes("box"))) return true;
+  if (nameLower === "dome camera" && (subcatLower.includes("dome") || prodNameLower.includes("dome"))) return true;
+  if (nameLower === "bullet camera" && (subcatLower.includes("bullet") || prodNameLower.includes("bullet"))) return true;
+  if (nameLower === "ptz camera" && (subcatLower.includes("ptz") || prodNameLower.includes("ptz"))) return true;
+  if (nameLower === "panoramic camera" && (subcatLower.includes("panoramic") || prodNameLower.includes("panoramic"))) return true;
+  if (nameLower === "thermal camera" && (subcatLower.includes("thermal") || prodNameLower.includes("thermal"))) return true;
+  if (nameLower === "fisheye camera" && (subcatLower.includes("fisheye") || prodNameLower.includes("fisheye"))) return true;
+  if (nameLower === "multi-sensor camera" && (subcatLower.includes("sensor") || prodNameLower.includes("sensor"))) return true;
+
+  if (nameLower === "industrial switches" && (subcatLower.includes("switch") || catLower.includes("telecom") || prodNameLower.includes("switch"))) return true;
+  if (nameLower === "junction box" && (subcatLower.includes("junction") || prodNameLower.includes("junction"))) return true;
+  if (nameLower === "network video recorders" && (subcatLower.includes("recorder") || prodNameLower.includes("recorder") || prodNameLower.includes("nvr"))) return true;
+  if (nameLower === "electrical workstation" && (subcatLower.includes("workstation") || prodNameLower.includes("workstation"))) return true;
+  if (nameLower === "ups & pdu" && (subcatLower.includes("ups") || subcatLower.includes("pdu") || prodNameLower.includes("ups") || prodNameLower.includes("pdu"))) return true;
+  if (nameLower === "paga system" && (subcatLower.includes("paga") || prodNameLower.includes("paga"))) return true;
+  if (nameLower === "hybrid composite cable" && (subcatLower.includes("cable") || prodNameLower.includes("cable"))) return true;
+
+  if (nameLower === "industrial solar panels" && (subcatLower.includes("panel") || prodNameLower.includes("panel"))) return true;
+  if (nameLower === "lithium lifepo4 batteries" && (subcatLower.includes("batter") || subcatLower.includes("batter") || prodNameLower.includes("lifepo4"))) return true;
+  if (nameLower === "smart hybrid inverters" && (subcatLower.includes("inverter") || prodNameLower.includes("inverter"))) return true;
+
+  if (nameLower === "small enclosures" && (subcatLower.includes("small") || subcatLower.includes("enclosure") || prodNameLower.includes("enclosure") || prodNameLower.includes("box"))) return true;
+  if (nameLower === "it enclosures" && (subcatLower.includes("it") || subcatLower.includes("enclosure") || prodNameLower.includes("enclosure"))) return true;
+  if (nameLower === "wall-mounted enclosures" && (subcatLower.includes("wall") || subcatLower.includes("wall") || prodNameLower.includes("cabinet"))) return true;
+  if (nameLower === "server racks" && (subcatLower.includes("rack") || subcatLower.includes("rack") || prodNameLower.includes("cabinet"))) return true;
+
+  if (nameLower === "ex-telephone" && (subcatLower.includes("telephone") || subcatLower.includes("phone") || prodNameLower.includes("phone") || prodNameLower.includes("telephone"))) return true;
+  if (nameLower === "ex-sounder" && (subcatLower.includes("sounder") || subcatLower.includes("sounder") || prodNameLower.includes("horn"))) return true;
+  if (nameLower === "ex-cctv camera" && (subcatLower.includes("camera") || prodNameLower.includes("camera"))) return true;
+  if (nameLower === "ex-junction box" && (subcatLower.includes("junction") || prodNameLower.includes("junction"))) return true;
+
+  return false;
+};
+
 interface StoreProps {
   currentView: string;
   setCurrentView: (view: string) => void;
@@ -27,60 +131,34 @@ export default function Store({
   setSearchQuery
 }: StoreProps) {
   const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const [selectedBrand, setSelectedBrand] = useState<string>("");
-  const [selectedType, setSelectedType] = useState<string>("");
-  const [maxPrice, setMaxPrice] = useState<number>(15000);
+  const [selectedSubcategory, setSelectedSubcategory] = useState<string>("");
   const [sortBy, setSortBy] = useState<string>("popular");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [loading, setLoading] = useState(false);
   const [isCompareOpen, setIsCompareOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedSubcategory, sortBy, searchQuery]);
 
   // Fetch product list dynamically with filter queries
   useEffect(() => {
     setLoading(true);
     let url = `/api/products?sort=${sortBy}`;
-    if (selectedCategory) url += `&category=${encodeURIComponent(selectedCategory)}`;
-    if (selectedBrand) url += `&brand=${encodeURIComponent(selectedBrand)}`;
-    if (selectedType) url += `&productType=${encodeURIComponent(selectedType)}`;
     if (searchQuery) url += `&search=${encodeURIComponent(searchQuery)}`;
 
     safeFetch(url)
       .then(res => res.json())
       .then((data: Product[]) => {
-        // Client side filter for price
-        const filtered = data.filter(p => p.priceUSD <= maxPrice);
-        setProducts(filtered);
+        setProducts(data);
       })
       .catch(err => console.error("Error fetching products", err))
       .finally(() => setLoading(false));
-  }, [selectedCategory, selectedBrand, selectedType, maxPrice, sortBy, searchQuery]);
-
-  // Fetch Category lists
-  useEffect(() => {
-    safeFetch("/api/products")
-      .then(res => res.json())
-      .then((data: Product[]) => {
-        // Derive unique categories from product catalog
-        const uniqueCats = Array.from(new Set(data.map(p => p.category)));
-        const derived: Category[] = uniqueCats.map((cat, idx) => ({
-          id: `cat-${idx}`,
-          name: cat,
-          slug: cat.toLowerCase().replace(/\s+/g, "-"),
-          iconName: "Shield",
-          subcategories: []
-        }));
-        setCategories(derived);
-      })
-      .catch(err => console.error("Error listing categories", err));
-  }, []);
+  }, [sortBy, searchQuery]);
 
   const handleResetFilters = () => {
-    setSelectedCategory("");
-    setSelectedBrand("");
-    setSelectedType("");
-    setMaxPrice(15000);
+    setSelectedSubcategory("");
     setSortBy("popular");
   };
 
@@ -101,13 +179,15 @@ export default function Store({
     setCurrentView("product-details");
   };
 
-  const uniqueBrands = ["HexaShield", "Vantage Power Systems", "CommsTect", "DuraRack"];
-  const uniqueTypes = ["Enterprise", "Hazardous Area", "Industrial", "Commercial"];
+  const filteredProducts = products.filter(p => matchProduct(p, selectedSubcategory));
+  const itemsPerPage = 60;
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage) || 1;
+  const paginatedProducts = filteredProducts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 lg:px-8 py-12 flex flex-col lg:flex-row gap-10" id="store-view">
+    <div className="max-w-[1536px] mx-auto px-4 lg:px-[47px] py-12 flex flex-col lg:flex-row gap-10" id="store-view">
       {/* 1. Left Sidebar Filter Pane */}
-      <aside className="w-full lg:w-64 shrink-0 space-y-8" id="store-sidebar">
+      <aside className="w-full lg:w-64 shrink-0 space-y-6" id="store-sidebar">
         <div className="flex items-center justify-between border-b border-gray-100 pb-4">
           <div className="flex items-center space-x-2 text-gray-900 font-bold text-sm">
             <SlidersHorizontal className="w-4 h-4 text-[#FF7A20]" />
@@ -122,92 +202,50 @@ export default function Store({
           </button>
         </div>
 
-        {/* Categories Section */}
-        <div className="space-y-3">
-          <h4 className="text-xs font-bold text-gray-900 uppercase tracking-wider">Business Division</h4>
-          <div className="flex flex-col space-y-1.5 text-xs text-gray-600">
+        {/* Divisions & Categories Section */}
+        <div className="space-y-4">
+          <h4 className="text-xs font-bold text-gray-900 uppercase tracking-wider flex items-center gap-1.5">
+            <span>Filter By Division</span>
+          </h4>
+          <div className="flex flex-col space-y-3">
             <button
-              onClick={() => setSelectedCategory("")}
-              className={`text-left py-1 px-2 rounded-lg transition ${!selectedCategory ? "bg-orange-50 text-[#FF7A20] font-bold" : "hover:bg-gray-50"}`}
+              onClick={() => setSelectedSubcategory("")}
+              className={`text-left py-2 px-3 rounded-lg text-xs font-bold transition flex items-center justify-between ${!selectedSubcategory ? "bg-[#FF7A20] text-white" : "bg-gray-50 text-gray-700 hover:bg-gray-100"}`}
             >
-              All Divisions
+              <span>All Products & Divisions</span>
             </button>
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setSelectedCategory(cat.name)}
-                className={`text-left py-1 px-2 rounded-lg transition ${selectedCategory === cat.name ? "bg-orange-50 text-[#FF7A20] font-bold" : "hover:bg-gray-50"}`}
-              >
-                {cat.name}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Product Type (Harzardous, industrial etc) */}
-        <div className="space-y-3">
-          <h4 className="text-xs font-bold text-gray-900 uppercase tracking-wider">Safety Specification</h4>
-          <div className="flex flex-col space-y-1.5 text-xs text-gray-600">
-            <button
-              onClick={() => setSelectedType("")}
-              className={`text-left py-1 px-2 rounded-lg transition ${!selectedType ? "bg-orange-50 text-[#FF7A20] font-bold" : "hover:bg-gray-50"}`}
-            >
-              All Standards
-            </button>
-            {uniqueTypes.map((type) => (
-              <button
-                key={type}
-                onClick={() => setSelectedType(type)}
-                className={`text-left py-1 px-2 rounded-lg transition ${selectedType === type ? "bg-orange-50 text-[#FF7A20] font-bold" : "hover:bg-gray-50"}`}
-              >
-                {type} Rating
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Brand / OEM Line */}
-        <div className="space-y-3">
-          <h4 className="text-xs font-bold text-gray-900 uppercase tracking-wider">OEM Partner Lines</h4>
-          <div className="flex flex-col space-y-1.5 text-xs text-gray-600">
-            <button
-              onClick={() => setSelectedBrand("")}
-              className={`text-left py-1 px-2 rounded-lg transition ${!selectedBrand ? "bg-orange-50 text-[#FF7A20] font-bold" : "hover:bg-gray-50"}`}
-            >
-              All Partner Brands
-            </button>
-            {uniqueBrands.map((brand) => (
-              <button
-                key={brand}
-                onClick={() => setSelectedBrand(brand)}
-                className={`text-left py-1 px-2 rounded-lg transition ${selectedBrand === brand ? "bg-orange-50 text-[#FF7A20] font-bold" : "hover:bg-gray-50"}`}
-              >
-                {brand}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Price Ranger */}
-        <div className="space-y-3">
-          <h4 className="text-xs font-bold text-gray-900 uppercase tracking-wider">Budget limit (USD)</h4>
-          <div className="space-y-2">
-            <input
-              type="range"
-              min="100"
-              max="15000"
-              step="100"
-              value={maxPrice}
-              onChange={(e) => setMaxPrice(Number(e.target.value))}
-              className="w-full accent-[#FF7A20]"
-            />
-            <div className="flex justify-between text-[11px] font-mono text-gray-500 font-bold">
-              <span>$100</span>
-              <span className="text-[#FF7A20]">${maxPrice.toLocaleString()}</span>
-            </div>
+            
+            {STORE_DIVISIONS.map((div) => {
+              const isCatSelected = selectedSubcategory === div.category;
+              return (
+                <div key={div.category} className="space-y-1">
+                  <button
+                    onClick={() => setSelectedSubcategory(div.category)}
+                    className={`w-full text-left py-1.5 px-3 rounded-lg text-xs font-extrabold transition flex items-center justify-between ${isCatSelected ? "bg-orange-50 text-[#FF7A20]" : "text-gray-950 hover:bg-gray-50"}`}
+                  >
+                    <span>{div.category}</span>
+                  </button>
+                  <div className="pl-3 py-1 space-y-1 border-l border-gray-100">
+                    {div.subcategories.map((sub) => {
+                      const isSubSelected = selectedSubcategory === sub;
+                      return (
+                        <button
+                          key={sub}
+                          onClick={() => setSelectedSubcategory(sub)}
+                          className={`w-full text-left py-1 px-2.5 rounded text-[11px] font-semibold transition ${isSubSelected ? "text-[#FF7A20] bg-orange-50/50 font-bold" : "text-gray-500 hover:text-gray-900 hover:bg-gray-50"}`}
+                        >
+                          {sub}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </aside>
+
 
       {/* 2. Right Products Panel */}
       <main className="flex-1 space-y-6" id="store-main">
@@ -216,11 +254,11 @@ export default function Store({
           <div className="text-xs font-semibold text-gray-600">
             {searchQuery ? (
               <span>
-                Search results for <span className="text-[#FF7A20] font-bold">"{searchQuery}"</span>: <span className="text-gray-900 font-bold">{products.length}</span> matches found
+                Search results for <span className="text-[#FF7A20] font-bold">"{searchQuery}"</span>: <span className="text-gray-900 font-bold">{filteredProducts.length}</span> matches found
               </span>
             ) : (
               <span>
-                Showing <span className="text-gray-900 font-bold">{products.length}</span> high-performance systems matches
+                Showing <span className="text-gray-900 font-bold">{filteredProducts.length}</span> high-performance systems matches
               </span>
             )}
           </div>
@@ -269,7 +307,7 @@ export default function Store({
             <RefreshCw className="w-8 h-8 text-[#FF7A20] animate-spin" />
             <p className="text-xs text-gray-400 font-semibold">Tuning equipment matches...</p>
           </div>
-        ) : products.length === 0 ? (
+        ) : filteredProducts.length === 0 ? (
           searchQuery ? (
             <div className="py-24 text-center space-y-6 max-w-md mx-auto" id="no-search-results">
               <div className="w-16 h-16 bg-orange-50 border border-orange-100 rounded-full flex items-center justify-center mx-auto text-orange-400">
@@ -305,8 +343,8 @@ export default function Store({
           )
         ) : viewMode === "grid" ? (
           /* Grid Layout View */
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="products-catalog-grid">
-            {products.map((p) => {
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="products-catalog-grid">
+            {paginatedProducts.map((p) => {
               const inCompare = compareList.some(comp => comp.id === p.id);
               return (
                 <div
@@ -314,10 +352,15 @@ export default function Store({
                   className="bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-xl transition duration-300 flex flex-col justify-between"
                 >
                   <div className="relative aspect-video bg-gray-50 cursor-pointer" onClick={() => handleProductDetails(p.id)}>
-                    <img src={p.images[0]} alt={p.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-                    <span className="absolute top-2.5 left-2.5 bg-gray-950/80 backdrop-blur-xs text-white font-semibold text-[8px] font-mono tracking-wider uppercase px-2 py-0.5 rounded-sm">
-                      {p.productType}
-                    </span>
+                    <img
+                      src={p.images[0]}
+                      alt={p.name}
+                      className="w-full h-full object-cover"
+                      referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        e.currentTarget.src = "https://i.ibb.co/5WPKmPXS/Avigilon-Generic-500x500-1.png";
+                      }}
+                    />
                     {p.stock <= 10 && (
                       <span className="absolute bottom-2.5 right-2.5 bg-rose-600 text-white font-bold text-[8px] px-1.5 py-0.5 rounded animate-pulse">
                         Low Stock: {p.stock}
@@ -367,7 +410,7 @@ export default function Store({
         ) : (
           /* List Layout View */
           <div className="space-y-4" id="products-catalog-list">
-            {products.map((p) => {
+            {paginatedProducts.map((p) => {
               const inCompare = compareList.some(comp => comp.id === p.id);
               return (
                 <div
@@ -380,12 +423,14 @@ export default function Store({
                     onClick={() => handleProductDetails(p.id)}
                     className="w-full md:w-48 h-40 object-cover cursor-pointer bg-gray-50 shrink-0"
                     referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      e.currentTarget.src = "https://i.ibb.co/5WPKmPXS/Avigilon-Generic-500x500-1.png";
+                    }}
                   />
                   <div className="p-5 flex-1 flex flex-col justify-between min-w-0">
                     <div className="space-y-1.5 min-w-0">
                       <div className="flex items-center justify-between text-[10px] text-gray-400 font-mono">
                         <span>SKU: {p.sku} | Brand: {p.brand}</span>
-                        <span className="bg-gray-100 px-1.5 py-0.5 rounded text-gray-600">{p.productType}</span>
                       </div>
                       <h3
                         onClick={() => handleProductDetails(p.id)}
@@ -424,12 +469,49 @@ export default function Store({
             })}
           </div>
         )}
+
+        {/* Pagination Controls */}
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center gap-4 mt-8 pt-6 border-t border-gray-100">
+            <button
+              onClick={() => {
+                setCurrentPage(prev => Math.max(prev - 1, 1));
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              disabled={currentPage === 1}
+              className={`px-4 py-2 text-xs font-bold rounded-lg border transition ${
+                currentPage === 1
+                  ? "bg-gray-50 border-gray-100 text-gray-300 cursor-not-allowed"
+                  : "bg-white border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300 cursor-pointer"
+              }`}
+            >
+              Previous Page
+            </button>
+            <span className="text-xs font-semibold text-gray-500 font-mono">
+              Page <span className="font-bold text-gray-950">{currentPage}</span> of <span className="font-bold text-gray-950">{totalPages}</span>
+            </span>
+            <button
+              onClick={() => {
+                setCurrentPage(prev => Math.min(prev + 1, totalPages));
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              disabled={currentPage === totalPages}
+              className={`px-4 py-2 text-xs font-bold rounded-lg border transition ${
+                currentPage === totalPages
+                  ? "bg-gray-50 border-gray-100 text-gray-300 cursor-not-allowed"
+                  : "bg-white border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300 cursor-pointer"
+              }`}
+            >
+              Next Page
+            </button>
+          </div>
+        )}
       </main>
 
       {/* Compare Specification Comparison Overlay Drawer */}
       {compareList.length > 0 && (
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-[#FF7A20] shadow-2xl z-40 p-4 transition duration-300" id="compare-tray">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="max-w-[1536px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4 px-4 lg:px-[47px]">
             <div className="flex items-center space-x-4">
               <span className="text-xs font-bold text-gray-900">Comparing Products ({compareList.length}/3)</span>
               <div className="flex space-x-3">
@@ -491,11 +573,6 @@ export default function Store({
               <div className="font-bold text-gray-500">OEM Supplier</div>
               {compareList.map(p => (
                 <div key={p.id}>{p.brand}</div>
-              ))}
-
-              <div className="font-bold text-gray-500">Standards Rating</div>
-              {compareList.map(p => (
-                <div key={p.id}>{p.productType} Standard</div>
               ))}
 
               <div className="font-bold text-gray-500">Stock Availability</div>

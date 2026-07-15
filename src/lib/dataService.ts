@@ -202,7 +202,7 @@ export async function safeFetch(input: RequestInfo | URL, init?: RequestInit): P
       const password = payload.password || "";
 
       if (emailLower !== "engineering@spineldistribution.com" || password !== "spineldistribution@123") {
-        return new Response(JSON.stringify({ error: "Invalid engineering credentials" }), {
+        return new Response(JSON.stringify({ error: "Invalid Credentials" }), {
           status: 401,
           headers: { "Content-Type": "application/json" }
         });

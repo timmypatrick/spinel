@@ -87,7 +87,7 @@ export default function ProductDetails({
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 lg:px-8 py-10 space-y-12" id="product-details-view">
+    <div className="max-w-[1536px] mx-auto px-4 lg:px-[47px] py-10 space-y-12" id="product-details-view">
       {/* Breadcrumb Row */}
       <nav className="flex items-center space-x-2 text-xs text-gray-500 font-semibold" id="product-breadcrumbs">
         <button onClick={() => setCurrentView("home")} className="hover:text-[#FF7A20]">Portal Home</button>
@@ -104,7 +104,15 @@ export default function ProductDetails({
         {/* Left Image Gallery (Cols 5) */}
         <div className="lg:col-span-5 space-y-4" id="gallery-container">
           <div className="relative aspect-square border border-gray-100 rounded-2xl overflow-hidden bg-gray-50 flex items-center justify-center p-4">
-            <img src={activeImage} alt={product.name} className="w-full h-full object-contain hover:scale-105 transition duration-300" referrerPolicy="no-referrer" />
+            <img
+              src={activeImage}
+              alt={product.name}
+              className="w-full h-full object-contain hover:scale-105 transition duration-300"
+              referrerPolicy="no-referrer"
+              onError={(e) => {
+                e.currentTarget.src = "https://i.ibb.co/5WPKmPXS/Avigilon-Generic-500x500-1.png";
+              }}
+            />
           </div>
           {product.images.length > 1 && (
             <div className="flex gap-3">
@@ -114,7 +122,15 @@ export default function ProductDetails({
                   onClick={() => setActiveImage(img)}
                   className={`w-16 h-16 border rounded-lg p-1 bg-gray-50 overflow-hidden cursor-pointer ${activeImage === img ? "border-[#FF7A20] ring-2 ring-orange-100" : "border-gray-200"}`}
                 >
-                  <img src={img} alt="thumbnail" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                  <img
+                    src={img}
+                    alt="thumbnail"
+                    className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      e.currentTarget.src = "https://i.ibb.co/5WPKmPXS/Avigilon-Generic-500x500-1.png";
+                    }}
+                  />
                 </button>
               ))}
             </div>
@@ -140,8 +156,6 @@ export default function ProductDetails({
               <span>Brand: {product.brand}</span>
               <span>|</span>
               <span>Division: {product.category}</span>
-              <span>|</span>
-              <span className="text-[#FF7A20]">{product.productType} rating</span>
             </div>
           </div>
 
@@ -322,7 +336,15 @@ export default function ProductDetails({
                 className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-xs hover:shadow-lg transition flex flex-col justify-between"
               >
                 <div className="relative aspect-video bg-gray-50 cursor-pointer" onClick={() => setSelectedProductId(p.id)}>
-                  <img src={p.images[0]} alt={p.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                  <img
+                    src={p.images[0]}
+                    alt={p.name}
+                    className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      e.currentTarget.src = "https://i.ibb.co/5WPKmPXS/Avigilon-Generic-500x500-1.png";
+                    }}
+                  />
                 </div>
                 <div className="p-4 space-y-2">
                   <h4

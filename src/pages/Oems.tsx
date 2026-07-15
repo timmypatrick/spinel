@@ -50,8 +50,8 @@ const PARTNERS = [
 
 export default function Oems({ setCurrentView }: OemsProps) {
   return (
-    <div className="bg-white min-h-screen py-12 px-4 sm:px-6 lg:px-8" id="oems-page">
-      <div className="max-w-7xl mx-auto space-y-12">
+    <div className="bg-white min-h-screen py-12 px-4 sm:px-6 lg:px-[47px]" id="oems-page">
+      <div className="max-w-[1536px] mx-auto space-y-12">
         {/* Page Header */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center space-x-2 bg-orange-50 border border-orange-100 px-3 py-1 rounded-full text-xs font-bold text-[#FF7A20] uppercase tracking-wider">

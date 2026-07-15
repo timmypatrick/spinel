@@ -33,6 +33,9 @@ export default function Header({
   const [isProductsMenuOpen, setIsProductsMenuOpen] = useState(false);
   const [isSolutionsMenuOpen, setIsSolutionsMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false);
+  const [isMobileSolutionsOpen, setIsMobileSolutionsOpen] = useState(false);
+  const [activeMobileSubcategory, setActiveMobileSubcategory] = useState<string | null>(null);
   const [searchResults, setSearchResults] = useState<Product[]>([]);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
@@ -158,7 +161,7 @@ export default function Header({
   return (
     <header className="w-full bg-white border-b border-gray-100 sticky top-0 z-50 shadow-xs" id="main-header">
       {/* Main Navbar */}
-      <div className="max-w-7xl mx-auto px-4 lg:px-8 py-3 flex items-center justify-between" id="navbar-container">
+      <div className="max-w-[1536px] mx-auto px-4 lg:px-[47px] py-3 flex items-center justify-between relative" id="navbar-container">
         {/* Logo Section (SVG mirroring orange/dark grey interlaced logo) */}
         <div
           onClick={() => handleNavigate("home")}
@@ -204,7 +207,15 @@ export default function Header({
                   onClick={() => handleSearchResultClick(p)}
                   className="flex items-center p-3 hover:bg-orange-50/50 rounded-md cursor-pointer transition duration-150 border-b border-gray-50 last:border-0"
                 >
-                  <img src={p.images[0]} alt={p.name} className="w-10 h-10 object-cover rounded bg-gray-50 border border-gray-100" referrerPolicy="no-referrer" />
+                  <img
+                    src={p.images[0]}
+                    alt={p.name}
+                    className="w-10 h-10 object-cover rounded bg-gray-50 border border-gray-100"
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      e.currentTarget.src = "https://i.ibb.co/5WPKmPXS/Avigilon-Generic-500x500-1.png";
+                    }}
+                  />
                   <div className="ml-3 flex-1 min-w-0">
                     <p className="text-xs font-semibold text-gray-900 truncate">{p.name}</p>
                     <div className="flex items-center justify-between text-[10px] text-gray-500 mt-0.5">
@@ -229,7 +240,7 @@ export default function Header({
         {/* Desktop Navigation Links */}
         <nav className="hidden lg:flex items-center space-x-8 text-base font-semibold text-gray-700" id="desktop-nav">
           <div
-            className="relative"
+            className=""
             onMouseEnter={() => setIsProductsMenuOpen(true)}
             onMouseLeave={() => setIsProductsMenuOpen(false)}
           >
@@ -239,21 +250,21 @@ export default function Header({
             </button>
             {/* Products Mega Menu */}
             {isProductsMenuOpen && (
-              <div className="absolute top-10 left-[60%] -translate-x-1/2 w-[1200px] bg-white border border-gray-100 rounded-xl shadow-2xl z-50 p-5 grid grid-cols-5 gap-5" id="products-mega-menu">
+              <div className="absolute top-[75%] left-0 right-0 bg-white border border-gray-100 rounded-xl shadow-2xl z-50 p-6 grid grid-cols-5 gap-6 before:content-[''] before:absolute before:-top-6 before:left-0 before:right-0 before:h-6" id="products-mega-menu">
                 <div>
                   <div className="flex items-center space-x-2 text-gray-900 font-bold text-base border-b border-gray-100 pb-2 mb-3">
                     <Shield className="w-5 h-5 text-[#FF7A20]" />
                     <span>CCTV Surveillance</span>
                   </div>
                   <ul className="space-y-2 text-sm text-gray-600">
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Box Camera</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Dome Camera</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Bullet Camera</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">PTZ Camera</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Panoramic Camera</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Thermal Camera</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Fisheye Camera</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Multi-Sensor Camera</button></li>
+                    <li><button onClick={() => { handleNavigate("category-Box Camera"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Box Camera</button></li>
+                    <li><button onClick={() => { handleNavigate("category-Dome Camera"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Dome Camera</button></li>
+                    <li><button onClick={() => { handleNavigate("category-Bullet Camera"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Bullet Camera</button></li>
+                    <li><button onClick={() => { handleNavigate("category-PTZ Camera"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">PTZ Camera</button></li>
+                    <li><button onClick={() => { handleNavigate("category-Panoramic Camera"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Panoramic Camera</button></li>
+                    <li><button onClick={() => { handleNavigate("category-Thermal Camera"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Thermal Camera</button></li>
+                    <li><button onClick={() => { handleNavigate("category-Fisheye Camera"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Fisheye Camera</button></li>
+                    <li><button onClick={() => { handleNavigate("category-Multi-Sensor Camera"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Multi-Sensor Camera</button></li>
                   </ul>
                 </div>
                 <div>
@@ -262,13 +273,14 @@ export default function Header({
                     <span>Electrical Systems</span>
                   </div>
                   <ul className="space-y-2 text-sm text-gray-600">
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Industrial Switches</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Junction Box</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Network Video Recorders</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Electrical Workstation</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">UPS & PDU</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">PAGA System</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Hybrid Composite Cable</button></li>
+                    <li><button onClick={() => { handleNavigate("category-Industrial Switches"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Industrial Switches</button></li>
+                    <li><button onClick={() => { handleNavigate("category-Junction Box"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Junction Box</button></li>
+                    <li><button onClick={() => { handleNavigate("category-Network Video Recorders"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Network Video Recorders</button></li>
+                    <li><button onClick={() => { handleNavigate("category-Electrical Workstation"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Electrical Workstation</button></li>
+                    <li><button onClick={() => { handleNavigate("category-UPS & PDU"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">UPS & PDU</button></li>
+                    <li><button onClick={() => { handleNavigate("category-PAGA System"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">PAGA System</button></li>
+                    <li><button onClick={() => { handleNavigate("category-Hybrid Composite Cable"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Hybrid Composite Cable</button></li>
+                    <li><button onClick={() => { handleNavigate("category-Accessories"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Accessories</button></li>
                   </ul>
                 </div>
                 <div>
@@ -277,9 +289,9 @@ export default function Header({
                     <span>Renewable Energy</span>
                   </div>
                   <ul className="space-y-2 text-sm text-gray-600">
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Industrial Solar Panels</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Lithium LiFePO4 Batteries</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Smart Hybrid Inverters</button></li>
+                    <li><button onClick={() => { handleNavigate("category-Industrial Solar Panels"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Industrial Solar Panels</button></li>
+                    <li><button onClick={() => { handleNavigate("category-Lithium LiFePO4 Batteries"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Lithium LiFePO4 Batteries</button></li>
+                    <li><button onClick={() => { handleNavigate("category-Smart Hybrid Inverters"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Smart Hybrid Inverters</button></li>
                   </ul>
                 </div>
                 <div>
@@ -288,10 +300,10 @@ export default function Header({
                     <span>Rack & Enclosures</span>
                   </div>
                   <ul className="space-y-2 text-sm text-gray-600">
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Small Enclosures</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">IT Enclosures</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Wall-Mounted Enclosures</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Server Racks</button></li>
+                    <li><button onClick={() => { handleNavigate("category-Small Enclosures"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Small Enclosures</button></li>
+                    <li><button onClick={() => { handleNavigate("category-IT Enclosures"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">IT Enclosures</button></li>
+                    <li><button onClick={() => { handleNavigate("category-Wall-Mounted Enclosures"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Wall-Mounted Enclosures</button></li>
+                    <li><button onClick={() => { handleNavigate("category-Server Racks"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Server Racks</button></li>
                   </ul>
                 </div>
                 <div>
@@ -300,10 +312,10 @@ export default function Header({
                     <span>Ex-Proof Equipments</span>
                   </div>
                   <ul className="space-y-2 text-sm text-gray-600">
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">EX-Telephone</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Ex-Sounder</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">Ex-CCTV Camera</button></li>
-                    <li><button onClick={() => { handleNavigate("store"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block">EX-Junction Box</button></li>
+                    <li><button onClick={() => { handleNavigate("category-EX-Telephone"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">EX-Telephone</button></li>
+                    <li><button onClick={() => { handleNavigate("category-Ex-Sounder"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Ex-Sounder</button></li>
+                    <li><button onClick={() => { handleNavigate("category-Ex-CCTV Camera"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Ex-CCTV Camera</button></li>
+                    <li><button onClick={() => { handleNavigate("category-EX-Junction Box"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">EX-Junction Box</button></li>
                   </ul>
                 </div>
               </div>
@@ -350,11 +362,11 @@ export default function Header({
           <button onClick={() => handleNavigate("store")} className="hover:text-[#FF7A20] cursor-pointer text-base font-semibold">Store</button>
           <button onClick={() => handleNavigate("oems")} className="hover:text-[#FF7A20] cursor-pointer text-base font-semibold">OEMs</button>
           <button onClick={() => handleNavigate("about")} className="hover:text-[#FF7A20] cursor-pointer text-base font-semibold">About</button>
-          <button onClick={() => handleNavigate("contact")} className="hover:text-[#FF7A20] cursor-pointer text-base font-semibold">Contact</button>
+          <button onClick={() => handleNavigate("contact")} className="hover:text-[#FF7A20] cursor-pointer text-base font-semibold lg:mr-12">Contact</button>
         </nav>
 
         {/* Header Action Buttons */}
-        <div className="flex items-center space-x-4" id="header-actions">
+        <div className="flex items-center space-x-4 lg:space-x-6" id="header-actions">
           {/* Compare list link */}
           {compareList.length > 0 && (
             <button
@@ -383,37 +395,52 @@ export default function Header({
           </button>
 
           {/* Request Quote Button */}
-          <button
-            onClick={() => setCurrentView("request-quote")}
-            className="hidden sm:inline-block bg-gray-900 text-white hover:bg-[#FF7A20] px-4 py-2 rounded-lg text-xs font-semibold transition duration-150 cursor-pointer shadow-xs"
-            id="btn-nav-request-quote"
-          >
-            Request Quote
-          </button>
+          {currentView !== "admin" && (
+            <button
+              onClick={() => setCurrentView("request-quote")}
+              className="hidden sm:inline-block bg-gray-900 text-white hover:bg-[#FF7A20] px-4 py-2 rounded-lg text-xs font-semibold transition duration-150 cursor-pointer shadow-xs"
+              id="btn-nav-request-quote"
+            >
+              Request Quote
+            </button>
+          )}
 
           {/* User Account / Auth Trigger */}
           {user ? (
-            <div className="flex items-center space-x-2 border-l border-gray-100 pl-4" id="user-profile-menu">
-              <div className="flex flex-col text-right">
-                <span className="text-xs font-semibold text-gray-900 truncate max-w-28">{user.name}</span>
-                {user.role === "admin" && (
+            <div className="flex items-center space-x-3 border-l border-gray-100 pl-4" id="user-profile-menu">
+              {user.role === "admin" ? (
+                <div className="flex items-center space-x-2">
+                  <label className="flex items-center cursor-pointer select-none" title="Admin Toggle">
+                    <input
+                      type="checkbox"
+                      checked={currentView === "admin"}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setCurrentView("admin");
+                        } else {
+                          handleSignOut();
+                        }
+                      }}
+                      className="w-5 h-5 rounded border-gray-300 text-[#FF7A20] focus:ring-[#FF7A20] cursor-pointer accent-[#FF7A20] transition-colors"
+                      id="admin-dashboard-toggle"
+                    />
+                  </label>
+                </div>
+              ) : (
+                <>
+                  <div className="flex flex-col text-right">
+                    <span className="text-xs font-semibold text-gray-900 truncate max-w-28">{user.name}</span>
+                  </div>
                   <button
-                    onClick={() => handleNavigate("admin")}
-                    className="text-[9px] text-[#FF7A20] font-bold uppercase hover:underline"
-                    id="btn-go-admin"
+                    onClick={handleSignOut}
+                    className="text-gray-400 hover:text-[#FF7A20] p-1.5"
+                    title="Sign Out"
+                    id="btn-logout"
                   >
-                    Admin Cockpit
+                    <X className="w-4 h-4" />
                   </button>
-                )}
-              </div>
-              <button
-                onClick={handleSignOut}
-                className="text-gray-400 hover:text-[#FF7A20] p-1.5"
-                title="Sign Out"
-                id="btn-logout"
-              >
-                <X className="w-4 h-4" />
-              </button>
+                </>
+              )}
             </div>
           ) : null}
 
@@ -430,7 +457,7 @@ export default function Header({
 
       {/* Mobile Sticky Drawer */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-white border-t border-gray-100 p-4 space-y-4 shadow-xl relative z-40" id="mobile-drawer">
+        <div className="lg:hidden bg-white border-t border-gray-100 p-4 space-y-4 shadow-xl relative z-40 max-h-[80vh] overflow-y-auto" id="mobile-drawer">
           <form onSubmit={handleSearchSubmit} className="flex relative" id="mobile-search-form">
             <input
               type="text"
@@ -445,12 +472,150 @@ export default function Header({
           </form>
 
           <nav className="flex flex-col space-y-3 text-sm font-semibold text-gray-700">
-            <button onClick={() => { handleNavigate("store"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Hardware Store</button>
-            <button onClick={() => { handleNavigate("oems"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">OEMs</button>
-            <button onClick={() => { handleNavigate("about"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Engineering Solutions</button>
-            <button onClick={() => { handleNavigate("about"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">About Company</button>
-            <button onClick={() => { handleNavigate("contact"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Contact Hub</button>
-            <button onClick={() => { handleNavigate("request-quote"); setIsMobileMenuOpen(false); }} className="text-left text-[#FF7A20] py-1">Request Quote Forms</button>
+            {/* Products Accordion */}
+            <div className="border-b border-gray-100 pb-2">
+              <button
+                onClick={() => setIsMobileProductsOpen(!isMobileProductsOpen)}
+                className="w-full text-left py-1.5 font-extrabold text-gray-900 hover:text-[#FF7A20] flex justify-between items-center"
+              >
+                <span>Products</span>
+                <ChevronDown className={`w-4 h-4 transform transition-transform ${isMobileProductsOpen ? "rotate-180" : ""}`} />
+              </button>
+              
+              {isMobileProductsOpen && (
+                <div className="pl-3 mt-2 space-y-3 border-l-2 border-orange-100 animate-fade-in text-xs">
+                  {/* CCTV Surveillance Group */}
+                  <div>
+                    <button
+                      onClick={() => setActiveMobileSubcategory(activeMobileSubcategory === "cctv" ? null : "cctv")}
+                      className="w-full text-left py-1 font-bold text-gray-800 flex justify-between items-center hover:text-[#FF7A20]"
+                    >
+                      <span className="flex items-center gap-1.5"><Shield className="w-3.5 h-3.5 text-[#FF7A20]" /> CCTV Surveillance</span>
+                      <ChevronDown className={`w-3 h-3 transform transition-transform ${activeMobileSubcategory === "cctv" ? "rotate-180" : ""}`} />
+                    </button>
+                    {activeMobileSubcategory === "cctv" && (
+                      <div className="pl-5 py-1 space-y-1.5 flex flex-col text-[11px] text-gray-500">
+                        <button onClick={() => { handleNavigate("category-Box Camera"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Box Camera</button>
+                        <button onClick={() => { handleNavigate("category-Dome Camera"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Dome Camera</button>
+                        <button onClick={() => { handleNavigate("category-Bullet Camera"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Bullet Camera</button>
+                        <button onClick={() => { handleNavigate("category-PTZ Camera"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">PTZ Camera</button>
+                        <button onClick={() => { handleNavigate("category-Panoramic Camera"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Panoramic Camera</button>
+                        <button onClick={() => { handleNavigate("category-Thermal Camera"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Thermal Camera</button>
+                        <button onClick={() => { handleNavigate("category-Fisheye Camera"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Fisheye Camera</button>
+                        <button onClick={() => { handleNavigate("category-Multi-Sensor Camera"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Multi-Sensor Camera</button>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Electrical Systems Group */}
+                  <div>
+                    <button
+                      onClick={() => setActiveMobileSubcategory(activeMobileSubcategory === "electrical" ? null : "electrical")}
+                      className="w-full text-left py-1 font-bold text-gray-800 flex justify-between items-center hover:text-[#FF7A20]"
+                    >
+                      <span className="flex items-center gap-1.5"><Server className="w-3.5 h-3.5 text-[#FF7A20]" /> Electrical Systems</span>
+                      <ChevronDown className={`w-3 h-3 transform transition-transform ${activeMobileSubcategory === "electrical" ? "rotate-180" : ""}`} />
+                    </button>
+                    {activeMobileSubcategory === "electrical" && (
+                      <div className="pl-5 py-1 space-y-1.5 flex flex-col text-[11px] text-gray-500">
+                        <button onClick={() => { handleNavigate("category-Industrial Switches"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Industrial Switches</button>
+                        <button onClick={() => { handleNavigate("category-Junction Box"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Junction Box</button>
+                        <button onClick={() => { handleNavigate("category-Network Video Recorders"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Network Video Recorders</button>
+                        <button onClick={() => { handleNavigate("category-Electrical Workstation"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Electrical Workstation</button>
+                        <button onClick={() => { handleNavigate("category-UPS & PDU"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">UPS & PDU</button>
+                        <button onClick={() => { handleNavigate("category-PAGA System"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">PAGA System</button>
+                        <button onClick={() => { handleNavigate("category-Hybrid Composite Cable"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Hybrid Composite Cable</button>
+                        <button onClick={() => { handleNavigate("category-Accessories"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Accessories</button>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Renewable Energy Group */}
+                  <div>
+                    <button
+                      onClick={() => setActiveMobileSubcategory(activeMobileSubcategory === "renewable" ? null : "renewable")}
+                      className="w-full text-left py-1 font-bold text-gray-800 flex justify-between items-center hover:text-[#FF7A20]"
+                    >
+                      <span className="flex items-center gap-1.5"><Sun className="w-3.5 h-3.5 text-[#FF7A20]" /> Renewable Energy</span>
+                      <ChevronDown className={`w-3 h-3 transform transition-transform ${activeMobileSubcategory === "renewable" ? "rotate-180" : ""}`} />
+                    </button>
+                    {activeMobileSubcategory === "renewable" && (
+                      <div className="pl-5 py-1 space-y-1.5 flex flex-col text-[11px] text-gray-500">
+                        <button onClick={() => { handleNavigate("category-Industrial Solar Panels"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Industrial Solar Panels</button>
+                        <button onClick={() => { handleNavigate("category-Lithium LiFePO4 Batteries"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Lithium LiFePO4 Batteries</button>
+                        <button onClick={() => { handleNavigate("category-Smart Hybrid Inverters"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Smart Hybrid Inverters</button>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Rack & Enclosures Group */}
+                  <div>
+                    <button
+                      onClick={() => setActiveMobileSubcategory(activeMobileSubcategory === "racks" ? null : "racks")}
+                      className="w-full text-left py-1 font-bold text-gray-800 flex justify-between items-center hover:text-[#FF7A20]"
+                    >
+                      <span className="flex items-center gap-1.5"><Server className="w-3.5 h-3.5 text-[#FF7A20]" /> Rack & Enclosures</span>
+                      <ChevronDown className={`w-3 h-3 transform transition-transform ${activeMobileSubcategory === "racks" ? "rotate-180" : ""}`} />
+                    </button>
+                    {activeMobileSubcategory === "racks" && (
+                      <div className="pl-5 py-1 space-y-1.5 flex flex-col text-[11px] text-gray-500">
+                        <button onClick={() => { handleNavigate("category-Small Enclosures"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Small Enclosures</button>
+                        <button onClick={() => { handleNavigate("category-IT Enclosures"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">IT Enclosures</button>
+                        <button onClick={() => { handleNavigate("category-Wall-Mounted Enclosures"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Wall-Mounted Enclosures</button>
+                        <button onClick={() => { handleNavigate("category-Server Racks"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Server Racks</button>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Ex-Proof Equipments Group */}
+                  <div>
+                    <button
+                      onClick={() => setActiveMobileSubcategory(activeMobileSubcategory === "exproof" ? null : "exproof")}
+                      className="w-full text-left py-1 font-bold text-gray-800 flex justify-between items-center hover:text-[#FF7A20]"
+                    >
+                      <span className="flex items-center gap-1.5"><Shield className="w-3.5 h-3.5 text-[#FF7A20]" /> Ex-Proof Equipments</span>
+                      <ChevronDown className={`w-3 h-3 transform transition-transform ${activeMobileSubcategory === "exproof" ? "rotate-180" : ""}`} />
+                    </button>
+                    {activeMobileSubcategory === "exproof" && (
+                      <div className="pl-5 py-1 space-y-1.5 flex flex-col text-[11px] text-gray-500">
+                        <button onClick={() => { handleNavigate("category-EX-Telephone"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">EX-Telephone</button>
+                        <button onClick={() => { handleNavigate("category-Ex-Sounder"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Ex-Sounder</button>
+                        <button onClick={() => { handleNavigate("category-Ex-CCTV Camera"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Ex-CCTV Camera</button>
+                        <button onClick={() => { handleNavigate("category-EX-Junction Box"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">EX-Junction Box</button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Solutions Accordion */}
+            <div className="border-b border-gray-100 pb-2">
+              <button
+                onClick={() => setIsMobileSolutionsOpen(!isMobileSolutionsOpen)}
+                className="w-full text-left py-1.5 font-extrabold text-gray-900 hover:text-[#FF7A20] flex justify-between items-center"
+              >
+                <span>Solutions</span>
+                <ChevronDown className={`w-4 h-4 transform transition-transform ${isMobileSolutionsOpen ? "rotate-180" : ""}`} />
+              </button>
+              
+              {isMobileSolutionsOpen && (
+                <div className="pl-3 mt-2 space-y-2 border-l-2 border-orange-100 animate-fade-in text-xs">
+                  <button onClick={() => { handleNavigate("about"); setIsMobileMenuOpen(false); }} className="text-left w-full py-1 text-gray-600 hover:text-[#FF7A20] block font-semibold">Security Solutions</button>
+                  <button onClick={() => { handleNavigate("about"); setIsMobileMenuOpen(false); }} className="text-left w-full py-1 text-gray-600 hover:text-[#FF7A20] block font-semibold">Telecommunication</button>
+                  <button onClick={() => { handleNavigate("about"); setIsMobileMenuOpen(false); }} className="text-left w-full py-1 text-gray-600 hover:text-[#FF7A20] block font-semibold">Multimedia Solutions</button>
+                </div>
+              )}
+            </div>
+
+            {/* Hardware Store direct link */}
+            <button onClick={() => { handleNavigate("store"); setIsMobileMenuOpen(false); }} className="text-left py-1.5 font-bold hover:text-[#FF7A20] border-b border-gray-100 pb-2">Hardware Store</button>
+            <button onClick={() => { handleNavigate("oems"); setIsMobileMenuOpen(false); }} className="text-left py-1.5 font-bold hover:text-[#FF7A20] border-b border-gray-100 pb-2">OEMs</button>
+            <button onClick={() => { handleNavigate("about"); setIsMobileMenuOpen(false); }} className="text-left py-1.5 font-bold hover:text-[#FF7A20] border-b border-gray-100 pb-2">About Company</button>
+            <button onClick={() => { handleNavigate("contact"); setIsMobileMenuOpen(false); }} className="text-left py-1.5 font-bold hover:text-[#FF7A20] border-b border-gray-100 pb-2">Contact Hub</button>
+            {currentView !== "admin" && (
+              <button onClick={() => { handleNavigate("request-quote"); setIsMobileMenuOpen(false); }} className="text-left text-[#FF7A20] py-1.5 font-bold">Request Quote Forms</button>
+            )}
           </nav>
         </div>
       )}

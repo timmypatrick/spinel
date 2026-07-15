@@ -50,7 +50,7 @@ export default function Cart({ cart, setCart, currency, setCurrentView }: CartPr
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 lg:px-8 py-12 space-y-8" id="cart-view">
+    <div className="max-w-[1536px] mx-auto px-4 lg:px-[47px] py-12 space-y-8" id="cart-view">
       <h1 className="text-2xl font-black text-gray-900 tracking-tight uppercase">Your Project Hardware Cart</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
@@ -62,7 +62,15 @@ export default function Cart({ cart, setCart, currency, setCurrentView }: CartPr
               className="bg-white border border-gray-100 p-5 rounded-xl hover:shadow-md transition flex flex-col sm:flex-row items-center justify-between gap-6"
             >
               <div className="flex items-center space-x-4 min-w-0 flex-1">
-                <img src={item.product.images[0]} alt={item.product.name} className="w-16 h-16 object-cover bg-gray-50 rounded border border-gray-100 shrink-0" referrerPolicy="no-referrer" />
+                <img
+                  src={item.product.images[0]}
+                  alt={item.product.name}
+                  className="w-16 h-16 object-cover bg-gray-50 rounded border border-gray-100 shrink-0"
+                  referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    e.currentTarget.src = "https://i.ibb.co/5WPKmPXS/Avigilon-Generic-500x500-1.png";
+                  }}
+                />
                 <div className="min-w-0">
                   <p className="font-bold text-xs sm:text-sm text-gray-900 truncate">{item.product.name}</p>
                   <p className="text-[10px] text-gray-400 font-mono mt-0.5">SKU: {item.product.sku} | Brand: {item.product.brand}</p>

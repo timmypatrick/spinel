@@ -13,6 +13,7 @@ import Contact from "./pages/Contact";
 import About from "./pages/About";
 import ThankYou from "./pages/ThankYou";
 import AdminDashboard from "./pages/AdminDashboard";
+import CategoryPage from "./pages/CategoryPage";
 
 import { Product, CartItem, UserSession } from "./types";
 
@@ -239,6 +240,16 @@ export default function App() {
             user={user}
             setUser={setUser}
             currency={currency}
+            setCurrentView={setCurrentView}
+          />
+        )}
+
+        {currentView.startsWith("category-") && (
+          <CategoryPage
+            subcategoryName={currentView.substring(9)}
+            currency={currency}
+            addToCart={handleAddToCart}
+            setSelectedProductId={setSelectedProductId}
             setCurrentView={setCurrentView}
           />
         )}

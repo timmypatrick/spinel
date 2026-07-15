@@ -45,7 +45,7 @@ export default function Footer({
     <footer className="w-full bg-gradient-to-r from-gray-900 to-gray-800 text-gray-400 text-sm border-t border-gray-800" id="main-footer">
       {/* Newsletter signup top band */}
       <div className="w-full border-gray-800 py-10">
-        <div className="max-w-7xl mx-auto px-4 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="max-w-[1536px] mx-auto px-4 lg:px-[47px] grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-6">
             <h3 className="text-white font-extrabold text-xl sm:text-2xl leading-tight">Subscribe to Spinel Distribution Briefings</h3>
             <p className="text-gray-300 text-sm sm:text-base mt-2">Get technical datasheets, ATEX regulation guides, and OEM product additions directly to your inbox.</p>
@@ -57,13 +57,13 @@ export default function Footer({
                 <span>Thank you! Your email is enrolled in our Catalog.</span>
               </div>
             ) : (
-              <form onSubmit={handleSubscribe} className="flex gap-2">
+              <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 w-full">
                 <input
                   type="email"
-                  placeholder="Enter your enterprise email address..."
+                  placeholder="Enter your email address..."
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-gray-950 border border-gray-700 text-white placeholder-gray-500 rounded-lg px-4 py-3 text-sm flex-1 focus:outline-none focus:ring-2 focus:ring-[#FF7A20] focus:border-transparent"
+                  className="bg-gray-950 border border-gray-700 text-white placeholder-gray-500 rounded-lg px-4 py-3 text-sm flex-1 focus:outline-none focus:ring-2 focus:ring-[#FF7A20] focus:border-transparent min-w-0"
                   required
                 />
                 <button
@@ -80,7 +80,7 @@ export default function Footer({
       </div>
 
       {/* Main Footer Sitemap Grid */}
-      <div className="max-w-7xl mx-auto px-4 lg:px-8 py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
+      <div className="max-w-[1536px] mx-auto px-4 lg:px-[47px] py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
         {/* Spinel Identity Column */}
         <div className="lg:col-span-4 space-y-4">
           <div className="flex items-center space-x-2">
@@ -173,7 +173,7 @@ export default function Footer({
 
       {/* Compliance & Copyright Bottom */}
       <div className="w-full border-gray-800 py-6 bg-gray-950">
-        <div className="max-w-7xl mx-auto px-4 lg:px-8 flex items-center justify-center text-xs text-gray-500">
+        <div className="max-w-[1536px] mx-auto px-4 lg:px-[47px] flex items-center justify-center text-xs text-gray-500">
           <span className="text-center text-sm">© 2026 Spinel Distribution Limited. All Rights Reserved.</span>
         </div>
       </div>
