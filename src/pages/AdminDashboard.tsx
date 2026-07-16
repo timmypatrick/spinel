@@ -132,10 +132,6 @@ export default function AdminDashboard({
   const [messagesSearch, setMessagesSearch] = useState("");
   const [messagesPage, setMessagesPage] = useState(1);
 
-  // Massive Bulk Upload state variables
-  const [bulkUploadPreview, setBulkUploadPreview] = useState<any[]>([]);
-  const [isUploadingBulk, setIsUploadingBulk] = useState(false);
-
   // Load Admin dashboard statistics and arrays on login
   useEffect(() => {
     if (user && user.role === "admin") {
@@ -431,156 +427,6 @@ export default function AdminDashboard({
   };
 
   // Download massive product upload Excel/CSV template
-  const handleDownloadTemplate = () => {
-    const headers = [
-      "SKU",
-      "Name",
-      "Category",
-      "Description",
-      "Price",
-      "Stock",
-      "Image"
-    ];
-    const sampleRows = [
-      [
-        "DOM-4K-ENT",
-        "Enterprise Dome Camera 4K",
-        "Dome Camera",
-        "High quality 4K dome security camera with infrared night vision.",
-        "299.99",
-        "25",
-        "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=600&auto=format&fit=crop"
-      ],
-      [
-        "PTZ-EX-Z1",
-        "Ex-Proof PTZ Zone 1 Camera",
-        "Ex-CCTV Camera",
-        "Explosion-proof stainless steel PTZ camera certified for Zone 1 and Zone 2 environments.",
-        "1899.00",
-        "8",
-        "https://images.unsplash.com/photo-1557597774-9d273605dfa9?q=80&w=600&auto=format&fit=crop"
-      ]
-    ];
-
-    const csvContent = [
-      headers.join(","),
-      ...sampleRows.map(row => row.map(val => `"${val.replace(/"/g, '""')}"`).join(","))
-    ].join("\n");
-
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.setAttribute("href", url);
-    link.setAttribute("download", "spinel_product_upload_template.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  // Parse Excel / CSV massive uploads using the xlsx package
-  const handleBulkExcelUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (evt) => {
-      try {
-        const bstr = evt.target?.result;
-        const wb = XLSX.read(bstr, { type: "binary" });
-        const wsname = wb.SheetNames[0];
-        const ws = wb.Sheets[wsname];
-        const data = XLSX.utils.sheet_to_json<any>(ws);
-
-        if (!data || data.length === 0) {
-          alert("The Excel / CSV file has no records.");
-          return;
-        }
-
-        // Standardize headers and parse records
-        const parsedProducts = data.map((row) => {
-          const normalizedRow: any = {};
-          Object.keys(row).forEach((key) => {
-            const cleanKey = key.toLowerCase().replace(/[\s_]+/g, "");
-            normalizedRow[cleanKey] = row[key];
-          });
-
-          const sku = normalizedRow.sku || normalizedRow.skucode || normalizedRow.productsku || "";
-          const name = normalizedRow.name || normalizedRow.productname || "";
-          const categoryPage = normalizedRow.category || normalizedRow.subcategory || normalizedRow.page || "";
-          const description = normalizedRow.description || normalizedRow.productdescription || "";
-          const price = normalizedRow.price || normalizedRow.priceusd || normalizedRow.usdprice || 0;
-          const stock = normalizedRow.stock || normalizedRow.quantity || normalizedRow.qty || 10;
-          const image = normalizedRow.image || normalizedRow.images || normalizedRow.imageurl || "";
-
-          // Auto-derive subcategory (specific page name) and category (division name)
-          const subcategoryValue = categoryPage || selectedCategorySection.replace("All Products (", "").replace(")", "") || "Uncategorized";
-          const majorCategoryValue = getCategoryForSubcategory(subcategoryValue);
-
-          return {
-            name,
-            sku,
-            priceUSD: Number(price) || 0,
-            priceNGN: (Number(price) || 0) * 1500,
-            brand: "Spinel",
-            category: majorCategoryValue,
-            subcategory: subcategoryValue,
-            description,
-            image,
-            stock: Number(stock) || 10,
-            productType: "Enterprise"
-          };
-        }).filter(p => p.name && p.sku);
-
-        if (parsedProducts.length === 0) {
-          alert("Could not extract any valid product records (each row must have at least a 'Name' and 'SKU' column).");
-          return;
-        }
-
-        setBulkUploadPreview(parsedProducts);
-      } catch (err) {
-        console.error("Error reading excel file", err);
-        alert("Failed to parse the file. Please ensure it is a valid Excel (.xlsx, .xls) or CSV (.csv) spreadsheet.");
-      }
-    };
-    reader.readAsBinaryString(file);
-    // Reset file input target
-    e.target.value = "";
-  };
-
-  // Commit parsed products to the backend
-  const handleCommitBulkUpload = async () => {
-    if (bulkUploadPreview.length === 0) return;
-    setIsUploadingBulk(true);
-    const token = localStorage.getItem("spinel_token") || "";
-
-    try {
-      const res = await safeFetch("/api/products/bulk", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": token
-        },
-        body: JSON.stringify({ products: bulkUploadPreview })
-      });
-
-      if (res.ok) {
-        const result = await res.json();
-        alert(`Successfully imported ${result.count} products to the catalog!`);
-        setBulkUploadPreview([]);
-        // Re-fetch all data to synchronize states
-        loadCockpitData();
-      } else {
-        const errorData = await res.json();
-        alert(`Seeding failed: ${errorData.error || "Unknown error"}`);
-      }
-    } catch (err) {
-      console.error("Bulk upload commit error", err);
-      alert("A communication error occurred while uploading products.");
-    } finally {
-      setIsUploadingBulk(false);
-    }
-  };
-
   // Redesigned: Fuzzy match product for Category Sections
   const matchProduct = (p: Product, subName: string) => {
     if (subName === "All Products (Store Page)") return true;
@@ -597,7 +443,8 @@ export default function AdminDashboard({
     if (catLower.includes(nameLower) || nameLower.includes(catLower)) return true;
 
     // Specific mapping helpers
-    if (nameLower === "box camera" && (subcatLower.includes("box") || prodNameLower.includes("box"))) return true;
+    if (nameLower === "box camera" && subcatLower === "box-camera") return true; // fallback
+    if (nameLower === "box camera" && subcatLower === "box camera") return true;
     if (nameLower === "dome camera" && (subcatLower.includes("dome") || prodNameLower.includes("dome"))) return true;
     if (nameLower === "bullet camera" && (subcatLower.includes("bullet") || prodNameLower.includes("bullet"))) return true;
     if (nameLower === "ptz camera" && (subcatLower.includes("ptz") || prodNameLower.includes("ptz"))) return true;
@@ -883,103 +730,7 @@ export default function AdminDashboard({
             </div>
           </div>
 
-          {/* Massive CSV / Excel Bulk Upload Panel */}
-          <div className="bg-slate-50 border border-dashed border-slate-300 rounded-xl p-5 space-y-3 shadow-xs">
-            <div className="flex items-center space-x-2 text-gray-900 font-bold text-xs sm:text-sm">
-              <Cpu className="w-4 h-4 text-[#FF7A20]" />
-              <span>Massive Product Upload (.csv)</span>
-            </div>
-            <p className="text-[11px] text-gray-500 max-w-3xl leading-relaxed">
-              Attach an Excel CSV sheet with column headers in the respective order <b>SKU, Name, Category, Description, Price, Stock, Image</b>
-            </p>
 
-            <div className="flex flex-wrap items-center gap-3">
-              <input
-                type="file"
-                accept=".csv"
-                onChange={handleBulkExcelUpload}
-                className="hidden"
-                id="bulk-product-file-input"
-              />
-              <label
-                htmlFor="bulk-product-file-input"
-                className="bg-white hover:bg-gray-50 border border-gray-200 text-gray-700 font-bold text-xs px-4 py-2.5 rounded-lg flex items-center gap-1.5 cursor-pointer shadow-xs"
-              >
-                <FolderEdit className="w-3.5 h-3.5 text-[#FF7A20]" />
-                Choose CSV File
-              </label>
-
-              {/* Template Download Button */}
-              <button
-                type="button"
-                onClick={handleDownloadTemplate}
-                className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs px-4 py-2.5 rounded-lg flex items-center gap-1 cursor-pointer transition"
-              >
-                <FileText className="w-3.5 h-3.5 text-gray-500" />
-                Download Upload Template
-              </button>
-            </div>
-
-            {bulkUploadPreview.length > 0 && (
-              <div className="bg-white border border-slate-200 rounded-lg p-4 space-y-3 mt-3 shadow-sm">
-                <div className="flex items-center justify-between flex-wrap gap-2">
-                  <span className="text-xs font-bold text-emerald-600 flex items-center gap-1">
-                    <CheckCircle className="w-4 h-4 text-emerald-500" /> Ready to Import {bulkUploadPreview.length} Models
-                  </span>
-                  <div className="flex gap-2">
-                    <button
-                      type="button"
-                      onClick={handleCommitBulkUpload}
-                      className="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs px-4 py-2 rounded-lg cursor-pointer flex items-center gap-1.5 transition"
-                      disabled={isUploadingBulk}
-                    >
-                      {isUploadingBulk ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <FileCheck className="w-3.5 h-3.5" />}
-                      <span>Commit Massive Uploads</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setBulkUploadPreview([])}
-                      className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs px-3 py-2 rounded-lg cursor-pointer"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-
-                <div className="max-h-48 overflow-y-auto border border-gray-100 rounded-lg">
-                  <table className="w-full text-left text-[10px] text-gray-600">
-                    <thead className="bg-gray-50 text-gray-400 font-bold uppercase sticky top-0 border-b border-gray-100">
-                      <tr>
-                        <th className="p-2">Name</th>
-                        <th className="p-2">SKU</th>
-                        <th className="p-2 text-right">Price USD</th>
-                        <th className="p-2">Category</th>
-                        <th className="p-2 text-center">Stock</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {bulkUploadPreview.slice(0, 10).map((p, idx) => (
-                        <tr key={idx} className="border-b border-gray-50 hover:bg-gray-50/55">
-                          <td className="p-2 font-bold truncate max-w-[150px]">{p.name}</td>
-                          <td className="p-2 font-mono">{p.sku}</td>
-                          <td className="p-2 text-right font-semibold">${Number(p.priceUSD).toLocaleString()}</td>
-                          <td className="p-2">{p.subcategory || "Default"}</td>
-                          <td className="p-2 text-center">{p.stock || 10}</td>
-                        </tr>
-                      ))}
-                      {bulkUploadPreview.length > 10 && (
-                        <tr>
-                          <td colSpan={5} className="p-2 text-center text-gray-400 italic font-medium bg-gray-50/20">
-                            ... and {bulkUploadPreview.length - 10} more rows
-                          </td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            )}
-          </div>
 
           {/* Search Bar for Supply Inventory */}
           <div className="flex justify-end bg-white border border-gray-100 rounded-xl p-4 shadow-xs">

@@ -74,7 +74,8 @@ const matchProduct = (p: Product, subName: string) => {
   if (catLower.includes(nameLower) || nameLower.includes(catLower)) return true;
 
   // Specific mapping helpers
-  if (nameLower === "box camera" && (subcatLower.includes("box") || prodNameLower.includes("box"))) return true;
+  if (nameLower === "box camera" && subcatLower === "box-camera") return true; // fallback
+  if (nameLower === "box camera" && subcatLower === "box camera") return true;
   if (nameLower === "dome camera" && (subcatLower.includes("dome") || prodNameLower.includes("dome"))) return true;
   if (nameLower === "bullet camera" && (subcatLower.includes("bullet") || prodNameLower.includes("bullet"))) return true;
   if (nameLower === "ptz camera" && (subcatLower.includes("ptz") || prodNameLower.includes("ptz"))) return true;

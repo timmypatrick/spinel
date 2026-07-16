@@ -289,48 +289,6 @@ app.post("/api/products", verifyAdminToken, (req, res) => {
   res.status(201).json(newProd);
 });
 
-// Bulk create products from Excel/CSV uploads
-app.post("/api/products/bulk", verifyAdminToken, (req, res) => {
-  const { products } = req.body;
-  if (!Array.isArray(products)) {
-    return res.status(400).json({ error: "Products array is required" });
-  }
-
-  const added = [];
-  for (const payload of products) {
-    if (!payload.name || !payload.sku || !payload.priceUSD) {
-      continue; 
-    }
-    const newProd = {
-      id: `prod-${Date.now()}-${Math.floor(Math.random() * 100000)}`,
-      sku: String(payload.sku).trim(),
-      name: String(payload.name).trim(),
-      slug: String(payload.name).toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-      brand: payload.brand ? String(payload.brand).trim() : "Spinel Brand",
-      category: payload.category ? String(payload.category).trim() : "Uncategorized",
-      subcategory: payload.subcategory ? String(payload.subcategory).trim() : "",
-      priceUSD: Number(payload.priceUSD) || 0,
-      priceNGN: Number(payload.priceNGN || (Number(payload.priceUSD) || 0) * 1500),
-      description: payload.description ? String(payload.description).trim() : "",
-      images: payload.images && Array.isArray(payload.images) && payload.images.length 
-        ? payload.images 
-        : [payload.image || "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=600&auto=format&fit=crop"],
-      specifications: Array.isArray(payload.specifications) ? payload.specifications : [],
-      stock: Number(payload.stock ?? 10),
-      oem: payload.oem ? String(payload.oem).trim() : (payload.brand ? String(payload.brand).trim() : "Spinel Partners"),
-      productType: payload.productType || "Enterprise",
-      featured: !!payload.featured,
-      popular: !!payload.popular,
-      downloads: Array.isArray(payload.downloads) ? payload.downloads : [],
-      reviews: []
-    };
-    db.products.unshift(newProd);
-    added.push(newProd);
-  }
-
-  res.status(201).json({ success: true, count: added.length, products: added });
-});
-
 app.put("/api/products/:id", verifyAdminToken, (req, res) => {
   const index = db.products.findIndex(p => p.id === req.params.id);
   if (index === -1) {
