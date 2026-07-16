@@ -7,94 +7,94 @@ import { motion, AnimatePresence } from "motion/react";
 
 const STATIC_FLYERS = [
   {
-    title: "Advanced CCTV Cameras",
-    subtitle: "Enterprise-Grade Intelligent Optical Security",
-    badge: "CCTV Cameras & Thermal Optics",
-    description: "ATEX & IECEx certified Zone 1 & 2 explosion-proof and standard dome, bullet, and PTZ cameras. AISI 316L stainless steel for marine & refinery environments.",
-    image: "https://i.ibb.co/BVk0bN2t/9e4bdef3-3007-4a0b-8117-9ea6305be664.png",
-    features: ["Zone 1 & 2 ATEX Certified", "AISI 316L Stainless Steel", "4K UHD with Starlight Low-light"],
-    cta: "Explore Security Cameras"
-  },
-  {
-    title: "Network Video Recorders",
-    subtitle: "Fail-Safe, High-Throughput Network Recording (NVR)",
-    badge: "NVR Storage Solutions",
-    description: "Heavy-duty server-grade video recorders supporting high bandwidth, continuous RAID redundancy, and remote SCADA control room integration.",
-    image: "https://i.ibb.co/ktYSJd0/e4868fd7-d32e-4214-8de2-c1fc8a694adb.png",
-    features: ["Up to 128 Channels RAID 5/6", "4K Synchronous Local Outputs", "Failover Hot-Spare Integration"],
-    cta: "View Storage Systems"
-  },
-  {
-    title: "Smart Hybrid Inverters",
-    subtitle: "High-Yield Three-Phase Grid Sync Systems",
-    badge: "Solar Inverters",
-    description: "Enterprise-grade solar hybrid inverters from 15kW to 500kW+. Seamless transition times (<4ms) with dual high-voltage MPPT efficiency.",
+    title: "LiFePO4 Energy Storage",
+    subtitle: "High-Density Smart Modular Battery Racks",
+    badge: "Lithium Battery Systems",
+    description: "Heavy-duty smart energy storage banks built for heavy-duty industrial backup power, grid stability, and deep daily cycles.",
     image: "https://i.ibb.co/HfTqzX2F/e4b2d89a-614a-4aa3-ae1d-5a6fce9b41a8.png",
-    features: ["98.4% Peak Conversion Yield", "Dual HV MPPT Controllers", "Active Grid Peak Shaving"],
-    cta: "Explore Hybrid Inverters"
-  },
-  {
-    title: "High-Yield Solar Panels",
-    subtitle: "Industrial-Grade Monocrystalline Modules",
-    badge: "Solar PV Panels",
-    description: "Highest conversion rate solar panels engineered for extreme tropical climates, salt-mist coastal deployment, and heavy industrial load demands.",
-    image: "https://i.ibb.co/r2my2CSV/280f3ec5-82a7-449a-8e16-e98cbfcc54cf.png",
-    features: ["Premium N-Type Mono Cells", "PID-free / Salt-Mist Resistant", "25-Year Linear Warranty"],
-    cta: "View Solar Panels"
+    features: ["6000+ Deep Charge Cycles", "Built-in Smart BMS Protection", "Modular Scalable Rack Design"],
+    cta: "View Lithium Storage"
   },
   {
     title: "Heavy-Duty Server Racks",
     subtitle: "IP65/IP66 Weatherproof and Seismic Enclosures",
     badge: "Server Racks & Cabinets",
     description: "Premium wall-mounted and floor-standing network cabinets and outdoor server enclosures with active thermostat ventilation.",
-    image: "https://i.ibb.co/5hsJkdQn/8904010b-d092-473f-af00-8ff01e3de2eb.png",
+    image: "https://i.ibb.co/ktYSJd0/e4868fd7-d32e-4214-8de2-c1fc8a694adb.png",
     features: ["IP65/IP66 Outdoor Dust-Waterproof", "Seismic Load Rated Structures", "Integrated Smart Thermostat Fans"],
     cta: "View Racks & Cabinets"
   },
   {
-    title: "Industrial Junction Boxes",
-    subtitle: "Flameproof and Weatherproof Distribution Hubs",
-    badge: "Junction Boxes & Panels",
-    description: "ATEX explosion-proof and standard IP68 weatherproof junction boxes. Solid impact-resistant GRP and electro-polished stainless steel structures.",
-    image: "https://i.ibb.co/rRw0xbjc/60e4e232-1282-49d7-be3c-524b598bbcee.png",
-    features: ["Zone 1 ATEX Ex-d & Ex-e", "Silicone Gasket IP68 Waterproof", "Pre-machined Custom Cable Entries"],
-    cta: "View Junction Boxes"
+    title: "Ex-Communication System",
+    subtitle: "ATEX Zone 1 Intrinsically Safe VoIP Phones",
+    badge: "Hazardous Communication",
+    description: "Heavy-duty, weather-resistant, flameproof communications equipment engineered for hazardous industries, offshore platforms, and mines.",
+    image: "https://i.ibb.co/BVk0bN2t/9e4bdef3-3007-4a0b-8117-9ea6305be664.png",
+    features: ["Zone 1 ATEX Ex-d certified", "IP66 Weatherproof Enclosure", "Intrinsically Safe Handsets"],
+    cta: "Explore Ex-Communication System"
   },
   {
-    title: "Hybrid Composite Cables",
+    title: "Heavy-Duty Server Racks",
+    subtitle: "IP65/IP66 Weatherproof and Seismic Enclosures",
+    badge: "Server Racks & Cabinets",
+    description: "Premium wall-mounted and floor-standing network cabinets and outdoor server enclosures with active thermostat ventilation.",
+    image: "https://i.ibb.co/r2my2CSV/280f3ec5-82a7-449a-8e16-e98cbfcc54cf.png",
+    features: ["IP65/IP66 Outdoor Dust-Waterproof", "Seismic Load Rated Structures", "Integrated Smart Thermostat Fans"],
+    cta: "View Racks & Cabinets"
+  },
+  {
+    title: "Intelligent PAGA System",
+    subtitle: "IP65/IP66 Weatherproof and Seismic Enclosures",
+    badge: "Enterprise Communication",
+    description: "From emergency announcements to routine communication, our advanced PA/GA systems provide dependable voice distribution, seamless integration, and superior sound quality for every environment.",
+    image: "https://i.ibb.co/5hsJkdQn/8904010b-d092-473f-af00-8ff01e3de2eb.png",
+    features: ["IP65/IP66 Outdoor Dust-Waterproof", "Seismic Load Rated Structures", "Integrated Smart Thermostat Fans"],
+    cta: "View PAGA System"
+  },
+  {
+    title: "One Cable. Multiple Connections",
     subtitle: "Long-Range Fibre Optic & Armoured Power Cabling",
-    badge: "Hybrid Composite & Armoured Cables",
+    badge: "Power • Fiber • Data",
     description: "High-durability combined data and high-voltage composite cables designed for subsea, offshore drilling, and cross-site industrial networks.",
-    image: "https://i.ibb.co/yn19C6Tb/5a45d505-065e-4482-8a37-1d12aeb79b2f.png",
+    image: "https://i.ibb.co/rRw0xbjc/60e4e232-1282-49d7-be3c-524b598bbcee.png",
     features: ["Simultaneous Data + Power", "ATEX / Oil-Resistant Sheathing", "Crush-Proof Steel-Wire Armour"],
     cta: "Explore Custom Cables"
   },
   {
-    title: "Active PoE+ Network Switches",
+    title: "Smart Hybrid Inverters",
+    subtitle: "High-Yield Three-Phase Grid Sync Systems",
+    badge: "Solar Inverters",
+    description: "Enterprise-grade solar hybrid inverters from 15kW to 500kW+. Seamless transition times (<4ms) with dual high-voltage MPPT efficiency.",
+    image: "https://i.ibb.co/yn19C6Tb/5a45d505-065e-4482-8a37-1d12aeb79b2f.png",
+    features: ["98.4% Peak Conversion Yield", "Dual HV MPPT Controllers", "Active Grid Peak Shaving"],
+    cta: "Explore Hybrid Inverters"
+  },
+  {
+    title: "Advanced CCTV & Video Surveillance",
     subtitle: "High-Throughput Ruggedized Telecom Backbone",
-    badge: "Industrial PoE Network Switches",
-    description: "Industrial layer 2/3 active network switches engineered for extreme temperature tolerance and rapid redundant ring failovers.",
+    badge: "24/7 Security Monitoring",
+    description: "Protect your people, property, and operations with high-definition CCTV cameras and intelligent network video recorders that provide real-time monitoring, secure recording, and 24/7 surveillance.",
     image: "https://i.ibb.co/whSbjCv9/0b703286-756a-4685-98ab-d265e609242b.png",
     features: ["IEEE 802.3bt Ultra PoE 90W", "-40°C to 75°C Industrial Grade", "ERPS Ring Recovery <20ms"],
-    cta: "View Network Switches"
+    cta: "View CCTV Camera"
   },
   {
-    title: "LiFePO4 Energy Storage",
-    subtitle: "High-Density Smart Modular Battery Racks",
-    badge: "Lithium Battery Systems",
-    description: "Heavy-duty smart energy storage banks built for heavy-duty industrial backup power, grid stability, and deep daily cycles.",
+    title: "Powering Clear Communication Everywhere",
+    subtitle: "Clear Announcements. Instant Communication",
+    badge: "Smart Audio Communication",
+    description: "Our integrated public address and general address solutions combine premium audio equipment, intelligent control systems, and scalable deployment to deliver reliable communication when it matters most.",
     image: "https://i.ibb.co/vC0RMT4Y/3b427c80-aac2-4909-8394-f5df335427b8.png",
     features: ["6000+ Deep Charge Cycles", "Built-in Smart BMS Protection", "Modular Scalable Rack Design"],
-    cta: "View Lithium Storage"
+    cta: "View PAGA"
   },
   {
-    title: "Explosion-Proof Comms",
-    subtitle: "ATEX Zone 1 Intrinsically Safe VoIP Phones",
-    badge: "Hazardous Communication",
-    description: "Heavy-duty, weather-resistant, flameproof communications equipment engineered for hazardous industries, offshore platforms, and mines.",
+    title: "Network Video Recorders",
+    subtitle: "Fail-Safe, High-Throughput Network Recording (NVR)",
+    badge: "NVR Storage Solutions",
+    description: "Heavy-duty server-grade video recorders supporting high bandwidth, continuous RAID redundancy, and remote SCADA control room integration.",
     image: "https://i.ibb.co/rYdWyVy/1e9363de-2e5d-4f8f-8ad0-c74b346660f2.png",
-    features: ["Zone 1 ATEX Ex-d certified", "IP66 Weatherproof Enclosure", "Intrinsically Safe Handsets"],
-    cta: "Explore Comms Panels"
+    features: ["Up to 128 Channels RAID 5/6", "4K Synchronous Local Outputs", "Failover Hot-Spare Integration"],
+    cta: "View Storage Systems"
   }
 ];
 
