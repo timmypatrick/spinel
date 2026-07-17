@@ -1,7 +1,7 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
 
-const oemBanner = "/src/assets/images/oem_partnership_banner_1784295688244.jpg";
+const oemBanner = "https://i.ibb.co/rKKrgn7J/images-10.png";
 
 interface OemsProps {
   setCurrentView: (view: string) => void;
