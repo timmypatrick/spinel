@@ -20,7 +20,7 @@ const CATEGORY_SECTIONS = [
   "Panoramic Camera",
   "Thermal Camera",
   "Fisheye Camera",
-  "Special Camera",
+  "Camera Bundle",
   "Multi-Sensor Camera",
   "Industrial Switches",
   "Junction Box",
@@ -453,6 +453,12 @@ export default function AdminDashboard({
     if (nameLower === "fisheye camera" && (subcatLower.includes("fisheye") || prodNameLower.includes("fisheye"))) return true;
     if (nameLower === "multi-sensor camera" && (subcatLower.includes("sensor") || prodNameLower.includes("sensor"))) return true;
 
+    if (nameLower === "camera bundle") {
+      if (subcatLower.includes("bundle") || prodNameLower.includes("bundle")) return true;
+      if (subcatLower.includes("panel") || prodNameLower.includes("panel")) return true;
+      if (subcatLower.includes("telephone") || subcatLower.includes("phone") || prodNameLower.includes("phone") || prodNameLower.includes("telephone")) return true;
+    }
+
     if (nameLower === "industrial switches" && (subcatLower.includes("switch") || catLower.includes("telecom") || prodNameLower.includes("switch"))) return true;
     if (nameLower === "junction box" && (subcatLower.includes("junction") || prodNameLower.includes("junction"))) return true;
     if (nameLower === "network video recorders" && (subcatLower.includes("recorder") || prodNameLower.includes("recorder") || prodNameLower.includes("nvr"))) return true;
@@ -461,19 +467,24 @@ export default function AdminDashboard({
     if (nameLower === "paga system" && (subcatLower.includes("paga") || prodNameLower.includes("paga"))) return true;
     if (nameLower === "hybrid composite cable" && (subcatLower.includes("cable") || prodNameLower.includes("cable"))) return true;
 
-    if (nameLower === "industrial solar panels" && (subcatLower.includes("panel") || prodNameLower.includes("panel"))) return true;
+
     if (nameLower === "lithium lifepo4 batteries" && (subcatLower.includes("batter") || prodNameLower.includes("batter") || prodNameLower.includes("lifepo4"))) return true;
     if (nameLower === "smart hybrid inverters" && (subcatLower.includes("inverter") || prodNameLower.includes("inverter"))) return true;
 
-    if (nameLower === "small enclosures" && (subcatLower.includes("small") || subcatLower.includes("enclosure") || prodNameLower.includes("enclosure") || prodNameLower.includes("box"))) return true;
+
     if (nameLower === "it enclosures" && (subcatLower.includes("it") || subcatLower.includes("enclosure") || prodNameLower.includes("enclosure"))) return true;
     if (nameLower === "wall-mounted enclosures" && (subcatLower.includes("wall") || prodNameLower.includes("wall") || prodNameLower.includes("cabinet"))) return true;
     if (nameLower === "server racks" && (subcatLower.includes("rack") || prodNameLower.includes("rack") || prodNameLower.includes("cabinet"))) return true;
 
-    if (nameLower === "ex-telephone" && (subcatLower.includes("telephone") || subcatLower.includes("phone") || prodNameLower.includes("phone") || prodNameLower.includes("telephone"))) return true;
+
     if (nameLower === "ex-sounder" && (subcatLower.includes("sounder") || subcatLower.includes("sounder") || prodNameLower.includes("horn"))) return true;
-    if (nameLower === "ex-cctv camera" && (subcatLower.includes("camera") || prodNameLower.includes("camera"))) return true;
-    if (nameLower === "ex-junction box" && (subcatLower.includes("junction") || prodNameLower.includes("junction"))) return true;
+
+    // Completely removed / disabled pages
+    if (nameLower === "industrial solar panels") return false;
+    if (nameLower === "ex-telephone") return false;
+    if (nameLower === "small enclosures") return false;
+    if (nameLower === "ex-cctv camera") return false;
+    if (nameLower === "ex-junction box") return false;
 
     return false;
   };
@@ -659,7 +670,7 @@ export default function AdminDashboard({
           onClick={() => setActiveTab("quotes")}
           className={`pb-3 border-b-2 transition cursor-pointer ${activeTab === "quotes" ? "border-[#FF7A20] text-gray-900 font-bold" : "border-transparent text-gray-400 hover:text-gray-600"}`}
         >
-          RFP Quote Proposals ({quotes.length})
+          RFQ Proposals ({quotes.length})
         </button>
         <button
           onClick={() => setActiveTab("orders")}
@@ -671,7 +682,7 @@ export default function AdminDashboard({
           onClick={() => setActiveTab("messages")}
           className={`pb-3 border-b-2 transition cursor-pointer ${activeTab === "messages" ? "border-[#FF7A20] text-gray-900 font-bold" : "border-transparent text-gray-400 hover:text-gray-600"}`}
         >
-          Contact tickets ({messages.length})
+          Contact Details ({messages.length})
         </button>
       </div>
 
@@ -679,7 +690,7 @@ export default function AdminDashboard({
       {loading ? (
         <div className="py-24 text-center text-xs font-semibold text-gray-400 flex flex-col items-center justify-center space-y-2">
           <RefreshCw className="w-8 h-8 animate-spin text-[#FF7A20]" />
-          <span>Loading cockpit telemetry...</span>
+          <span>Please wait...</span>
         </div>
       ) : activeTab === "products" ? (
         /* TAB 1: PRODUCT LIST */
@@ -858,7 +869,7 @@ export default function AdminDashboard({
         <div className="space-y-4" id="tab-quotes-content">
           <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-xs flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
-              <h3 className="font-bold text-gray-900 text-sm">RFP Quote Proposals ({searchedQuotes.length})</h3>
+              <h3 className="font-bold text-gray-900 text-sm">RFQ Proposals ({searchedQuotes.length})</h3>
               <p className="text-[11px] text-gray-500">Search and manage client requests for quotes.</p>
             </div>
             {/* Search Input */}
@@ -880,14 +891,14 @@ export default function AdminDashboard({
           </div>
 
           {searchedQuotes.length === 0 ? (
-            <div className="py-12 text-center text-gray-400">No active RFPs found matching search.</div>
+            <div className="py-12 text-center text-gray-400">No active RFQs found matching search.</div>
           ) : (
-            paginatedQuotes.map((q) => (
+            paginatedQuotes.map((q: any) => (
               <div key={q.id} className="bg-white border border-gray-100 p-6 rounded-2xl shadow-xs space-y-4">
                 <div className="flex justify-between items-center pb-2 border-b border-gray-50">
                   <div>
-                    <span className="font-mono text-[10px] bg-orange-50 text-[#FF7A20] font-bold px-2 py-0.5 rounded-sm">RFP Ref: {q.rfqNumber}</span>
-                    <h3 className="font-bold text-sm text-gray-900 mt-1">{q.company}</h3>
+                    <span className="font-mono text-[10px] bg-orange-50 text-[#FF7A20] font-bold px-2 py-0.5 rounded-sm">RFQ Ref: {q.rfqNumber || q.quoteNumber}</span>
+                    <h3 className="font-bold text-sm text-gray-900 mt-1">{q.companyName || q.company || "Enterprise Corp"}</h3>
                   </div>
                   <span className={`text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full ${q.status === "approved" ? "bg-emerald-50 text-emerald-600" : "bg-orange-50 text-[#FF7A20]"}`}>
                     {q.status === "approved" ? "SLA Design Released" : "Awaiting Engineering review"}
@@ -896,30 +907,44 @@ export default function AdminDashboard({
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
                   <div>
                     <span className="text-gray-400 font-bold uppercase text-[9px]">Contact Rep</span>
-                    <p className="font-bold text-gray-900">{q.name}</p>
+                    <p className="font-bold text-gray-900">{q.contactName || q.name || "Representative"}</p>
                     <p className="text-gray-500 text-[10px]">{q.email}</p>
                   </div>
                   <div>
                     <span className="text-gray-400 font-bold uppercase text-[9px]">Project Site Location</span>
-                    <p className="font-bold text-gray-900">{q.location}</p>
+                    <p className="font-bold text-gray-900">{q.location || q.country || "Nigeria"}</p>
                   </div>
+                  {q.budget && (
+                    <div>
+                      <span className="text-gray-400 font-bold uppercase text-[9px]">Assigned Budget</span>
+                      <p className="font-bold text-gray-900">{q.budget}</p>
+                    </div>
+                  )}
                   <div>
-                    <span className="text-gray-400 font-bold uppercase text-[9px]">Assigned Budget</span>
-                    <p className="font-bold text-gray-900">{q.budget}</p>
-                  </div>
-                  <div>
-                    <span className="text-gray-400 font-bold uppercase text-[9px]">Scope Domain</span>
-                    <p className="font-bold text-[#FF7A20]">{q.domain}</p>
+                    <span className="text-gray-400 font-bold uppercase text-[9px]">Scope Division</span>
+                    <p className="font-bold text-[#FF7A20]">{q.domain || "Custom Hardware Specs"}</p>
                   </div>
                 </div>
-                <p className="text-xs text-gray-600 font-sans leading-relaxed bg-gray-50 p-3 rounded-lg border border-gray-200/50">{q.description}</p>
+                {/* Render selected products if they exist (from cart quote request) */}
+                {q.items && q.items.length > 0 && (
+                  <div className="text-[11px] bg-gray-50/50 p-3 rounded-lg border border-gray-100 space-y-1.5">
+                    <p className="font-bold text-gray-400 uppercase text-[9px]">Requested Inventory Items:</p>
+                    {q.items.map((it: any, idx: number) => (
+                      <div key={idx} className="flex justify-between text-gray-700">
+                        <span>• {it.productName}</span>
+                        <span className="font-bold">Qty {it.quantity}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                <p className="text-xs text-gray-600 font-sans leading-relaxed bg-gray-50 p-3 rounded-lg border border-gray-200/50">{q.description || q.message}</p>
                 {q.status !== "approved" && (
                   <div className="flex justify-end pt-2">
                     <button
                       onClick={() => handleApproveQuote(q.id)}
                       className="bg-gray-950 text-white font-bold text-xs px-4 py-2 rounded-lg hover:bg-[#FF7A20] transition cursor-pointer"
                     >
-                      Release Technical Proposal RFP
+                      Release Technical Proposal RFQ
                     </button>
                   </div>
                 )}
@@ -1189,7 +1214,7 @@ export default function AdminDashboard({
         <div className="space-y-4" id="tab-messages-content">
           <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-xs flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
-              <h3 className="font-bold text-gray-900 text-sm">Contact Tickets ({searchedMessages.length})</h3>
+              <h3 className="font-bold text-gray-900 text-sm">Contact Details ({searchedMessages.length})</h3>
               <p className="text-[11px] text-gray-500">Review client messages and contact form submissions.</p>
             </div>
             {/* Search Input */}
@@ -1213,7 +1238,7 @@ export default function AdminDashboard({
           {searchedMessages.length === 0 ? (
             <div className="py-12 text-center text-gray-400">No active customer tickets found matching search.</div>
           ) : (
-            paginatedMessages.map((m) => (
+            paginatedMessages.map((m: any) => (
               <div key={m.id} className="bg-white border border-gray-100 p-5 rounded-xl space-y-2.5 shadow-xs">
                 <div className="flex justify-between text-xs">
                   <div>
@@ -1221,6 +1246,24 @@ export default function AdminDashboard({
                     <span className="text-gray-400 font-semibold ml-2">({m.email})</span>
                   </div>
                   <span className="font-bold text-[#FF7A20] bg-orange-50 px-2 py-0.5 rounded text-[9px]">{m.subject}</span>
+                </div>
+                {/* Extra contact details */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-[10px] text-gray-500 bg-gray-50/50 p-2.5 rounded-lg border border-gray-100 font-mono">
+                  {m.companyName && (
+                    <div>
+                      <span className="text-gray-400">Company:</span> <span className="font-bold text-gray-700">{m.companyName}</span>
+                    </div>
+                  )}
+                  {m.phone && (
+                    <div>
+                      <span className="text-gray-400">Phone:</span> <span className="font-bold text-gray-700">{m.phone}</span>
+                    </div>
+                  )}
+                  {m.address && (
+                    <div className="sm:col-span-1 md:col-span-1">
+                      <span className="text-gray-400">Location:</span> <span className="font-bold text-gray-700">{m.address}, {m.state}, {m.country}</span>
+                    </div>
+                  )}
                 </div>
                 <p className="text-xs text-gray-600 leading-normal font-sans bg-gray-50 p-3 rounded">{m.message}</p>
               </div>

@@ -135,7 +135,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col font-sans select-text selection:bg-orange-100 selection:text-[#FF7A20]" id="app-root">
+    <div className="min-h-screen bg-[#FAF9F6] flex flex-col font-sans select-text selection:bg-orange-100 selection:text-[#FF7A20]" id="app-root">
       {/* 1. Global Navigation Header */}
       <Header
         currentView={currentView}

@@ -45,7 +45,11 @@ export default function CategoryPage({
     if (nameLower === "panoramic camera" && (subcatLower.includes("panoramic") || prodNameLower.includes("panoramic"))) return true;
     if (nameLower === "thermal camera" && (subcatLower.includes("thermal") || prodNameLower.includes("thermal"))) return true;
     if (nameLower === "fisheye camera" && (subcatLower.includes("fisheye") || prodNameLower.includes("fisheye"))) return true;
-    if (nameLower === "special camera" && (subcatLower.includes("special") || prodNameLower.includes("special"))) return true;
+    if (nameLower === "camera bundle") {
+      if (subcatLower.includes("bundle") || prodNameLower.includes("bundle")) return true;
+      if (subcatLower.includes("panel") || prodNameLower.includes("panel")) return true;
+      if (subcatLower.includes("telephone") || subcatLower.includes("phone") || prodNameLower.includes("phone") || prodNameLower.includes("telephone")) return true;
+    }
     if (nameLower === "multi-sensor camera" && (subcatLower.includes("sensor") || prodNameLower.includes("sensor"))) return true;
 
     if (nameLower === "industrial switches" && (subcatLower.includes("switch") || catLower.includes("telecom") || prodNameLower.includes("switch"))) return true;
@@ -56,19 +60,24 @@ export default function CategoryPage({
     if (nameLower === "paga system" && (subcatLower.includes("paga") || prodNameLower.includes("paga"))) return true;
     if (nameLower === "hybrid composite cable" && (subcatLower.includes("cable") || prodNameLower.includes("cable"))) return true;
 
-    if (nameLower === "industrial solar panels" && (subcatLower.includes("panel") || prodNameLower.includes("panel"))) return true;
+
     if (nameLower === "lithium lifepo4 batteries" && (subcatLower.includes("batter") || prodNameLower.includes("batter") || prodNameLower.includes("lifepo4"))) return true;
     if (nameLower === "smart hybrid inverters" && (subcatLower.includes("inverter") || prodNameLower.includes("inverter"))) return true;
 
-    if (nameLower === "small enclosures" && (subcatLower.includes("small") || subcatLower.includes("enclosure") || prodNameLower.includes("enclosure") || prodNameLower.includes("box"))) return true;
+
     if (nameLower === "it enclosures" && (subcatLower.includes("it") || subcatLower.includes("enclosure") || prodNameLower.includes("enclosure"))) return true;
     if (nameLower === "wall-mounted enclosures" && (subcatLower.includes("wall") || prodNameLower.includes("wall") || prodNameLower.includes("cabinet"))) return true;
     if (nameLower === "server racks" && (subcatLower.includes("rack") || prodNameLower.includes("rack") || prodNameLower.includes("cabinet"))) return true;
 
-    if (nameLower === "ex-telephone" && (subcatLower.includes("telephone") || subcatLower.includes("phone") || prodNameLower.includes("phone") || prodNameLower.includes("telephone"))) return true;
+
     if (nameLower === "ex-sounder" && (subcatLower.includes("sounder") || prodNameLower.includes("sounder") || prodNameLower.includes("horn"))) return true;
-    if (nameLower === "ex-cctv camera" && (subcatLower.includes("camera") || prodNameLower.includes("camera"))) return true;
-    if (nameLower === "ex-junction box" && (subcatLower.includes("junction") || prodNameLower.includes("junction"))) return true;
+
+    // Completely removed / disabled pages
+    if (nameLower === "industrial solar panels") return false;
+    if (nameLower === "ex-telephone") return false;
+    if (nameLower === "small enclosures") return false;
+    if (nameLower === "ex-cctv camera") return false;
+    if (nameLower === "ex-junction box") return false;
 
     return false;
   };
@@ -171,7 +180,7 @@ export default function CategoryPage({
       {loading ? (
         <div className="py-24 text-center text-xs font-semibold text-gray-400 flex flex-col items-center justify-center space-y-2">
           <RefreshCw className="w-8 h-8 animate-spin text-[#FF7A20]" />
-          <span>Synchronizing telemetry with central distribution ledger...</span>
+          <span>Please wait...</span>
         </div>
       ) : filteredProducts.length === 0 ? (
         <div className="bg-gray-50 border border-gray-100 p-12 text-center rounded-2xl">

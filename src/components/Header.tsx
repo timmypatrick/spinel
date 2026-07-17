@@ -264,7 +264,7 @@ export default function Header({
                     <li><button onClick={() => { handleNavigate("category-Panoramic Camera"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Panoramic Camera</button></li>
                     <li><button onClick={() => { handleNavigate("category-Thermal Camera"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Thermal Camera</button></li>
                     <li><button onClick={() => { handleNavigate("category-Fisheye Camera"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Fisheye Camera</button></li>
-                    <li><button onClick={() => { handleNavigate("category-Special Camera"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Special Camera</button></li>
+                    <li><button onClick={() => { handleNavigate("category-Camera Bundle"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Camera Bundle</button></li>
                     <li><button onClick={() => { handleNavigate("category-Multi-Sensor Camera"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Multi-Sensor Camera</button></li>
                   </ul>
                 </div>
@@ -503,7 +503,7 @@ export default function Header({
                         <button onClick={() => { handleNavigate("category-Panoramic Camera"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Panoramic Camera</button>
                         <button onClick={() => { handleNavigate("category-Thermal Camera"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Thermal Camera</button>
                         <button onClick={() => { handleNavigate("category-Fisheye Camera"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Fisheye Camera</button>
-                        <button onClick={() => { handleNavigate("category-Special Camera"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Special Camera</button>
+                        <button onClick={() => { handleNavigate("category-Camera Bundle"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Camera Bundle</button>
                         <button onClick={() => { handleNavigate("category-Multi-Sensor Camera"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Multi-Sensor Camera</button>
                       </div>
                     )}

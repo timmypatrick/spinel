@@ -5,6 +5,11 @@ export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    companyName: "",
+    phone: "",
+    address: "",
+    state: "",
+    country: "",
     subject: "Catalog Request",
     message: ""
   });
@@ -23,7 +28,17 @@ export default function Contact() {
       });
       if (res.ok) {
         setSuccess(true);
-        setFormData({ name: "", email: "", subject: "Catalog Request", message: "" });
+        setFormData({
+          name: "",
+          email: "",
+          companyName: "",
+          phone: "",
+          address: "",
+          state: "",
+          country: "",
+          subject: "Catalog Request",
+          message: ""
+        });
       }
     } catch (err) {
       console.error("Contact form error", err);
@@ -118,6 +133,67 @@ export default function Contact() {
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       required
                       placeholder="representative@domain.com"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:border-[#FF7A20]"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="text-gray-500 font-semibold">Company Name <span className="text-gray-400 text-[10px] font-normal">(Optional)</span></label>
+                    <input
+                      type="text"
+                      value={formData.companyName}
+                      onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+                      placeholder="Enterprise Corp"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:border-[#FF7A20]"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-gray-500 font-semibold">Phone Number</label>
+                    <input
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      required
+                      placeholder="+234 803 123 4567"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:border-[#FF7A20]"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-gray-500 font-semibold">Address</label>
+                  <input
+                    type="text"
+                    value={formData.address}
+                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                    required
+                    placeholder="Plot 15, Trans-Amadi Industrial Layout"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:border-[#FF7A20]"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="text-gray-500 font-semibold">State</label>
+                    <input
+                      type="text"
+                      value={formData.state}
+                      onChange={(e) => setFormData({ ...formData, state: e.target.value })}
+                      required
+                      placeholder="Rivers State"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:border-[#FF7A20]"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-gray-500 font-semibold">Country</label>
+                    <input
+                      type="text"
+                      value={formData.country}
+                      onChange={(e) => setFormData({ ...formData, country: e.target.value })}
+                      required
+                      placeholder="Nigeria"
                       className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:border-[#FF7A20]"
                     />
                   </div>

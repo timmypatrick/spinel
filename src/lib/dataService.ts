@@ -10,7 +10,7 @@ export function getLocalProducts(): Product[] {
   }
   try {
     const parsed = JSON.parse(stored);
-    if (!Array.isArray(parsed) || parsed.length < INITIAL_PRODUCTS.length) {
+    if (!Array.isArray(parsed) || parsed.length !== INITIAL_PRODUCTS.length || parsed.some(p => p.priceUSD === 0)) {
       localStorage.setItem("spinel_products", JSON.stringify(INITIAL_PRODUCTS));
       return INITIAL_PRODUCTS;
     }
@@ -148,7 +148,14 @@ export async function safeFetch(input: RequestInfo | URL, init?: RequestInit): P
 
       // GET ALL PRODUCTS (supports query params simulation)
       if (method === "GET") {
-        let list = [...products];
+        let list = products.filter(p => p.priceUSD > 0);
+        
+        // Fisher-Yates Shuffle
+        for (let i = list.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [list[i], list[j]] = [list[j], list[i]];
+        }
+
         try {
           // Parse relative queries using a dummy origin
           const urlObj = new URL(urlStr, "http://localhost");

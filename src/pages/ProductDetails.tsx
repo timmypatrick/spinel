@@ -161,7 +161,7 @@ export default function ProductDetails({
 
           <div className="p-4 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between">
             <div>
-              <span className="text-[10px] text-gray-400 font-bold uppercase">Dealer Distribution Price</span>
+              <span className="text-[10px] text-gray-400 font-bold uppercase">Distribution Price</span>
               <p className="text-2xl font-black text-[#FF7A20] leading-none mt-1">
                 {currency === "USD" ? `$${product.priceUSD.toLocaleString()}` : `₦${product.priceNGN.toLocaleString()}`}
               </p>

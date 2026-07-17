@@ -64,43 +64,14 @@ const db = {
       totalUSD: 14500,
       totalNGN: 21750000,
       items: [
-        { productId: "sp-sol-bat-10", productName: "Spinel Titan-X 50kWh Lithium Iron Phosphate (LiFePO4) Power Storage System", sku: "SP-TITAN-L50", quantity: 1, priceUSD: 14500, priceNGN: 21750000 }
+        { productId: "sp-sol-bat-10", productName: "Spinel Titan-X 50kWh Lithium Iron Phosphate (LiFePO4) Power Storage System", sku: "SP-TITAN-L50", quantity: 1, priceUSD: 1450, priceNGN: 21750000 }
       ],
       billingAddress: { fullName: "Tim Patrick", email: "timi.patrick@dataset.ng", phone: "+2347069876543", addressLine1: "Plot 104, Industrial Layout", city: "Port Harcourt", state: "Rivers", country: "Nigeria" },
       shippingAddress: { fullName: "Tim Patrick", email: "timi.patrick@dataset.ng", phone: "+2347069876543", addressLine1: "Plot 104, Industrial Layout", city: "Port Harcourt", state: "Rivers", country: "Nigeria" }
     }
   ],
-  quotes: [
-    {
-      id: "qt-1",
-      quoteNumber: "SP-QT-2026-1001",
-      companyName: "Chevron Nigeria Limited",
-      contactName: "Engr. Sandra Nduka",
-      email: "snduka@chevron.com",
-      phone: "+2348055551212",
-      country: "Nigeria",
-      items: [
-        { productId: "sp-ex-dome-01", productName: "SpinelShield ATEX Explosion-Proof Dome Camera", quantity: 12 },
-        { productName: "Zone 1 Fiber Splicing Box", quantity: 2 }
-      ],
-      message: "We require ATEX Zone 1 standard dome cameras for our offshore platform Escravos expansion project. Please include heavy-duty mounting arms and 100m armoured hybrid composite fiber cable for each camera terminal.",
-      status: "Pending",
-      createdAt: "2026-07-10T11:45:00Z"
-    }
-  ],
-  messages: [
-    {
-      id: "msg-1",
-      name: "Alhaji Ibrahim Musa",
-      email: "imusa@kanoelectrics.com",
-      phone: "+2348123456789",
-      companyName: "Kano Electrics Ltd",
-      subject: "OEM Distribution Partnership",
-      message: "We are interested in distributing Spinel's range of explosion-proof electrical junction boxes and solar charge controllers in the Northern region of Nigeria. Kindly let us know your dealer requirements.",
-      status: "Unread",
-      createdAt: "2026-07-11T09:12:00Z"
-    }
-  ],
+  quotes: [],
+  messages: [],
   subscribers: [],
   users: [
     {
@@ -150,8 +121,9 @@ function loadDb() {
           db.products = Array.from(map.values());
         }
         if (Array.isArray(parsed.orders)) db.orders = parsed.orders;
-        if (Array.isArray(parsed.quotes)) db.quotes = parsed.quotes;
-        if (Array.isArray(parsed.messages)) db.messages = parsed.messages;
+        // Force clean start by removing previous details as requested
+        db.quotes = [];
+        db.messages = [];
         if (Array.isArray(parsed.subscribers)) db.subscribers = parsed.subscribers;
         if (Array.isArray(parsed.users)) db.users = parsed.users;
         
@@ -202,7 +174,13 @@ function verifyAdminToken(req: express.Request, res: express.Response, next: exp
 
 // 1. API: Products CRUD
 app.get("/api/products", (req, res) => {
-  let list = [...db.products];
+  let list = db.products.filter(p => p.priceUSD > 0);
+
+  // Fisher-Yates Shuffle
+  for (let i = list.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [list[i], list[j]] = [list[j], list[i]];
+  }
 
   // Search filter
   if (req.query.search) {
@@ -330,21 +308,51 @@ app.delete("/api/products/:id", verifyAdminToken, (req, res) => {
 
 // 2. API: Quotes Endpoint
 app.post("/api/quotes", (req, res) => {
-  const { companyName, contactName, email, phone, country, items, message } = req.body;
-  if (!companyName || !contactName || !email || !items || !items.length) {
+  const {
+    companyName,
+    contactName,
+    email,
+    phone,
+    country,
+    items,
+    message,
+    company,
+    name,
+    location,
+    domain,
+    description
+  } = req.body;
+
+  const finalCompanyName = companyName || company || "Individual/Non-Company";
+  const finalContactName = contactName || name || "No Name Provided";
+  const finalEmail = email;
+  const finalPhone = phone || "";
+  const finalCountry = country || "Nigeria";
+  const finalLocation = location || "";
+  const finalDomain = domain || "";
+  const finalDescription = description || message || "";
+
+  if (!finalCompanyName || !finalContactName || !finalEmail) {
     return res.status(400).json({ error: "Missing required quote registration fields" });
   }
+
+  const finalItems = Array.isArray(items) ? items : [
+    { productName: `Custom Design Project Request [${finalDomain}]`, quantity: 1 }
+  ];
 
   const newQuote = {
     id: `qt-${Date.now()}`,
     quoteNumber: `SP-QT-2026-${Math.floor(1000 + Math.random() * 9000)}`,
-    companyName,
-    contactName,
-    email,
-    phone: phone || "",
-    country: country || "Nigeria",
-    items,
-    message: message || "",
+    rfqNumber: `RFQ-2026-${Math.floor(1000 + Math.random() * 9000)}`, // Support UI success tracking
+    companyName: finalCompanyName,
+    contactName: finalContactName,
+    email: finalEmail,
+    phone: finalPhone,
+    country: finalCountry,
+    location: finalLocation,
+    domain: finalDomain,
+    items: finalItems,
+    message: finalDescription,
     status: "Pending" as const,
     createdAt: new Date().toISOString()
   };
@@ -486,7 +494,7 @@ app.put("/api/orders/:id", verifyAdminToken, (req, res) => {
 
 // 4. API: Contact Submissions & Newsletters
 app.post("/api/contact", (req, res) => {
-  const { name, email, phone, companyName, subject, message } = req.body;
+  const { name, email, phone, companyName, address, state, country, subject, message } = req.body;
   if (!name || !email || !subject || !message) {
     return res.status(400).json({ error: "Missing required contact form fields" });
   }
@@ -497,6 +505,9 @@ app.post("/api/contact", (req, res) => {
     email,
     phone: phone || "",
     companyName: companyName || "",
+    address: address || "",
+    state: state || "",
+    country: country || "",
     subject,
     message,
     status: "Unread" as const,

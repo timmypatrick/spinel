@@ -14,8 +14,6 @@ export default function RequestQuote({ currency, setCurrentView }: RequestQuoteP
     phone: "",
     location: "",
     domain: "Security surveillance",
-    budget: "$10,000 - $50,000",
-    timeline: "Immediate (Within 30 Days)",
     description: ""
   });
   const [files, setFiles] = useState<File[]>([]);
@@ -115,7 +113,7 @@ export default function RequestQuote({ currency, setCurrentView }: RequestQuoteP
           <h3 className="font-bold text-sm text-gray-900 border-b border-gray-100 pb-2 uppercase tracking-wider">1. Organization Details</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-gray-500 font-semibold">Company / Institution Name</label>
+              <label className="text-gray-500 font-semibold">Company Name</label>
               <input
                 type="text"
                 name="company"
@@ -127,7 +125,7 @@ export default function RequestQuote({ currency, setCurrentView }: RequestQuoteP
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-gray-500 font-semibold">Authorized Representative</label>
+              <label className="text-gray-500 font-semibold">Representative</label>
               <input
                 type="text"
                 name="name"
@@ -139,7 +137,7 @@ export default function RequestQuote({ currency, setCurrentView }: RequestQuoteP
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-gray-500 font-semibold">Technical Email Address</label>
+              <label className="text-gray-500 font-semibold">Email Address</label>
               <input
                 type="email"
                 name="email"
@@ -151,7 +149,7 @@ export default function RequestQuote({ currency, setCurrentView }: RequestQuoteP
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-gray-500 font-semibold">Project Location / Zone</label>
+              <label className="text-gray-500 font-semibold">Location Address</label>
               <input
                 type="text"
                 name="location"
@@ -168,47 +166,20 @@ export default function RequestQuote({ currency, setCurrentView }: RequestQuoteP
         {/* Step 2: Technical Specifications Scope */}
         <div className="space-y-4 pt-4">
           <h3 className="font-bold text-sm text-gray-900 border-b border-gray-100 pb-2 uppercase tracking-wider">2. Technical Scope Specifications</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="space-y-1.5">
-              <label className="text-gray-500 font-semibold">Core Business Division</label>
-              <select
-                name="domain"
-                value={formData.domain}
-                onChange={handleInputChange}
-                className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none"
-              >
-                <option value="Security surveillance">Electronic Security Matrix</option>
-                <option value="Solar Microgrid">Renewable Solar Microgrid</option>
-                <option value="Server Racks">Telecom Racks & Structures</option>
-                <option value="Harzardous Comms">ATEX Certified VoIP intercoms</option>
-              </select>
-            </div>
-            <div className="space-y-1.5">
-              <label className="text-gray-500 font-semibold">Assigned Budget Scope</label>
-              <select
-                name="budget"
-                value={formData.budget}
-                onChange={handleInputChange}
-                className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none"
-              >
-                <option value="$10,000 - $50,000">$10,000 - $50,000 USD (SME Scale)</option>
-                <option value="$50,000 - $250,000">$50,000 - $250,000 USD (Regional Hub)</option>
-                <option value="$250,000+">$250,000+ USD (Enterprise Master Plan)</option>
-              </select>
-            </div>
-            <div className="space-y-1.5">
-              <label className="text-gray-500 font-semibold">Expected Deployment Window</label>
-              <select
-                name="timeline"
-                value={formData.timeline}
-                onChange={handleInputChange}
-                className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none"
-              >
-                <option value="Immediate">Immediate (Within 30 Days)</option>
-                <option value="Next Quarter">Next Quarter Planning</option>
-                <option value="Tendering Phase">Active Bidding Tendering</option>
-              </select>
-            </div>
+          
+          <div className="space-y-1.5">
+            <label className="text-gray-500 font-semibold">Core Business Division</label>
+            <select
+              name="domain"
+              value={formData.domain}
+              onChange={handleInputChange}
+              className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none"
+            >
+              <option value="Security surveillance">Electronic Security Matrix</option>
+              <option value="Solar Microgrid">Renewable Solar Microgrid</option>
+              <option value="Server Racks">Telecom Racks & Structures</option>
+              <option value="Harzardous Comms">ATEX Certified VoIP intercoms</option>
+            </select>
           </div>
 
           <div className="space-y-1.5">
