@@ -48,7 +48,7 @@ export function VortexParticlesCanvas() {
           speed: (0.003 + Math.random() * 0.012) * (Math.random() > 0.5 ? 1 : -1),
           // Spiral inward velocity
           radialSpeed: 0.12 + Math.random() * 0.55,
-          size: 0.3 + Math.random() * 0.7, // Physically smaller tiny dots
+          size: 0.12 + Math.random() * 0.28, // Super tiny delicate glowing dots
           opacity: 0.15 + Math.random() * 0.8,
           hue: Math.random() > 0.85 ? 18 : Math.random() > 0.4 ? 26 : 34, // Warm orange hues
           pulseSpeed: 1.2 + Math.random() * 2.5,

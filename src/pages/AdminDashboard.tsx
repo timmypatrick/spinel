@@ -547,7 +547,7 @@ export default function AdminDashboard({
   // Login Panel Screen if not authenticated
   if (!user || user.role !== "admin") {
     return (
-      <div className="max-w-md mx-auto px-4 py-24" id="admin-login-screen">
+      <div className="max-w-md mx-auto px-4 lg:px-[70px] md:px-[70px] py-24" id="admin-login-screen">
         <div className="bg-white border border-gray-100 p-8 rounded-2xl shadow-2xl space-y-6">
           <div className="text-center space-y-1.5">
             <img
@@ -625,7 +625,7 @@ export default function AdminDashboard({
   }
 
   return (
-    <div className="max-w-[1536px] mx-auto px-4 lg:px-[52px] py-10 space-y-10" id="admin-cockpit-view">
+    <div className="max-w-[1536px] mx-auto px-4 lg:px-[70px] md:px-[70px] py-10 space-y-10" id="admin-cockpit-view">
       {/* Cockpit Title Banner */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-gray-950 text-white p-6 rounded-2xl">
         <div className="flex items-center space-x-3">
@@ -935,6 +935,25 @@ export default function AdminDashboard({
                         <span className="font-bold">Qty {it.quantity}</span>
                       </div>
                     ))}
+                  </div>
+                )}
+                {q.files && q.files.length > 0 && (
+                  <div className="text-[11px] bg-gray-50/50 p-3 rounded-lg border border-gray-100 space-y-1.5">
+                    <p className="font-bold text-gray-400 uppercase text-[9px]">Annex & Engineering Drawings ({q.files.length}):</p>
+                    <div className="flex flex-wrap gap-2">
+                      {q.files.map((file: any, idx: number) => (
+                        <a
+                          key={idx}
+                          href={file.data}
+                          download={file.name}
+                          className="inline-flex items-center space-x-1.5 bg-white border border-gray-200 hover:border-orange-200 px-2.5 py-1.5 rounded-lg text-[10px] font-bold text-gray-700 transition"
+                        >
+                          <FileText className="w-3.5 h-3.5 text-[#FF7A20] shrink-0" />
+                          <span className="underline max-w-[150px] truncate">{file.name}</span>
+                          <span className="text-gray-400 text-[8px]">({(file.size / (1024 * 1024)).toFixed(2)} MB)</span>
+                        </a>
+                      ))}
+                    </div>
                   </div>
                 )}
                 <p className="text-xs text-gray-600 font-sans leading-relaxed bg-gray-50 p-3 rounded-lg border border-gray-200/50">{q.description || q.message}</p>

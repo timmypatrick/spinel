@@ -39,15 +39,49 @@ export default function RequestQuote({ currency, setCurrentView }: RequestQuoteP
     }
   };
 
+  const fileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
   const handleSubmitQuote = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
+      const serializedFiles = await Promise.all(
+        files.map(async (f) => {
+          try {
+            const base64 = await fileToBase64(f);
+            return {
+              name: f.name,
+              size: f.size,
+              type: f.type,
+              data: base64
+            };
+          } catch (err) {
+            console.error("Error reading file", f.name, err);
+            return {
+              name: f.name,
+              size: f.size,
+              type: f.type,
+              data: ""
+            };
+          }
+        })
+      );
+
       const res = await fetch("/api/quotes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({
+          ...formData,
+          files: serializedFiles
+        })
       });
 
       if (!res.ok) {
@@ -97,7 +131,7 @@ export default function RequestQuote({ currency, setCurrentView }: RequestQuoteP
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12 space-y-10" id="request-quote-view">
+    <div className="max-w-4xl mx-auto px-4 lg:px-[70px] md:px-[70px] py-12 space-y-10" id="request-quote-view">
       <div className="text-center space-y-2">
         <div className="inline-flex items-center space-x-1.5 bg-orange-50 border border-orange-100 px-3 py-1 rounded-full text-xs text-[#FF7A20] font-semibold">
           <Sparkles className="w-4.5 h-4.5 animate-pulse" />

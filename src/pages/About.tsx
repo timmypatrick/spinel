@@ -59,7 +59,7 @@ export default function About() {
   ];
 
   return (
-    <div className="max-w-[1536px] mx-auto px-4 lg:px-[52px] py-12 space-y-16" id="about-view">
+    <div className="max-w-[1536px] mx-auto px-4 lg:px-[70px] md:px-[70px] py-12 space-y-16" id="about-view">
       {/* Company Mission/Vision Intro */}
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div className="lg:col-span-7 space-y-6">

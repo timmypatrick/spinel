@@ -87,7 +87,7 @@ export default function ProductDetails({
   };
 
   return (
-    <div className="max-w-[1536px] mx-auto px-4 lg:px-[47px] py-10 space-y-12" id="product-details-view">
+    <div className="max-w-[1536px] mx-auto px-4 lg:px-[70px] md:px-[70px] py-10 space-y-12" id="product-details-view">
       {/* Breadcrumb Row */}
       <nav className="flex items-center space-x-2 text-xs text-gray-500 font-semibold" id="product-breadcrumbs">
         <button onClick={() => setCurrentView("home")} className="hover:text-[#FF7A20]">Portal Home</button>

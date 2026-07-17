@@ -120,7 +120,7 @@ export default function CategoryPage({
   const paginatedProducts = filteredProducts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
-    <div className="max-w-[1536px] mx-auto px-4 lg:px-[52px] py-10 space-y-8" id="category-page">
+    <div className="max-w-[1536px] mx-auto px-4 lg:px-[70px] md:px-[70px] py-10 space-y-8" id="category-page">
       {/* Back button & SEO title section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <button

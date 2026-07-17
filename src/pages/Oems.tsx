@@ -9,12 +9,12 @@ interface OemsProps {
 
 const OEMS_LIST = [
   {
-    name: "Fortinet Security",
+    name: "Ubiquity Networks",
     image: "https://i.ibb.co/gFc4WVxZ/images-13.png",
     description: "Industry-leading enterprise cybersecurity solutions designed to deliver unified protection and deep visibility across critical network infrastructures."
   },
   {
-    name: "Legrand Systems",
+    name: "Technovideo",
     image: "https://i.ibb.co/5xSR8hBw/images-12.png",
     description: "Specialized building network architectures, high-quality wiring systems, and professional cable management designs for robust enterprise facilities."
   },
@@ -24,37 +24,37 @@ const OEMS_LIST = [
     description: "World-class ICT infrastructure, cloud computing hardware, and advanced smart device systems built for modern telecommunications operators."
   },
   {
-    name: "Leviton Network Solutions",
+    name: "Hikvision",
     image: "https://i.ibb.co/rKKrgn7J/images-10.png",
     description: "Comprehensive structured cabling systems and robust connectivity solutions designed to optimize high-performance corporate data centers."
   },
   {
-    name: "Panduit Infrastructure",
+    name: "Gennex",
     image: "https://i.ibb.co/zwxkR6g/Logo-2.png",
     description: "Global manufacturer of high-end physical infrastructure, network cabling, and industrial electrical systems for maximum operational efficiency."
   },
   {
-    name: "Corning Optical Systems",
+    name: "Dahua",
     image: "https://i.ibb.co/21yZtrQV/logo-1.png",
     description: "A pioneer in optical science, producing world-leading fiber optic cabling and premium hardware systems for high-bandwidth networks."
   },
   {
-    name: "Nexans Cable Systems",
+    name: "Cambium Networks",
     image: "https://i.ibb.co/YFYsvYyT/images-9.png",
     description: "Advanced electrical cabling and power transmission systems engineered for heavy industry, telecom, and critical energy projects."
   },
   {
-    name: "R&M Swiss Connectivity",
+    name: "Cisco",
     image: "https://i.ibb.co/BR1Szky/images-8.png",
     description: "Swiss-quality structured cabling systems and high-density copper/fiber connections that power enterprise digital communications."
   },
   {
-    name: "Siemens Automation",
+    name: "Sophos",
     image: "https://i.ibb.co/pjwrzySb/images-7.png",
     description: "A global engineering giant delivering cutting-edge industrial automation controllers and smart grid electrical systems."
   },
   {
-    name: "Prysmian Group",
+    name: "DELL Technologies",
     image: "https://i.ibb.co/Mk8tZFRb/images-6.png",
     description: "The global leader in energy and telecom cable solutions, specialized for complex marine, underground, and industrial applications."
   },
@@ -127,7 +127,7 @@ const OEMS_LIST = [
 
 export default function Oems({ setCurrentView }: OemsProps) {
   return (
-    <div className="bg-transparent min-h-screen py-12 px-4 sm:px-6 lg:px-[52px]" id="oems-page">
+    <div className="bg-transparent min-h-screen py-12 px-4 sm:px-6 lg:px-[70px] md:px-[70px]" id="oems-page">
       {/* Injecting marquee animation rules */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes marquee {
@@ -148,14 +148,11 @@ export default function Oems({ setCurrentView }: OemsProps) {
         {/* Page Header */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center bg-gray-50 p-6 sm:p-8 lg:p-10 rounded-3xl border border-gray-100">
           <div className="lg:col-span-7 space-y-4 text-left">
-            <div className="inline-block bg-orange-50 text-[#FF7A20] font-mono text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-              Strategic Alliance Ecosystem
-            </div>
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 tracking-tight leading-tight uppercase">
-              Represented <span className="text-[#FF7A20]">OEM</span> Partners
+              Global <span className="text-[#FF7A20]">OEM</span> Partners
             </h1>
             <p className="text-gray-600 text-xs sm:text-sm leading-relaxed font-sans">
-              Spinel Distribution collaborate with globally recognized Original Equipment Manufacturers (OEMs) to deliver reliable, innovative, and industry-leading technology solutions. Our strategic partnerships enable us to provide authentic products, cutting-edge innovations, and comprehensive technical support across ICT, electronic security, telecommunications, networking, power, and industrial infrastructure. By working closely with trusted OEMs, we ensure our customers receive certified solutions that meet international quality standards, backed by expert guidance, warranty support, and dependable after-sales service.
+              Spinel Distribution collaborate with globally recognized Original Equipment Manufacturers (OEMs) to deliver reliable, innovative, and industry-best practice. Our strategic partnerships enable us to provide authentic products, cutting-edge innovations, and comprehensive technical support across ICT, electronic security, telecommunications, networking, renewable energy, and industrial infrastructure. By working closely with trusted OEMs, we ensure our customers receive reliable products that meet international quality standards, backed by expert guidance, warranty support, and dependable after-sales support.
             </p>
           </div>
           <div className="lg:col-span-5">
@@ -174,7 +171,7 @@ export default function Oems({ setCurrentView }: OemsProps) {
         {/* 23 Partners Grid */}
         <div className="space-y-6">
           <div className="border-b border-gray-100 pb-4">
-            <h2 className="text-xl font-bold text-gray-900 uppercase tracking-tight">Our Authorized Manufacturers</h2>
+            <h2 className="text-xl font-bold text-gray-900 uppercase tracking-tight">Our Manufacturers</h2>
             <p className="text-sm text-gray-500">Feel free to contact our Expertise Desk for official quotes, project designs, and technical support.</p>
           </div>
 
@@ -224,7 +221,7 @@ export default function Oems({ setCurrentView }: OemsProps) {
           <div className="text-center space-y-1.5">
             <span className="text-[10px] text-orange-500 font-bold uppercase tracking-widest">Enterprise Alignment</span>
             <h2 className="text-lg sm:text-xl font-bold uppercase tracking-tight text-gray-900">Strategic Brand Portfolio</h2>
-            <p className="text-xs text-gray-500 max-w-2xl mx-auto">Explore the premium manufacturers integrated within our high-performance client solutions.</p>
+            <p className="text-sm text-gray-500 max-w-2xl mx-auto">Explore the premium manufacturers integrated within our high-performance client solutions.</p>
           </div>
 
           <div className="overflow-hidden relative bg-gray-50/80 border border-gray-100 py-10 rounded-2xl">

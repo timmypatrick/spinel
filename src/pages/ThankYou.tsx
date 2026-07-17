@@ -16,7 +16,7 @@ export default function ThankYou({ orderDetails, currency, setCurrentView }: Tha
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-16 space-y-10" id="thank-you-view">
+    <div className="max-w-3xl mx-auto px-4 lg:px-[70px] md:px-[70px] py-16 space-y-10" id="thank-you-view">
       {/* Visual Header Success Toast */}
       <div className="text-center space-y-4">
         <div className="inline-flex p-3 bg-emerald-50 rounded-full text-emerald-500">

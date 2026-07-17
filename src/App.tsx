@@ -131,7 +131,6 @@ export default function App() {
     } else {
       setCart([...cart, { product, quantity }]);
     }
-    alert(`Added: "${product.name}" to your Quote Cart.`);
   };
 
   return (

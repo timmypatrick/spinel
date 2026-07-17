@@ -353,6 +353,7 @@ app.post("/api/quotes", (req, res) => {
     domain: finalDomain,
     items: finalItems,
     message: finalDescription,
+    files: req.body.files || [],
     status: "Pending" as const,
     createdAt: new Date().toISOString()
   };

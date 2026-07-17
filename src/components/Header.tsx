@@ -161,7 +161,7 @@ export default function Header({
   return (
     <header className="w-full bg-white border-b border-gray-100 sticky top-0 z-50 shadow-xs" id="main-header">
       {/* Main Navbar */}
-      <div className="max-w-[1536px] mx-auto px-4 lg:px-[52px] py-3 flex items-center justify-between relative" id="navbar-container">
+      <div className="max-w-[1536px] mx-auto px-4 lg:px-[70px] md:px-[70px] py-3 flex items-center justify-between relative" id="navbar-container">
         {/* Logo Section (SVG mirroring orange/dark grey interlaced logo) */}
         <div
           onClick={() => handleNavigate("home")}
@@ -339,22 +339,22 @@ export default function Header({
                   onClick={() => { handleNavigate("about"); setIsSolutionsMenuOpen(false); }}
                   className="p-3 hover:bg-orange-50 rounded-lg cursor-pointer transition"
                 >
-                  <p className="text-sm font-bold text-gray-900">Security Solutions</p>
-                  <p className="text-xs text-gray-500 mt-0.5">CCTV, Access Control, Intrusion Detection, Fire Detection </p>
+                  <p className="text-base font-bold text-gray-900">Security Solutions</p>
+                  <p className="text-sm text-gray-500 mt-0.5">CCTV, Access Control, Intrusion Detection, Fire Detection </p>
                 </div>
                 <div
                   onClick={() => { handleNavigate("about"); setIsSolutionsMenuOpen(false); }}
                   className="p-3 hover:bg-orange-50 rounded-lg cursor-pointer transition"
                 >
-                  <p className="text-sm font-bold text-gray-900">Telecommunication</p>
-                  <p className="text-xs text-gray-500 mt-0.5">Wireless Solution, Microwave & Radio</p>
+                  <p className="text-base font-bold text-gray-900">Telecommunication</p>
+                  <p className="text-sm text-gray-500 mt-0.5">Wireless Solution, Microwave & Radio</p>
                 </div>
                 <div
                   onClick={() => { handleNavigate("about"); setIsSolutionsMenuOpen(false); }}
                   className="p-3 hover:bg-orange-50 rounded-lg cursor-pointer transition"
                 >
-                  <p className="text-sm font-bold text-gray-900">Multimedia Solutions</p>
-                  <p className="text-xs text-gray-500 mt-0.5">PAGA, Audio/Video Solution</p>
+                  <p className="text-base font-bold text-gray-900">Multimedia Solutions</p>
+                  <p className="text-sm text-gray-500 mt-0.5">PAGA, Audio/Video Solution</p>
                 </div>
               </div>
             )}

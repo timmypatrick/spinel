@@ -45,10 +45,10 @@ export default function Footer({
     <footer className="w-full bg-gradient-to-r from-gray-900 to-gray-800 text-gray-400 text-sm border-t border-gray-800" id="main-footer">
       {/* Newsletter signup top band */}
       <div className="w-full border-gray-800 py-10">
-        <div className="max-w-[1536px] mx-auto px-4 lg:px-[47px] grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="max-w-[1536px] mx-auto px-4 lg:px-[70px] md:px-[70px] grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-6">
             <h3 className="text-white font-extrabold text-xl sm:text-2xl leading-tight">Subscribe to Spinel Distribution Briefings</h3>
-            <p className="text-gray-300 text-sm sm:text-base mt-2">Get technical datasheets, ATEX regulation guides, and OEM product additions directly to your inbox.</p>
+            <p className="text-gray-300 text-sm sm:text-base mt-2">Stay informed with the latest product launches, industry insights, and exclusive offers, from Spinel Distribution Ltd</p>
           </div>
           <div className="lg:col-span-6">
             {subscribed ? (
@@ -80,7 +80,7 @@ export default function Footer({
       </div>
 
       {/* Main Footer Sitemap Grid */}
-      <div className="max-w-[1536px] mx-auto px-4 lg:px-[47px] py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
+      <div className="max-w-[1536px] mx-auto px-4 lg:px-[70px] md:px-[70px] py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
         {/* Spinel Identity Column */}
         <div className="lg:col-span-4 space-y-4">
           <div className="flex items-center space-x-2">
@@ -96,7 +96,7 @@ export default function Footer({
             </div>
           </div>
           <p className="text-sm text-gray-400 leading-relaxed">
-            Spinel Distribution is a global ICT Distribution and Engineering Solutions company. We represent premier OEMs in hazardous area communication, grid solar back up systems, and high-security CCTV video matrix grids.
+            Spinel Distribution is a global ICT Distribution company. We are a leading provider of industrial products, security surveillance, solar power system and equipment related to ICT.
           </p>
           <div className="flex flex-wrap gap-2">
             <a href="https://web.facebook.com/profile.php?id=61558951755204" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-900 rounded-md text-gray-400 hover:text-[#FF7A20] transition duration-150 flex items-center justify-center" aria-label="Facebook">
@@ -173,13 +173,13 @@ export default function Footer({
 
       {/* Compliance & Copyright Bottom */}
       <div className="w-full border-gray-800 py-6 bg-gray-950">
-        <div className="max-w-[1536px] mx-auto px-4 lg:px-[47px] flex items-center justify-center text-xs text-gray-500">
+        <div className="max-w-[1536px] mx-auto px-4 lg:px-[70px] md:px-[70px] flex items-center justify-center text-xs text-gray-500">
           <span className="text-center text-sm">© 2026 Spinel Distribution Limited. All Rights Reserved.</span>
         </div>
       </div>
 
       {/* Dynamic Currency Toggle Widget */}
-      <div className="fixed bottom-4 left-4 z-40 bg-gray-900 border border-gray-800 p-1.5 rounded-full shadow-2xl flex items-center space-x-1">
+      <div className="fixed bottom-[46px] left-4 z-40 bg-gray-900 border border-gray-800 p-1.5 rounded-full shadow-2xl flex items-center space-x-1">
         <button
           onClick={() => setCurrency("USD")}
           className={`flex items-center space-x-2 px-3 py-1.5 rounded-full text-xs font-bold transition duration-200 cursor-pointer ${

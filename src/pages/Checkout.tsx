@@ -29,6 +29,7 @@ export default function Checkout({
   });
   const [loading, setLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<"paystack" | "bank-transfer">("paystack");
+  const [isBankModalOpen, setIsBankModalOpen] = useState(false);
 
   useEffect(() => {
     if (cart.length === 0) {
@@ -94,7 +95,13 @@ export default function Checkout({
 
       // Clear Shopping Cart on success
       setCart([]);
-      setCurrentView("thank-you");
+
+      if (paymentMethod === "paystack") {
+        // Redirect to Paystack secure completion page
+        window.location.href = "https://paystack.com";
+      } else {
+        setCurrentView("thank-you");
+      }
 
     } catch (err: any) {
       console.error("Order completion failed", err);
@@ -105,7 +112,7 @@ export default function Checkout({
   };
 
   return (
-    <div className="max-w-[1536px] mx-auto px-4 lg:px-[47px] py-12 space-y-10" id="checkout-view">
+    <div className="max-w-[1536px] mx-auto px-4 lg:px-[70px] md:px-[70px] py-12 space-y-10" id="checkout-view">
       <div className="flex items-center space-x-3">
         <CreditCard className="w-6 h-6 text-[#FF7A20]" />
         <h1 className="text-2xl font-black text-gray-900 tracking-tight uppercase">Corporate Site Checkout</h1>
@@ -221,7 +228,7 @@ export default function Checkout({
               </div>
 
               <div
-                onClick={() => setPaymentMethod("bank-transfer")}
+                onClick={() => { setPaymentMethod("bank-transfer"); setIsBankModalOpen(true); }}
                 className={`p-4 border rounded-xl cursor-pointer transition flex items-start space-x-3 ${paymentMethod === "bank-transfer" ? "border-gray-950 bg-gray-50/50" : "border-gray-200"}`}
               >
                 <input
@@ -291,7 +298,7 @@ export default function Checkout({
                 disabled={loading}
                 className="w-full bg-[#FF7A20] text-white hover:bg-[#e06512] disabled:opacity-50 font-bold py-3 px-4 rounded-xl text-xs uppercase tracking-wider transition duration-150 flex items-center justify-center space-x-1.5 cursor-pointer shadow-md"
               >
-                <span>{loading ? "Registering Hardware Allocation..." : `Finalize secured payment`}</span>
+                <span>{loading ? "Registering Hardware Allocation..." : paymentMethod === "paystack" ? "Proceed to Paystack" : "Finalize secured payment"}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
@@ -303,6 +310,66 @@ export default function Checkout({
           </div>
         </div>
       </form>
+
+      {/* Credentials Modal */}
+      {isBankModalOpen && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center z-50 p-4 animate-fade-in" id="bank-wire-modal">
+          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-gray-100 space-y-6">
+            <div className="flex justify-between items-start">
+              <div>
+                <h3 className="text-base font-black text-gray-900 tracking-tight">Spinel Distribution Banking Credentials</h3>
+                <p className="text-xs text-gray-500">Please execute wire/transfer and send confirmation details to sales@spinel.ng</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsBankModalOpen(false)}
+                className="text-gray-400 hover:text-gray-600 font-bold text-lg p-1"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              {/* Naira Account */}
+              <div className="bg-gray-50 border border-gray-200 p-4 rounded-xl space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-[10px] uppercase font-bold text-[#FF7A20] tracking-wider">Naira Account (NGN)</span>
+                  <span className="text-[10px] font-mono font-bold bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded">GTBank Corporate</span>
+                </div>
+                <div className="space-y-1 text-xs">
+                  <div className="flex justify-between"><span className="text-gray-400">Account Name:</span> <span className="font-bold text-gray-800">Spinel Distribution Limited</span></div>
+                  <div className="flex justify-between"><span className="text-gray-400">Account Number:</span> <span className="font-bold text-gray-900 font-mono text-sm">0124598731</span></div>
+                  <div className="flex justify-between"><span className="text-gray-400">Bank Name:</span> <span className="font-bold text-gray-800">Guaranty Trust Bank Plc</span></div>
+                </div>
+              </div>
+
+              {/* Dollar Account */}
+              <div className="bg-gray-50 border border-gray-200 p-4 rounded-xl space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-[10px] uppercase font-bold text-[#FF7A20] tracking-wider">Dollar Account (USD)</span>
+                  <span className="text-[10px] font-mono font-bold bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded">Citibank Dom</span>
+                </div>
+                <div className="space-y-1 text-xs">
+                  <div className="flex justify-between"><span className="text-gray-400">Account Name:</span> <span className="font-bold text-gray-800">Spinel Distribution Limited</span></div>
+                  <div className="flex justify-between"><span className="text-gray-400">Account Number:</span> <span className="font-bold text-gray-900 font-mono text-sm">5092348571</span></div>
+                  <div className="flex justify-between"><span className="text-gray-400">Bank Name:</span> <span className="font-bold text-gray-800">Citibank Nigeria Limited</span></div>
+                  <div className="flex justify-between"><span className="text-gray-400">Swift Code:</span> <span className="font-bold text-gray-800 font-mono">GTBINGLAXXX</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-2 border-t border-gray-100 flex justify-end">
+              <button
+                type="button"
+                onClick={() => setIsBankModalOpen(false)}
+                className="bg-gray-950 hover:bg-gray-800 text-white font-bold text-xs px-5 py-2.5 rounded-lg transition"
+              >
+                Close & Continue Checkout
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
