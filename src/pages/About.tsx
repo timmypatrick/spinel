@@ -6,16 +6,16 @@ export default function About() {
 
   const team = [
     {
-      name: "Engr. Patrick Timi",
-      role: "Chief Technology Officer (CTO)",
-      bio: "20+ years of industrial ICT deployments. Former Lead Security Grid Consultant for offshore LNG complexes. ATEX Zone 1 compliance examiner.",
-      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&auto=format&fit=crop"
+      name: "Engr. OJO ADEDAYO",
+      role: "General Manager",
+      bio: "20+ years of industrial ICT deployments",
+      image: "https://i.ibb.co/PZ0H5VSt/boss-2.jpg"
     },
     {
-      name: "Marcus Olayinka",
-      role: "Head of Renewable Solutions",
-      bio: "Specializes in high-capacity hybrid solar setups and battery thermal kinetics. Managed 200+ tower rollouts across the Sahel belt.",
-      image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop"
+      name: "Engr. Dotun JOB",
+      role: "Head of Engineering Operations",
+      bio: "Specializes in high-capacity surveillance setups",
+      image: "https://i.ibb.co/JFHffg6y/Mr-Dotun.jpg"
     }
   ];
 
