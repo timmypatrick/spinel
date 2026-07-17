@@ -77,7 +77,7 @@ export default function About() {
         <div className="lg:col-span-5 relative hidden lg:block">
           <div className="border border-gray-100 p-2.5 rounded-2xl bg-gray-50/50">
             <img
-              src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=600&auto=format&fit=crop"
+              src="https://i.ibb.co/SwCdYPGr/spinel-team-1.png"
               alt="Systems Testing Bench"
               className="rounded-xl object-cover w-full h-[280px]"
               referrerPolicy="no-referrer"
