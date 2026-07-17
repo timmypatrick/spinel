@@ -1,7 +1,7 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
 
-const oemBanner = "https://i.ibb.co/rKKrgn7J/images-10.png";
+const oemBanner = "https://i.ibb.co/mZH3GMt/pokecutweb-17843025187811.jpg";
 
 interface OemsProps {
   setCurrentView: (view: string) => void;
