@@ -162,7 +162,7 @@ export default function Oems({ setCurrentView }: OemsProps) {
             <div className="relative overflow-hidden rounded-2xl border border-gray-100 shadow-lg bg-white p-2 group hover:border-orange-100 transition duration-300">
               <img 
                 src={oemBanner} 
-                alt="OEM Partnership Ecosystem" 
+                alt="OEM Partnership" 
                 className="w-full h-auto rounded-xl object-cover transform group-hover:scale-[1.02] transition duration-500"
                 referrerPolicy="no-referrer"
               />
