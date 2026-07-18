@@ -121,9 +121,8 @@ function loadDb() {
           db.products = Array.from(map.values());
         }
         if (Array.isArray(parsed.orders)) db.orders = parsed.orders;
-        // Force clean start by removing previous details as requested
-        db.quotes = [];
-        db.messages = [];
+        if (Array.isArray(parsed.quotes)) db.quotes = parsed.quotes;
+        if (Array.isArray(parsed.messages)) db.messages = parsed.messages;
         if (Array.isArray(parsed.subscribers)) db.subscribers = parsed.subscribers;
         if (Array.isArray(parsed.users)) db.users = parsed.users;
         
@@ -370,14 +369,14 @@ app.post("/api/quotes", async (req, res) => {
       const { error } = await supabase
         .from("Request Quote")
         .insert([{
-          Representative_Name: finalContactName,
-          Email_Address: finalEmail,
-          Company_Name: finalCompanyName,
-          Phone_Number: finalPhone,
-          Location_Address: finalLocation,
+          Representative_Name: finalContactName || "",
+          Email_Address: finalEmail || "",
+          Company_Name: finalCompanyName || "",
+          Phone_Number: finalPhone || "",
+          Location_Address: finalLocation || "",
           Product_Name: productName || "",
           SKU: sku || "",
-          Description: finalDescription
+          Description: finalDescription || ""
         }]);
 
       if (error) {
@@ -561,15 +560,15 @@ app.post("/api/contact", async (req, res) => {
       const { error } = await supabase
         .from("Contact Details")
         .insert([{
-          Representative_Name: name,
-          Email_Address: email,
-          Company_Name: companyName,
-          Phone_Number: phone,
-          Location_Address: address,
+          Representative_Name: name || "",
+          Email_Address: email || "",
+          Company_Name: companyName || "",
+          Phone_Number: phone || "",
+          Location_Address: address || "",
           State: state || "N/A",
           Country: country || "N/A",
-          Subject: subject,
-          Description: message
+          Subject: subject || "",
+          Description: message || ""
         }]);
 
       if (error) {
