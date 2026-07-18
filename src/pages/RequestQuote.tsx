@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FileText, Send, CheckCircle2, CloudUpload, Sparkles } from "lucide-react";
+import { Send, CheckCircle2, Sparkles } from "lucide-react";
 
 interface RequestQuoteProps {
   currency: "USD" | "NGN";
@@ -13,10 +13,10 @@ export default function RequestQuote({ currency, setCurrentView }: RequestQuoteP
     email: "",
     phone: "",
     location: "",
-    domain: "Security surveillance",
+    productName: "",
+    sku: "",
     description: ""
   });
-  const [files, setFiles] = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
   const [rfqNumber, setRfqNumber] = useState("");
 
@@ -24,63 +24,16 @@ export default function RequestQuote({ currency, setCurrentView }: RequestQuoteP
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleFileDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    if (e.dataTransfer.files) {
-      const dropped = Array.from(e.dataTransfer.files);
-      setFiles([...files, ...dropped]);
-    }
-  };
-
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const selected = Array.from(e.target.files);
-      setFiles([...files, ...selected]);
-    }
-  };
-
-  const fileToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
-    });
-  };
-
   const handleSubmitQuote = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const serializedFiles = await Promise.all(
-        files.map(async (f) => {
-          try {
-            const base64 = await fileToBase64(f);
-            return {
-              name: f.name,
-              size: f.size,
-              type: f.type,
-              data: base64
-            };
-          } catch (err) {
-            console.error("Error reading file", f.name, err);
-            return {
-              name: f.name,
-              size: f.size,
-              type: f.type,
-              data: ""
-            };
-          }
-        })
-      );
-
       const res = await fetch("/api/quotes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...formData,
-          files: serializedFiles
+          ...formData
         })
       });
 
@@ -138,7 +91,7 @@ export default function RequestQuote({ currency, setCurrentView }: RequestQuoteP
           <span>Spinel Engineering Tendering Office</span>
         </div>
         <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-gray-900 uppercase">Request Custom Systems Quote (RFP)</h1>
-        <p className="text-gray-500 text-xs sm:text-sm max-w-md mx-auto">Upload site blueprints or list environmental constraints to receive a compiled design study.</p>
+        <p className="text-gray-500 text-xs sm:text-sm max-w-md mx-auto">List environmental constraints or product details to receive a compiled design study.</p>
       </div>
 
       <form onSubmit={handleSubmitQuote} className="bg-white border border-gray-100 p-6 sm:p-8 rounded-2xl shadow-xs space-y-6 text-xs">
@@ -183,6 +136,18 @@ export default function RequestQuote({ currency, setCurrentView }: RequestQuoteP
               />
             </div>
             <div className="space-y-1.5">
+              <label className="text-gray-500 font-semibold">Phone Number</label>
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                required
+                placeholder="+234 803 123 4567"
+                className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:border-[#FF7A20]"
+              />
+            </div>
+            <div className="space-y-1.5">
               <label className="text-gray-500 font-semibold">Location Address</label>
               <input
                 type="text"
@@ -197,23 +162,35 @@ export default function RequestQuote({ currency, setCurrentView }: RequestQuoteP
           </div>
         </div>
 
-        {/* Step 2: Technical Specifications Scope */}
+        {/* Step 2: Product Details */}
         <div className="space-y-4 pt-4">
-          <h3 className="font-bold text-sm text-gray-900 border-b border-gray-100 pb-2 uppercase tracking-wider">2. Technical Scope Specifications</h3>
+          <h3 className="font-bold text-sm text-gray-900 border-b border-gray-100 pb-2 uppercase tracking-wider">2. Product Details</h3>
           
-          <div className="space-y-1.5">
-            <label className="text-gray-500 font-semibold">Core Business Division</label>
-            <select
-              name="domain"
-              value={formData.domain}
-              onChange={handleInputChange}
-              className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none"
-            >
-              <option value="Security surveillance">Electronic Security Matrix</option>
-              <option value="Solar Microgrid">Renewable Solar Microgrid</option>
-              <option value="Server Racks">Telecom Racks & Structures</option>
-              <option value="Harzardous Comms">ATEX Certified VoIP intercoms</option>
-            </select>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <label className="text-gray-500 font-semibold">Product Name</label>
+              <input
+                type="text"
+                name="productName"
+                value={formData.productName}
+                onChange={handleInputChange}
+                required
+                placeholder="Avigilon H5A Explosion-Protected Camera"
+                className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:border-[#FF7A20]"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <label className="text-gray-500 font-semibold">SKU</label>
+              <input
+                type="text"
+                name="sku"
+                value={formData.sku}
+                onChange={handleInputChange}
+                required
+                placeholder="2.0C-H5EX-A0-CO1"
+                className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:border-[#FF7A20]"
+              />
+            </div>
           </div>
 
           <div className="space-y-1.5">
@@ -228,46 +205,6 @@ export default function RequestQuote({ currency, setCurrentView }: RequestQuoteP
               className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:border-[#FF7A20] font-sans"
             />
           </div>
-        </div>
-
-        {/* Step 3: File / Diagram Drag-and-Drop Uploader */}
-        <div className="space-y-4 pt-4">
-          <h3 className="font-bold text-sm text-gray-900 border-b border-gray-100 pb-2 uppercase tracking-wider">3. Annex & Engineering Drawings</h3>
-          <div
-            onDragOver={(e) => e.preventDefault()}
-            onDrop={handleFileDrop}
-            className="border-2 border-dashed border-gray-200 hover:border-[#FF7A20] transition rounded-2xl p-6 text-center cursor-pointer space-y-2 bg-gray-50/50"
-          >
-            <CloudUpload className="w-8 h-8 text-gray-400 mx-auto" />
-            <p className="font-bold text-gray-800">Drag & Drop drawings, datasheets or maps here</p>
-            <p className="text-[10px] text-gray-400">Accepts PDF, DWG, PNG, JPEG formats up to 45MB</p>
-            <input
-              type="file"
-              multiple
-              onChange={handleFileSelect}
-              className="hidden"
-              id="quote-file-input"
-            />
-            <button
-              type="button"
-              onClick={() => document.getElementById("quote-file-input")?.click()}
-              className="text-[#FF7A20] font-bold hover:underline"
-            >
-              Or browse files manually
-            </button>
-          </div>
-
-          {files.length > 0 && (
-            <div className="space-y-2 bg-white border border-gray-100 p-4 rounded-xl">
-              <p className="font-bold text-[10px] uppercase text-gray-400 tracking-wider">Loaded Enclosures ({files.length})</p>
-              {files.map((f, idx) => (
-                <div key={idx} className="flex justify-between items-center text-[10px] text-gray-600 bg-gray-50 p-2 rounded">
-                  <span className="font-mono">{f.name}</span>
-                  <span className="font-bold">({(f.size / (1024 * 1024)).toFixed(2)} MB)</span>
-                </div>
-              ))}
-            </div>
-          )}
         </div>
 
         {/* Action Buttons */}

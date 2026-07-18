@@ -307,7 +307,7 @@ app.delete("/api/products/:id", verifyAdminToken, (req, res) => {
 });
 
 // 2. API: Quotes Endpoint
-app.post("/api/quotes", (req, res) => {
+app.post("/api/quotes", async (req, res) => {
   const {
     companyName,
     contactName,
@@ -320,7 +320,9 @@ app.post("/api/quotes", (req, res) => {
     name,
     location,
     domain,
-    description
+    description,
+    productName,
+    sku
   } = req.body;
 
   const finalCompanyName = companyName || company || "Individual/Non-Company";
@@ -337,10 +339,10 @@ app.post("/api/quotes", (req, res) => {
   }
 
   const finalItems = Array.isArray(items) ? items : [
-    { productName: `Custom Design Project Request [${finalDomain}]`, quantity: 1 }
+    { productName: productName || `Custom Design Project Request [${finalDomain}]`, quantity: 1 }
   ];
 
-  const newQuote = {
+  const newQuote: any = {
     id: `qt-${Date.now()}`,
     quoteNumber: `SP-QT-2026-${Math.floor(1000 + Math.random() * 9000)}`,
     rfqNumber: `RFQ-2026-${Math.floor(1000 + Math.random() * 9000)}`, // Support UI success tracking
@@ -351,12 +353,45 @@ app.post("/api/quotes", (req, res) => {
     country: finalCountry,
     location: finalLocation,
     domain: finalDomain,
+    productName: productName || "",
+    sku: sku || "",
     items: finalItems,
     message: finalDescription,
     files: req.body.files || [],
     status: "Pending" as const,
     createdAt: new Date().toISOString()
   };
+
+  // Sync to Supabase in a secure, server-side, production-ready manner
+  const supabase = getSupabaseClient();
+  if (supabase) {
+    try {
+      // Perform a secure insert into 'Request Quote' table matching underscore-style naming convention
+      const { error } = await supabase
+        .from("Request Quote")
+        .insert([{
+          Representative_Name: finalContactName,
+          Email_Address: finalEmail,
+          Company_Name: finalCompanyName,
+          Phone_Number: finalPhone,
+          Location_Address: finalLocation,
+          Product_Name: productName || "",
+          SKU: sku || "",
+          Description: finalDescription
+        }]);
+
+      if (error) {
+        console.warn("Supabase Request Quote insertion failed, fell back to local storage:", error.message);
+        newQuote._syncInfo = { synced: false, reason: error.message };
+      } else {
+        console.log("Supabase Request Quote insertion succeeded!");
+        newQuote._syncInfo = { synced: true };
+      }
+    } catch (err: any) {
+      console.warn("Supabase Request Quote exception occurred, fell back to local storage:", err.message || err);
+      newQuote._syncInfo = { synced: false, reason: err.message || "Exception" };
+    }
+  }
 
   db.quotes.unshift(newQuote);
   res.status(201).json(newQuote);

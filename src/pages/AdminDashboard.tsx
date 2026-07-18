@@ -521,7 +521,9 @@ export default function AdminDashboard({
       (q.rfqNumber && q.rfqNumber.toLowerCase().includes(query)) ||
       (q.description && q.description.toLowerCase().includes(query)) ||
       (q.domain && q.domain.toLowerCase().includes(query)) ||
-      (q.location && q.location.toLowerCase().includes(query))
+      (q.location && q.location.toLowerCase().includes(query)) ||
+      (q.productName && q.productName.toLowerCase().includes(query)) ||
+      (q.sku && q.sku.toLowerCase().includes(query))
     );
   });
   const totalQuotesPages = Math.ceil(searchedQuotes.length / itemsPerPage60) || 1;
@@ -914,15 +916,13 @@ export default function AdminDashboard({
                     <span className="text-gray-400 font-bold uppercase text-[9px]">Project Site Location</span>
                     <p className="font-bold text-gray-900">{q.location || q.country || "Nigeria"}</p>
                   </div>
-                  {q.budget && (
-                    <div>
-                      <span className="text-gray-400 font-bold uppercase text-[9px]">Assigned Budget</span>
-                      <p className="font-bold text-gray-900">{q.budget}</p>
-                    </div>
-                  )}
                   <div>
-                    <span className="text-gray-400 font-bold uppercase text-[9px]">Scope Division</span>
-                    <p className="font-bold text-[#FF7A20]">{q.domain || "Custom Hardware Specs"}</p>
+                    <span className="text-gray-400 font-bold uppercase text-[9px]">Product Name</span>
+                    <p className="font-bold text-gray-900">{q.productName || (q.domain ? `Design [${q.domain}]` : "N/A")}</p>
+                  </div>
+                  <div>
+                    <span className="text-gray-400 font-bold uppercase text-[9px]">SKU</span>
+                    <p className="font-bold text-[#FF7A20]">{q.sku || "N/A"}</p>
                   </div>
                 </div>
                 {/* Render selected products if they exist (from cart quote request) */}

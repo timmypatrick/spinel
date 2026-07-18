@@ -121,6 +121,8 @@ export interface QuoteRequest {
   email: string;
   phone: string;
   country: string;
+  productName?: string;
+  sku?: string;
   items: QuoteItem[];
   message: string;
   status: "Pending" | "Approved" | "Rejected" | "Converted";
