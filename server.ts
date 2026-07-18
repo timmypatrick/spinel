@@ -494,7 +494,7 @@ app.put("/api/orders/:id", verifyAdminToken, (req, res) => {
 });
 
 // 4. API: Contact Submissions & Newsletters
-app.post("/api/contact", (req, res) => {
+app.post("/api/contact", async (req, res) => {
   const { name, email, phone, companyName, address, state, country, subject, message } = req.body;
   if (!name || !email || !subject || !message) {
     return res.status(400).json({ error: "Missing required contact form fields" });
@@ -515,7 +515,49 @@ app.post("/api/contact", (req, res) => {
     createdAt: new Date().toISOString()
   };
 
+  // Always persist locally first for maximum reliability
   db.messages.unshift(newMessage);
+
+  // Sync to Supabase in a secure, server-side, production-ready manner
+  const supabase = getSupabaseClient();
+  if (supabase) {
+    try {
+      // Perform a secure, blind insert into 'Contact Details' table to respect RLS insert-only policies
+      const { error } = await supabase
+        .from("Contact Details")
+        .insert([{
+          Representative_Name: name,
+          Email_Address: email,
+          Company_Name: companyName,
+          Phone_Number: phone,
+          Location_Address: address,
+          State: state || "N/A",
+          Country: country || "N/A",
+          Subject: subject,
+          Description: message
+        }]);
+
+      if (error) {
+        console.warn("Supabase Contact Details insertion failed, fell back to local storage:", error.message);
+        return res.status(201).json({
+          ...newMessage,
+          _syncInfo: { synced: false, reason: error.message }
+        });
+      }
+
+      return res.status(201).json({
+        ...newMessage,
+        _syncInfo: { synced: true }
+      });
+    } catch (err: any) {
+      console.warn("Supabase Contact Details exception occurred, fell back to local storage:", err.message || err);
+      return res.status(201).json({
+        ...newMessage,
+        _syncInfo: { synced: false, reason: err.message || "Exception" }
+      });
+    }
+  }
+
   res.status(201).json(newMessage);
 });
 
@@ -557,13 +599,21 @@ app.post("/api/newsletter", async (req, res) => {
   const supabase = getSupabaseClient();
   if (supabase) {
     try {
-      // Attempt saving to 'subscribers' table. If the table doesn't exist, Supabase returns error.
-      // We will perform an upsert or insert so it's safe and doesn't duplicate.
-      const { data, error } = await supabase
-        .from("subscribers")
-        .upsert([{ email: emailLower, subscribed_at: new Date().toISOString() }], { onConflict: "email" });
+      // Attempt saving to 'Subscribers Catalog' table. If the table doesn't exist, Supabase returns error.
+      // We use the correct column 'Email' and perform a blind insert without selecting to respect RLS policies.
+      const { error } = await supabase
+        .from("Subscribers Catalog")
+        .insert([{ Email: emailLower }]);
 
       if (error) {
+        // If it's a unique violation (already subscribed), treat it as a success
+        if (error.code === "23505") {
+          return res.status(201).json({
+            message: "Subscribed successfully and saved to Supabase!",
+            subscriber: newSub
+          });
+        }
+
         console.warn("Supabase insertion failed, falling back to local storage:", error.message);
         return res.status(201).json({
           message: "Subscribed successfully (saved to local list; Supabase: " + error.message + ")",

@@ -10,7 +10,7 @@ export default function Contact() {
     address: "",
     state: "",
     country: "",
-    subject: "Catalog Request",
+    subject: "",
     message: ""
   });
   const [loading, setLoading] = useState(false);
