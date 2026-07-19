@@ -10,7 +10,7 @@ export default function Contact() {
     address: "",
     state: "",
     country: "",
-    subject: "",
+    subject: "General Request",
     message: ""
   });
   const [loading, setLoading] = useState(false);
@@ -206,7 +206,7 @@ export default function Contact() {
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                     className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none"
                   >
-                    <option value=""></option>
+                    <option value="General Request">General Request</option>
                     <option value="Partnership Opportunities">Partnership Opportunities</option>
                     <option value="Bulk Order">Bulk Order</option>
                     <option value="System Design">System Design</option>
