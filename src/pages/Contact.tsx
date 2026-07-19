@@ -10,7 +10,7 @@ export default function Contact() {
     address: "",
     state: "",
     country: "",
-    subject: "",
+    subject: "Catalog Request",
     message: ""
   });
   const [loading, setLoading] = useState(false);
@@ -24,7 +24,17 @@ export default function Contact() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          companyName: formData.companyName.trim(),
+          phone: formData.phone.trim(),
+          address: formData.address.trim(),
+          state: formData.state.trim(),
+          country: formData.country.trim(),
+          subject: formData.subject || "Catalog Request",
+          message: formData.message.trim()
+        })
       });
       if (res.ok) {
         setSuccess(true);

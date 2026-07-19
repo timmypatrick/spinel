@@ -33,7 +33,14 @@ export default function RequestQuote({ currency, setCurrentView }: RequestQuoteP
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...formData
+          company: formData.company.trim(),
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone.trim(),
+          location: formData.location.trim(),
+          productName: formData.productName.trim(),
+          sku: formData.sku.trim(),
+          description: formData.description.trim()
         })
       });
 

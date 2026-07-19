@@ -12,8 +12,8 @@ dotenv.config();
 
 // Lazy-initialized Supabase Client to avoid crashes when keys are missing
 function getSupabaseClient() {
-  const supabaseUrl = process.env.SUPABASE_URL;
-  const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
+  const supabaseUrl = process.env.SUPABASE_URL?.trim();
+  const supabaseAnonKey = process.env.SUPABASE_ANON_KEY?.trim();
   if (!supabaseUrl || !supabaseAnonKey) {
     return null;
   }
@@ -307,22 +307,20 @@ app.delete("/api/products/:id", verifyAdminToken, (req, res) => {
 
 // 2. API: Quotes Endpoint
 app.post("/api/quotes", async (req, res) => {
-  const {
-    companyName,
-    contactName,
-    email,
-    phone,
-    country,
-    items,
-    message,
-    company,
-    name,
-    location,
-    domain,
-    description,
-    productName,
-    sku
-  } = req.body;
+  const company = (req.body.company || "").trim();
+  const companyName = (req.body.companyName || "").trim();
+  const name = (req.body.name || "").trim();
+  const contactName = (req.body.contactName || "").trim();
+  const email = (req.body.email || "").trim();
+  const phone = (req.body.phone || "").trim();
+  const country = (req.body.country || "").trim();
+  const location = (req.body.location || "").trim();
+  const domain = (req.body.domain || "").trim();
+  const description = (req.body.description || "").trim();
+  const message = (req.body.message || "").trim();
+  const productName = (req.body.productName || "").trim();
+  const sku = (req.body.sku || "").trim();
+  const items = req.body.items;
 
   const finalCompanyName = companyName || company || "Individual/Non-Company";
   const finalContactName = contactName || name || "No Name Provided";
@@ -331,10 +329,10 @@ app.post("/api/quotes", async (req, res) => {
   const finalCountry = country || "Nigeria";
   const finalLocation = location || "";
   const finalDomain = domain || "";
-  const finalDescription = description || message || "";
+  const finalDescription = description || message || "No details provided";
 
-  if (!finalCompanyName || !finalContactName || !finalEmail) {
-    return res.status(400).json({ error: "Missing required quote registration fields" });
+  if (!finalEmail) {
+    return res.status(400).json({ error: "Email address is required for custom quote" });
   }
 
   const finalItems = Array.isArray(items) ? items : [
@@ -369,14 +367,14 @@ app.post("/api/quotes", async (req, res) => {
       const { error } = await supabase
         .from("Request Quote")
         .insert([{
-          Representative_Name: finalContactName || "",
-          Email_Address: finalEmail || "",
-          Company_Name: finalCompanyName || "",
-          Phone_Number: finalPhone || "",
-          Location_Address: finalLocation || "",
-          Product_Name: productName || "",
-          SKU: sku || "",
-          Description: finalDescription || ""
+          Representative_Name: finalContactName,
+          Email_Address: finalEmail,
+          Company_Name: finalCompanyName,
+          Phone_Number: finalPhone,
+          Location_Address: finalLocation,
+          Product_Name: productName || "N/A",
+          SKU: sku || "N/A",
+          Description: finalDescription
         }]);
 
       if (error) {
@@ -529,20 +527,29 @@ app.put("/api/orders/:id", verifyAdminToken, (req, res) => {
 
 // 4. API: Contact Submissions & Newsletters
 app.post("/api/contact", async (req, res) => {
-  const { name, email, phone, companyName, address, state, country, subject, message } = req.body;
-  if (!name || !email || !subject || !message) {
-    return res.status(400).json({ error: "Missing required contact form fields" });
+  const name = (req.body.name || "").trim();
+  const email = (req.body.email || "").trim();
+  const phone = (req.body.phone || "").trim();
+  const companyName = (req.body.companyName || "").trim();
+  const address = (req.body.address || "").trim();
+  const state = (req.body.state || "").trim();
+  const country = (req.body.country || "").trim();
+  const subject = (req.body.subject || "").trim() || "Catalog Request";
+  const message = (req.body.message || "").trim() || "No message content provided";
+
+  if (!name || !email) {
+    return res.status(400).json({ error: "Missing required name or email fields" });
   }
 
   const newMessage = {
     id: `msg-${Date.now()}`,
     name,
     email,
-    phone: phone || "",
-    companyName: companyName || "",
-    address: address || "",
-    state: state || "",
-    country: country || "",
+    phone,
+    companyName,
+    address,
+    state,
+    country,
     subject,
     message,
     status: "Unread" as const,
@@ -560,15 +567,15 @@ app.post("/api/contact", async (req, res) => {
       const { error } = await supabase
         .from("Contact Details")
         .insert([{
-          Representative_Name: name || "",
-          Email_Address: email || "",
-          Company_Name: companyName || "",
-          Phone_Number: phone || "",
-          Location_Address: address || "",
+          Representative_Name: name,
+          Email_Address: email,
+          Company_Name: companyName,
+          Phone_Number: phone,
+          Location_Address: address,
           State: state || "N/A",
           Country: country || "N/A",
-          Subject: subject || "",
-          Description: message || ""
+          Subject: subject,
+          Description: message
         }]);
 
       if (error) {
