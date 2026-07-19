@@ -443,11 +443,35 @@ app.put("/api/quotes/:id", verifyAdminToken, (req, res) => {
 });
 
 // 3. API: Checkout & Orders
-app.post("/api/orders", (req, res) => {
-  const { billingAddress, shippingAddress, items, paymentMethod, reference } = req.body;
-  if (!billingAddress || !items || !items.length) {
+app.post("/api/orders", async (req, res) => {
+  const billingInput = req.body.billingAddress || req.body.shippingDetails;
+  const shippingInput = req.body.shippingAddress || req.body.shippingDetails || billingInput;
+
+  if (!billingInput || !req.body.items || !req.body.items.length) {
     return res.status(400).json({ error: "Invalid order data submission" });
   }
+
+  const billingAddress = {
+    fullName: billingInput.fullName || billingInput.name || "No Name Provided",
+    email: billingInput.email || "",
+    phone: billingInput.phone || "",
+    addressLine1: billingInput.addressLine1 || billingInput.address || "",
+    city: billingInput.city || billingInput.state || "",
+    state: billingInput.state || "Lagos",
+    country: billingInput.country || "Nigeria"
+  };
+
+  const shippingAddress = {
+    fullName: shippingInput.fullName || shippingInput.name || billingAddress.fullName,
+    email: shippingInput.email || billingAddress.email,
+    phone: shippingInput.phone || billingAddress.phone,
+    addressLine1: shippingInput.addressLine1 || shippingInput.address || billingAddress.addressLine1,
+    city: shippingInput.city || shippingInput.state || billingAddress.city,
+    state: shippingInput.state || billingAddress.state,
+    country: shippingInput.country || billingAddress.country
+  };
+
+  const items = req.body.items;
 
   // Calculate order metrics
   let subtotalUSD = 0;
@@ -489,6 +513,9 @@ app.post("/api/orders", (req, res) => {
   const totalUSD = subtotalUSD + taxUSD + shippingUSD;
   const totalNGN = subtotalNGN + taxNGN + shippingNGN;
 
+  const paymentMethod = req.body.paymentMethod || "paystack";
+  const reference = req.body.reference;
+
   const newOrder = {
     id: `ord-${Date.now()}`,
     orderNumber: `SP-ORD-2026-${Math.floor(10000 + Math.random() * 90000)}`,
@@ -496,7 +523,7 @@ app.post("/api/orders", (req, res) => {
     customerName: billingAddress.fullName,
     customerEmail: billingAddress.email,
     billingAddress,
-    shippingAddress: shippingAddress || billingAddress,
+    shippingAddress,
     items: processedItems,
     subtotalUSD,
     subtotalNGN,
@@ -506,13 +533,66 @@ app.post("/api/orders", (req, res) => {
     shippingNGN,
     totalUSD,
     totalNGN,
-    status: (paymentMethod === "Paystack" ? "Paid" : "Pending") as any,
+    status: (paymentMethod === "Paystack" || paymentMethod === "paystack" ? "Paid" : "Pending") as any,
     paymentMethod,
     paymentReference: reference || `REF-${Date.now()}`
   };
 
   db.orders.unshift(newOrder);
-  res.status(201).json(newOrder);
+
+  // Sync to Supabase in a secure, server-side, production-ready manner
+  const supabase = getSupabaseClient();
+  if (supabase) {
+    try {
+      // Try writing to "Orders" table
+      const { error } = await supabase
+        .from("Orders")
+        .insert([{
+          Representative_Name: billingAddress.fullName,
+          Email_Address: billingAddress.email,
+          Phone_Number: billingAddress.phone,
+          Location_Address: billingAddress.addressLine1,
+          State: billingAddress.state,
+          Country: billingAddress.country,
+          Payment_Method: paymentMethod,
+          Total_Amount_USD: totalUSD,
+          Total_Amount_NGN: totalNGN,
+          Items_Detail: JSON.stringify(processedItems)
+        }]);
+
+      if (error) {
+        console.warn("Supabase Orders insertion failed, trying 'Placed Orders':", error.message);
+        // Fallback to "Placed Orders" table
+        const { error: error2 } = await supabase
+          .from("Placed Orders")
+          .insert([{
+            Representative_Name: billingAddress.fullName,
+            Email_Address: billingAddress.email,
+            Phone_Number: billingAddress.phone,
+            Location_Address: billingAddress.addressLine1,
+            State: billingAddress.state,
+            Country: billingAddress.country,
+            Payment_Method: paymentMethod,
+            Total_Amount_USD: totalUSD,
+            Total_Amount_NGN: totalNGN,
+            Items_Detail: JSON.stringify(processedItems)
+          }]);
+        if (error2) {
+          console.warn("Supabase Placed Orders insertion failed too:", error2.message);
+        }
+      } else {
+        console.log("Supabase Orders insertion succeeded!");
+      }
+    } catch (err: any) {
+      console.warn("Supabase Orders insertion exception occurred:", err.message || err);
+    }
+  }
+
+  res.status(201).json({
+    ...newOrder,
+    invoiceNumber: newOrder.orderNumber,
+    orderId: newOrder.id
+  });
 });
 
 app.get("/api/orders", verifyAdminToken, (req, res) => {
