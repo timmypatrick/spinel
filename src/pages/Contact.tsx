@@ -206,10 +206,10 @@ export default function Contact() {
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                     className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none"
                   >
-                    <option value="Catalog Request">Technical Datasheet Request</option>
-                    <option value="OEM Partnership">OEM Partnership Opportunities</option>
-                    <option value="Logistics Shipping">Bulk Order Logistics Shipping</option>
-                    <option value="System Design">Custom System Design Assistance</option>
+                    <option value=""></option>
+                    <option value="Partnership Opportunities">Partnership Opportunities</option>
+                    <option value="Bulk Order">Bulk Order</option>
+                    <option value="System Design">System Design</option>
                   </select>
                 </div>
 
