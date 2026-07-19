@@ -12,8 +12,8 @@ dotenv.config();
 
 // Lazy-initialized Supabase Client to avoid crashes when keys are missing
 function getSupabaseClient() {
-  const supabaseUrl = process.env.SUPABASE_URL?.trim();
-  const supabaseAnonKey = process.env.SUPABASE_ANON_KEY?.trim();
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
   if (!supabaseUrl || !supabaseAnonKey) {
     return null;
   }
@@ -121,8 +121,9 @@ function loadDb() {
           db.products = Array.from(map.values());
         }
         if (Array.isArray(parsed.orders)) db.orders = parsed.orders;
-        if (Array.isArray(parsed.quotes)) db.quotes = parsed.quotes;
-        if (Array.isArray(parsed.messages)) db.messages = parsed.messages;
+        // Force clean start by removing previous details as requested
+        db.quotes = [];
+        db.messages = [];
         if (Array.isArray(parsed.subscribers)) db.subscribers = parsed.subscribers;
         if (Array.isArray(parsed.users)) db.users = parsed.users;
         
@@ -307,20 +308,22 @@ app.delete("/api/products/:id", verifyAdminToken, (req, res) => {
 
 // 2. API: Quotes Endpoint
 app.post("/api/quotes", async (req, res) => {
-  const company = (req.body.company || "").trim();
-  const companyName = (req.body.companyName || "").trim();
-  const name = (req.body.name || "").trim();
-  const contactName = (req.body.contactName || "").trim();
-  const email = (req.body.email || "").trim();
-  const phone = (req.body.phone || "").trim();
-  const country = (req.body.country || "").trim();
-  const location = (req.body.location || "").trim();
-  const domain = (req.body.domain || "").trim();
-  const description = (req.body.description || "").trim();
-  const message = (req.body.message || "").trim();
-  const productName = (req.body.productName || "").trim();
-  const sku = (req.body.sku || "").trim();
-  const items = req.body.items;
+  const {
+    companyName,
+    contactName,
+    email,
+    phone,
+    country,
+    items,
+    message,
+    company,
+    name,
+    location,
+    domain,
+    description,
+    productName,
+    sku
+  } = req.body;
 
   const finalCompanyName = companyName || company || "Individual/Non-Company";
   const finalContactName = contactName || name || "No Name Provided";
@@ -329,10 +332,10 @@ app.post("/api/quotes", async (req, res) => {
   const finalCountry = country || "Nigeria";
   const finalLocation = location || "";
   const finalDomain = domain || "";
-  const finalDescription = description || message || "No details provided";
+  const finalDescription = description || message || "";
 
-  if (!finalEmail) {
-    return res.status(400).json({ error: "Email address is required for custom quote" });
+  if (!finalCompanyName || !finalContactName || !finalEmail) {
+    return res.status(400).json({ error: "Missing required quote registration fields" });
   }
 
   const finalItems = Array.isArray(items) ? items : [
@@ -372,8 +375,8 @@ app.post("/api/quotes", async (req, res) => {
           Company_Name: finalCompanyName,
           Phone_Number: finalPhone,
           Location_Address: finalLocation,
-          Product_Name: productName || "N/A",
-          SKU: sku || "N/A",
+          Product_Name: productName || "",
+          SKU: sku || "",
           Description: finalDescription
         }]);
 
@@ -527,29 +530,20 @@ app.put("/api/orders/:id", verifyAdminToken, (req, res) => {
 
 // 4. API: Contact Submissions & Newsletters
 app.post("/api/contact", async (req, res) => {
-  const name = (req.body.name || "").trim();
-  const email = (req.body.email || "").trim();
-  const phone = (req.body.phone || "").trim();
-  const companyName = (req.body.companyName || "").trim();
-  const address = (req.body.address || "").trim();
-  const state = (req.body.state || "").trim();
-  const country = (req.body.country || "").trim();
-  const subject = (req.body.subject || "").trim() || "Catalog Request";
-  const message = (req.body.message || "").trim() || "No message content provided";
-
-  if (!name || !email) {
-    return res.status(400).json({ error: "Missing required name or email fields" });
+  const { name, email, phone, companyName, address, state, country, subject, message } = req.body;
+  if (!name || !email || !subject || !message) {
+    return res.status(400).json({ error: "Missing required contact form fields" });
   }
 
   const newMessage = {
     id: `msg-${Date.now()}`,
     name,
     email,
-    phone,
-    companyName,
-    address,
-    state,
-    country,
+    phone: phone || "",
+    companyName: companyName || "",
+    address: address || "",
+    state: state || "",
+    country: country || "",
     subject,
     message,
     status: "Unread" as const,

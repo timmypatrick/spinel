@@ -21,15 +21,14 @@ export default function Footer({
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    const cleanEmail = email.trim();
-    if (!cleanEmail) return;
+    if (!email) return;
     setLoading(true);
 
     try {
       const res = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: cleanEmail })
+        body: JSON.stringify({ email })
       });
       if (res.ok) {
         setSubscribed(true);
