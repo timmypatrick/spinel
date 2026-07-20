@@ -191,9 +191,13 @@ export default function Home({
   ];
 
   const faqs = [
-    { q: "Are Spinel Distribution's hazardous area products certified for Zone 1?", a: "Yes, all hazardous area items are fully certified under ATEX, IECEx, and standard Zone 1 & 2 regulations, crafted with robust flameproof cast housings and intrinsically safe electronics." },
-    { q: "Do you supply customized technical engineering drawings for bids?", a: "Yes, our in-house systems design team compiles full single-line diagrams, solar microgrid telemetry drawings, and CCTV optical spacing layouts for corporate project bids." },
-    { q: "What is your standard delivery timeline for regional hubs in Nigeria?", a: "Ex-stock items deliver within 24-48 hours to Lagos and Port Harcourt. Special custom OEM builds carry standard factory lead times of 3-6 weeks with expedited air freight options." }
+    { q: "What products does Spinel Distribution offer?", a: "Spinel supplies a wide range of ICT, electronic security, renewable energy, PAGA, multimedia and industrial products" },
+    { q: "How reliable are your products?", a: "We partner with leading global OEMs to provide genuine, high-quality products backed by manufacturer warranties and technical support." },
+    { q: "Can I request a quotation before placing an order?", a: "Absolutely. You can use our Request Quote page to submit your requirements, and our sales team will provide a customized quotation tailored to your need." },
+    { q: "What about your products with fixed price tag?", a: "They give you access to instant procurement and on-time delivery" },
+    { q: "Do you provide installation services?", a: "Yes. We can connect you with our technical team or trusted partners for installation, commissioning, and technical support on selected solutions." },
+    { q: "How can I track my order?", a: "Once your order has been processed, you'll receive updates on its status. You can also contact our support team for order tracking assistance." },
+    { q: "How do I know which product is right for my project?", a: "Our technical sales team is available to help you select the most suitable products based on your project requirements, and application." },
   ];
 
   const handleProductDetails = (id: string) => {
@@ -265,14 +269,14 @@ export default function Home({
       </section>
 
       {/* 2. Shop More Products (50 random items) - Inserted as requested */}
-      <section className="max-w-[1536px] mx-auto px-4 lg:px-[70px] md:px-[70px] py-16 space-y-8" id="shop-more-products">
+      <section className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] py-16 space-y-8" id="shop-more-products">
         <div className="flex justify-between items-center border-b border-gray-100 pb-4">
           <div className="flex items-center space-x-2">
             <h2 
               onClick={() => setCurrentView("store")}
               className="text-lg sm:text-xl font-bold tracking-tight text-gray-900 hover:text-[#FF7A20] cursor-pointer transition flex items-center gap-2"
             >
-              <span>Shop More Products</span>
+              <span>View More Products</span>
               <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF7A20]" />
             </h2>
           </div>
@@ -329,12 +333,12 @@ export default function Home({
       </section>
 
       {/* 8. FAQ Accordion Grid */}
-      <section className="max-w-[1536px] mx-auto px-4 lg:px-[70px] md:px-[70px] py-20 space-y-12" id="faqs">
+      <section className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] py-20 space-y-12" id="faqs">
         <div className="text-center space-y-2">
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">Technical FAQ Desk</h2>
-          <p className="text-gray-500 text-sm sm:text-base max-w-md mx-auto">Get instant clarifications regarding logistics, certifications and specifications.</p>
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">ICT, Security & Renewable Energy FAQs</h2>
+          <p className="text-gray-500 text-sm sm:text-base max-w-md mx-auto">Learn more about our electronic security products, hazardous-area communication systems, renewable energy equipment, networking solutions, delivery, quotations, and after-sales support.</p>
         </div>
-        <div className="max-w-2xl mx-auto space-y-3">
+        <div className="max-w-4xl lg:max-w-5xl mx-auto space-y-3">
           {faqs.map((faq, idx) => (
             <div key={idx} className="border border-gray-200 rounded-xl overflow-hidden">
               <button

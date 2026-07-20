@@ -120,7 +120,7 @@ export default function CategoryPage({
   const paginatedProducts = filteredProducts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
-    <div className="max-w-[1536px] mx-auto px-4 lg:px-[70px] md:px-[70px] py-10 space-y-8" id="category-page">
+    <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] py-10 space-y-8" id="category-page">
       {/* Back button & SEO title section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <button
@@ -128,7 +128,7 @@ export default function CategoryPage({
           className="flex items-center space-x-2 text-[#FF7A20] font-bold text-xs hover:underline cursor-pointer bg-orange-50 px-3 py-1.5 rounded-lg border border-orange-100 transition"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Back to Hardware Store</span>
+          <span>Back to Store</span>
         </button>
 
         <div className="flex items-center space-x-2 bg-slate-50 border border-slate-100 rounded-full px-3 py-1 text-[11px] font-semibold text-slate-500 font-mono">

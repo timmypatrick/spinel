@@ -195,7 +195,7 @@ export default function Store({
   const paginatedProducts = filteredProducts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
-    <div className="max-w-[1536px] mx-auto px-4 lg:px-[70px] md:px-[70px] py-12 flex flex-col lg:flex-row gap-10" id="store-view">
+    <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] py-12 flex flex-col lg:flex-row gap-10" id="store-view">
       {/* 1. Left Sidebar Filter Pane */}
       <aside className="w-full lg:w-72 shrink-0 space-y-6" id="store-sidebar">
         <div className="flex items-center justify-between border-b border-gray-100 pb-4">
@@ -220,7 +220,7 @@ export default function Store({
           <div className="flex flex-col space-y-3">
             <button
               onClick={() => setSelectedSubcategory("")}
-              className={`text-left py-2.5 px-4 rounded-lg text-sm font-bold transition flex items-center justify-between ${!selectedSubcategory ? "bg-[#FF7A20] text-white" : "bg-gray-50 text-gray-700 hover:bg-gray-100"}`}
+              className={`text-left py-2.5 px-4 rounded-lg text-base font-bold transition flex items-center justify-between ${!selectedSubcategory ? "bg-[#FF7A20] text-white" : "bg-gray-50 text-gray-700 hover:bg-gray-100"}`}
             >
               <span>All Products & Divisions</span>
             </button>
@@ -231,7 +231,7 @@ export default function Store({
                 <div key={div.category} className="space-y-2">
                   <button
                     onClick={() => setSelectedSubcategory(div.category)}
-                    className={`w-full text-left py-2 px-3 rounded-lg text-sm font-extrabold transition flex items-center justify-between ${isCatSelected ? "bg-orange-50 text-[#FF7A20]" : "text-gray-950 hover:bg-gray-50"}`}
+                    className={`w-full text-left py-2 px-3 rounded-lg text-base font-extrabold transition flex items-center justify-between ${isCatSelected ? "bg-orange-50 text-[#FF7A20]" : "text-gray-950 hover:bg-gray-50"}`}
                   >
                     <span>{div.category}</span>
                   </button>
@@ -242,7 +242,7 @@ export default function Store({
                         <button
                           key={sub}
                           onClick={() => setSelectedSubcategory(sub)}
-                          className={`w-full text-left py-1.5 px-3 rounded text-xs font-semibold transition ${isSubSelected ? "text-[#FF7A20] bg-orange-50/50 font-bold" : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"}`}
+                          className={`w-full text-left py-1.5 px-3 rounded text-sm font-semibold transition ${isSubSelected ? "text-[#FF7A20] bg-orange-50/50 font-bold" : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"}`}
                         >
                           {sub}
                         </button>
@@ -315,7 +315,7 @@ export default function Store({
         {loading ? (
           <div className="py-20 flex flex-col justify-center items-center space-y-3">
             <RefreshCw className="w-8 h-8 text-[#FF7A20] animate-spin" />
-            <p className="text-xs text-gray-400 font-semibold">Tuning equipment matches...</p>
+            <p className="text-xs text-gray-400 font-semibold">Loading...</p>
           </div>
         ) : filteredProducts.length === 0 ? (
           searchQuery ? (
@@ -521,7 +521,7 @@ export default function Store({
       {/* Compare Specification Comparison Overlay Drawer */}
       {compareList.length > 0 && (
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-[#FF7A20] shadow-2xl z-40 p-4 transition duration-300" id="compare-tray">
-          <div className="max-w-[1536px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4 px-4 lg:px-[70px] md:px-[70px]">
+          <div className="max-w-[1536px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4 px-4 md:px-[100px] lg:px-[100px]">
             <div className="flex items-center space-x-4">
               <span className="text-sm font-bold text-gray-900">Comparing Products ({compareList.length}/3)</span>
               <div className="flex space-x-3">

@@ -45,7 +45,7 @@ export default function Footer({
     <footer className="w-full bg-gradient-to-r from-gray-900 to-gray-800 text-gray-400 text-sm border-t border-gray-800" id="main-footer">
       {/* Newsletter signup top band */}
       <div className="w-full border-gray-800 py-10">
-        <div className="max-w-[1536px] mx-auto px-4 lg:px-[70px] md:px-[70px] grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-6">
             <h3 className="text-white font-extrabold text-xl sm:text-2xl leading-tight">Subscribe to Spinel Distribution Briefings</h3>
             <p className="text-gray-300 text-sm sm:text-base mt-2">Stay informed with the latest product launches, industry insights, and exclusive offers, from Spinel Distribution Ltd</p>
@@ -80,7 +80,7 @@ export default function Footer({
       </div>
 
       {/* Main Footer Sitemap Grid */}
-      <div className="max-w-[1536px] mx-auto px-4 lg:px-[70px] md:px-[70px] py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
+      <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
         {/* Spinel Identity Column */}
         <div className="lg:col-span-4 space-y-4">
           <div className="flex items-center space-x-2">
@@ -96,7 +96,7 @@ export default function Footer({
             </div>
           </div>
           <p className="text-sm text-gray-400 leading-relaxed">
-            Spinel Distribution is a global ICT Distribution company. We are a leading provider of industrial products, security surveillance, solar power system and equipment related to ICT.
+            Spinel Distribution Ltd is a global ICT Distribution company. We are a leading provider of industrial products, security surveillance, solar power system and equipment related to ICT.
           </p>
           <div className="flex flex-wrap gap-2">
             <a href="https://web.facebook.com/profile.php?id=61558951755204" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-900 rounded-md text-gray-400 hover:text-[#FF7A20] transition duration-150 flex items-center justify-center" aria-label="Facebook">
@@ -123,21 +123,21 @@ export default function Footer({
         <div className="lg:col-span-2 space-y-4">
           <h4 className="text-white font-extrabold text-sm uppercase tracking-wider">Our Product</h4>
           <ul className="space-y-2 text-sm text-gray-400">
-            <li><button onClick={() => setCurrentView("store")} className="hover:text-white block py-0.5">Explosion-Proof CCTV</button></li>
-            <li><button onClick={() => setCurrentView("store")} className="hover:text-white block py-0.5">Commercial Solar Panels</button></li>
-            <li><button onClick={() => setCurrentView("store")} className="hover:text-white block py-0.5">Lithium Energy Vaults</button></li>
-            <li><button onClick={() => setCurrentView("store")} className="hover:text-white block py-0.5">Rugged IP Telephony</button></li>
-            <li><button onClick={() => setCurrentView("store")} className="hover:text-white block py-0.5">Seismic Rack Cabinets</button></li>
+            <li><button onClick={() => setCurrentView("store")} className="hover:text-white block py-0.5">CCTV Surveillance</button></li>
+            <li><button onClick={() => setCurrentView("store")} className="hover:text-white block py-0.5">Electrical Systems</button></li>
+            <li><button onClick={() => setCurrentView("store")} className="hover:text-white block py-0.5">Renewable Energy</button></li>
+            <li><button onClick={() => setCurrentView("store")} className="hover:text-white block py-0.5">Rack & Enclosures</button></li>
+            <li><button onClick={() => setCurrentView("store")} className="hover:text-white block py-0.5">Ex-Proof Equipments</button></li>
           </ul>
         </div>
 
         <div className="lg:col-span-2 space-y-4">
           <h4 className="text-white font-extrabold text-sm uppercase tracking-wider">Our Solutions</h4>
           <ul className="space-y-2 text-sm text-gray-400">
-            <li><button onClick={() => setCurrentView("about")} className="hover:text-white block py-0.5">Video Surveillance</button></li>
-            <li><button onClick={() => setCurrentView("about")} className="hover:text-white block py-0.5">Off-Grid Microgrids</button></li>
-            <li><button onClick={() => setCurrentView("about")} className="hover:text-white block py-0.5">Refinery PA/GA Grids</button></li>
-            <li><button onClick={() => setCurrentView("about")} className="hover:text-white block py-0.5">Telecom Node Backups</button></li>
+            <li><button onClick={() => setCurrentView("about")} className="hover:text-white block py-0.5">Access Control</button></li>
+            <li><button onClick={() => setCurrentView("about")} className="hover:text-white block py-0.5">Intrusion Detection</button></li>
+            <li><button onClick={() => setCurrentView("about")} className="hover:text-white block py-0.5">Fire Detection</button></li>
+            <li><button onClick={() => setCurrentView("about")} className="hover:text-white block py-0.5">Telecommunication</button></li>
           </ul>
         </div>
 
@@ -173,7 +173,7 @@ export default function Footer({
 
       {/* Compliance & Copyright Bottom */}
       <div className="w-full border-gray-800 py-6 bg-gray-950">
-        <div className="max-w-[1536px] mx-auto px-4 lg:px-[70px] md:px-[70px] flex items-center justify-center text-xs text-gray-500">
+        <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] flex items-center justify-center text-xs text-gray-500">
           <span className="text-center text-sm">© 2026 Spinel Distribution Limited. All Rights Reserved.</span>
         </div>
       </div>
@@ -189,7 +189,7 @@ export default function Footer({
           }`}
           id="toggle-usd-btn"
         >
-          <span>🇺🇸</span>
+          <img src="https://i.ibb.co/kscSYwq8/usa-flag.png" alt="US Flag" className="w-5 h-3.5 object-cover rounded-xs" referrerPolicy="no-referrer" />
           <span>USD</span>
         </button>
         <button
@@ -201,7 +201,7 @@ export default function Footer({
           }`}
           id="toggle-ngn-btn"
         >
-          <span>🇳🇬</span>
+          <img src="https://i.ibb.co/wFrgxdhP/nigeria-flag.png" alt="NG Flag" className="w-5 h-3.5 object-cover rounded-xs" referrerPolicy="no-referrer" />
           <span>NGN</span>
         </button>
       </div>

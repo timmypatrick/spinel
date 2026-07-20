@@ -127,7 +127,7 @@ const OEMS_LIST = [
 
 export default function Oems({ setCurrentView }: OemsProps) {
   return (
-    <div className="bg-transparent min-h-screen py-12 px-4 sm:px-6 lg:px-[70px] md:px-[70px]" id="oems-page">
+    <div className="bg-transparent min-h-screen py-12 px-4 sm:px-6 md:px-[100px] lg:px-[100px]" id="oems-page">
       {/* Injecting marquee animation rules */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes marquee {
@@ -219,9 +219,9 @@ export default function Oems({ setCurrentView }: OemsProps) {
         {/* Professional Marquee of OEM Logos */}
         <div className="space-y-6 pt-4 border-t border-gray-100">
           <div className="text-center space-y-1.5">
-            <span className="text-[10px] text-orange-500 font-bold uppercase tracking-widest">Enterprise Alignment</span>
-            <h2 className="text-lg sm:text-xl font-bold uppercase tracking-tight text-gray-900">Strategic Brand Portfolio</h2>
-            <p className="text-sm text-gray-500 max-w-2xl mx-auto">Explore the premium manufacturers integrated within our high-performance client solutions.</p>
+            <span className="text-[10px] text-orange-500 font-bold uppercase tracking-widest">Leading Global OEM Partners for ICT, Security & Engineering products</span>
+            <h2 className="text-lg sm:text-xl font-bold uppercase tracking-tight text-gray-900">Authorized Technology Brands & Manufacturing Partners</h2>
+            <p className="text-sm text-gray-500 max-w-2xl mx-auto">Explore our portfolio of world-class OEM partners delivering innovative ICT infrastructure, electronic security systems, renewable energy products, industrial networking equipment, hazardous-area communication systems, power distribution products, and engineering technologies.</p>
           </div>
 
           <div className="overflow-hidden relative bg-gray-50/80 border border-gray-100 py-10 rounded-2xl">

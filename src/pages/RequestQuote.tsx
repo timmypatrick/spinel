@@ -139,7 +139,7 @@ export default function RequestQuote({ currency, setCurrentView }: RequestQuoteP
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 lg:px-[70px] md:px-[70px] py-12 space-y-10" id="request-quote-view">
+    <div className="max-w-4xl mx-auto px-4 md:px-[100px] lg:px-[100px] py-12 space-y-10" id="request-quote-view">
       <div className="text-center space-y-2">
         <div className="inline-flex items-center space-x-1.5 bg-orange-50 border border-orange-100 px-3 py-1 rounded-full text-xs text-[#FF7A20] font-semibold">
           <Sparkles className="w-4.5 h-4.5 animate-pulse" />

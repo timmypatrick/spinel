@@ -161,7 +161,7 @@ export default function Header({
   return (
     <header className="w-full bg-white border-b border-gray-100 sticky top-0 z-50 shadow-xs" id="main-header">
       {/* Main Navbar */}
-      <div className="max-w-[1536px] mx-auto px-4 lg:px-[70px] md:px-[70px] py-3 flex items-center justify-between relative" id="navbar-container">
+      <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] py-3 flex items-center justify-between relative" id="navbar-container">
         {/* Logo Section (SVG mirroring orange/dark grey interlaced logo) */}
         <div
           onClick={() => handleNavigate("home")}
@@ -250,7 +250,7 @@ export default function Header({
             </button>
             {/* Products Mega Menu */}
             {isProductsMenuOpen && (
-              <div className="absolute top-[75%] left-4 lg:left-[52px] right-4 lg:right-[52px] bg-white border border-gray-100 rounded-xl shadow-2xl z-50 p-6 grid grid-cols-5 gap-6 before:content-[''] before:absolute before:-top-6 before:left-0 before:right-0 before:h-6" id="products-mega-menu">
+              <div className="absolute top-[75%] left-4 md:left-[100px] lg:left-[100px] right-4 md:right-[100px] lg:right-[100px] bg-white border border-gray-100 rounded-xl shadow-2xl z-50 p-6 grid grid-cols-5 gap-6 before:content-[''] before:absolute before:-top-6 before:left-0 before:right-0 before:h-6" id="products-mega-menu">
                 <div>
                   <div className="flex items-center space-x-2 text-gray-900 font-bold text-base border-b border-gray-100 pb-2 mb-3">
                     <Shield className="w-5 h-5 text-[#FF7A20]" />
@@ -611,12 +611,12 @@ export default function Header({
             </div>
 
             {/* Hardware Store direct link */}
-            <button onClick={() => { handleNavigate("store"); setIsMobileMenuOpen(false); }} className="text-left py-1.5 font-bold hover:text-[#FF7A20] border-b border-gray-100 pb-2">Hardware Store</button>
+            <button onClick={() => { handleNavigate("store"); setIsMobileMenuOpen(false); }} className="text-left py-1.5 font-bold hover:text-[#FF7A20] border-b border-gray-100 pb-2">Our Store</button>
             <button onClick={() => { handleNavigate("oems"); setIsMobileMenuOpen(false); }} className="text-left py-1.5 font-bold hover:text-[#FF7A20] border-b border-gray-100 pb-2">OEMs</button>
             <button onClick={() => { handleNavigate("about"); setIsMobileMenuOpen(false); }} className="text-left py-1.5 font-bold hover:text-[#FF7A20] border-b border-gray-100 pb-2">About Company</button>
-            <button onClick={() => { handleNavigate("contact"); setIsMobileMenuOpen(false); }} className="text-left py-1.5 font-bold hover:text-[#FF7A20] border-b border-gray-100 pb-2">Contact Hub</button>
+            <button onClick={() => { handleNavigate("contact"); setIsMobileMenuOpen(false); }} className="text-left py-1.5 font-bold hover:text-[#FF7A20] border-b border-gray-100 pb-2">Contact Us</button>
             {currentView !== "admin" && (
-              <button onClick={() => { handleNavigate("request-quote"); setIsMobileMenuOpen(false); }} className="text-left text-[#FF7A20] py-1.5 font-bold">Request Quote Forms</button>
+              <button onClick={() => { handleNavigate("request-quote"); setIsMobileMenuOpen(false); }} className="text-left text-[#FF7A20] py-1.5 font-bold">Request Quote</button>
             )}
           </nav>
         </div>

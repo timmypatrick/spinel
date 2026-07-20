@@ -54,7 +54,7 @@ export default function ProductDetails({
   if (loading || !product) {
     return (
       <div className="py-24 text-center text-xs font-semibold text-gray-400">
-        Aligning optics and data sheets...
+        Loading...
       </div>
     );
   }
@@ -87,12 +87,12 @@ export default function ProductDetails({
   };
 
   return (
-    <div className="max-w-[1536px] mx-auto px-4 lg:px-[70px] md:px-[70px] py-10 space-y-12" id="product-details-view">
+    <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] py-10 space-y-12" id="product-details-view">
       {/* Breadcrumb Row */}
       <nav className="flex items-center space-x-2 text-xs text-gray-500 font-semibold" id="product-breadcrumbs">
-        <button onClick={() => setCurrentView("home")} className="hover:text-[#FF7A20]">Portal Home</button>
+        <button onClick={() => setCurrentView("home")} className="hover:text-[#FF7A20]">Home</button>
         <ChevronRight className="w-3 h-3 text-gray-400" />
-        <button onClick={() => setCurrentView("store")} className="hover:text-[#FF7A20]">Store Catalog</button>
+        <button onClick={() => setCurrentView("store")} className="hover:text-[#FF7A20]">Store</button>
         <ChevronRight className="w-3 h-3 text-gray-400" />
         <span className="text-gray-400 select-none">Division: {product.category}</span>
         <ChevronRight className="w-3 h-3 text-gray-400" />
@@ -161,7 +161,7 @@ export default function ProductDetails({
 
           <div className="p-4 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between">
             <div>
-              <span className="text-[10px] text-gray-400 font-bold uppercase">Distribution Price</span>
+              <span className="text-[10px] text-gray-400 font-bold uppercase">Price</span>
               <p className="text-2xl font-black text-[#FF7A20] leading-none mt-1">
                 {currency === "USD" ? `$${product.priceUSD.toLocaleString()}` : `₦${product.priceNGN.toLocaleString()}`}
               </p>
@@ -212,7 +212,7 @@ export default function ProductDetails({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 border-t border-gray-100 pt-12">
         {/* Left specifications (Cols 7) */}
         <div className="lg:col-span-8 space-y-6">
-          <h3 className="font-bold text-sm text-gray-900 border-b border-gray-100 pb-2 uppercase tracking-wider">Engineering Specifications</h3>
+          <h3 className="font-bold text-sm text-gray-900 border-b border-gray-100 pb-2 uppercase tracking-wider">Product Specifications</h3>
           <table className="w-full text-xs">
             <tbody>
               {product.specifications.map((spec, idx) => (
@@ -223,30 +223,6 @@ export default function ProductDetails({
               ))}
             </tbody>
           </table>
-        </div>
-
-        {/* Right downloads & brochures (Cols 4) */}
-        <div className="lg:col-span-4 space-y-6">
-          <h3 className="font-bold text-sm text-gray-900 border-b border-gray-100 pb-2 uppercase tracking-wider">OEM Downloads Desk</h3>
-          <div className="space-y-2.5">
-            {product.downloads.map((dl, idx) => (
-              <a
-                key={idx}
-                href={dl.url}
-                onClick={(e) => { e.preventDefault(); alert(`Initiating file transfer for document: "${dl.title}" [PDF].`); }}
-                className="flex items-center justify-between p-3.5 bg-gray-50 border border-gray-200/60 rounded-xl hover:border-[#FF7A20] transition group cursor-pointer"
-              >
-                <div className="flex items-center space-x-2.5">
-                  <Download className="w-4 h-4 text-gray-400 group-hover:text-[#FF7A20]" />
-                  <div>
-                    <p className="font-bold text-[11px] text-gray-900">{dl.title}</p>
-                    <span className="text-[9px] uppercase font-mono tracking-wider text-gray-400 font-bold">{dl.type}</span>
-                  </div>
-                </div>
-                <span className="text-[10px] text-[#FF7A20] font-bold">Transfer</span>
-              </a>
-            ))}
-          </div>
         </div>
       </div>
 

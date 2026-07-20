@@ -50,7 +50,7 @@ export default function Cart({ cart, setCart, currency, setCurrentView }: CartPr
   }
 
   return (
-    <div className="max-w-[1536px] mx-auto px-4 lg:px-[70px] md:px-[70px] py-12 space-y-8" id="cart-view">
+    <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] py-12 space-y-8" id="cart-view">
       <h1 className="text-2xl font-black text-gray-900 tracking-tight uppercase">Your Project Hardware Cart</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">

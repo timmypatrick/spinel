@@ -10,7 +10,7 @@ export default function Contact() {
     address: "",
     state: "",
     country: "",
-    subject: "General Request",
+    subject: "General Inquiry",
     message: ""
   });
   const [loading, setLoading] = useState(false);
@@ -49,31 +49,31 @@ export default function Contact() {
 
   const offices = [
     {
-      title: "Lagos Headquarters (Zone A)",
-      address: "Plot 24, Admiralty Way, Lekki Phase 1, Lagos, Nigeria",
-      phone: "+234 1 888 7746",
-      email: "lagos.sales@spineldistribution.com"
+      title: "Dubai Office – Middle East Operations",
+      address: "Office No. 1806, 18th Floor Aurora Tower, Dubai Media Dubai UEA.",
+      phone: "+234 816 963 2070",
+      email: "engineering@spineldistribution.com"
     },
     {
-      title: "Port Harcourt Integration Hub",
-      address: "Plot 15, Trans-Amadi Industrial Layout, Port Harcourt, Rivers State",
-      phone: "+234 84 456 9900",
-      email: "ph.engineering@spineldistribution.com"
+      title: "Lagos Headquarters – Nigeria Operations",
+      address: "Plot 8, The Providence Str, Lekki Phase 1, Lagos, Nigeria.",
+      phone: "+234 706 890 7595",
+      email: "sales@spineldistribution.com"
     }
   ];
 
   return (
-    <div className="max-w-[1536px] mx-auto px-4 lg:px-[70px] md:px-[70px] py-12 space-y-12" id="contact-view">
+    <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] py-12 space-y-12" id="contact-view">
       <div className="text-center space-y-2">
-        <h1 className="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight uppercase">Contact our Systems Hubs</h1>
-        <p className="text-gray-500 text-xs sm:text-sm max-w-sm mx-auto">Get in direct communication with regional engineers and delivery officers.</p>
+        <h1 className="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight uppercase">Contact Spinel Distribution – ICT, Security & Engineering Solutions</h1>
+        <p className="text-gray-500 text-xs sm:text-sm max-w-sm mx-auto">Speak with Our Sales, Technical Support & Engineering Team.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
         {/* Left contacts details (Cols 5) */}
         <div className="lg:col-span-5 space-y-6">
           <div className="space-y-4">
-            <h3 className="font-bold text-sm text-gray-900 uppercase tracking-wider pb-2 border-b border-gray-100">Regional Distribution Hubs</h3>
+            <h3 className="font-bold text-sm text-gray-900 uppercase tracking-wider pb-2 border-b border-gray-100">Spinel Distribution Office Locations</h3>
             {offices.map((off, idx) => (
               <div key={idx} className="bg-white border border-gray-100 p-5 rounded-xl space-y-3 shadow-xs">
                 <h4 className="font-bold text-xs text-gray-900 flex items-center space-x-2">
@@ -92,9 +92,9 @@ export default function Contact() {
           <div className="bg-gray-50 p-5 rounded-xl border border-gray-100 text-xs text-gray-500 leading-relaxed">
             <h4 className="font-bold text-gray-900 mb-1 flex items-center space-x-1.5">
               <HelpCircle className="w-4 h-4 text-[#FF7A20]" />
-              <span>Tendering Office hours</span>
+              <span>Business Hours & Customer Support</span>
             </h4>
-            <p>Our sales desks and dispatch yards operate Monday - Friday (08:00 - 17:00 UTC+1). Special weekend emergency logistics can be cleared via priority project contracts.</p>
+            <p>Our sales, customer support, and engineering teams are available Monday to Friday, 8:00 AM – 5:00 PM (WAT) to provide quotations, technical assistance, product information, and project support.</p>
           </div>
         </div>
 
@@ -107,21 +107,21 @@ export default function Contact() {
               <div className="bg-emerald-50 border border-emerald-100 p-6 rounded-xl flex items-center space-x-3 text-emerald-800 text-xs">
                 <CheckCircle className="w-8 h-8 text-emerald-500 shrink-0" />
                 <div>
-                  <p className="font-bold">Message Forwarded Successfully!</p>
-                  <p className="text-emerald-600 mt-0.5">A technician is analyzing your specs and will reply shortly.</p>
+                  <p className="font-bold">Message Sent Successfully!</p>
+                  <p className="text-emerald-600 mt-0.5">Thank you for contacting Spinel Distribution. Our sales or technical team will respond as soon as possible.</p>
                 </div>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4 text-xs">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="text-gray-500 font-semibold">Your Name</label>
+                    <label className="text-gray-500 font-semibold">Representative Name</label>
                     <input
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       required
-                      placeholder="Patrick Olayinka"
+                      placeholder="Timmy Patrick"
                       className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:border-[#FF7A20]"
                     />
                   </div>
@@ -132,7 +132,7 @@ export default function Contact() {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       required
-                      placeholder="representative@domain.com"
+                      placeholder="sales@spineldistribution.com"
                       className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:border-[#FF7A20]"
                     />
                   </div>
@@ -145,7 +145,7 @@ export default function Contact() {
                       type="text"
                       value={formData.companyName}
                       onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                      placeholder="Enterprise Corp"
+                      placeholder="Spinel Distribution Ltd"
                       className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:border-[#FF7A20]"
                     />
                   </div>
@@ -156,7 +156,7 @@ export default function Contact() {
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       required
-                      placeholder="+234 803 123 4567"
+                      placeholder="+234 801 234 5678"
                       className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:border-[#FF7A20]"
                     />
                   </div>
@@ -169,7 +169,7 @@ export default function Contact() {
                     value={formData.address}
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                     required
-                    placeholder="Plot 15, Trans-Amadi Industrial Layout"
+                    placeholder="Plot 8, The Providence Str, Lekki Phase 1"
                     className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:border-[#FF7A20]"
                   />
                 </div>
@@ -182,7 +182,7 @@ export default function Contact() {
                       value={formData.state}
                       onChange={(e) => setFormData({ ...formData, state: e.target.value })}
                       required
-                      placeholder="Rivers State"
+                      placeholder="Lagos State"
                       className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:border-[#FF7A20]"
                     />
                   </div>
@@ -200,27 +200,28 @@ export default function Contact() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-gray-500 font-semibold">Inquiry Subject</label>
+                  <label className="text-gray-500 font-semibold">Select a Subject</label>
                   <select
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                     className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none"
                   >
-                    <option value="General Request">General Request</option>
-                    <option value="Partnership Opportunities">Partnership Opportunities</option>
-                    <option value="Bulk Order">Bulk Order</option>
-                    <option value="System Design">System Design</option>
+                    <option value="General Inquiry">General Inquiry</option>
+                    <option value="Sales Inquiry">Sales Inquiry</option>
+                    <option value="Technical Support">Technical Support</option>
+                    <option value="Order Status">Order Status</option>
+                    <option value="Other">Other</option>
                   </select>
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-gray-500 font-semibold">Technical Specs Details</label>
+                  <label className="text-gray-500 font-semibold">How Can We Assist You?</label>
                   <textarea
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     required
                     rows={4}
-                    placeholder="Briefly detail your equipment request, site constraints, or certification queries..."
+                    placeholder="Tell us about your product inquiry, project requirements, or technical support needs. Our sales and engineering team will respond with the best solution for your business."
                     className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:border-[#FF7A20]"
                   />
                 </div>
