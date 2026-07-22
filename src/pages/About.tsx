@@ -86,32 +86,32 @@ export default function About() {
     {
       title: "Genuine OEM Products",
       icon: Award,
-      short: "100% verified authentic systems with active warranty certificates.",
-      detail: "We operate a strict zero gray-market policy. Every camera, router, switch, solar controller, and battery is sourced directly from certified production lines. This ensures your project benefits from authentic hardware, secure firmware upgrades, and reliable manufacturer warranty compliance."
+      short: "100% verified authentic products with active warranty certificates.",
+      detail: "We operate a strict zero gray-market policy. Every camera, router, switch, solar controller, battery e.t.c is sourced directly from certified production lines. This ensures your project benefits from authentic hardware, secure firmware upgrades, and reliable manufacturer warranty compliance."
     },
     {
       title: "Competitive Pricing",
       icon: Tag,
-      short: "Optimized corporate and project distribution pricing tier.",
+      short: "Optimized corporate and product distribution pricing tier.",
       detail: "By leveraging our direct factory relationships and bulk purchasing agreements, we eliminate unnecessary middlemen. This cost optimization is passed directly to our corporate clients, ensuring maximum value for capital budgets and highly competitive tenders."
     },
     {
       title: "Technical Expertise",
       icon: Cpu,
-      short: "Led by certified physical security and systems engineers.",
+      short: "Led by certified electrionic security and systems engineers.",
       detail: "Our company is engineering-led. Our specialists have deep technical certifications from major global brands. We don't just sell components; we analyze systems, verify compatibility, and assist in designing robust, long-term technical architectures."
     },
     {
       title: "Fast Nationwide Delivery",
       icon: Truck,
-      short: "Direct ex-stock distribution from regional warehouse hubs.",
-      detail: "With strategic inventory holding facilities in major industrial hubs, we are uniquely equipped to meet pressing deployment timelines. Our established transport network secures swift transit to project sites across Lagos, Port Harcourt, and beyond."
+      short: "Fast Nationwide Delivery of ICT & Engineering Products",
+      detail: "Our reliable logistics network ensures the fast, secure, and efficient delivery of genuine ICT, electronic security, renewable energy, and engineering products, helping keep your projects on schedule across Nigeria and Africa."
     },
     {
-      title: "Engineering Support",
+      title: "Free Nationwide Delivery",
       icon: Wrench,
-      short: "Comprehensive pre-sales design study and architecture validation.",
-      detail: "We assist corporate engineering offices during the critical planning stages of RFPs and RFQs. We help compile technical submittals, run site calculation metrics, check electrical compatibility, and validate system designs before orders are finalized."
+      short: "Free, and reliable delivery of genuine ICT products",
+      detail: "We provide free delivery on qualifying orders, ensuring your genuine OEM products are delivered quickly, securely, and efficiently to your location."
     },
     {
       title: "After-Sales Service",
@@ -325,7 +325,7 @@ export default function About() {
         <div className="lg:col-span-7 space-y-6">
           <span className="text-[#FF7A20] font-bold text-xs uppercase tracking-widest font-mono">About Spinel Distribution</span>
           <h1 className="text-3xl sm:text-4xl font-black text-gray-900 leading-tight uppercase">
-            Delivering Innovative ICT, Electronic Security & Renewable Energy Products Across Africa
+           ICT & Electronic Security Distribution Across Africa
           </h1>
           <p className="text-gray-600 text-sm leading-relaxed font-sans">
             Spinel is a leading ICT and engineering Distribution company, delivering high-quality ICT products, renewable energy systems, industrial communication system, networking equipment, and power distribution infrastructure. Through strategic partnerships with globally recognized OEMs, we help businesses across Africa build secured, connected, and future-ready infrastructures.
@@ -350,8 +350,7 @@ export default function About() {
       <section className="space-y-8 bg-gray-50 border border-gray-100 p-8 sm:p-10 rounded-3xl" id="vision-mission-strategic">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-gray-200 pb-6">
           <div className="space-y-2">
-            <span className="text-[#FF7A20] font-extrabold text-xs uppercase tracking-wider font-mono">Strategic Framework</span>
-            <h2 className="text-2xl sm:text-3xl font-black text-gray-900 uppercase">Our Core Purpose & Vision</h2>
+            <h2 className="text-2xl sm:text-3xl font-black text-gray-900 uppercase">Our Vision & Mission</h2>
             <p className="text-gray-500 text-sm max-w-xl">
               Explore our core strategic mandate and the fundamental pillars that drive Spinel's daily operations.
             </p>
@@ -454,10 +453,9 @@ export default function About() {
       {/* 4. "Why Choose Spinel Distribution" Highly Engaging Interactive Grid Section */}
       <section className="space-y-8 bg-gray-950 text-white p-8 sm:p-12 rounded-3xl" id="why-choose-spinel">
         <div className="max-w-3xl space-y-2">
-          <span className="text-[#FF7A20] font-bold text-xs uppercase tracking-widest font-mono">The Spinel Advantage</span>
-          <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight">Why Choose Spinel Distribution?</h2>
+          <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight">Why Businesses Choose Spinel Distribution</h2>
           <p className="text-gray-400 text-sm sm:text-base">
-            Click on any advantage card below to inspect the dedicated execution standards and system assurances we guarantee for your organization.
+            Discover why businesses across Africa trust Spinel Distribution for genuine OEM products, expert after-sales support and exceptional customer service.
           </p>
         </div>
 
@@ -525,10 +523,9 @@ export default function About() {
       {/* 5. "Our Product Portfolio" Segment with Dynamic Profile Display */}
       <section className="space-y-8" id="product-portfolio">
         <div className="space-y-1.5 text-center">
-          <span className="text-[#FF7A20] font-bold text-xs uppercase tracking-widest font-mono">Our Distribution Reach</span>
           <h2 className="text-2xl sm:text-3xl font-black text-gray-900 uppercase">Our Product Portfolio</h2>
           <p className="text-gray-500 text-sm max-w-lg mx-auto">
-            Explore the 9 major technology divisions under Spinel Distribution. Click a tab division to view its core components and technical advantages.
+            Explore the 9 major technology divisions under Spinel Distribution.
           </p>
         </div>
 
@@ -562,7 +559,7 @@ export default function About() {
                 {productPortfolioData[selectedPortfolioTab].badge}
               </span>
               <h3 className="text-xl sm:text-2xl font-black text-gray-900 uppercase">
-                {productPortfolioData[selectedPortfolioTab].title} Division
+                {productPortfolioData[selectedPortfolioTab].title}
               </h3>
               <p className="text-gray-500 text-sm leading-relaxed">
                 {productPortfolioData[selectedPortfolioTab].desc}
