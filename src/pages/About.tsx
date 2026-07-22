@@ -51,18 +51,18 @@ export default function About() {
 
   const coreValues = [
     {
-      title: "Explosion-Proof Safety Standards",
-      desc: "Our hardware complies strictly with global ATEX / IECEx directives. We prioritize structural survival in volatile refinery zones.",
-      icon: ShieldCheck
-    },
-    {
-      title: "OEM Supply Integrity",
-      desc: "Zero gray-market policy. Every battery, switch, and camera is sourced direct from certified production lines with active warrantee keys.",
+      title: "Customer Focus",
+      desc: "We prioritize our customers' needs by distributing exceptional product tailored to their needs.",
       icon: Award
     },
     {
-      title: "Logistics Excellence",
-      desc: "Direct ex-stock delivery from regional hubs in Lagos and PH to reduce lead delays and secure bid compliance milestones.",
+      title: "Quality Products",
+      desc: "We supply reliable and cost-effective, products from global equipment menufacturers.",
+      icon: ShieldCheck
+    },
+    {
+      title: "All-round Integrity",
+      desc: "We conduct every business relationship with honesty, transparency, and accountability.",
       icon: Globe
     }
   ];
@@ -70,14 +70,14 @@ export default function About() {
   // Vision & Mission Pillars
   const strategicPillars = {
     vision: [
-      { title: "Gateway to Innovation", desc: "Bringing the most advanced and robust industrial technologies directly to the African landscape." },
-      { title: "Empowering Sustainability", desc: "Pioneering hybrid solar and clean distribution setups to secure critical infrastructure uptime." },
-      { title: "Uncompromising Safety", desc: "Setting the standard for explosion-proof safety designs in maritime and volatile sectors." }
+      { title: "Gateway to Innovative ICT & Security Infrastructures", desc: "Connecting businesses across Africa with world-class ICT infrastructure, electronic security systems, industrial networking and engineering equipment from globally trusted OEM partners." },
+      { title: "Renewable Energy & Sustainable Power Solutions", desc: "Delivering high-performance solar power systems, hybrid energy solutions, batteries, and power management technologies that enable secure, efficient, and environmentally responsible operations." },
+      { title: "Explosion-Protected & Industrial Safety Distribution", desc: "Supplying certified explosion-proof telephones, IP phones, junction boxes, sounders, surveillance systems, and hazardous-area communication equipment for the oil and gas, marine, petrochemical, and industrial sectors." }
     ],
     mission: [
-      { title: "Sourcing Integrity", desc: "Ensuring 100% genuine products with full backing directly from certified international OEMs." },
-      { title: "Engineering First", desc: "Supporting our clients with design checks, site surveys, and continuous post-delivery technical audits." },
-      { title: "Logistics Reliability", desc: "Optimizing supply chain timelines through strategic localized distribution hubs." }
+      { title: "Reliable ICT Equipments", desc: "Ensuring 100% genuine products with full backing directly from certified international OEMs." },
+      { title: "Engineering support", desc: "Supporting our clients with design checks, site surveys, and continuous post-delivery technical audits." },
+      { title: "Trusted Supply Chain & Product Distributiony", desc: "Providing efficient procurement, inventory management, and nationwide distribution of ICT, electronic security, renewable energy, and industrial technology products." }
     ]
   };
 
@@ -328,7 +328,7 @@ export default function About() {
             Delivering Innovative ICT, Electronic Security & Renewable Energy Products Across Africa
           </h1>
           <p className="text-gray-600 text-sm leading-relaxed font-sans">
-            Spinel is a leading ICT and engineering Distribution company, delivering high-quality ICT products, renewable energy systems, industrial communication system, networking equipment, and power distribution infrastructure. Through strategic partnerships with globally recognized OEMs, we help businesses across Africa build secure, connected, and future-ready infrastructures.
+            Spinel is a leading ICT and engineering Distribution company, delivering high-quality ICT products, renewable energy systems, industrial communication system, networking equipment, and power distribution infrastructure. Through strategic partnerships with globally recognized OEMs, we help businesses across Africa build secured, connected, and future-ready infrastructures.
           </p>
           <p className="text-gray-600 text-sm leading-relaxed font-sans">
             Our company is not merely a supplier; we are an engineering-led team that conducts site studies, design checks, and regulatory assessments to ensure that when hardware leaves our warehouses, it thrives in active environments.
@@ -353,7 +353,7 @@ export default function About() {
             <span className="text-[#FF7A20] font-extrabold text-xs uppercase tracking-wider font-mono">Strategic Framework</span>
             <h2 className="text-2xl sm:text-3xl font-black text-gray-900 uppercase">Our Core Purpose & Vision</h2>
             <p className="text-gray-500 text-sm max-w-xl">
-              Click the tabs below to explore our core strategic mandate and the fundamental pillars that drive Spinel's daily operations.
+              Explore our core strategic mandate and the fundamental pillars that drive Spinel's daily operations.
             </p>
           </div>
           
@@ -393,24 +393,24 @@ export default function About() {
                   {activeStrategicTab === "vision" ? <Eye className="w-7 h-7" /> : <Target className="w-7 h-7" />}
                 </div>
                 <h3 className="text-xl font-black text-gray-900 uppercase">
-                  {activeStrategicTab === "vision" ? "The Horizon We Aim For" : "The Core Mission We Live"}
+                  {activeStrategicTab === "vision" ? "Our Vision" : "Our Mission"}
                 </h3>
                 <p className="text-gray-600 text-sm sm:text-base leading-relaxed font-sans">
                   {activeStrategicTab === "vision" 
-                    ? "To be the ultimate and most reliable distribution gateway for world-class ICT, electronic security, and renewable energy technologies in Africa and emerging markets, powering sustainable industrial growth and connectivity."
-                    : "To deliver exceptional value to our clients and OEM partners through the seamless procurement and supply of genuine, high-performance technology products, backed by technical engineering support, responsive logistics, and unyielding integrity."
+                    ? "To be the ultimate distribution gateway for world-class ICT, electronic security, and renewable energy products in Africa, powering sustainable industrial growth and connectivity."
+                    : "To deliver exceptional value to our customers through the reliable procurement and distribution of cost-effective high-performance ICT, security, and renewable energy products, supported by technical expertise across Africa."
                   }
                 </p>
               </div>
               <div className="border-t border-gray-100 pt-4 mt-6 text-xs text-[#FF7A20] font-bold tracking-wider uppercase flex items-center space-x-1.5">
-                <span>Active strategic target</span>
+                <span>Our Strategic Focus</span>
                 <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
               </div>
             </div>
           </div>
 
           <div className="lg:col-span-7 space-y-4 flex flex-col justify-center">
-            <h4 className="font-bold text-xs uppercase tracking-wider text-gray-400">Strategic Pillars of Excellence</h4>
+            <h4 className="font-bold text-xs uppercase tracking-wider text-gray-400">Our Strategic Pillars of Excellence</h4>
             <div className="grid grid-cols-1 sm:grid-cols-1 gap-4">
               {strategicPillars[activeStrategicTab].map((pillar, idx) => (
                 <div key={idx} className="bg-white hover:border-orange-200 border border-gray-200/60 p-5 rounded-2xl flex items-start space-x-4 transition shadow-xs group">
@@ -431,9 +431,9 @@ export default function About() {
       {/* 3. Core Values Section */}
       <section className="space-y-8" id="corporate-values">
         <div className="text-center space-y-1.5">
-          <span className="text-[#FF7A20] font-bold text-xs uppercase tracking-widest font-mono">Our Directives</span>
-          <h2 className="text-2xl sm:text-3xl font-black text-gray-900 uppercase">Our Corporate Values</h2>
-          <p className="text-gray-500 text-sm max-w-md mx-auto">The unyielding principles guiding Spinel's engineering distributions.</p>
+          <span className="text-[#FF7A20] font-bold text-xs uppercase tracking-widest font-mono">Committed to Quality & Excellence</span>
+          <h2 className="text-2xl sm:text-3xl font-black text-gray-900 uppercase">Our Core Values</h2>
+          <p className="text-gray-500 text-sm max-w-md mx-auto">Our values shape the way we serve businesses across Africa.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {coreValues.map((val, idx) => {

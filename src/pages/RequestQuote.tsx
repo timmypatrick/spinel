@@ -78,7 +78,7 @@ export default function RequestQuote({ currency, setCurrentView }: RequestQuoteP
           <span>Receive a Custom Quote</span>
         </div>
         <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-gray-900 uppercase">Request a Quote for ICT Infrastructures</h1>
-        <p className="text-gray-500 text-xs sm:text-sm mx-auto">Submit your project requirements or specifications, Our sales and engineering specialists will review your request and provide a tailored quotation with the most suitable products, pricing, and technical recommendations for your project.</p>
+        <p className="text-gray-500 text-sm sm:text-base mx-auto">Submit your project specifications, our sales and engineering specialists will review your request and provide a quotation tailored to your requirements.</p>
       </div>
 
       <form onSubmit={handleSubmitQuote} className="bg-white border border-gray-100 p-6 sm:p-8 rounded-2xl shadow-xs space-y-6 text-sm">

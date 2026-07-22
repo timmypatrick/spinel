@@ -149,9 +149,9 @@ export default function Oems({ setCurrentView }: OemsProps) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center bg-gray-50 p-6 sm:p-8 lg:p-10 rounded-3xl border border-gray-100">
           <div className="lg:col-span-7 space-y-4 text-left">
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 tracking-tight leading-tight uppercase">
-              Global <span className="text-[#FF7A20]">OEM</span> Partners
+              Our <span className="text-[#FF7A20]">OEM</span> Partners
             </h1>
-            <p className="text-gray-600 text-xs sm:text-sm leading-relaxed font-sans">
+            <p className="text-gray-600 text-base leading-relaxed font-sans">
               Spinel Distribution collaborate with globally recognized Original Equipment Manufacturers (OEMs) to deliver reliable, innovative, and industry-best practice. Our strategic partnerships enable us to provide authentic products, cutting-edge innovations, and comprehensive technical support across ICT, electronic security, telecommunications, networking, renewable energy, and industrial infrastructure. By working closely with trusted OEMs, we ensure our customers receive reliable products that meet international quality standards, backed by expert guidance, warranty support, and dependable after-sales support.
             </p>
           </div>

@@ -94,7 +94,7 @@ export default function Contact() {
               <HelpCircle className="w-5 h-5 text-[#FF7A20]" />
               <span>Business Hours & Customer Support</span>
             </h4>
-            <p>Our sales, customer support, and engineering teams are available Monday to Friday, 8:00 AM – 5:00 PM (WAT) to provide quotations, technical assistance, product information, and project support.</p>
+            <p>Our sales, customer support, and engineering teams are available Monday to Friday, 9:00 AM – 5:00 PM (WAT) to provide quotations, technical assistance, product information, and project support.</p>
           </div>
         </div>
 
@@ -121,7 +121,7 @@ export default function Contact() {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       required
-                      placeholder="Timmy Patrick"
+                      placeholder="Name in full"
                       className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 text-sm focus:outline-none focus:border-[#FF7A20]"
                     />
                   </div>
@@ -132,7 +132,7 @@ export default function Contact() {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       required
-                      placeholder="sales@spineldistribution.com"
+                      placeholder="Business Mail"
                       className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 text-sm focus:outline-none focus:border-[#FF7A20]"
                     />
                   </div>
@@ -145,7 +145,7 @@ export default function Contact() {
                       type="text"
                       value={formData.companyName}
                       onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                      placeholder="Spinel Distribution Ltd"
+                      placeholder="Name in full"
                       className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 text-sm focus:outline-none focus:border-[#FF7A20]"
                     />
                   </div>
@@ -156,7 +156,7 @@ export default function Contact() {
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       required
-                      placeholder="+234 801 234 5678"
+                      placeholder="+234 701 234 5678"
                       className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 text-sm focus:outline-none focus:border-[#FF7A20]"
                     />
                   </div>
@@ -169,7 +169,7 @@ export default function Contact() {
                     value={formData.address}
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                     required
-                    placeholder="Plot 8, The Providence Str, Lekki Phase 1"
+                    placeholder="Company Location"
                     className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 text-sm focus:outline-none focus:border-[#FF7A20]"
                   />
                 </div>
@@ -182,7 +182,7 @@ export default function Contact() {
                       value={formData.state}
                       onChange={(e) => setFormData({ ...formData, state: e.target.value })}
                       required
-                      placeholder="Lagos State"
+                      placeholder="State"
                       className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 text-sm focus:outline-none focus:border-[#FF7A20]"
                     />
                   </div>
@@ -193,7 +193,7 @@ export default function Contact() {
                       value={formData.country}
                       onChange={(e) => setFormData({ ...formData, country: e.target.value })}
                       required
-                      placeholder="Nigeria"
+                      placeholder="Country"
                       className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 text-sm focus:outline-none focus:border-[#FF7A20]"
                     />
                   </div>
@@ -221,7 +221,7 @@ export default function Contact() {
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     required
                     rows={4}
-                    placeholder="Tell us about your product inquiry, project requirements, or technical support needs. Our sales and engineering team will respond with the best solution for your business."
+                    placeholder="Tell us about your product inquiry or the support needed in details"
                     className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 text-sm focus:outline-none focus:border-[#FF7A20]"
                   />
                 </div>
