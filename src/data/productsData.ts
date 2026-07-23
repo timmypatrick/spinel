@@ -18355,6 +18355,279 @@ export const LITHIUM_BATTERIES_PRODUCTS: Product[] = [
   }
 ];
 
+export const SMART_HYBRID_INVERTERS_PRODUCTS: Product[] = [
+  {
+    id: "si-inverter-01",
+    sku: "SI-YA-HA-101",
+    name: "Infinisolar 15KVA Hybrid Inverter",
+    slug: "infinisolar-15kva-hybrid-inverter-si-ya-ha-101",
+    brand: "Infinisolar",
+    category: "Renewable Energy",
+    subcategory: "Smart Hybrid Inverters",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "15KVA Inverter - 48V 3 Phase Hybrid Solar Inverter. It is a multifunctional 3 Phase 15kw inverter that combines the functions of inverter, solar charger and battery charge controller to provide uninterrupted power supply.",
+    images: ["https://i.ibb.co/n8LDsyjn/15kva-Inverter-3phase-48v.png"],
+    specifications: [
+      { label: "SKU", value: "SI-YA-HA-101" },
+      { label: "Brand", value: "Infinisolar" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Smart Hybrid Inverters" },
+      { label: "Capacity", value: "15 KVA (48V 3 Phase)" }
+    ],
+    stock: 305,
+    oem: "Infinisolar",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SI-YA-HA-101 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "si-inverter-02",
+    sku: "SI-YA-HA-102",
+    name: "5KW/48V VMII Hybrid Inverter",
+    slug: "5kw-48v-vmii-hybrid-inverter-si-ya-ha-102",
+    brand: "Gennex",
+    category: "Renewable Energy",
+    subcategory: "Smart Hybrid Inverters",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "Gennex 5KW/48V VMII With 5,000W Inbuilt MPPT Charge Controller. With fast transfer time to protect mission-critical loads such as servers and ATM the 5KW/48V VMII is the best of its kind. Our Inverters are all compatible with mains voltage, solar and generator.",
+    images: ["https://i.ibb.co/Rpt0y2Qy/5-KVA-VMII-Inverter2.jpg"],
+    specifications: [
+      { label: "SKU", value: "SI-YA-HA-102" },
+      { label: "Brand", value: "Gennex" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Smart Hybrid Inverters" },
+      { label: "Capacity", value: "5 KW / 48V" }
+    ],
+    stock: 283,
+    oem: "Gennex",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SI-YA-HA-102 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "si-inverter-03",
+    sku: "SI-YA-HA-103",
+    name: "1.2KVA/12V Inverter",
+    slug: "1-2kva-12v-inverter-si-ya-ha-103",
+    brand: "Generic",
+    category: "Renewable Energy",
+    subcategory: "Smart Hybrid Inverters",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "1.2KVA/12V Inverter With Built-in 50A PWM Solar Charger. With the 1.2KVA Inverter, you get a customized power backup solution that can power your essential household appliances. It's the perfect solution for homes.",
+    images: ["https://i.ibb.co/Q3hWwRmx/1-2-KVA-in-Lagos-removebg-preview.jpg"],
+    specifications: [
+      { label: "SKU", value: "SI-YA-HA-103" },
+      { label: "Brand", value: "Generic" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Smart Hybrid Inverters" },
+      { label: "Capacity", value: "1.2 KVA / 12V" }
+    ],
+    stock: 709,
+    oem: "Generic",
+    productType: "Enterprise",
+    featured: false,
+    popular: true,
+    downloads: [
+      { title: "SI-YA-HA-103 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "si-inverter-04",
+    sku: "SI-YA-HA-104",
+    name: "2 KVA Hybrid Inverter",
+    slug: "2-kva-hybrid-inverter-si-ya-ha-104",
+    brand: "Generic",
+    category: "Renewable Energy",
+    subcategory: "Smart Hybrid Inverters",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "2KVA Hybrid inverters are high-quality solar inverters with in-built MPPT solar charge controller design to withstand harsh environment and last longer. With the 2 kva solar hybrid inverter (24V (1500W/25A MPPT), you get a fully customized power backup or solar solution that can power your specific energy need.",
+    images: ["https://i.ibb.co/whxN70wn/2kva-inverter.jpg"],
+    specifications: [
+      { label: "SKU", value: "SI-YA-HA-104" },
+      { label: "Brand", value: "Generic" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Smart Hybrid Inverters" },
+      { label: "Capacity", value: "2 KVA (24V 1500W/25A MPPT)" }
+    ],
+    stock: 185,
+    oem: "Generic",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SI-YA-HA-104 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "si-inverter-05",
+    sku: "SI-YA-HA-105",
+    name: "8KVA Inverter - Axpert MAX",
+    slug: "8kva-inverter-axpert-max-si-ya-ha-105",
+    brand: "Axpert",
+    category: "Renewable Energy",
+    subcategory: "Smart Hybrid Inverters",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "The Axpert MAX 8kva solar Inverter is manufactured with the most recent technologies in the solar energy space. The Axpert MAX 8kva inverter possesses better durability and is easy to install and use for on/off-grid installations. This 8 kva inverter also contains the feature of battery independence that enables the 8kva solar inverter to operate and run all appliances using just sunlight without a battery connected to it when the sun is up.",
+    images: ["https://i.ibb.co/svpBmDMm/8kva-inverter-1.jpg"],
+    specifications: [
+      { label: "SKU", value: "SI-YA-HA-105" },
+      { label: "Brand", value: "Axpert" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Smart Hybrid Inverters" },
+      { label: "Capacity", value: "8 KVA" }
+    ],
+    stock: 894,
+    oem: "Axpert",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SI-YA-HA-105 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "si-inverter-06",
+    sku: "SI-YA-HA-106",
+    name: "6KVA Inverter",
+    slug: "6kva-inverter-si-ya-ha-106",
+    brand: "Axpert",
+    category: "Renewable Energy",
+    subcategory: "Smart Hybrid Inverters",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "Axpert VM III Twin 6KVA Inverter is an innovative third-generation off-grid solar inverter with rich new functionalities. The 6kva Inverter possesses a detachable LCD control module that can be turned into a remote panel. This 6 kva inverter also contains the feature of battery independency that enables this inverter to operate and run all appliances using just sunlight without a battery connected to it.",
+    images: ["https://i.ibb.co/zVT2v4Wv/6kva-inverter-1.png"],
+    specifications: [
+      { label: "SKU", value: "SI-YA-HA-106" },
+      { label: "Brand", value: "Axpert" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Smart Hybrid Inverters" },
+      { label: "Capacity", value: "6 KVA" }
+    ],
+    stock: 509,
+    oem: "Axpert",
+    productType: "Enterprise",
+    featured: false,
+    popular: true,
+    downloads: [
+      { title: "SI-YA-HA-106 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "si-inverter-07",
+    sku: "SI-YA-HA-107",
+    name: "5KW/48V VMII Hybrid Inverter",
+    slug: "5kw-48v-vmii-hybrid-inverter-vmii-si-ya-ha-107",
+    brand: "Gennex",
+    category: "Renewable Energy",
+    subcategory: "Smart Hybrid Inverters",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "Our 5KVA Hybrid Inverter are the new trend in superior quality inverter manufacturing. They are laced with tons of upgrade that makes them, easier to install, user-friendly, last longer, adaptable, etc. With fast transfer time to protect mission-critical loads such as servers and ATM the 5KW/48V VMII is the best of its kind.",
+    images: ["https://i.ibb.co/1YMrFQdm/Gennex-5-KVA-Inverter-with-MPPT-charge-controller.jpg"],
+    specifications: [
+      { label: "SKU", value: "SI-YA-HA-107" },
+      { label: "Brand", value: "Gennex" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Smart Hybrid Inverters" },
+      { label: "Capacity", value: "5 KW / 48V" }
+    ],
+    stock: 958,
+    oem: "Gennex",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SI-YA-HA-107 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "si-inverter-08",
+    sku: "SI-YA-HA-108",
+    name: "12kW Off-grid Inverter",
+    slug: "12kw-off-grid-inverter-si-ya-ha-108",
+    brand: "Spinel",
+    category: "Renewable Energy",
+    subcategory: "Smart Hybrid Inverters",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "12K Hybrid Inverter: Power Your Future with Unmatched Solar Efficiency. Spinel 12kW SNA-EU stand out as the pinnacle of hybrid inverter technology. Engineered for versatility, this high-frequency pure sine wave inverter blend solar, battery, grid, and generator inputs into one intelligent system with guranteed extended durability.",
+    images: ["https://i.ibb.co/d4fnZm3x/12kva-Gennex-Plus-Hybrid-Inverter.jpg"],
+    specifications: [
+      { label: "SKU", value: "SI-YA-HA-108" },
+      { label: "Brand", value: "Spinel" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Smart Hybrid Inverters" },
+      { label: "Capacity", value: "12 kW" }
+    ],
+    stock: 381,
+    oem: "Spinel",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SI-YA-HA-108 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "si-inverter-09",
+    sku: "SI-YA-HA-109",
+    name: "8kW Inverter",
+    slug: "8kw-inverter-si-ya-ha-109",
+    brand: "Spinel",
+    category: "Renewable Energy",
+    subcategory: "Smart Hybrid Inverters",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "Spinel 8kW Hybrid Inverter is a very flexible hybrid solar inverter that is designed to optimise your commercial and residential solar energy efficiency. With an extra-ordinary performance and efficiency, this 8kW solar inverter combines both solar energy generation and faster energy storage, providing a more reliable off-grid and on-grid solar and backup solutions.",
+    images: ["https://i.ibb.co/Ldd69fZ1/10-Kw-Gennex-Inverter-1.jpg"],
+    specifications: [
+      { label: "SKU", value: "SI-YA-HA-109" },
+      { label: "Brand", value: "Spinel" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Smart Hybrid Inverters" },
+      { label: "Capacity", value: "8 kW" }
+    ],
+    stock: 462,
+    oem: "Spinel",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SI-YA-HA-109 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  }
+];
+
 export const ACCESSORIES_PRODUCTS: Product[] = [
   ...mappedAccessories,
   ...PTZ_CAMERA_PRODUCTS,
@@ -18370,6 +18643,7 @@ export const ACCESSORIES_PRODUCTS: Product[] = [
   ...INDUSTRIAL_SWITCH_PRODUCTS,
   ...UPS_PDU_PRODUCTS,
   ...INDUSTRIAL_SOLAR_PANELS_PRODUCTS,
-  ...LITHIUM_BATTERIES_PRODUCTS
+  ...LITHIUM_BATTERIES_PRODUCTS,
+  ...SMART_HYBRID_INVERTERS_PRODUCTS
 ];
 

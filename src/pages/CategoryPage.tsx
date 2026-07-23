@@ -55,6 +55,19 @@ export default function CategoryPage({
       return subcatLower === "lithium lifepo4 batteries" || catLower === "lithium lifepo4 batteries";
     }
 
+    if (
+      nameLower.includes("hybrid inverter") ||
+      nameLower.includes("smart hybrid") ||
+      nameLower === "smart hybrid inverters" ||
+      nameLower === "smart-hybrid-inverters" ||
+      (nameLower === "inverters" && p.sku && p.sku.startsWith("SI-YA-HA-"))
+    ) {
+      if (p.sku && p.sku.startsWith("SI-YA-HA-")) return true;
+      if (subcatLower.includes("hybrid inverter") || subcatLower.includes("smart hybrid")) return true;
+      if (prodNameLower.includes("inverter") || prodNameLower.includes("hybrid")) return true;
+      return subcatLower === "smart hybrid inverters" || catLower === "smart hybrid inverters";
+    }
+
     // Direct exact match
     if (catLower === nameLower || subcatLower === nameLower) return true;
 
