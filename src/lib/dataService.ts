@@ -13,7 +13,7 @@ export function getLocalProducts(): Product[] {
     if (
       !Array.isArray(parsed) ||
       parsed.length !== INITIAL_PRODUCTS.length ||
-      !parsed.some(p => p.sku === "SP-YA-HA-100" && p.priceUSD > 0)
+      !parsed.some(p => p.sku === "LB-YA-HA-101")
     ) {
       localStorage.setItem("spinel_products", JSON.stringify(INITIAL_PRODUCTS));
       return INITIAL_PRODUCTS;

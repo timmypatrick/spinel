@@ -43,6 +43,18 @@ export default function CategoryPage({
       return subcatLower === "industrial solar panels" || catLower === "industrial solar panels";
     }
 
+    if (
+      nameLower.includes("lithium") ||
+      nameLower.includes("lifepo4") ||
+      nameLower === "lithium lifepo4 batteries" ||
+      nameLower === "lithium-lifepo4-batteries"
+    ) {
+      if (p.sku && p.sku.startsWith("LB-YA-HA-")) return true;
+      if (subcatLower.includes("lithium") || subcatLower.includes("lifepo4")) return true;
+      if (prodNameLower.includes("lifepo4") || prodNameLower.includes("lithium")) return true;
+      return subcatLower === "lithium lifepo4 batteries" || catLower === "lithium lifepo4 batteries";
+    }
+
     // Direct exact match
     if (catLower === nameLower || subcatLower === nameLower) return true;
 

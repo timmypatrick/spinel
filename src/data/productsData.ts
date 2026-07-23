@@ -18112,6 +18112,249 @@ export const INDUSTRIAL_SOLAR_PANELS_PRODUCTS: Product[] = [
   }
 ];
 
+export const LITHIUM_BATTERIES_PRODUCTS: Product[] = [
+  {
+    id: "lb-battery-01",
+    sku: "LB-YA-HA-101",
+    name: "SVC LiFePO4 16 kwh Lithium Battery",
+    slug: "svc-lifepo4-16-kwh-lithium-battery-lb-ya-ha-101",
+    brand: "SVC",
+    category: "Renewable Energy",
+    subcategory: "Lithium LiFePO4 Batteries",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "16 kWh Lithium Battery - 51.2V 314Ah SVC LiFePO4 Lithium Battery (Floor Mounted)",
+    images: ["https://i.ibb.co/6Rm87VYh/battery-2.png"],
+    specifications: [
+      { label: "SKU", value: "LB-YA-HA-101" },
+      { label: "Brand", value: "SVC" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Lithium LiFePO4 Batteries" },
+      { label: "Capacity", value: "16 kWh (51.2V 314Ah)" }
+    ],
+    stock: 705,
+    oem: "SVC",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "LB-YA-HA-101 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "lb-battery-02",
+    sku: "LB-YA-HA-102",
+    name: "SVC 11.8 kWh LiFePO4 Solar Battery",
+    slug: "svc-11-8-kwh-lifepo4-solar-battery-lb-ya-ha-102",
+    brand: "SVC",
+    category: "Renewable Energy",
+    subcategory: "Lithium LiFePO4 Batteries",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "11.8kWh Lithium Battery (51.2V 230Ah SVC Floor Mounted Battery). The 11.8kWh 51.2V LiFePO4 Lithium Battery by SVC is a modern energy storage solution for solar systems and backup power for home nad businesses",
+    images: ["https://i.ibb.co/1tJvPRHN/battery-3.png"],
+    specifications: [
+      { label: "SKU", value: "LB-YA-HA-102" },
+      { label: "Brand", value: "SVC" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Lithium LiFePO4 Batteries" },
+      { label: "Capacity", value: "11.8 kWh (51.2V 230Ah)" }
+    ],
+    stock: 683,
+    oem: "SVC",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "LB-YA-HA-102 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "lb-battery-03",
+    sku: "LB-YA-HA-103",
+    name: "SVC 8 kWh LiFePO4 Solar Battery",
+    slug: "svc-8-kwh-lifepo4-solar-battery-lb-ya-ha-103",
+    brand: "SVC",
+    category: "Renewable Energy",
+    subcategory: "Lithium LiFePO4 Batteries",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "8 kWh Lithium Battery (25.6V SVC Floor Mounted Battery). 360 degree protection: such as SOC/SOH/ Anti-theft function. High discharge rate currents, suitable for on-grid or off-grid solar system and other loads.",
+    images: ["https://i.ibb.co/DPsDT0rV/battery-5.jpg"],
+    specifications: [
+      { label: "SKU", value: "LB-YA-HA-103" },
+      { label: "Brand", value: "SVC" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Lithium LiFePO4 Batteries" },
+      { label: "Capacity", value: "8 kWh (25.6V)" }
+    ],
+    stock: 309,
+    oem: "SVC",
+    productType: "Enterprise",
+    featured: false,
+    popular: true,
+    downloads: [
+      { title: "LB-YA-HA-103 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "lb-battery-04",
+    sku: "LB-YA-HA-104",
+    name: "SVC 10.5kWh LiFePO4 Solar Battery",
+    slug: "svc-10-5kwh-lifepo4-solar-battery-lb-ya-ha-104",
+    brand: "SVC",
+    category: "Renewable Energy",
+    subcategory: "Lithium LiFePO4 Batteries",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "10.5kWh LiFePO4 - 51.2V 205AH Lithium Battery (BMP - Floor/Wall Mounted). Ensures real-time monitoring of voltage, current, and battery status.",
+    images: ["https://i.ibb.co/BVWKS1vd/battery-6.png"],
+    specifications: [
+      { label: "SKU", value: "LB-YA-HA-104" },
+      { label: "Brand", value: "SVC" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Lithium LiFePO4 Batteries" },
+      { label: "Capacity", value: "10.5 kWh (51.2V 205Ah)" }
+    ],
+    stock: 585,
+    oem: "SVC",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "LB-YA-HA-104 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "lb-battery-05",
+    sku: "LB-YA-HA-105",
+    name: "SVC LiFePO4 15 kwh Lithium Battery",
+    slug: "svc-lifepo4-15-kwh-lithium-battery-lb-ya-ha-105",
+    brand: "SVC",
+    category: "Renewable Energy",
+    subcategory: "Lithium LiFePO4 Batteries",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "15 kWh lithium battery - 48V 200AH SVC LiFePO4 Lithium Battery (Floor Mounted). Featuring a built-in intelligent Battery Management System (BMS), it optimize and safeguards the battery while extending its service life.",
+    images: ["https://i.ibb.co/Fb30n4gx/battery-7.jpg"],
+    specifications: [
+      { label: "SKU", value: "LB-YA-HA-105" },
+      { label: "Brand", value: "SVC" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Lithium LiFePO4 Batteries" },
+      { label: "Capacity", value: "15 kWh (48V 200Ah)" }
+    ],
+    stock: 794,
+    oem: "SVC",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "LB-YA-HA-105 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "lb-battery-06",
+    sku: "LB-YA-HA-106",
+    name: "SVC 10kWh LiFePO4 Solar Battery",
+    slug: "svc-10kwh-lifepo4-solar-battery-lb-ya-ha-106",
+    brand: "SVC",
+    category: "Renewable Energy",
+    subcategory: "Lithium LiFePO4 Batteries",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "10kWh LiFePO4 - 48V 200AH Lithium Battery (BMV - Wall Mounted) With 100A Max Charge/Discharge Current. Elegant and Stylish, wall-mounted installation",
+    images: ["https://i.ibb.co/Fb30n4gx/battery-7.jpg"],
+    specifications: [
+      { label: "SKU", value: "LB-YA-HA-106" },
+      { label: "Brand", value: "SVC" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Lithium LiFePO4 Batteries" },
+      { label: "Capacity", value: "10 kWh (48V 200Ah)" }
+    ],
+    stock: 209,
+    oem: "SVC",
+    productType: "Enterprise",
+    featured: false,
+    popular: true,
+    downloads: [
+      { title: "LB-YA-HA-106 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "lb-battery-07",
+    sku: "LB-YA-HA-107",
+    name: "SVC 5kWh LiFePO4 Solar Battery",
+    slug: "svc-5kwh-lifepo4-solar-battery-lb-ya-ha-107",
+    brand: "SVC",
+    category: "Renewable Energy",
+    subcategory: "Lithium LiFePO4 Batteries",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "5kWh LiFePO4 - 48V 100AH Lithium Battery (BMV - Wall Mounted). Manufactured to withstand the most rigorous conditions of renewable energy applications and usage the 5kWh - 48V 100AH LiFePO4 lithium battery gives you the best value and performance for your installation.",
+    images: ["https://i.ibb.co/DH1c6nTj/battery-9.png"],
+    specifications: [
+      { label: "SKU", value: "LB-YA-HA-107" },
+      { label: "Brand", value: "SVC" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Lithium LiFePO4 Batteries" },
+      { label: "Capacity", value: "5 kWh (48V 100Ah)" }
+    ],
+    stock: 358,
+    oem: "SVC",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "LB-YA-HA-107 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "lb-battery-08",
+    sku: "LB-YA-HA-108",
+    name: "Rack Mounted Battery – BMR Series",
+    slug: "rack-mounted-battery-bmr-series-lb-ya-ha-108",
+    brand: "SVC",
+    category: "Renewable Energy",
+    subcategory: "Lithium LiFePO4 Batteries",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "LiFePO4 Lithium Battery: 5.12kWh - 48V 100AH (Floor and Rack Mounted). Manufactured to withstand the most rigorous conditions of renewable energy applications and usage this 5kWh - 48V 100AH LiFePO4 lithium battery gives you best value for your money and longer life-cycle.",
+    images: ["https://i.ibb.co/Wpdq26p2/battery-1.jpg"],
+    specifications: [
+      { label: "SKU", value: "LB-YA-HA-108" },
+      { label: "Brand", value: "SVC" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Lithium LiFePO4 Batteries" },
+      { label: "Capacity", value: "5.12 kWh (48V 100Ah)" }
+    ],
+    stock: 781,
+    oem: "SVC",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "LB-YA-HA-108 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  }
+];
+
 export const ACCESSORIES_PRODUCTS: Product[] = [
   ...mappedAccessories,
   ...PTZ_CAMERA_PRODUCTS,
@@ -18126,6 +18369,7 @@ export const ACCESSORIES_PRODUCTS: Product[] = [
   ...EX_JUNCTION_BOX_PRODUCTS,
   ...INDUSTRIAL_SWITCH_PRODUCTS,
   ...UPS_PDU_PRODUCTS,
-  ...INDUSTRIAL_SOLAR_PANELS_PRODUCTS
+  ...INDUSTRIAL_SOLAR_PANELS_PRODUCTS,
+  ...LITHIUM_BATTERIES_PRODUCTS
 ];
 
