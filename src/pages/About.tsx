@@ -269,61 +269,71 @@ export default function About() {
       name: "Oil & Gas",
       icon: Flame,
       summary: "Petrochemical Refineries, Drilling Rigs, and Floating Production Vessels.",
-      solution: "We supply specialized AISI 316L stainless steel explosion-proof cameras (ATEX/IECEx certified), rugged single-mode fiber infrastructure, intrinsically safe communication intercoms, and flameproof instrumentation power accessories configured to withstand offshore salt spray and combustible atmospheres."
+      solution: "We supply specialized AISI 316L stainless steel explosion-proof cameras (ATEX/IECEx certified), rugged single-mode fiber infrastructure, intrinsically safe communication intercoms, and flameproof instrumentation power accessories configured to withstand offshore salt spray and combustible atmospheres.",
+      image: "https://i.ibb.co/gMGdhQfd/Exploration-for-oil-and-gas-is-very-expensive-and-risky.jpg"
     },
     {
       name: "Telecommunications",
       icon: Radio,
       summary: "Cellular Towers, Signal Distribution Arrays, and Central Nodes.",
-      solution: "Provision of high-performance off-grid solar energy systems utilizing Vantage hybrid solar inverters, dual-MPPT smart controllers, and stackable lithium-iron phosphate (LiFePO4) battery systems to guarantee continuous cellular tower operations and eliminate operational diesel expenditure."
+      solution: "Provision of high-performance off-grid solar energy systems utilizing Vantage hybrid solar inverters, dual-MPPT smart controllers, and stackable lithium-iron phosphate (LiFePO4) battery systems to guarantee continuous cellular tower operations and eliminate operational diesel expenditure.",
+      image: "https://i.ibb.co/21yGtgrT/image.png"
     },
     {
       name: "Government",
       icon: Building2,
       summary: "Municipal Buildings, Emergency Response Agencies, and Civil Command Hubs.",
-      solution: "Secure, state-of-the-art municipal security backbones. We offer unified, high-density optical fiber grids, high-definition IP camera networks with AI facial and vehicle analytics, central server rack cabinets, and emergency double-conversion online UPS systems."
+      solution: "Secure, state-of-the-art municipal security backbones. We offer unified, high-density optical fiber grids, high-definition IP camera networks with AI facial and vehicle analytics, central server rack cabinets, and emergency double-conversion online UPS systems.",
+      image: "https://i.ibb.co/0yMq2K9S/image.png"
     },
     {
       name: "Manufacturing",
       icon: Factory,
       summary: "Heavy Assembly Lines, Automated Plants, and Storage Depots.",
-      solution: "Hardened industrial network communications. Our portfolio provides managed IP67 PoE switches designed for high temperature swings, hardened media converters, armored hybrid cabling, and surge isolation panels to insulate robotic assembly lines."
+      solution: "Hardened industrial network communications. Our portfolio provides managed IP67 PoE switches designed for high temperature swings, hardened media converters, armored hybrid cabling, and surge isolation panels to insulate robotic assembly lines.",
+      image: "https://i.ibb.co/V05cXSd1/image.png"
     },
     {
       name: "Healthcare",
       icon: HeartPulse,
       summary: "Hospital Centers, Critical Medical Laboratories, and Storage Vaults.",
-      solution: "Reliable power stability and networks. Double-conversion online UPS arrays designed to safeguard sensitive scanning devices, clean surgical suite network enclosures, high-capacity CAT6A networking, and robust hospital-wide Wi-Fi distribution switches."
+      solution: "Reliable power stability and networks. Double-conversion online UPS arrays designed to safeguard sensitive scanning devices, clean surgical suite network enclosures, high-capacity CAT6A networking, and robust hospital-wide Wi-Fi distribution switches.",
+      image: "https://i.ibb.co/bM8mDKkx/image.png"
     },
     {
       name: "Education",
       icon: GraduationCap,
       summary: "University Campuses, Academic Research Parks, and Administration Complexes.",
-      solution: "Structured campus-wide high-capacity network routing, fiber optic connection trunks, high-density smart routers, outdoor surveillance systems for safe campuses, and robust server racks for administrative database systems."
+      solution: "Structured campus-wide high-capacity network routing, fiber optic connection trunks, high-density smart routers, outdoor surveillance systems for safe campuses, and robust server racks for administrative database systems.",
+      image: "https://i.ibb.co/d4NqV0k7/image.png"
     },
     {
       name: "Banking & Finance",
       icon: Landmark,
       summary: "Corporate Bank Head Offices, Vault Vaults, and Cash Centers.",
-      solution: "Elite, high-bandwidth surveillance and communication paths. Centralized NVR video vaults with multi-terabyte RAID arrays, network switches with advanced packet encryption, access-controlled equipment cabinets, and reliable backup battery systems."
+      solution: "Elite, high-bandwidth surveillance and communication paths. Centralized NVR video vaults with multi-terabyte RAID arrays, network switches with advanced packet encryption, access-controlled equipment cabinets, and reliable backup battery systems.",
+      image: "https://i.ibb.co/607xvT59/image.png"
     },
     {
       name: "Data Centers",
       icon: Server,
       summary: "High-Tier Server Facilities, Colocation Sites, and Fiber Entry Vaults.",
-      solution: "Heavy-duty server cabinet grids, precise horizontal cable organizers, intelligent PDU switches, highly stable copper-fiber hybrid trunks, copper earthing grounding bars, and secure environmental sensor monitoring frameworks."
+      solution: "Heavy-duty server cabinet grids, precise horizontal cable organizers, intelligent PDU switches, highly stable copper-fiber hybrid trunks, copper earthing grounding bars, and secure environmental sensor monitoring frameworks.",
+      image: "https://i.ibb.co/0R9FgkRm/server-room-infrastructure.png"
     },
     {
       name: "Commercial Buildings",
       icon: Building,
       summary: "Skyscraper Complexes, Corporate Office Towers, and Luxury Warehouses.",
-      solution: "Integrated structured cabling, smart building power accessories, fiber-to-the-desk routing distribution panels, outdoor-indoor IP dome security arrays, central network racks, and ATS automated transfer units."
+      solution: "Integrated structured cabling, smart building power accessories, fiber-to-the-desk routing distribution panels, outdoor-indoor IP dome security arrays, central network racks, and ATS automated transfer units.",
+      image: "https://i.ibb.co/C5Z63Nb8/image.png"
     },
     {
       name: "Enterprise Business",
       icon: Briefcase,
       summary: "Multi-branch companies, large offices, and trade facilities.",
-      solution: "Fully scalable enterprise routers, managed gigabit PoE network switches, unified telecommunication VOIP boxes, standard 19-inch racks, and integrated visual security configurations tailored for corporate networks."
+      solution: "Fully scalable enterprise routers, managed gigabit PoE network switches, unified telecommunication VOIP boxes, standard 19-inch racks, and integrated visual security configurations tailored for corporate networks.",
+      image: "https://i.ibb.co/8gmF2vpK/image.png"
     }
   ];
 
@@ -665,6 +675,15 @@ export default function About() {
                       Sector Application: {industriesWeServeData[selectedIndustryIdx].summary}
                     </p>
                   </div>
+                </div>
+
+                <div className="border border-gray-100 p-2 rounded-2xl bg-gray-50/50 shadow-xs overflow-hidden">
+                  <img
+                    src={industriesWeServeData[selectedIndustryIdx].image}
+                    alt={industriesWeServeData[selectedIndustryIdx].name}
+                    className="rounded-xl object-cover w-full h-[220px] sm:h-[260px]"
+                    referrerPolicy="no-referrer"
+                  />
                 </div>
 
                 <div className="space-y-2">
