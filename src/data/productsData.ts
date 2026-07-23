@@ -17521,6 +17521,181 @@ export const CAMERA_BUNDLE_PRODUCTS: Product[] = [
   }
 ];
 
+export const EX_JUNCTION_BOX_PRODUCTS: Product[] = [
+  {
+    id: "sp-ex-jbox-01",
+    sku: "JBOX-1201",
+    name: "Junction Box for Dual Head Cameras",
+    slug: "junction-box-for-dual-head-cameras-jbox-1201",
+    brand: "Pelco",
+    category: "Ex-Proof Equipments",
+    subcategory: "EX-Junction Box",
+    priceUSD: 135,
+    priceNGN: 135 * 1500,
+    description: "Junction Box for Dual Head Cameras",
+    images: ["https://i.ibb.co/DH8wYR0z/images-48.jpg"],
+    specifications: [
+      { label: "SKU", value: "JBOX-1201" },
+      { label: "Brand", value: "Pelco" },
+      { label: "Category", value: "Ex-Proof Equipments" },
+      { label: "Subcategory", value: "EX-Junction Box" }
+    ],
+    stock: 274,
+    oem: "Pelco",
+    productType: "Hazardous Area",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "JBOX-1201 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sp-ex-jbox-02",
+    sku: "SRXV2-JBX-1001",
+    name: "Sarix Value 2 Junction Box for Indoor Dome",
+    slug: "sarix-value-2-junction-box-for-indoor-dome-srxv2-jbx-1001",
+    brand: "Pelco",
+    category: "Ex-Proof Equipments",
+    subcategory: "EX-Junction Box",
+    priceUSD: 135,
+    priceNGN: 135 * 1500,
+    description: "Sarix Value 2 Junction Box for Indoor Dome (Shipping from May2025)",
+    images: ["https://i.ibb.co/ksRmCd9B/images-49.jpg"],
+    specifications: [
+      { label: "SKU", value: "SRXV2-JBX-1001" },
+      { label: "Brand", value: "Pelco" },
+      { label: "Category", value: "Ex-Proof Equipments" },
+      { label: "Subcategory", value: "EX-Junction Box" }
+    ],
+    stock: 193,
+    oem: "Pelco",
+    productType: "Hazardous Area",
+    featured: false,
+    popular: true,
+    downloads: [
+      { title: "SRXV2-JBX-1001 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sp-ex-jbox-03",
+    sku: "SRXV2-JBX-1003",
+    name: "Sarix Value 2 Junction Box for Outdoor Dome",
+    slug: "sarix-value-2-junction-box-for-outdoor-dome-srxv2-jbx-1003",
+    brand: "Pelco",
+    category: "Ex-Proof Equipments",
+    subcategory: "EX-Junction Box",
+    priceUSD: 195,
+    priceNGN: 195 * 1500,
+    description: "Sarix Value 2 Junction Box for Outdoor Domes (Shipping from April2025)",
+    images: ["https://i.ibb.co/qMMG97dx/images-50.jpg"],
+    specifications: [
+      { label: "SKU", value: "SRXV2-JBX-1003" },
+      { label: "Brand", value: "Pelco" },
+      { label: "Category", value: "Ex-Proof Equipments" },
+      { label: "Subcategory", value: "EX-Junction Box" }
+    ],
+    stock: 491,
+    oem: "Pelco",
+    productType: "Hazardous Area",
+    featured: false,
+    popular: true,
+    downloads: [
+      { title: "SRXV2-JBX-1003 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sp-ex-jbox-04",
+    sku: "IFBV-JB",
+    name: "Junction Box for Sarix Value IFV Fixed Lens Turrets and IBV Bullets",
+    slug: "junction-box-for-sarix-value-ifv-fixed-lens-turrets-and-ibv-bullets-ifbv-jb",
+    brand: "Pelco",
+    category: "Ex-Proof Equipments",
+    subcategory: "EX-Junction Box",
+    priceUSD: 120,
+    priceNGN: 120 * 1500,
+    description: "Junction Box for IFV Series Sarix Value Environmental Fixed Lens Turrets and IBV Series Environmental Bullets",
+    images: ["https://i.ibb.co/ymrL6ccG/images-51.jpg"],
+    specifications: [
+      { label: "SKU", value: "IFBV-JB" },
+      { label: "Brand", value: "Pelco" },
+      { label: "Category", value: "Ex-Proof Equipments" },
+      { label: "Subcategory", value: "EX-Junction Box" }
+    ],
+    stock: 723,
+    oem: "Pelco",
+    productType: "Hazardous Area",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "IFBV-JB Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sp-ex-jbox-05",
+    sku: "IMJTV-JB",
+    name: "Junction Box for Sarix Value IMV; IJV; ITV Series",
+    slug: "junction-box-for-sarix-value-imv-ijv-itv-series-imjtv-jb",
+    brand: "Pelco",
+    category: "Ex-Proof Equipments",
+    subcategory: "EX-Junction Box",
+    priceUSD: 134,
+    priceNGN: 134 * 1500,
+    description: "Junction Box for Sarix Value Environmental IMV Series Varifocal Domes And IJV Series Fixed Focal And ITV Series Varifocal Turrets",
+    images: ["https://i.ibb.co/qMMG97dx/images-50.jpg"],
+    specifications: [
+      { label: "SKU", value: "IMJTV-JB" },
+      { label: "Brand", value: "Pelco" },
+      { label: "Category", value: "Ex-Proof Equipments" },
+      { label: "Subcategory", value: "EX-Junction Box" }
+    ],
+    stock: 385,
+    oem: "Pelco",
+    productType: "Hazardous Area",
+    featured: false,
+    popular: true,
+    downloads: [
+      { title: "IMJTV-JB Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  }
+];
+
+export const INDUSTRIAL_SWITCH_PRODUCTS: Product[] = [
+  {
+    id: "sp-ind-switch-01",
+    sku: "SM24TAT2SA-EU",
+    name: "26-Port Gigabit Managed PoE+ Switch",
+    slug: "26-port-gigabit-managed-poe-plus-switch-sm24tat2sa-eu",
+    brand: "Lantronix",
+    category: "Industrial Switches",
+    subcategory: "Industrial Switches",
+    priceUSD: 2023.44,
+    priceNGN: 2023.44 * 1500,
+    description: "26-Port Gigabit Managed PoE+ Switch with 24 PoE+ ports (370W power budget) and 2 SFP uplink ports.",
+    images: ["http://avoweb1.s3-us-west-2.amazonaws.com/Prod/PRODUCT%20MARKETING/Lantronix%20PoE%20Switch/LANTRONIX-POE_SM8TAT2SA.jpg"],
+    specifications: [
+      { label: "SKU", value: "SM24TAT2SA-EU" },
+      { label: "Brand", value: "Lantronix" },
+      { label: "Category", value: "Industrial Switches" },
+      { label: "Subcategory", value: "Industrial Switches" },
+      { label: "Ports", value: "24 PoE+ ports (370W power budget) + 2 SFP uplink ports" }
+    ],
+    stock: 482,
+    oem: "Lantronix",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SM24TAT2SA-EU Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  }
+];
+
 export const ACCESSORIES_PRODUCTS: Product[] = [
   ...mappedAccessories,
   ...PTZ_CAMERA_PRODUCTS,
@@ -17531,6 +17706,8 @@ export const ACCESSORIES_PRODUCTS: Product[] = [
   ...DOME_CAMERA_PRODUCTS,
   ...ELECTRICAL_WORKSTATION_PRODUCTS,
   ...NETWORK_VIDEO_RECORDER_PRODUCTS,
-  ...CAMERA_BUNDLE_PRODUCTS
+  ...CAMERA_BUNDLE_PRODUCTS,
+  ...EX_JUNCTION_BOX_PRODUCTS,
+  ...INDUSTRIAL_SWITCH_PRODUCTS
 ].filter(p => p.priceUSD > 0);
 

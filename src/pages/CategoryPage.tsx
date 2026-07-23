@@ -52,7 +52,7 @@ export default function CategoryPage({
     }
     if (nameLower === "multi-sensor camera" && (subcatLower.includes("sensor") || prodNameLower.includes("sensor"))) return true;
 
-    if (nameLower === "industrial switches" && (subcatLower.includes("switch") || catLower.includes("telecom") || prodNameLower.includes("switch"))) return true;
+    if ((nameLower === "industrial switches" || nameLower === "industrial switch") && (subcatLower.includes("switch") || catLower.includes("telecom") || catLower.includes("industrial") || prodNameLower.includes("switch"))) return true;
     if (nameLower === "junction box" && (subcatLower.includes("junction") || prodNameLower.includes("junction"))) return true;
     if (nameLower === "network video recorders" && (subcatLower.includes("recorder") || prodNameLower.includes("recorder") || prodNameLower.includes("nvr"))) return true;
     if (nameLower === "electrical workstation" && (subcatLower.includes("workstation") || prodNameLower.includes("workstation"))) return true;
@@ -71,13 +71,13 @@ export default function CategoryPage({
 
 
     if (nameLower === "ex-sounder" && (subcatLower.includes("sounder") || prodNameLower.includes("sounder") || prodNameLower.includes("horn"))) return true;
+    if (nameLower === "ex-junction box" && (subcatLower.includes("junction") || catLower.includes("junction") || prodNameLower.includes("junction") || subcatLower === "ex-junction box")) return true;
 
     // Completely removed / disabled pages
     if (nameLower === "industrial solar panels") return false;
     if (nameLower === "ex-telephone") return false;
     if (nameLower === "small enclosures") return false;
     if (nameLower === "ex-cctv camera") return false;
-    if (nameLower === "ex-junction box") return false;
 
     return false;
   };
