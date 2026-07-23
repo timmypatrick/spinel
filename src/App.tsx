@@ -223,7 +223,7 @@ export default function App() {
         )}
 
         {currentView === "about" && (
-          <About />
+          <About setCurrentView={setCurrentView} />
         )}
 
         {currentView === "thank-you" && lastOrderDetails && (

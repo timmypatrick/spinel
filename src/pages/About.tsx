@@ -36,7 +36,11 @@ import {
   Info
 } from "lucide-react";
 
-export default function About() {
+interface AboutProps {
+  setCurrentView?: (view: string) => void;
+}
+
+export default function About({ setCurrentView }: AboutProps) {
   // Interactive state for Vision/Mission Pillars
   const [activeStrategicTab, setActiveStrategicTab] = useState<"vision" | "mission">("vision");
 
@@ -669,40 +673,43 @@ export default function About() {
                   </div>
                   <div>
                     <h3 className="font-black text-base text-gray-900 uppercase">
-                      {industriesWeServeData[selectedIndustryIdx].name} Solutions
+                      {industriesWeServeData[selectedIndustryIdx].name}
                     </h3>
-                    <p className="text-xs text-gray-400 font-sans">
-                      Sector Application: {industriesWeServeData[selectedIndustryIdx].summary}
-                    </p>
                   </div>
                 </div>
 
-                <div className="border border-gray-100 p-2 rounded-2xl bg-gray-50/50 shadow-xs overflow-hidden">
+                <div className="border border-gray-100 p-2.5 rounded-2xl bg-gray-50/50 shadow-xs overflow-hidden">
                   <img
                     src={industriesWeServeData[selectedIndustryIdx].image}
                     alt={industriesWeServeData[selectedIndustryIdx].name}
-                    className="rounded-xl object-cover w-full h-[220px] sm:h-[260px]"
+                    className="rounded-xl object-cover w-full h-[340px] sm:h-[400px]"
                     referrerPolicy="no-referrer"
                   />
                 </div>
+              </div>
 
-                <div className="space-y-2">
-                  <h4 className="font-extrabold text-xs text-gray-900 uppercase tracking-wide">Custom-Tailored Solution Statement</h4>
-                  <p className="text-sm text-gray-600 leading-relaxed font-sans">
-                    {industriesWeServeData[selectedIndustryIdx].solution}
+              <button
+                type="button"
+                onClick={() => {
+                  if (setCurrentView) {
+                    setCurrentView("request-quote");
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }
+                }}
+                className="w-full bg-orange-50/50 hover:bg-orange-100/80 p-4 rounded-xl border border-orange-100 flex items-center justify-between transition-all duration-200 cursor-pointer group text-left shadow-2xs hover:shadow-xs"
+              >
+                <div className="space-y-0.5">
+                  <p className="text-xs text-gray-900 font-extrabold uppercase tracking-wide group-hover:text-[#FF7A20] transition-colors">
+                    Need technical consultation for this sector?
+                  </p>
+                  <p className="text-[11px] text-gray-500 font-sans">
+                    Our design engineers will review your site plans.
                   </p>
                 </div>
-              </div>
-
-              <div className="bg-orange-50/50 p-4 rounded-xl border border-orange-100/50 flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <p className="text-xs text-gray-900 font-extrabold uppercase tracking-wide">Need technical consultation for this sector?</p>
-                  <p className="text-[11px] text-gray-500 font-sans">Our design engineers will review your site plans.</p>
-                </div>
-                <div className="p-2 bg-white rounded-lg border border-orange-200 text-[#FF7A20] shadow-xs">
+                <div className="p-2 bg-white rounded-lg border border-orange-200 text-[#FF7A20] shadow-xs group-hover:bg-[#FF7A20] group-hover:text-white group-hover:border-[#FF7A20] transition-all">
                   <ChevronRight className="w-4 h-4" />
                 </div>
-              </div>
+              </button>
             </div>
           </div>
         </div>
