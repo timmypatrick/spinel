@@ -140,6 +140,7 @@ export default function About() {
       icon: Camera,
       badge: "Commercial & Rugged",
       desc: "High-capacity security systems designed to protect critical assets.",
+      image: "https://i.ibb.co/mr1fm2S6/cctv-5.jpg",
       systems: [
         "Intelligent AI-Powered IP CCTV Cameras",
         "AISI 316L Stainless Explosion-Proof Dome Cameras",
@@ -153,6 +154,7 @@ export default function About() {
       icon: Sun,
       badge: "High-Efficiency Solar",
       desc: "Reliable power architectures to offset rising operational energy costs.",
+      image: "https://i.ibb.co/mVyRddQk/0f10dca6-cc4d-4434-9984-b13373fb249a.png",
       systems: [
         "Monocrystalline Solar PV Panels with high salt-mist resistance",
         "Smart Hybrid Inverters and Grid-Interactive Inverters",
@@ -166,6 +168,7 @@ export default function About() {
       icon: Network,
       badge: "Enterprise Core",
       desc: "Robust backbones for high-speed corporate network distribution.",
+      image: "https://i.ibb.co/0R9FgkRm/server-room-infrastructure.png",
       systems: [
         "High-density optical fiber terminal distribution panels",
         "Layer 3 enterprise routing engines and trunking cards",
@@ -179,6 +182,7 @@ export default function About() {
       icon: Router,
       badge: "Hardened Systems",
       desc: "Reliable communications in physically challenging environments.",
+      image: "https://i.ibb.co/tw2s06T6/ethernetip-port-number.jpg",
       systems: [
         "Weatherproof IP67 Managed/Unmanaged PoE Switches",
         "Hardened fiber optic media transceivers",
@@ -192,6 +196,7 @@ export default function About() {
       icon: Zap,
       badge: "Grid Stability",
       desc: "Comprehensive power backup and safety switches.",
+      image: "https://i.ibb.co/XkxCcM8D/image.png",
       systems: [
         "Double-conversion Online UPS Racks",
         "Automatic Transfer Switches (ATS) with remote telemetry",
@@ -205,6 +210,7 @@ export default function About() {
       icon: Database,
       badge: "Equipment Housing",
       desc: "Secure physical enclosures with active environment cooling.",
+      image: "https://i.ibb.co/5hwh5kPj/e5790da7-a68e-4bf7-8870-d27241b599d5.png",
       systems: [
         "Premium 19-inch floor-standing server racks",
         "IP66 weatherproof outdoor telecommunication field enclosures",
@@ -218,6 +224,7 @@ export default function About() {
       icon: Cable,
       badge: "Integrated Signal",
       desc: "Combined power and fiber optic transmission lines.",
+      image: "https://i.ibb.co/GQvR8yhb/hybrid-mobile.jpg",
       systems: [
         "Armored fiber-copper hybrid composite cabling reels",
         "Direct-burial high-bandwidth communication lines",
@@ -231,6 +238,7 @@ export default function About() {
       icon: ShieldCheck,
       badge: "Explosion Safety",
       desc: "Specialized equipment built to mitigate electrical sparks in volatile areas.",
+      image: "https://i.ibb.co/B5vtR80h/image.png",
       systems: [
         "Ex-d and Ex-e certified explosion-protected junctions boxes",
         "Intrinsically safe field communication intercom stations",
@@ -244,6 +252,7 @@ export default function About() {
       icon: Plug,
       badge: "Industrial Connections",
       desc: "Premium grade terminal links and cabling structures.",
+      image: "https://i.ibb.co/Xf7mNhSn/image.png",
       systems: [
         "Heavy-duty industrial connectors and multi-phase plugs",
         "High-conductivity copper grounding strips and lightning kits",
@@ -430,7 +439,7 @@ export default function About() {
       {/* 3. Core Values Section */}
       <section className="space-y-8" id="corporate-values">
         <div className="text-center space-y-1.5">
-          <span className="text-[#FF7A20] font-bold text-xs uppercase tracking-widest font-mono">Committed to Quality & Excellence</span>
+          <span className="text-[#FF7A20] font-bold text-xs uppercase tracking-widest font-mono">Committed to Quality</span>
           <h2 className="text-2xl sm:text-3xl font-black text-gray-900 uppercase">Our Core Values</h2>
           <p className="text-gray-500 text-sm max-w-md mx-auto">Our values shape the way we serve businesses across Africa.</p>
         </div>
@@ -588,23 +597,13 @@ export default function About() {
 
           {/* Visual Presentation side for portfolio division */}
           <div className="lg:col-span-5 relative">
-            <div className="bg-gray-50 border border-gray-100 p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4">
-              <div className="p-5 bg-white rounded-full text-[#FF7A20] shadow-md border border-gray-100">
-                {(() => {
-                  const CurrentIcon = productPortfolioData[selectedPortfolioTab].icon;
-                  return <CurrentIcon className="w-10 h-10" />;
-                })()}
-              </div>
-              <div className="space-y-1">
-                <p className="font-bold text-gray-900 text-sm sm:text-base uppercase">Premium Sourcing Alignment</p>
-                <p className="text-xs text-gray-500 font-sans max-w-xs">
-                  We verify each batch with laser telemetry test rigs before scheduling client delivery and port dispatch.
-                </p>
-              </div>
-              <span className="inline-flex items-center space-x-1.5 text-xs text-[#FF7A20] font-bold">
-                <span>Direct Ex-Stock Available</span>
-                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              </span>
+            <div className="border border-gray-100 p-2.5 rounded-2xl bg-gray-50/50 shadow-xs overflow-hidden">
+              <img
+                src={productPortfolioData[selectedPortfolioTab].image}
+                alt={productPortfolioData[selectedPortfolioTab].title}
+                className="rounded-xl object-cover w-full h-[280px] sm:h-[320px]"
+                referrerPolicy="no-referrer"
+              />
             </div>
           </div>
         </div>
