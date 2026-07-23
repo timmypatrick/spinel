@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ChevronRight, ShoppingCart, Download, Star, Share2, Shield, Settings, Heart, Box, CheckCircle } from "lucide-react";
+import { ChevronRight, ShoppingCart, Download, Star, Share2, Shield, Settings, Heart, Box, CheckCircle, Send } from "lucide-react";
 import { Product } from "../types";
 import { safeFetch } from "../lib/dataService";
 
@@ -9,6 +9,7 @@ interface ProductDetailsProps {
   setSelectedProductId: (id: string | null) => void;
   currency: "USD" | "NGN";
   addToCart: (product: Product, quantity?: number) => void;
+  onRequestQuote?: (product: Product) => void;
 }
 
 export default function ProductDetails({
@@ -16,7 +17,8 @@ export default function ProductDetails({
   setCurrentView,
   setSelectedProductId,
   currency,
-  addToCart
+  addToCart,
+  onRequestQuote
 }: ProductDetailsProps) {
   const [product, setProduct] = useState<Product | null>(null);
   const [related, setRelated] = useState<Product[]>([]);
@@ -159,51 +161,84 @@ export default function ProductDetails({
             </div>
           </div>
 
-          <div className="p-4 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between">
-            <div>
-              <span className="text-[10px] text-gray-400 font-bold uppercase">Price</span>
-              <p className="text-2xl font-black text-[#FF7A20] leading-none mt-1">
-                {currency === "USD" ? `$${product.priceUSD.toLocaleString()}` : `₦${product.priceNGN.toLocaleString()}`}
-              </p>
+          {product.priceUSD === 0 || product.isQuoteOnly || product.category === "Industrial Solar Panels" ? (
+            <div className="p-4 bg-orange-50/50 rounded-xl border border-orange-100 flex items-center justify-between">
+              <div>
+                <span className="text-[10px] text-orange-600 font-bold uppercase tracking-wider">Pricing Option</span>
+                <p className="text-xl font-extrabold text-[#FF7A20] leading-none mt-1">
+                  Request For Quote Required
+                </p>
+              </div>
+              <div className="flex items-center space-x-1 text-xs font-semibold text-gray-600 bg-white px-3 py-1.5 rounded-lg border border-gray-100">
+                <Shield className="w-4 h-4 text-emerald-500" />
+                <span>Full OEM Warranty Enrolled</span>
+              </div>
             </div>
-            <div className="flex items-center space-x-1 text-xs font-semibold text-gray-500 bg-white px-3 py-1.5 rounded-lg border border-gray-100">
-              <Shield className="w-4 h-4 text-emerald-500" />
-              <span>Full OEM Warranty Enrolled</span>
+          ) : (
+            <div className="p-4 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between">
+              <div>
+                <span className="text-[10px] text-gray-400 font-bold uppercase">Price</span>
+                <p className="text-2xl font-black text-[#FF7A20] leading-none mt-1">
+                  {currency === "USD" ? `$${product.priceUSD.toLocaleString()}` : `₦${product.priceNGN.toLocaleString()}`}
+                </p>
+              </div>
+              <div className="flex items-center space-x-1 text-xs font-semibold text-gray-500 bg-white px-3 py-1.5 rounded-lg border border-gray-100">
+                <Shield className="w-4 h-4 text-emerald-500" />
+                <span>Full OEM Warranty Enrolled</span>
+              </div>
             </div>
-          </div>
+          )}
 
           <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-sans">{product.description}</p>
 
           {/* Configuration and Cart Controls */}
           <div className="flex flex-wrap gap-4 items-center pt-4 border-t border-gray-100">
-            <div className="flex items-center border border-gray-200 rounded-xl overflow-hidden h-11 bg-white">
+            {product.priceUSD === 0 || product.isQuoteOnly || product.category === "Industrial Solar Panels" ? (
               <button
-                onClick={() => setQuantity(q => Math.max(1, q - 1))}
-                className="px-4 py-2 hover:bg-gray-50 text-gray-600 font-bold"
+                onClick={() => {
+                  if (onRequestQuote) {
+                    onRequestQuote(product);
+                  } else {
+                    setCurrentView("request-quote");
+                  }
+                }}
+                className="bg-[#FF7A20] text-white hover:bg-[#e06512] font-bold text-sm px-8 py-3.5 rounded-xl transition flex items-center space-x-2 cursor-pointer shadow-md"
               >
-                −
+                <Send className="w-4 h-4" />
+                <span>Request For Quote</span>
               </button>
-              <span className="px-4 py-2 font-mono text-xs font-bold text-gray-900 select-none min-w-8 text-center">{quantity}</span>
-              <button
-                onClick={() => setQuantity(q => q + 1)}
-                className="px-4 py-2 hover:bg-gray-50 text-gray-600 font-bold"
-              >
-                +
-              </button>
-            </div>
-            <button
-              onClick={handleAddToCart}
-              className="bg-gray-900 text-white hover:bg-[#FF7A20] font-bold text-xs px-6 py-3 rounded-xl h-11 transition flex items-center space-x-2 cursor-pointer shadow-sm"
-            >
-              <ShoppingCart className="w-4 h-4" />
-              <span>Add to Quote Cart</span>
-            </button>
-            <button
-              onClick={handleBuyNow}
-              className="bg-[#FF7A20] text-white hover:bg-[#e06512] font-bold text-xs px-6 py-3 rounded-xl h-11 transition cursor-pointer shadow-md"
-            >
-              Buy Now
-            </button>
+            ) : (
+              <>
+                <div className="flex items-center border border-gray-200 rounded-xl overflow-hidden h-11 bg-white">
+                  <button
+                    onClick={() => setQuantity(q => Math.max(1, q - 1))}
+                    className="px-4 py-2 hover:bg-gray-50 text-gray-600 font-bold"
+                  >
+                    −
+                  </button>
+                  <span className="px-4 py-2 font-mono text-xs font-bold text-gray-900 select-none min-w-8 text-center">{quantity}</span>
+                  <button
+                    onClick={() => setQuantity(q => q + 1)}
+                    className="px-4 py-2 hover:bg-gray-50 text-gray-600 font-bold"
+                  >
+                    +
+                  </button>
+                </div>
+                <button
+                  onClick={handleAddToCart}
+                  className="bg-gray-900 text-white hover:bg-[#FF7A20] font-bold text-xs px-6 py-3 rounded-xl h-11 transition flex items-center space-x-2 cursor-pointer shadow-sm"
+                >
+                  <ShoppingCart className="w-4 h-4" />
+                  <span>Add to Quote Cart</span>
+                </button>
+                <button
+                  onClick={handleBuyNow}
+                  className="bg-[#FF7A20] text-white hover:bg-[#e06512] font-bold text-xs px-6 py-3 rounded-xl h-11 transition cursor-pointer shadow-md"
+                >
+                  Buy Now
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>

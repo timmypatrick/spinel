@@ -114,10 +114,10 @@ function loadDb() {
       if (parsed && typeof parsed === "object") {
         if (Array.isArray(parsed.products)) {
           const map = new Map<string, any>();
-          // Seed the default 582 ACCESSORIES_PRODUCTS
-          ACCESSORIES_PRODUCTS.forEach(p => map.set(p.id, p));
-          // Overlay whatever was already in db.json to preserve edits and existing items
+          // Seed whatever was in db.json first
           parsed.products.forEach(p => map.set(p.id, p));
+          // Overlay default ACCESSORIES_PRODUCTS from code so latest catalog definitions take precedence
+          ACCESSORIES_PRODUCTS.forEach(p => map.set(p.id, p));
           db.products = Array.from(map.values());
         }
         if (Array.isArray(parsed.orders)) db.orders = parsed.orders;
@@ -174,7 +174,7 @@ function verifyAdminToken(req: express.Request, res: express.Response, next: exp
 
 // 1. API: Products CRUD
 app.get("/api/products", (req, res) => {
-  let list = db.products.filter(p => p.priceUSD > 0);
+  let list = db.products.filter(p => p.sku !== "SKU" && p.name !== "Name" && (p.priceUSD > 0 || p.isQuoteOnly));
 
   // Fisher-Yates Shuffle
   for (let i = list.length - 1; i > 0; i--) {

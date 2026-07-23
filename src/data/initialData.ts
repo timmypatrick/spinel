@@ -13,7 +13,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     name: "Renewable Energy",
     slug: "renewable-energy",
     iconName: "Sun",
-    subcategories: ["Solar Panels", "Solar Batteries", "Inverters", "Charge Controllers", "Solar Accessories"]
+    subcategories: ["Industrial Solar Panels", "Lithium LiFePO4 Batteries", "Smart Hybrid Inverters", "Solar Panels", "Solar Batteries", "Inverters", "Charge Controllers", "Solar Accessories"]
   },
   {
     id: "racks-enclosures",

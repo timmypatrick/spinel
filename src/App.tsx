@@ -57,6 +57,16 @@ export default function App() {
 
   // Compare specifications list
   const [compareList, setCompareList] = useState<Product[]>([]);
+  const [quotePrefill, setQuotePrefill] = useState<{ productName: string; sku: string } | null>(null);
+
+  const handleRequestQuote = (product?: Product) => {
+    if (product) {
+      setQuotePrefill({ productName: product.name || "", sku: product.sku || "" });
+    } else {
+      setQuotePrefill(null);
+    }
+    setCurrentView("request-quote");
+  };
 
   // Listen to popstate or route changes if needed
   useEffect(() => {
@@ -172,6 +182,7 @@ export default function App() {
             setCompareList={setCompareList}
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
+            onRequestQuote={handleRequestQuote}
           />
         )}
 
@@ -188,6 +199,7 @@ export default function App() {
             setSelectedProductId={setSelectedProductId}
             currency={currency}
             addToCart={handleAddToCart}
+            onRequestQuote={handleRequestQuote}
           />
         )}
 
@@ -215,6 +227,7 @@ export default function App() {
           <RequestQuote
             currency={currency}
             setCurrentView={setCurrentView}
+            quotePrefill={quotePrefill}
           />
         )}
 
@@ -250,6 +263,7 @@ export default function App() {
             addToCart={handleAddToCart}
             setSelectedProductId={setSelectedProductId}
             setCurrentView={setCurrentView}
+            onRequestQuote={handleRequestQuote}
           />
         )}
       </main>

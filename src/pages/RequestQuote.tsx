@@ -1,22 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Send, CheckCircle2, Sparkles } from "lucide-react";
 
 interface RequestQuoteProps {
   currency: "USD" | "NGN";
   setCurrentView: (view: string) => void;
+  quotePrefill?: { productName: string; sku: string } | null;
 }
 
-export default function RequestQuote({ currency, setCurrentView }: RequestQuoteProps) {
+export default function RequestQuote({ currency, setCurrentView, quotePrefill }: RequestQuoteProps) {
   const [formData, setFormData] = useState({
     company: "",
     name: "",
     email: "",
     phone: "",
     location: "",
-    productName: "",
-    sku: "",
-    description: ""
+    productName: quotePrefill?.productName || "",
+    sku: quotePrefill?.sku || "",
+    description: quotePrefill?.productName ? `Quote request for ${quotePrefill.productName} (SKU: ${quotePrefill.sku})` : ""
   });
+
+  useEffect(() => {
+    if (quotePrefill) {
+      setFormData(prev => ({
+        ...prev,
+        productName: quotePrefill.productName || prev.productName,
+        sku: quotePrefill.sku || prev.sku,
+        description: quotePrefill.productName ? `Quote request for ${quotePrefill.productName} (SKU: ${quotePrefill.sku})` : prev.description
+      }));
+    }
+  }, [quotePrefill]);
   const [loading, setLoading] = useState(false);
   const [rfqNumber, setRfqNumber] = useState("");
 

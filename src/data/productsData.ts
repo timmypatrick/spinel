@@ -17839,6 +17839,279 @@ export const UPS_PDU_PRODUCTS: Product[] = [
   }
 ];
 
+export const INDUSTRIAL_SOLAR_PANELS_PRODUCTS: Product[] = [
+  {
+    id: "sp-solar-panel-01",
+    sku: "SP-YA-HA-100",
+    name: "Canadian Solar 705w Watts Mono Solar Panel",
+    slug: "canadian-solar-705w-watts-mono-solar-panel-sp-ya-ha-100",
+    brand: "Canadian Solar",
+    category: "Renewable Energy",
+    subcategory: "Industrial Solar Panels",
+    priceUSD: 805,
+    priceNGN: 805 * 1500,
+    isQuoteOnly: true,
+    description: "705W Module efficiency up to 23.2 %. 30 Linear Power Performance Warranty. Excellent anti-LeTID & anti-PID performance. Low power degradation, high energy yield",
+    images: ["https://i.ibb.co/Mxv48vjy/panel-1.jpg"],
+    specifications: [
+      { label: "SKU", value: "SP-YA-HA-100" },
+      { label: "Brand", value: "Canadian Solar" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Industrial Solar Panels" },
+      { label: "Power Output", value: "705W" }
+    ],
+    stock: 805,
+    oem: "Canadian Solar",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SP-YA-HA-100 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sp-solar-panel-02",
+    sku: "SP-YA-HA-101",
+    name: "Canadian Solar 655w Watts Mono Solar Panel",
+    slug: "canadian-solar-655w-watts-mono-solar-panel-sp-ya-ha-101",
+    brand: "Canadian Solar",
+    category: "Renewable Energy",
+    subcategory: "Industrial Solar Panels",
+    priceUSD: 583,
+    priceNGN: 583 * 1500,
+    isQuoteOnly: true,
+    description: "665W module efficiency up to 21.7%. 25 years linear power output warranty. Comprehensive LID / LeTID mitigation technology, up to 50% lower degradation",
+    images: ["https://i.ibb.co/Jwqj7Lz7/panel-2.jpg"],
+    specifications: [
+      { label: "SKU", value: "SP-YA-HA-101" },
+      { label: "Brand", value: "Canadian Solar" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Industrial Solar Panels" },
+      { label: "Power Output", value: "655W" }
+    ],
+    stock: 583,
+    oem: "Canadian Solar",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SP-YA-HA-101 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sp-solar-panel-03",
+    sku: "SP-YA-HA-102",
+    name: "Canadian Solar 600w Watts Mono Solar Panel",
+    slug: "canadian-solar-600w-watts-mono-solar-panel-sp-ya-ha-102",
+    brand: "Canadian Solar",
+    category: "Renewable Energy",
+    subcategory: "Industrial Solar Panels",
+    priceUSD: 209,
+    priceNGN: 209 * 1500,
+    isQuoteOnly: true,
+    description: "600W module efficiency up to 21.6%. 25 years linear power output warranty. Comprehensive LID / LeTID mitigation technology, up to 50% lower degradation",
+    images: ["https://i.ibb.co/67XDZ89L/panel-3.jpg"],
+    specifications: [
+      { label: "SKU", value: "SP-YA-HA-102" },
+      { label: "Brand", value: "Canadian Solar" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Industrial Solar Panels" },
+      { label: "Power Output", value: "600W" }
+    ],
+    stock: 209,
+    oem: "Canadian Solar",
+    productType: "Enterprise",
+    featured: false,
+    popular: true,
+    downloads: [
+      { title: "SP-YA-HA-102 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sp-solar-panel-04",
+    sku: "SP-YA-HA-103",
+    name: "Canadian Solar Panel 605w – CS7L (Monocrystalline)",
+    slug: "canadian-solar-panel-605w-cs7l-monocrystalline-sp-ya-ha-103",
+    brand: "Canadian Solar",
+    category: "Renewable Energy",
+    subcategory: "Industrial Solar Panels",
+    priceUSD: 385,
+    priceNGN: 385 * 1500,
+    isQuoteOnly: true,
+    description: "Canadian Solar 605w Solar Panel. Comprehensive LID / LeTID mitigation technology, up to 50% lower degradation",
+    images: ["https://i.ibb.co/fVKg7hFy/panel-4.jpg"],
+    specifications: [
+      { label: "SKU", value: "SP-YA-HA-103" },
+      { label: "Brand", value: "Canadian Solar" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Industrial Solar Panels" },
+      { label: "Power Output", value: "605W" }
+    ],
+    stock: 385,
+    oem: "Canadian Solar",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SP-YA-HA-103 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sp-solar-panel-05",
+    sku: "SP-YA-HA-104",
+    name: "Canadian Solar 670w Watts Mono Solar Panel",
+    slug: "canadian-solar-670w-watts-mono-solar-panel-sp-ya-ha-104",
+    brand: "Canadian Solar",
+    category: "Renewable Energy",
+    subcategory: "Industrial Solar Panels",
+    priceUSD: 194,
+    priceNGN: 194 * 1500,
+    isQuoteOnly: true,
+    description: "670W module efficiency up to 21.7%. 25 years linear power output warranty. Comprehensive LID / LeTID mitigation technology, up to 50% lower degradation",
+    images: ["https://i.ibb.co/bjpfkV6Z/panel-5.jpg"],
+    specifications: [
+      { label: "SKU", value: "SP-YA-HA-104" },
+      { label: "Brand", value: "Canadian Solar" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Industrial Solar Panels" },
+      { label: "Power Output", value: "670W" }
+    ],
+    stock: 194,
+    oem: "Canadian Solar",
+    productType: "Enterprise",
+    featured: false,
+    popular: true,
+    downloads: [
+      { title: "SP-YA-HA-104 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sp-solar-panel-06",
+    sku: "SP-YA-HA-105",
+    name: "660 Watts Canadian Solar Panel",
+    slug: "660-watts-canadian-solar-panel-sp-ya-ha-105",
+    brand: "Canadian Solar",
+    category: "Renewable Energy",
+    subcategory: "Industrial Solar Panels",
+    priceUSD: 609,
+    priceNGN: 609 * 1500,
+    isQuoteOnly: true,
+    description: "660W module efficiency up to 21.6%. 25 years linear power output warranty. Comprehensive LID / LeTID mitigation technology, up to 50% lower degradation",
+    images: ["https://i.ibb.co/Mxsf2xtQ/panel-6.png"],
+    specifications: [
+      { label: "SKU", value: "SP-YA-HA-105" },
+      { label: "Brand", value: "Canadian Solar" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Industrial Solar Panels" },
+      { label: "Power Output", value: "660W" }
+    ],
+    stock: 609,
+    oem: "Canadian Solar",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SP-YA-HA-105 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sp-solar-panel-07",
+    sku: "SP-YA-HA-106",
+    name: "595 Watts HiKu7 Mono PERC Canadian Solar Panel",
+    slug: "595-watts-hiku7-mono-perc-canadian-solar-panel-sp-ya-ha-106",
+    brand: "Canadian Solar",
+    category: "Renewable Energy",
+    subcategory: "Industrial Solar Panels",
+    priceUSD: 352,
+    priceNGN: 352 * 1500,
+    isQuoteOnly: true,
+    description: "Module power up to 610 W. 25 years linear power output warranty. Comprehensive LID / LeTID mitigation technology, up to 50% lower degradation",
+    images: ["https://i.ibb.co/PZfdTFKk/panel-7.png"],
+    specifications: [
+      { label: "SKU", value: "SP-YA-HA-106" },
+      { label: "Brand", value: "Canadian Solar" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Industrial Solar Panels" },
+      { label: "Power Output", value: "595W" }
+    ],
+    stock: 352,
+    oem: "Canadian Solar",
+    productType: "Enterprise",
+    featured: false,
+    popular: true,
+    downloads: [
+      { title: "SP-YA-HA-106 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sp-solar-panel-08",
+    sku: "SP-YA-HA-107",
+    name: "Canadian Solar 550w BiHiKu6 Mono PERC Solar Panel",
+    slug: "canadian-solar-550w-bihiku6-mono-perc-solar-panel-sp-ya-ha-107",
+    brand: "Canadian Solar",
+    category: "Renewable Energy",
+    subcategory: "Industrial Solar Panels",
+    priceUSD: 581,
+    priceNGN: 581 * 1500,
+    isQuoteOnly: true,
+    description: "550W module efficiency up to 20.6%. 25 years linear power output warranty. Comprehensive LID / LeTID mitigation technology, up to 50% lower degradation",
+    images: ["https://i.ibb.co/k2XhpdyF/panel-8.png"],
+    specifications: [
+      { label: "SKU", value: "SP-YA-HA-107" },
+      { label: "Brand", value: "Canadian Solar" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Industrial Solar Panels" },
+      { label: "Power Output", value: "550W" }
+    ],
+    stock: 581,
+    oem: "Canadian Solar",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SP-YA-HA-107 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sp-solar-panel-09",
+    sku: "SP-YA-HA-108",
+    name: "415 Watts HiKu Mono PERC Canadian Solar Panel",
+    slug: "415-watts-hiku-mono-perc-canadian-solar-panel-sp-ya-ha-108",
+    brand: "Canadian Solar",
+    category: "Renewable Energy",
+    subcategory: "Industrial Solar Panels",
+    priceUSD: 957,
+    priceNGN: 957 * 1500,
+    isQuoteOnly: true,
+    description: "415W Canadian Solar - Super High Power Mono PERC HiKU. Heavy snow load up to 5400 Pa, enhanced wind load up to 2400 Pa. 1st year power degradation no more than 2%. Subsequent annual power degradation no more than 0.55%",
+    images: ["https://i.ibb.co/xKz8Pd15/panel-9.png"],
+    specifications: [
+      { label: "SKU", value: "SP-YA-HA-108" },
+      { label: "Brand", value: "Canadian Solar" },
+      { label: "Category", value: "Renewable Energy" },
+      { label: "Subcategory", value: "Industrial Solar Panels" },
+      { label: "Power Output", value: "415W" }
+    ],
+    stock: 957,
+    oem: "Canadian Solar",
+    productType: "Enterprise",
+    featured: false,
+    popular: true,
+    downloads: [
+      { title: "SP-YA-HA-108 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  }
+];
+
 export const ACCESSORIES_PRODUCTS: Product[] = [
   ...mappedAccessories,
   ...PTZ_CAMERA_PRODUCTS,
@@ -17852,6 +18125,7 @@ export const ACCESSORIES_PRODUCTS: Product[] = [
   ...CAMERA_BUNDLE_PRODUCTS,
   ...EX_JUNCTION_BOX_PRODUCTS,
   ...INDUSTRIAL_SWITCH_PRODUCTS,
-  ...UPS_PDU_PRODUCTS
-].filter(p => p.priceUSD > 0);
+  ...UPS_PDU_PRODUCTS,
+  ...INDUSTRIAL_SOLAR_PANELS_PRODUCTS
+];
 

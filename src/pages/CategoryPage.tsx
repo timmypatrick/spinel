@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ArrowLeft, ShoppingCart, Info, Search, RefreshCw, ShieldCheck } from "lucide-react";
+import { ArrowLeft, ShoppingCart, Info, Search, RefreshCw, ShieldCheck, Send } from "lucide-react";
 import { Product } from "../types";
 import { safeFetch } from "../lib/dataService";
 
@@ -9,6 +9,7 @@ interface CategoryPageProps {
   addToCart: (product: Product, quantity?: number) => void;
   setSelectedProductId: (id: string | null) => void;
   setCurrentView: (view: string) => void;
+  onRequestQuote?: (product: Product) => void;
 }
 
 export default function CategoryPage({
@@ -16,7 +17,8 @@ export default function CategoryPage({
   currency,
   addToCart,
   setSelectedProductId,
-  setCurrentView
+  setCurrentView,
+  onRequestQuote
 }: CategoryPageProps) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
@@ -28,6 +30,18 @@ export default function CategoryPage({
     const catLower = p.category ? p.category.toLowerCase() : "";
     const subcatLower = p.subcategory ? p.subcategory.toLowerCase() : "";
     const prodNameLower = p.name ? p.name.toLowerCase() : "";
+
+    if (
+      nameLower === "industrial solar panels" ||
+      nameLower === "industrial solar panel" ||
+      nameLower === "industrial-solar-panels" ||
+      nameLower === "solar panels"
+    ) {
+      if (p.sku && p.sku.startsWith("SP-YA-HA-")) return true;
+      if (subcatLower.includes("industrial solar") || subcatLower.includes("solar panel") || catLower.includes("industrial solar")) return true;
+      if (prodNameLower.includes("canadian solar") || prodNameLower.includes("solar panel")) return true;
+      return subcatLower === "industrial solar panels" || catLower === "industrial solar panels";
+    }
 
     // Direct exact match
     if (catLower === nameLower || subcatLower === nameLower) return true;
@@ -47,7 +61,6 @@ export default function CategoryPage({
     if (nameLower === "fisheye camera" && (subcatLower.includes("fisheye") || prodNameLower.includes("fisheye"))) return true;
     if (nameLower === "camera bundle") {
       if (subcatLower.includes("bundle") || prodNameLower.includes("bundle")) return true;
-      if (subcatLower.includes("panel") || prodNameLower.includes("panel")) return true;
       if (subcatLower.includes("telephone") || subcatLower.includes("phone") || prodNameLower.includes("phone") || prodNameLower.includes("telephone")) return true;
     }
     if (nameLower === "multi-sensor camera" && (subcatLower.includes("sensor") || prodNameLower.includes("sensor"))) return true;
@@ -62,7 +75,7 @@ export default function CategoryPage({
 
     if (nameLower === "lithium lifepo4 batteries" && (subcatLower.includes("batter") || prodNameLower.includes("batter") || prodNameLower.includes("lifepo4"))) return true;
     if (nameLower === "smart hybrid inverters" && (subcatLower.includes("inverter") || prodNameLower.includes("inverter"))) return true;
-
+    if (nameLower === "industrial solar panels" && (catLower === "industrial solar panels" || subcatLower === "industrial solar panels")) return true;
 
     if (nameLower === "it enclosures" && (subcatLower.includes("it") || subcatLower.includes("enclosure") || prodNameLower.includes("enclosure"))) return true;
     if (nameLower === "wall-mounted enclosures" && (subcatLower.includes("wall") || prodNameLower.includes("wall") || prodNameLower.includes("cabinet"))) return true;
@@ -73,7 +86,6 @@ export default function CategoryPage({
     if (nameLower === "ex-junction box" && (subcatLower.includes("junction") || catLower.includes("junction") || prodNameLower.includes("junction") || subcatLower === "ex-junction box")) return true;
 
     // Completely removed / disabled pages
-    if (nameLower === "industrial solar panels") return false;
     if (nameLower === "ex-telephone") return false;
     if (nameLower === "small enclosures") return false;
     if (nameLower === "ex-cctv camera") return false;
@@ -235,19 +247,38 @@ export default function CategoryPage({
                   </div>
                 </div>
                 <div className="p-4 border-t border-gray-100 bg-gray-50/40 flex justify-between items-center">
-                  <span className="font-extrabold text-[#FF7A20] text-sm sm:text-base">
-                    {currency === "USD" ? `$${p.priceUSD.toLocaleString()}` : `₦${p.priceNGN.toLocaleString()}`}
-                  </span>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      addToCart(p);
-                    }}
-                    className="bg-[#FF7A20] hover:bg-orange-600 text-white p-2 rounded-lg transition-all duration-200 shadow-sm flex items-center justify-center"
-                    title="Add to Quote Cart"
-                  >
-                    <ShoppingCart className="w-4 h-4" />
-                  </button>
+                  {p.priceUSD === 0 || p.isQuoteOnly || p.category === "Industrial Solar Panels" ? (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (onRequestQuote) {
+                          onRequestQuote(p);
+                        } else {
+                          setCurrentView("request-quote");
+                        }
+                      }}
+                      className="w-full bg-[#FF7A20] hover:bg-[#e06512] text-white font-bold text-xs py-2.5 px-3 rounded-lg transition-all flex items-center justify-center space-x-2 shadow-sm cursor-pointer"
+                    >
+                      <Send className="w-3.5 h-3.5" />
+                      <span>Request For Quote</span>
+                    </button>
+                  ) : (
+                    <>
+                      <span className="font-extrabold text-[#FF7A20] text-sm sm:text-base">
+                        {currency === "USD" ? `$${p.priceUSD.toLocaleString()}` : `₦${p.priceNGN.toLocaleString()}`}
+                      </span>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          addToCart(p);
+                        }}
+                        className="bg-[#FF7A20] hover:bg-orange-600 text-white p-2 rounded-lg transition-all duration-200 shadow-sm flex items-center justify-center cursor-pointer"
+                        title="Add to Quote Cart"
+                      >
+                        <ShoppingCart className="w-4 h-4" />
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             ))}

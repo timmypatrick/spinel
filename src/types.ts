@@ -28,6 +28,7 @@ export interface Product {
   featured: boolean;
   popular: boolean;
   downloads: ProductDownload[];
+  isQuoteOnly?: boolean;
   seoTitle?: string;
   seoDescription?: string;
   reviews?: Review[];

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Grid, List, SlidersHorizontal, Search, RefreshCw, ShoppingCart, Plus, Check, Trash } from "lucide-react";
+import { Grid, List, SlidersHorizontal, Search, RefreshCw, ShoppingCart, Plus, Check, Trash, Send } from "lucide-react";
 import { Product, Category } from "../types";
 import { safeFetch } from "../lib/dataService";
 
@@ -26,7 +26,6 @@ const STORE_DIVISIONS = [
       "Network Video Recorders",
       "Electrical Workstation",
       "UPS & PDU",
-      "PAGA System",
       "Hybrid Composite Cable",
       "Accessories"
     ]
@@ -66,6 +65,18 @@ const matchProduct = (p: Product, subName: string) => {
   const subcatLower = p.subcategory ? p.subcategory.toLowerCase() : "";
   const prodNameLower = p.name ? p.name.toLowerCase() : "";
 
+  if (
+    nameLower === "industrial solar panels" ||
+    nameLower === "industrial solar panel" ||
+    nameLower === "industrial-solar-panels" ||
+    nameLower === "solar panels"
+  ) {
+    if (p.sku && p.sku.startsWith("SP-YA-HA-")) return true;
+    if (subcatLower.includes("industrial solar") || subcatLower.includes("solar panel") || catLower.includes("industrial solar")) return true;
+    if (prodNameLower.includes("canadian solar") || prodNameLower.includes("solar panel")) return true;
+    return subcatLower === "industrial solar panels" || catLower === "industrial solar panels";
+  }
+
   // Direct exact match
   if (catLower === nameLower || subcatLower === nameLower) return true;
 
@@ -89,17 +100,16 @@ const matchProduct = (p: Product, subName: string) => {
   if (nameLower === "network video recorders" && (subcatLower.includes("recorder") || prodNameLower.includes("recorder") || prodNameLower.includes("nvr"))) return true;
   if (nameLower === "electrical workstation" && (subcatLower.includes("workstation") || prodNameLower.includes("workstation"))) return true;
   if (nameLower === "ups & pdu" && (subcatLower.includes("ups") || subcatLower.includes("pdu") || prodNameLower.includes("ups") || prodNameLower.includes("pdu"))) return true;
-  if (nameLower === "paga system" && (subcatLower.includes("paga") || prodNameLower.includes("paga"))) return true;
   if (nameLower === "hybrid composite cable" && (subcatLower.includes("cable") || prodNameLower.includes("cable"))) return true;
 
   if (nameLower === "camera bundle") {
     if (subcatLower.includes("bundle") || prodNameLower.includes("bundle")) return true;
-    if (subcatLower.includes("panel") || prodNameLower.includes("panel")) return true;
     if (subcatLower.includes("telephone") || subcatLower.includes("phone") || prodNameLower.includes("phone") || prodNameLower.includes("telephone")) return true;
   }
 
   if (nameLower === "lithium lifepo4 batteries" && (subcatLower.includes("batter") || subcatLower.includes("batter") || prodNameLower.includes("lifepo4"))) return true;
   if (nameLower === "smart hybrid inverters" && (subcatLower.includes("inverter") || prodNameLower.includes("inverter"))) return true;
+  if (nameLower === "industrial solar panels" && (catLower === "industrial solar panels" || subcatLower === "industrial solar panels")) return true;
 
   if (nameLower === "it enclosures" && (subcatLower.includes("it") || subcatLower.includes("enclosure") || prodNameLower.includes("enclosure"))) return true;
   if (nameLower === "wall-mounted enclosures" && (subcatLower.includes("wall") || subcatLower.includes("wall") || prodNameLower.includes("cabinet"))) return true;
@@ -108,11 +118,11 @@ const matchProduct = (p: Product, subName: string) => {
   if (nameLower === "ex-sounder" && (subcatLower.includes("sounder") || subcatLower.includes("sounder") || prodNameLower.includes("horn"))) return true;
 
   // Completely removed / disabled pages
-  if (nameLower === "industrial solar panels") return false;
   if (nameLower === "ex-telephone") return false;
   if (nameLower === "small enclosures") return false;
   if (nameLower === "ex-cctv camera") return false;
   if (nameLower === "ex-junction box") return false;
+  if (nameLower === "paga system") return false;
 
   return false;
 };
@@ -127,6 +137,7 @@ interface StoreProps {
   setCompareList: (list: Product[]) => void;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
+  onRequestQuote?: (product: Product) => void;
 }
 
 export default function Store({
@@ -138,7 +149,8 @@ export default function Store({
   compareList,
   setCompareList,
   searchQuery,
-  setSearchQuery
+  setSearchQuery,
+  onRequestQuote
 }: StoreProps) {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>("");
@@ -402,16 +414,34 @@ export default function Store({
                     </label>
                   </div>
                   <div className="p-4 border-t border-gray-50 bg-gray-50/40 flex items-center justify-between">
-                    <span className="font-black text-[#FF7A20] text-sm sm:text-base">
-                      {currency === "USD" ? `$${p.priceUSD.toLocaleString()}` : `₦${p.priceNGN.toLocaleString()}`}
-                    </span>
-                    <button
-                      onClick={() => addToCart(p)}
-                      className="bg-gray-900 hover:bg-[#FF7A20] text-white p-2.5 rounded-lg transition cursor-pointer"
-                      title="Add to Quote Cart"
-                    >
-                      <ShoppingCart className="w-4 h-4" />
-                    </button>
+                    {p.priceUSD === 0 || p.isQuoteOnly || p.category === "Industrial Solar Panels" ? (
+                      <button
+                        onClick={() => {
+                          if (onRequestQuote) {
+                            onRequestQuote(p);
+                          } else {
+                            setCurrentView("request-quote");
+                          }
+                        }}
+                        className="w-full bg-[#FF7A20] hover:bg-[#e06512] text-white font-bold text-xs py-2.5 px-3 rounded-lg transition flex items-center justify-center space-x-1.5 shadow-sm cursor-pointer"
+                      >
+                        <Send className="w-3.5 h-3.5" />
+                        <span>Request For Quote</span>
+                      </button>
+                    ) : (
+                      <>
+                        <span className="font-black text-[#FF7A20] text-sm sm:text-base">
+                          {currency === "USD" ? `$${p.priceUSD.toLocaleString()}` : `₦${p.priceNGN.toLocaleString()}`}
+                        </span>
+                        <button
+                          onClick={() => addToCart(p)}
+                          className="bg-gray-900 hover:bg-[#FF7A20] text-white p-2.5 rounded-lg transition cursor-pointer"
+                          title="Add to Quote Cart"
+                        >
+                          <ShoppingCart className="w-4 h-4" />
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
               );
@@ -451,27 +481,56 @@ export default function Store({
                       <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">{p.description}</p>
                     </div>
                     <div className="flex flex-wrap items-center justify-between gap-4 border-t border-gray-50 pt-3 mt-3">
-                      <span className="font-black text-[#FF7A20] text-base sm:text-lg">
-                        {currency === "USD" ? `$${p.priceUSD.toLocaleString()}` : `₦${p.priceNGN.toLocaleString()}`}
-                      </span>
-                      <div className="flex items-center space-x-4">
-                        <label className="flex items-center space-x-1.5 text-xs text-gray-500 cursor-pointer">
-                          <input
-                            type="checkbox"
-                            checked={inCompare}
-                            onChange={() => handleToggleCompare(p)}
-                            className="w-4 h-4 rounded border-gray-300 text-[#FF7A20] focus:ring-[#FF7A20] cursor-pointer"
-                          />
-                          <span className={inCompare ? "text-[#FF7A20] font-bold" : ""}>Compare Specs</span>
-                        </label>
-                        <button
-                          onClick={() => addToCart(p)}
-                          className="bg-gray-950 text-white hover:bg-[#FF7A20] px-5 py-2.5 rounded-lg text-sm font-semibold flex items-center space-x-1.5 cursor-pointer"
-                        >
-                          <ShoppingCart className="w-4 h-4" />
-                          <span>Add to Quote Cart</span>
-                        </button>
-                      </div>
+                      {p.priceUSD === 0 || p.isQuoteOnly || p.category === "Industrial Solar Panels" ? (
+                        <div className="flex items-center justify-between w-full">
+                          <label className="flex items-center space-x-1.5 text-xs text-gray-500 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={inCompare}
+                              onChange={() => handleToggleCompare(p)}
+                              className="w-4 h-4 rounded border-gray-300 text-[#FF7A20] focus:ring-[#FF7A20] cursor-pointer"
+                            />
+                            <span className={inCompare ? "text-[#FF7A20] font-bold" : ""}>Compare Specs</span>
+                          </label>
+                          <button
+                            onClick={() => {
+                              if (onRequestQuote) {
+                                onRequestQuote(p);
+                              } else {
+                                setCurrentView("request-quote");
+                              }
+                            }}
+                            className="bg-[#FF7A20] text-white hover:bg-[#e06512] px-5 py-2.5 rounded-lg text-sm font-semibold flex items-center space-x-2 cursor-pointer shadow-sm"
+                          >
+                            <Send className="w-4 h-4" />
+                            <span>Request For Quote</span>
+                          </button>
+                        </div>
+                      ) : (
+                        <>
+                          <span className="font-black text-[#FF7A20] text-base sm:text-lg">
+                            {currency === "USD" ? `$${p.priceUSD.toLocaleString()}` : `₦${p.priceNGN.toLocaleString()}`}
+                          </span>
+                          <div className="flex items-center space-x-4">
+                            <label className="flex items-center space-x-1.5 text-xs text-gray-500 cursor-pointer">
+                              <input
+                                type="checkbox"
+                                checked={inCompare}
+                                onChange={() => handleToggleCompare(p)}
+                                className="w-4 h-4 rounded border-gray-300 text-[#FF7A20] focus:ring-[#FF7A20] cursor-pointer"
+                              />
+                              <span className={inCompare ? "text-[#FF7A20] font-bold" : ""}>Compare Specs</span>
+                            </label>
+                            <button
+                              onClick={() => addToCart(p)}
+                              className="bg-gray-950 text-white hover:bg-[#FF7A20] px-5 py-2.5 rounded-lg text-sm font-semibold flex items-center space-x-1.5 cursor-pointer"
+                            >
+                              <ShoppingCart className="w-4 h-4" />
+                              <span>Add to Quote Cart</span>
+                            </button>
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
