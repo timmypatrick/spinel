@@ -43,15 +43,6 @@ const STATIC_FLYERS = [
     cta: "View Racks & Cabinets"
   },
   {
-    title: "Intelligent PAGA System",
-    subtitle: "IP65/IP66 Weatherproof and Seismic Enclosures",
-    badge: "Enterprise Communication",
-    description: "From emergency announcements to routine communication, our advanced PA/GA systems provide dependable voice distribution, seamless integration, and superior sound quality for every environment.",
-    image: "https://i.ibb.co/5hsJkdQn/8904010b-d092-473f-af00-8ff01e3de2eb.png",
-    features: ["IP65/IP66 Outdoor Dust-Waterproof", "Seismic Load Rated Structures", "Integrated Smart Thermostat Fans"],
-    cta: "View PAGA System"
-  },
-  {
     title: "One Cable. Multiple Connections",
     subtitle: "Long-Range Fibre Optic & Armoured Power Cabling",
     badge: "Power • Fiber • Data",
@@ -77,15 +68,6 @@ const STATIC_FLYERS = [
     image: "https://i.ibb.co/whSbjCv9/0b703286-756a-4685-98ab-d265e609242b.png",
     features: ["IEEE 802.3bt Ultra PoE 90W", "-40°C to 75°C Industrial Grade", "ERPS Ring Recovery <20ms"],
     cta: "View CCTV Camera"
-  },
-  {
-    title: "Powering Clear Communication Everywhere",
-    subtitle: "Clear Announcements. Instant Communication",
-    badge: "Smart Audio Communication",
-    description: "Our integrated public address and general address solutions combine premium audio equipment, intelligent control systems, and scalable deployment to deliver reliable communication when it matters most.",
-    image: "https://i.ibb.co/vC0RMT4Y/3b427c80-aac2-4909-8394-f5df335427b8.png",
-    features: ["6000+ Deep Charge Cycles", "Built-in Smart BMS Protection", "Modular Scalable Rack Design"],
-    cta: "View PAGA"
   },
   {
     title: "Network Video Recorders",
@@ -191,7 +173,7 @@ export default function Home({
   ];
 
   const faqs = [
-    { q: "What products does Spinel Distribution offer?", a: "Spinel supplies a wide range of ICT, electronic security, renewable energy, PAGA, multimedia and industrial products" },
+    { q: "What products does Spinel Distribution offer?", a: "Spinel supplies a wide range of ICT, electronic security, renewable energy, multimedia and industrial products" },
     { q: "How reliable are your products?", a: "We partner with leading global OEMs to provide genuine, high-quality products backed by manufacturer warranties and technical support." },
     { q: "Can I request a quotation before placing an order?", a: "Absolutely. You can use our Request Quote page to submit your requirements, and our sales team will provide a customized quotation tailored to your need." },
     { q: "What about your products with fixed price tag?", a: "They give you access to instant procurement and on-time delivery" },

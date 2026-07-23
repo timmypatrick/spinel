@@ -279,7 +279,6 @@ export default function Header({
                     <li><button onClick={() => { handleNavigate("category-Network Video Recorders"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Network Video Recorders</button></li>
                     <li><button onClick={() => { handleNavigate("category-Electrical Workstation"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Electrical Workstation</button></li>
                     <li><button onClick={() => { handleNavigate("category-UPS & PDU"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">UPS & PDU</button></li>
-                    <li><button onClick={() => { handleNavigate("category-PAGA System"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">PAGA System</button></li>
                     <li><button onClick={() => { handleNavigate("category-Hybrid Composite Cable"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Hybrid Composite Cable</button></li>
                     <li><button onClick={() => { handleNavigate("category-Accessories"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Accessories</button></li>
                   </ul>
@@ -525,7 +524,6 @@ export default function Header({
                         <button onClick={() => { handleNavigate("category-Network Video Recorders"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Network Video Recorders</button>
                         <button onClick={() => { handleNavigate("category-Electrical Workstation"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Electrical Workstation</button>
                         <button onClick={() => { handleNavigate("category-UPS & PDU"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">UPS & PDU</button>
-                        <button onClick={() => { handleNavigate("category-PAGA System"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">PAGA System</button>
                         <button onClick={() => { handleNavigate("category-Hybrid Composite Cable"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Hybrid Composite Cable</button>
                         <button onClick={() => { handleNavigate("category-Accessories"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Accessories</button>
                       </div>

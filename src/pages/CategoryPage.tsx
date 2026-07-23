@@ -57,7 +57,6 @@ export default function CategoryPage({
     if (nameLower === "network video recorders" && (subcatLower.includes("recorder") || prodNameLower.includes("recorder") || prodNameLower.includes("nvr"))) return true;
     if (nameLower === "electrical workstation" && (subcatLower.includes("workstation") || prodNameLower.includes("workstation"))) return true;
     if (nameLower === "ups & pdu" && (subcatLower.includes("ups") || subcatLower.includes("pdu") || prodNameLower.includes("ups") || prodNameLower.includes("pdu"))) return true;
-    if (nameLower === "paga system" && (subcatLower.includes("paga") || prodNameLower.includes("paga"))) return true;
     if (nameLower === "hybrid composite cable" && (subcatLower.includes("cable") || prodNameLower.includes("cable"))) return true;
 
 
@@ -78,6 +77,7 @@ export default function CategoryPage({
     if (nameLower === "ex-telephone") return false;
     if (nameLower === "small enclosures") return false;
     if (nameLower === "ex-cctv camera") return false;
+    if (nameLower === "paga system") return false;
 
     return false;
   };

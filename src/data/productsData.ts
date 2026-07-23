@@ -17696,6 +17696,149 @@ export const INDUSTRIAL_SWITCH_PRODUCTS: Product[] = [
   }
 ];
 
+export const UPS_PDU_PRODUCTS: Product[] = [
+  {
+    id: "sp-ups-pdu-01",
+    sku: "SRV3KIL",
+    name: "APC Easy UPS On-Line",
+    slug: "apc-easy-ups-on-line-srv3kil",
+    brand: "APC",
+    category: "UPS & PDU",
+    subcategory: "UPS & PDU",
+    priceUSD: 520,
+    priceNGN: 520 * 1500,
+    description: "APC Easy UPS On-Line Ext. Runtime SRV 3000VA 230V with External Battery Pack SRV3KIL",
+    images: ["https://i.ibb.co/7xc0RzVL/apc-easy-ups-on-line-3000va-230v-with-external-battery-pack-srv3kil.jpg"],
+    specifications: [
+      { label: "SKU", value: "SRV3KIL" },
+      { label: "Brand", value: "APC" },
+      { label: "Category", value: "UPS & PDU" },
+      { label: "Subcategory", value: "UPS & PDU" }
+    ],
+    stock: 282,
+    oem: "APC",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SRV3KIL Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sp-ups-pdu-02",
+    sku: "SRV4KIL",
+    name: "APC Easy UPS SMV",
+    slug: "apc-easy-ups-smv-srv4kil",
+    brand: "APC",
+    category: "UPS & PDU",
+    subcategory: "UPS & PDU",
+    priceUSD: 850,
+    priceNGN: 850 * 1500,
+    description: "APC Easy UPS SMV 3000VA, Universal Outlet, 230V SMV3000AI-MSX - Line Interactive, 1 Phase",
+    images: ["https://i.ibb.co/KxhDXBLm/apc-easy-ups-smv-3000va-smv3000ai-ms.jpg"],
+    specifications: [
+      { label: "SKU", value: "SRV4KIL" },
+      { label: "Brand", value: "APC" },
+      { label: "Category", value: "UPS & PDU" },
+      { label: "Subcategory", value: "UPS & PDU" }
+    ],
+    stock: 167,
+    oem: "APC",
+    productType: "Enterprise",
+    featured: false,
+    popular: true,
+    downloads: [
+      { title: "SRV4KIL Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sp-ups-pdu-03",
+    sku: "SRV5KIL",
+    name: "APC Essential SurgeArrest",
+    slug: "apc-essential-surgearrest-srv5kil",
+    brand: "APC",
+    category: "UPS & PDU",
+    subcategory: "UPS & PDU",
+    priceUSD: 52,
+    priceNGN: 52 * 1500,
+    description: "APC Essential SurgeArrest 5 outlets 230V UK - Protection Against Lightning & Power Surges for Computers and Electronics",
+    images: ["https://i.ibb.co/VcKSgDdK/apc-essential-surgearrest-5-outlets-230v-pm5-uk-surge-protector.jpg"],
+    specifications: [
+      { label: "SKU", value: "SRV5KIL" },
+      { label: "Brand", value: "APC" },
+      { label: "Category", value: "UPS & PDU" },
+      { label: "Subcategory", value: "UPS & PDU" }
+    ],
+    stock: 3289,
+    oem: "APC",
+    productType: "Enterprise",
+    featured: false,
+    popular: true,
+    downloads: [
+      { title: "SRV5KIL Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sp-ups-pdu-04",
+    sku: "SRV6KIL",
+    name: "APC Smart-UPS C 1500VA LCD 230V",
+    slug: "apc-smart-ups-c-1500va-lcd-230v-srv6kil",
+    brand: "APC",
+    category: "UPS & PDU",
+    subcategory: "UPS & PDU",
+    priceUSD: 189,
+    priceNGN: 189 * 1500,
+    description: "APC Smart-UPS C 1500VA LCD 230V - 900 Watts/1500VA, Input 230V/Output 230V, Interface Port USB SMC1500I",
+    images: ["https://i.ibb.co/xqcWVdmd/apc-smart-ups-c-1500va-lcd-230v-900-watts-smc1500i.jpg"],
+    specifications: [
+      { label: "SKU", value: "SRV6KIL" },
+      { label: "Brand", value: "APC" },
+      { label: "Category", value: "UPS & PDU" },
+      { label: "Subcategory", value: "UPS & PDU" }
+    ],
+    stock: 450,
+    oem: "APC",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SRV6KIL Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sp-ups-pdu-05",
+    sku: "SRT3000XLI",
+    name: "APC Smart-UPS On-Line SRT",
+    slug: "apc-smart-ups-on-line-srt-srt3000xli",
+    brand: "APC",
+    category: "UPS & PDU",
+    subcategory: "UPS & PDU",
+    priceUSD: 860,
+    priceNGN: 860 * 1500,
+    description: "APC Smart-UPS On-Line SRT 3000VA 230V SRT3000XLI - 2700 Watts/3000VA, Input 230V /Output 230V",
+    images: ["https://i.ibb.co/4n0gwMdQ/apc-smart-ups-on-line-srt-3000va-230v-srt3000xli-2700-watts-3000va.jpg"],
+    specifications: [
+      { label: "SKU", value: "SRT3000XLI" },
+      { label: "Brand", value: "APC" },
+      { label: "Category", value: "UPS & PDU" },
+      { label: "Subcategory", value: "UPS & PDU" }
+    ],
+    stock: 284,
+    oem: "APC",
+    productType: "Enterprise",
+    featured: false,
+    popular: true,
+    downloads: [
+      { title: "SRT3000XLI Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  }
+];
+
 export const ACCESSORIES_PRODUCTS: Product[] = [
   ...mappedAccessories,
   ...PTZ_CAMERA_PRODUCTS,
@@ -17708,6 +17851,7 @@ export const ACCESSORIES_PRODUCTS: Product[] = [
   ...NETWORK_VIDEO_RECORDER_PRODUCTS,
   ...CAMERA_BUNDLE_PRODUCTS,
   ...EX_JUNCTION_BOX_PRODUCTS,
-  ...INDUSTRIAL_SWITCH_PRODUCTS
+  ...INDUSTRIAL_SWITCH_PRODUCTS,
+  ...UPS_PDU_PRODUCTS
 ].filter(p => p.priceUSD > 0);
 
