@@ -146,7 +146,7 @@ export default function RequestQuote({ currency, setCurrentView, quotePrefill }:
                 className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 text-sm focus:outline-none focus:border-[#FF7A20]"
               />
             </div>
-            <div className="space-y-1.5">
+            <div className="space-y-1.5 md:col-span-2">
               <label className="text-gray-500 font-bold text-xs uppercase tracking-wider">Location Address</label>
               <input
                 type="text"

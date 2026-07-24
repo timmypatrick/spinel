@@ -227,6 +227,89 @@ export default function CategoryPage({
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage) || 1;
   const paginatedProducts = filteredProducts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
+  const getHeroBgImage = (subName: string): string => {
+    const nameLower = subName.toLowerCase().trim();
+    if (nameLower.includes("box camera") || nameLower === "box camera") {
+      return "https://i.ibb.co/yFpPP42n/7fbcdd1e-7952-4cb1-8ae6-62ac3eda62ba.png";
+    }
+    if (nameLower.includes("dome camera") || nameLower === "dome camera") {
+      return "https://i.ibb.co/Tq41Zq2N/f46a385f-6cb0-4ac2-896c-76c58b7e93d0.png";
+    }
+    if (nameLower.includes("bullet camera") || nameLower === "bullet camera") {
+      return "https://i.ibb.co/RTDPffL6/c1591ea1-58b0-4618-ab36-69945c0aa45d.png";
+    }
+    if (nameLower.includes("ptz camera") || nameLower === "ptz camera") {
+      return "https://i.ibb.co/gZP475xf/856c4c30-9c99-4355-8b41-64a8877fcb08.png";
+    }
+    if (nameLower.includes("panoramic")) {
+      return "https://i.ibb.co/gL28n7Mt/2ff314f7-bb74-4550-9828-c29bd50f21cd.png";
+    }
+    if (nameLower.includes("thermal")) {
+      return "https://i.ibb.co/1GdTQbcZ/55d01433-a43b-4193-80e9-283c23a67b16.png";
+    }
+    if (nameLower.includes("fisheye")) {
+      return "https://i.ibb.co/M5GYZ9zz/5ff0ed5c-72db-482b-b79b-bb30df710f5b.png";
+    }
+    if (nameLower.includes("bundle")) {
+      return "https://i.ibb.co/3m0dsYLS/9edf6e9c-61d1-47f4-934f-3b4f40bff114.png";
+    }
+    if (nameLower.includes("multi-sensor") || nameLower.includes("multisensor") || nameLower.includes("multi sensor")) {
+      return "https://i.ibb.co/rK7xspsS/f7b8999e-d680-482b-8181-d597c5b1e4f8.png";
+    }
+    if (nameLower.includes("industrial switch") || nameLower.includes("switches")) {
+      return "https://i.ibb.co/VcfCdtbm/b4b235b8-c243-4648-b78a-5a0478efbf7b.png";
+    }
+    if (nameLower.includes("ex-junction") || nameLower.includes("ex junction")) {
+      return "https://i.ibb.co/JWJTZdSP/ecc6b079-c461-4e04-b892-d631c5738104.png";
+    }
+    if (nameLower.includes("junction box") || nameLower.includes("junction")) {
+      return "https://i.ibb.co/r214v3JL/8135701e-7b47-405f-8b76-b9100682d08f.png";
+    }
+    if (nameLower.includes("network video recorder") || nameLower.includes("nvr") || nameLower.includes("video recorder")) {
+      return "https://i.ibb.co/7x0XRr2W/e495f939-07ad-4c54-b6d8-030f8b402ed2.png";
+    }
+    if (nameLower.includes("workstation") || nameLower.includes("electrical workstation")) {
+      return "https://i.ibb.co/Wv3mvcwJ/92ed04b9-7e1d-420c-b8dc-df823d1714d0.png";
+    }
+    if (nameLower.includes("ups") || nameLower.includes("pdu")) {
+      return "https://i.ibb.co/JjHTkGsy/a3b4fd1f-6e2e-4ead-8a66-ec40b38c394d.png";
+    }
+    if (nameLower.includes("hybrid composite cable") || nameLower.includes("composite cable") || nameLower.includes("cable")) {
+      return "https://i.ibb.co/MkBtMcPs/a005c529-3a5b-4991-87c4-745771639f77.png";
+    }
+    if (nameLower.includes("accessories") || nameLower.includes("accessory")) {
+      return "https://i.ibb.co/hFXkmDFx/eb22a405-3095-4326-844a-8a9ee0fb6755.png";
+    }
+    if (nameLower.includes("solar")) {
+      return "https://i.ibb.co/1tFC3Fjw/4591b573-eac4-4b2e-9a87-32d07983da97.png";
+    }
+    if (nameLower.includes("batter") || nameLower.includes("lifepo4") || nameLower.includes("lithium")) {
+      return "https://i.ibb.co/nqLVdz8d/8f420e7d-8bb9-45bd-88c3-de7409bfe263.png";
+    }
+    if (nameLower.includes("inverter")) {
+      return "https://i.ibb.co/21Lvqfg4/ecae048a-cb0a-42b3-bc29-b4e5661a55c7.png";
+    }
+    if (nameLower.includes("small enclosure")) {
+      return "https://i.ibb.co/35Z0zXtb/3f7f377f-225e-44e1-a983-b270b407e463.png";
+    }
+    if (nameLower.includes("it enclosure")) {
+      return "https://i.ibb.co/Z1gtcLZQ/8cf842a6-1807-4133-a814-ced1723ac559.png";
+    }
+    if (nameLower.includes("wall-mounted enclosure") || nameLower.includes("wall mounted enclosure")) {
+      return "https://i.ibb.co/0RzNt8wp/722a9d7f-d3aa-449e-a0ab-12518197a1cd.png";
+    }
+    if (nameLower.includes("server rack") || nameLower.includes("rack")) {
+      return "https://i.ibb.co/wNdKL1sS/49173788-d399-4094-8378-8a0a6d922f50.png";
+    }
+    if (nameLower.includes("paga")) {
+      return "https://i.ibb.co/6c7k2f9G/9a8e5675-9b26-43aa-9d1d-9d3481c89053.png";
+    }
+    if (nameLower.includes("ex-cctv") || nameLower.includes("ex cctv")) {
+      return "https://i.ibb.co/hR7zLJvd/c6e20e34-d826-4963-890f-91a0a29437da.png";
+    }
+    return "https://i.ibb.co/gMGdhQfd/Exploration-for-oil-and-gas-is-very-expensive-and-risky.jpg";
+  };
+
   return (
     <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] py-10 space-y-8" id="category-page">
       {/* Back button & SEO title section */}
@@ -245,25 +328,34 @@ export default function CategoryPage({
         </div>
       </div>
 
-      {/* Category Banner with rich, search-engine indexing copy */}
-      <div className="bg-gradient-to-br from-gray-950 to-slate-900 text-white rounded-2xl p-6 sm:p-10 relative overflow-hidden shadow-xl border border-gray-800">
-        <div className="max-w-2xl relative z-10 space-y-3">
-          <span className="text-[10px] sm:text-xs text-[#FF7A20] uppercase font-mono tracking-widest bg-orange-950/40 border border-orange-800/40 px-2.5 py-1 rounded-md inline-block font-extrabold">
-            Industrial Systems Catalog
-          </span>
-          <h1 className="text-2xl sm:text-4xl font-extrabold uppercase tracking-tight text-white leading-none">
-            {subcategoryName} Page
-          </h1>
-          <p className="text-xs sm:text-sm text-gray-300 leading-relaxed max-w-xl">
-            Welcome to the official, dedicated distribution showcase for certified high-performance{" "}
-            <span className="font-semibold text-white">{subcategoryName}</span> hardware systems. 
-            All models are fully compliant with stringent IECEx, ATEX, and global industrial reliability standardizations. 
-            Engineered specifically to endure salt-mist corrosion, extreme pressure, and tropical climates.
-          </p>
-        </div>
+      {/* Category Banner with rich background image hero section */}
+      {(() => {
+        const heroBg = getHeroBgImage(subcategoryName);
+        return (
+          <div
+            className="relative rounded-2xl p-6 sm:p-10 lg:p-12 overflow-hidden shadow-xl border border-gray-800 bg-gray-950 bg-cover bg-center bg-no-repeat min-h-[220px] sm:min-h-[260px] flex items-center"
+            style={{ backgroundImage: `url('${heroBg}')` }}
+          >
+            {/* Gradient overlay for contrast & legibility */}
+            <div className="absolute inset-0 bg-gradient-to-r from-gray-950 via-gray-950/85 to-gray-950/40 z-0"></div>
 
-        <div className="absolute right-0 bottom-0 top-0 w-1/3 opacity-5 hidden lg:block bg-cover bg-center" style={{ backgroundImage: `url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=600&auto=format&fit=crop')` }}></div>
-      </div>
+            <div className="max-w-2xl relative z-10 space-y-3">
+              <span className="text-[10px] sm:text-xs text-[#FF7A20] uppercase font-mono tracking-widest bg-orange-950/70 border border-orange-800/70 px-3 py-1 rounded-md inline-block font-extrabold backdrop-blur-sm">
+                Industrial Systems Catalog
+              </span>
+              <h1 className="text-2xl sm:text-4xl font-extrabold uppercase tracking-tight text-white leading-none drop-shadow-md">
+                {subcategoryName} Page
+              </h1>
+              <p className="text-xs sm:text-sm text-gray-200 leading-relaxed max-w-xl drop-shadow">
+                Welcome to the official, dedicated distribution showcase for certified high-performance{" "}
+                <span className="font-semibold text-white">{subcategoryName}</span> hardware systems. 
+                All models are fully compliant with stringent IECEx, ATEX, and global industrial reliability standardizations. 
+                Engineered specifically to endure salt-mist corrosion, extreme pressure, and tropical climates.
+              </p>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* Local search filter pane */}
       <div className="flex flex-col sm:flex-row gap-4 bg-white border border-gray-100 p-4 rounded-xl items-center justify-between">
