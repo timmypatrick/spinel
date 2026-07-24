@@ -50,8 +50,7 @@ const STORE_DIVISIONS = [
   {
     category: "Ex-Proof Equipments",
     subcategories: [
-      "EX-Telephone",
-      "Ex-Sounder",
+      "PAGA System",
       "Ex-CCTV Camera",
       "EX-Junction Box"
     ]
@@ -64,6 +63,36 @@ const matchProduct = (p: Product, subName: string) => {
   const catLower = p.category ? p.category.toLowerCase() : "";
   const subcatLower = p.subcategory ? p.subcategory.toLowerCase() : "";
   const prodNameLower = p.name ? p.name.toLowerCase() : "";
+
+  if (p.sku && p.sku.startsWith("PS-YA-HA-")) {
+    return (
+      nameLower === "paga system" ||
+      nameLower === "paga" ||
+      nameLower === "paga-system" ||
+      nameLower === "ex-proof equipments" ||
+      nameLower === "ex-proof equipment"
+    );
+  }
+
+  if (p.sku && p.sku.startsWith("EC-YA-HA-")) {
+    return (
+      nameLower.includes("ex-cctv") ||
+      nameLower === "ex-cctv camera" ||
+      nameLower === "ex-cctv-camera" ||
+      nameLower === "ex-proof equipments" ||
+      nameLower === "ex-proof equipment"
+    );
+  }
+
+  if (
+    nameLower.includes("ex-cctv") ||
+    nameLower === "ex-cctv camera" ||
+    nameLower === "ex-cctv-camera"
+  ) {
+    if (p.sku && p.sku.startsWith("EC-YA-HA-")) return true;
+    if (subcatLower.includes("ex-cctv") || catLower.includes("ex-cctv")) return true;
+    return subcatLower === "ex-cctv camera" || catLower === "ex-cctv camera";
+  }
 
   if (
     nameLower === "industrial solar panels" ||
@@ -174,14 +203,19 @@ const matchProduct = (p: Product, subName: string) => {
   if (nameLower === "wall-mounted enclosures" && (subcatLower.includes("wall") || subcatLower.includes("wall") || prodNameLower.includes("cabinet"))) return true;
   if (nameLower === "server racks" && (subcatLower.includes("rack") || subcatLower.includes("rack") || prodNameLower.includes("cabinet"))) return true;
 
-  if (nameLower === "ex-sounder" && (subcatLower.includes("sounder") || subcatLower.includes("sounder") || prodNameLower.includes("horn"))) return true;
+  if (
+    nameLower === "paga" ||
+    nameLower === "paga system"
+  ) {
+    if (p.sku && p.sku.startsWith("PS-YA-HA-")) return true;
+    if (subcatLower.includes("paga") || catLower.includes("paga") || prodNameLower.includes("paga")) return true;
+    return subcatLower === "paga" || catLower === "paga" || subcatLower === "paga system";
+  }
 
   // Completely removed / disabled pages
-  if (nameLower === "ex-telephone") return false;
+  if (nameLower === "ex-telephone" || nameLower === "ex-telephones") return false;
   if (nameLower === "small enclosures") return false;
-  if (nameLower === "ex-cctv camera") return false;
   if (nameLower === "ex-junction box") return false;
-  if (nameLower === "paga system") return false;
 
   return false;
 };

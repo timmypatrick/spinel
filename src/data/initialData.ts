@@ -27,7 +27,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     name: "Hazardous Area Communication",
     slug: "hazardous-communication",
     iconName: "PhoneCall",
-    subcategories: ["Explosion Proof Telephone", "Explosion Proof IP Phone", "Explosion Proof Mobile Phone", "Explosion Proof Sounder"]
+    subcategories: ["PAGA System", "PAGA Controllers", "PAGA Speakers & Accessories", "Ex-CCTV Camera"]
   },
   {
     id: "electrical-systems",

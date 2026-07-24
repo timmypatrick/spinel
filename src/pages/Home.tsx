@@ -163,7 +163,7 @@ export default function Home({
     { id: "electronic-security", title: "Electronic Security", icon: Shield, desc: "ATEX Certified CCTV, PTZs, Thermal Scanners, and biometric entry matrices." },
     { id: "renewable-energy", title: "Renewable Energy", icon: Sun, desc: "Stackable LiFePO4 battery modules, dual MPPT hybrid inverters, solar panels." },
     { id: "racks-enclosures", title: "Server Racks & Cabinets", icon: Server, desc: "IP66 outdoor server racks, dynamic cooling server enclosures, vertical PDUs." },
-    { id: "hazardous-communication", title: "ATEX Ex Comms", icon: Network, desc: "Intrinsically safe VoIP telephones, flameproof horn sounders, Zone 1 mobiles." }
+    { id: "hazardous-communication", title: "ATEX Ex Comms", icon: Network, desc: "PAGA Public Address & General Alarm systems, Ex-CCTV, and hazardous area communication solutions." }
   ];
 
   const industries = [

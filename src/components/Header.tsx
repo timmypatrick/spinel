@@ -312,8 +312,7 @@ export default function Header({
                     <span>Ex-Proof Equipments</span>
                   </div>
                   <ul className="space-y-2 text-sm text-gray-600">
-                    <li><button onClick={() => { handleNavigate("category-EX-Telephone"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">EX-Telephone</button></li>
-                    <li><button onClick={() => { handleNavigate("category-Ex-Sounder"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Ex-Sounder</button></li>
+                    <li><button onClick={() => { handleNavigate("category-PAGA System"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">PAGA System</button></li>
                     <li><button onClick={() => { handleNavigate("category-Ex-CCTV Camera"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">Ex-CCTV Camera</button></li>
                     <li><button onClick={() => { handleNavigate("category-EX-Junction Box"); setIsProductsMenuOpen(false); }} className="hover:text-[#FF7A20] py-1 block text-left w-full cursor-pointer">EX-Junction Box</button></li>
                   </ul>
@@ -578,8 +577,7 @@ export default function Header({
                     </button>
                     {activeMobileSubcategory === "exproof" && (
                       <div className="pl-5 py-1 space-y-1.5 flex flex-col text-[11px] text-gray-500">
-                        <button onClick={() => { handleNavigate("category-EX-Telephone"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">EX-Telephone</button>
-                        <button onClick={() => { handleNavigate("category-Ex-Sounder"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Ex-Sounder</button>
+                        <button onClick={() => { handleNavigate("category-PAGA System"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">PAGA System</button>
                         <button onClick={() => { handleNavigate("category-Ex-CCTV Camera"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">Ex-CCTV Camera</button>
                         <button onClick={() => { handleNavigate("category-EX-Junction Box"); setIsMobileMenuOpen(false); }} className="text-left py-1 hover:text-[#FF7A20]">EX-Junction Box</button>
                       </div>

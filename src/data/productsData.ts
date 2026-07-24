@@ -19810,6 +19810,360 @@ export const SERVER_RACKS_PRODUCTS: Product[] = [
   }
 ];
 
+export const EX_CCTV_CAMERA_PRODUCTS: Product[] = [
+  {
+    id: "ex-cctv-01",
+    sku: "EC-YA-HA-101",
+    name: "ExSite Pro Bullet",
+    slug: "exsite-pro-bullet-ec-ya-ha-101",
+    brand: "Pelco",
+    category: "Ex-Proof Equipments",
+    subcategory: "Ex-CCTV Camera",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "ExSite Pro Bullet. Explosion-proof and dust-ignition-proof. Rugged for tough conditions. Built-in IR to see in darkness. Rated from -40° to 65°C (-40° to 149°F). Robust built-in cybersecurity features. Flexible mounting options for easy install",
+    images: ["https://i.ibb.co/1Ywh43dR/3067e8d9-957d-4338-97a4-d1bd5034e890.png"],
+    specifications: [
+      { label: "SKU", value: "EC-YA-HA-101" },
+      { label: "Brand", value: "Pelco" },
+      { label: "Category", value: "Ex-Proof Equipments" },
+      { label: "Subcategory", value: "Ex-CCTV Camera" }
+    ],
+    stock: 805,
+    oem: "Pelco",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "EC-YA-HA-101 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "ex-cctv-02",
+    sku: "EC-YA-HA-102",
+    name: "ExSite Enhanced 2 Series PTZ",
+    slug: "exsite-enhanced-2-series-ptz-ec-ya-ha-102",
+    brand: "Pelco",
+    category: "Ex-Proof Equipments",
+    subcategory: "Ex-CCTV Camera",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "ExSite Enhanced 2 Series PTZ. Explosion-proof and dust-ignition-proof. Heavy-duty stainless steel housing. Long-range zoom. Rated from -40° to 70°C (-40° to 158°F). High-quality imaging. Various accessories for easy installation",
+    images: ["https://i.ibb.co/Y76LnzYd/908e1246-d2a3-40ae-9fa7-848b7a18db9e.png"],
+    specifications: [
+      { label: "SKU", value: "EC-YA-HA-102" },
+      { label: "Brand", value: "Pelco" },
+      { label: "Category", value: "Ex-Proof Equipments" },
+      { label: "Subcategory", value: "Ex-CCTV Camera" }
+    ],
+    stock: 283,
+    oem: "Pelco",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "EC-YA-HA-102 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "ex-cctv-03",
+    sku: "EC-YA-HA-103",
+    name: "ExSite Pro IR PTZ",
+    slug: "exsite-pro-ir-ptz-ec-ya-ha-103",
+    brand: "Pelco",
+    category: "Ex-Proof Equipments",
+    subcategory: "Ex-CCTV Camera",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "ExSite Pro IR PTZ. Explosion-proof and dust-ignition-proof. Cost-saving with aluminum housing. Long-range built-in infrared illuminator. Large area coverage with smooth PTZ. Easy installation with various accessories. Rated from -40° to 60°C (-40° to 140°F)",
+    images: ["https://i.ibb.co/gM0mzpRY/1d4b95b1-9dae-4314-a4ee-981663599802.png"],
+    specifications: [
+      { label: "SKU", value: "EC-YA-HA-103" },
+      { label: "Brand", value: "Pelco" },
+      { label: "Category", value: "Ex-Proof Equipments" },
+      { label: "Subcategory", value: "Ex-CCTV Camera" }
+    ],
+    stock: 109,
+    oem: "Pelco",
+    productType: "Enterprise",
+    featured: false,
+    popular: true,
+    downloads: [
+      { title: "EC-YA-HA-103 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "ex-cctv-04",
+    sku: "EC-YA-HA-104",
+    name: "ExSite Enhanced Thermal 2 Series Fixed",
+    slug: "exsite-enhanced-thermal-2-series-fixed-ec-ya-ha-104",
+    brand: "Pelco",
+    category: "Ex-Proof Equipments",
+    subcategory: "Ex-CCTV Camera",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "ExSite Enhanced Thermal 2 Series Fixed. Explosion-proof and dust-ignition-proof. Heavy-duty stainless steel housing. Wide and long-range thermal views. Radiometrics available on select models. Rated from -50° to 65°C (-58° to 149°F). Flexible mounting options for easy install",
+    images: ["https://i.ibb.co/4gw7sr9m/8fc00249-2a4c-45f6-bebf-1baa7dce2fda.png"],
+    specifications: [
+      { label: "SKU", value: "EC-YA-HA-104" },
+      { label: "Brand", value: "Pelco" },
+      { label: "Category", value: "Ex-Proof Equipments" },
+      { label: "Subcategory", value: "Ex-CCTV Camera" }
+    ],
+    stock: 585,
+    oem: "Pelco",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "EC-YA-HA-104 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "ex-cctv-05",
+    sku: "EC-YA-HA-105",
+    name: "ExSite Enhanced 2 Series Fixed",
+    slug: "exsite-enhanced-2-series-fixed-ec-ya-ha-105",
+    brand: "Pelco",
+    category: "Ex-Proof Equipments",
+    subcategory: "Ex-CCTV Camera",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "ExSite Enhanced 2 Series Fixed. Explosion-proof and dust-ignition-proof. Heavy-duty stainless steel housing. Rated from -50° to 65°C (-58° to 149°F). Wiper and sun shield for extra protection. Electronic Image Stabilization. Flexible mounting options for easy install",
+    images: ["https://i.ibb.co/XkLDMCyN/e2baadb1-07c3-48cd-8325-af124b075c9c.png"],
+    specifications: [
+      { label: "SKU", value: "EC-YA-HA-105" },
+      { label: "Brand", value: "Pelco" },
+      { label: "Category", value: "Ex-Proof Equipments" },
+      { label: "Subcategory", value: "Ex-CCTV Camera" }
+    ],
+    stock: 994,
+    oem: "Pelco",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "EC-YA-HA-105 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "ex-cctv-06",
+    sku: "EC-YA-HA-106",
+    name: "ExSite Enhanced IR 2 Series PTZ",
+    slug: "exsite-enhanced-ir-2-series-ptz-ec-ya-ha-106",
+    brand: "Pelco",
+    category: "Ex-Proof Equipments",
+    subcategory: "Ex-CCTV Camera",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "ExSite Enhanced IR 2 Series PTZ. Explosion-proof and dust-ignition-proof. Heavy-duty stainless steel housing. Long-range varifocal IR illumination. Rated from -40° to 70°C (-40° to 158°F). Electronic Image Stabilization. Easy to install with multiple accessories",
+    images: ["https://i.ibb.co/s9XDdYrM/9f2af2bc-19ec-4f1c-97e4-88ddd79b8ab7.png"],
+    specifications: [
+      { label: "SKU", value: "EC-YA-HA-106" },
+      { label: "Brand", value: "Pelco" },
+      { label: "Category", value: "Ex-Proof Equipments" },
+      { label: "Subcategory", value: "Ex-CCTV Camera" }
+    ],
+    stock: 259,
+    oem: "Pelco",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "EC-YA-HA-106 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  }
+];
+
+export const PAGA_SYSTEM_PRODUCTS: Product[] = [
+  {
+    id: "paga-system-01",
+    sku: "PS-YA-HA-101",
+    name: "ExResistTel Explosion Proof Telephone IP4",
+    slug: "exresisttel-explosion-proof-telephone-ip4-ps-ya-ha-101",
+    brand: "FHF",
+    category: "Ex-Proof Equipments",
+    subcategory: "PAGA System",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "ExResistTel IP4 is suitable for all indoor and outdoor installations. This device is ideal for every weather condition and numerous operation sites, including exposure to seawater, high humidity or extensive mechanical strain. The ExResistTel range comprises our most high-performance and rugged models for the most demanding environments.",
+    images: ["https://i.ibb.co/vx7FXPmp/f9669fef-1d28-4ba8-89e7-516f01bb2c5b.png"],
+    specifications: [
+      { label: "SKU", value: "PS-YA-HA-101" },
+      { label: "Brand", value: "FHF" },
+      { label: "Category", value: "Ex-Proof Equipments" },
+      { label: "Subcategory", value: "PAGA System" }
+    ],
+    stock: 105,
+    oem: "FHF",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "PS-YA-HA-101 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "paga-system-02",
+    sku: "PS-YA-HA-102",
+    name: "FernTel IP Z2 Explosionproof Telephone IP",
+    slug: "ferntel-ip-z2-explosionproof-telephone-ip-ps-ya-ha-102",
+    brand: "FHF",
+    category: "Ex-Proof Equipments",
+    subcategory: "PAGA System",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "FHF FernTel IP Z2 is an IP desk/wall telephone for applications in potentially explosive areas in Zone 2 and 22. The FernTel IP Z2 is manufactured from Polycarbonate an impact-resistant thermoplastic which is certified according to ATEX. The housing prevents corrosion and provides longevity minimising the overall maintenance costs.",
+    images: ["https://i.ibb.co/RT6kr8S4/60f7bec3-c7f5-4e00-aa4e-5b1358894f82.png"],
+    specifications: [
+      { label: "SKU", value: "PS-YA-HA-102" },
+      { label: "Brand", value: "FHF" },
+      { label: "Category", value: "Ex-Proof Equipments" },
+      { label: "Subcategory", value: "PAGA System" }
+    ],
+    stock: 183,
+    oem: "FHF",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "PS-YA-HA-102 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "paga-system-03",
+    sku: "PS-YA-HA-103",
+    name: "ResistTel Weatherproof Telephone IP4",
+    slug: "resisttel-weatherproof-telephone-ip4-ps-ya-ha-103",
+    brand: "FHF",
+    category: "Ex-Proof Equipments",
+    subcategory: "PAGA System",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "FHF ResistTel IP4 is a weatherproof VoIP telephone suitable for indoor and outdoor use for rough environmental conditions with the highest degree of safety in industrial areas. Our telephone is resistant to seawater as well as alkali, acids and lubricants. The ResistTel range comprises our most high-performance and rugged models for the most demanding environments.",
+    images: ["https://i.ibb.co/RpbNvMRT/1139ea96-d406-46d6-a0f9-a0ea772a25a0.png"],
+    specifications: [
+      { label: "SKU", value: "PS-YA-HA-103" },
+      { label: "Brand", value: "FHF" },
+      { label: "Category", value: "Ex-Proof Equipments" },
+      { label: "Subcategory", value: "PAGA System" }
+    ],
+    stock: 209,
+    oem: "FHF",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "PS-YA-HA-103 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "paga-system-04",
+    sku: "PS-YA-HA-104",
+    name: "MEDC CU1 Combination Sounder Beacon Range",
+    slug: "medc-cu1-combination-sounder-beacon-range-ps-ya-ha-104",
+    brand: "MEDC",
+    category: "Ex-Proof Equipments",
+    subcategory: "PAGA System",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "Spinel Crouse-Hinds series MEDC CU1 combination sounder/beacon range is engineered for hazardous and potentially explosive atmospheres. Designed for oil, gas, and petrochemical industries, it is suitable for marine, onshore, and offshore environments. The CU1 delivers a powerful sound output of up to 116dB(A) and beacon tube energy of up to 10 joules, ensuring clear audible and visual warnings in critical conditions.",
+    images: ["https://i.ibb.co/hJYHT7xN/4752181e-d34a-4a2b-9071-51fb8fa3f426.png"],
+    specifications: [
+      { label: "SKU", value: "PS-YA-HA-104" },
+      { label: "Brand", value: "MEDC" },
+      { label: "Category", value: "Ex-Proof Equipments" },
+      { label: "Subcategory", value: "PAGA System" }
+    ],
+    stock: 185,
+    oem: "Eaton MEDC",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "PS-YA-HA-104 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "paga-system-05",
+    sku: "PS-YA-HA-105",
+    name: "MEDC DB1 Metallic Sounder Range",
+    slug: "medc-db1-metallic-sounder-range-ps-ya-ha-105",
+    brand: "MEDC",
+    category: "Ex-Proof Equipments",
+    subcategory: "PAGA System",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "Spinel's Crouse-Hinds series MEDC DB1 range of lightweight, flame-proof sounders is designed for use in potentially explosive atmospheres and has been designed with a high weatherproof rating to cope with the harsh environmental conditions found offshore and onshore in the oil, gas and petrochemical industries. The DB1P and DB1HP can be switched between two selectable tones by either reversing the supply polarity, or connecting a second voltage supply. The higher output DB1H and DB1HP are particularly suitable for noisy environments.",
+    images: ["https://i.ibb.co/WvxnQsC0/11a18456-b882-41b2-b339-9d1aedaf8465.png"],
+    specifications: [
+      { label: "SKU", value: "PS-YA-HA-105" },
+      { label: "Brand", value: "MEDC" },
+      { label: "Category", value: "Ex-Proof Equipments" },
+      { label: "Subcategory", value: "PAGA System" }
+    ],
+    stock: 194,
+    oem: "Eaton MEDC",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "PS-YA-HA-105 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "paga-system-06",
+    sku: "PS-YA-HA-106",
+    name: "MEDC DB3B Explosion Proof Sounder Range",
+    slug: "medc-db3b-explosion-proof-sounder-range-ps-ya-ha-106",
+    brand: "MEDC",
+    category: "Ex-Proof Equipments",
+    subcategory: "PAGA System",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "Crouse-Hinds series MEDC DB3B is a high-power explosion proof sounder which is provided with versatile control options allowing compatibility with a wide range of control methods and PLCs. Certified for use from -55°C to +85°C, the DB3B can withstand the harshest conditions. With an Ex enclosure manufactured from GRP and a rugged thermoplastic flare, it is lightweight and corrosion-resistant without compromising on durability.",
+    images: ["https://i.ibb.co/d4zNW4z0/49017f6b-f3a7-43c5-ac57-d062f5ada936.png"],
+    specifications: [
+      { label: "SKU", value: "PS-YA-HA-106" },
+      { label: "Brand", value: "MEDC" },
+      { label: "Category", value: "Ex-Proof Equipments" },
+      { label: "Subcategory", value: "PAGA System" }
+    ],
+    stock: 159,
+    oem: "Eaton MEDC",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "PS-YA-HA-106 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  }
+];
+
 export const ACCESSORIES_PRODUCTS: Product[] = [
   ...mappedAccessories,
   ...PTZ_CAMERA_PRODUCTS,
@@ -19830,6 +20184,8 @@ export const ACCESSORIES_PRODUCTS: Product[] = [
   ...SMALL_ENCLOSURES_PRODUCTS,
   ...IT_ENCLOSURES_PRODUCTS,
   ...WALL_MOUNTED_ENCLOSURES_PRODUCTS,
-  ...SERVER_RACKS_PRODUCTS
+  ...SERVER_RACKS_PRODUCTS,
+  ...EX_CCTV_CAMERA_PRODUCTS,
+  ...PAGA_SYSTEM_PRODUCTS
 ];
 

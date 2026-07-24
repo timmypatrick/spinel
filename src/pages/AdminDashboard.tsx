@@ -37,8 +37,6 @@ const CATEGORY_SECTIONS = [
   "IT Enclosures",
   "Wall-Mounted Enclosures",
   "Server Racks",
-  "EX-Telephone",
-  "Ex-Sounder",
   "Ex-CCTV Camera",
   "EX-Junction Box"
 ];
@@ -435,6 +433,36 @@ export default function AdminDashboard({
     const subcatLower = p.subcategory ? p.subcategory.toLowerCase() : "";
     const prodNameLower = p.name ? p.name.toLowerCase() : "";
 
+    if (p.sku && p.sku.startsWith("PS-YA-HA-")) {
+      return (
+        nameLower === "paga system" ||
+        nameLower === "paga" ||
+        nameLower === "paga-system" ||
+        nameLower === "ex-proof equipments" ||
+        nameLower === "ex-proof equipment"
+      );
+    }
+
+    if (p.sku && p.sku.startsWith("EC-YA-HA-")) {
+      return (
+        nameLower.includes("ex-cctv") ||
+        nameLower === "ex-cctv camera" ||
+        nameLower === "ex-cctv-camera" ||
+        nameLower === "ex-proof equipments" ||
+        nameLower === "ex-proof equipment"
+      );
+    }
+
+    if (
+      nameLower.includes("ex-cctv") ||
+      nameLower === "ex-cctv camera" ||
+      nameLower === "ex-cctv-camera"
+    ) {
+      if (p.sku && p.sku.startsWith("EC-YA-HA-")) return true;
+      if (subcatLower.includes("ex-cctv") || catLower.includes("ex-cctv")) return true;
+      return subcatLower === "ex-cctv camera" || catLower === "ex-cctv camera";
+    }
+
     // Direct exact match
     if (catLower === nameLower || subcatLower === nameLower) return true;
 
@@ -464,7 +492,7 @@ export default function AdminDashboard({
     if (nameLower === "network video recorders" && (subcatLower.includes("recorder") || prodNameLower.includes("recorder") || prodNameLower.includes("nvr"))) return true;
     if (nameLower === "electrical workstation" && (subcatLower.includes("workstation") || prodNameLower.includes("workstation"))) return true;
     if (nameLower === "ups & pdu" && (subcatLower.includes("ups") || subcatLower.includes("pdu") || prodNameLower.includes("ups") || prodNameLower.includes("pdu"))) return true;
-    if (nameLower === "paga system" && (subcatLower.includes("paga") || prodNameLower.includes("paga"))) return true;
+    if ((nameLower === "paga system" || nameLower === "paga" || nameLower === "ex-sounder") && (subcatLower.includes("paga") || prodNameLower.includes("paga") || subcatLower.includes("sounder") || prodNameLower.includes("horn"))) return true;
     if (nameLower === "hybrid composite cable" && (subcatLower.includes("cable") || prodNameLower.includes("cable"))) return true;
 
 
@@ -477,13 +505,10 @@ export default function AdminDashboard({
     if (nameLower === "server racks" && (subcatLower.includes("rack") || prodNameLower.includes("rack") || prodNameLower.includes("cabinet"))) return true;
 
 
-    if (nameLower === "ex-sounder" && (subcatLower.includes("sounder") || subcatLower.includes("sounder") || prodNameLower.includes("horn"))) return true;
-
     // Completely removed / disabled pages
     if (nameLower === "industrial solar panels") return false;
     if (nameLower === "ex-telephone") return false;
     if (nameLower === "small enclosures") return false;
-    if (nameLower === "ex-cctv camera") return false;
     if (nameLower === "ex-junction box") return false;
 
     return false;

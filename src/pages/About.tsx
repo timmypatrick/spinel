@@ -76,7 +76,7 @@ export default function About({ setCurrentView }: AboutProps) {
     vision: [
       { title: "Gateway to Innovative ICT & Security Infrastructures", desc: "Connecting businesses across Africa with world-class ICT infrastructure, electronic security systems, industrial networking and engineering equipment from globally trusted OEM partners." },
       { title: "Renewable Energy & Sustainable Power Solutions", desc: "Delivering high-performance solar power systems, hybrid energy solutions, batteries, and power management technologies that enable secure, efficient, and environmentally responsible operations." },
-      { title: "Explosion-Protected & Industrial Safety Distribution", desc: "Supplying certified explosion-proof telephones, IP phones, junction boxes, sounders, surveillance systems, and hazardous-area communication equipment for the oil and gas, marine, petrochemical, and industrial sectors." }
+      { title: "Explosion-Protected & Industrial Safety Distribution", desc: "Supplying certified PAGA systems, junction boxes, Ex-CCTV surveillance systems, and hazardous-area communication equipment for the oil and gas, marine, petrochemical, and industrial sectors." }
     ],
     mission: [
       { title: "Reliable ICT Equipments", desc: "Ensuring 100% genuine products with full backing directly from certified international OEMs." },
@@ -246,7 +246,7 @@ export default function About({ setCurrentView }: AboutProps) {
       systems: [
         "Ex-d and Ex-e certified explosion-protected junctions boxes",
         "Intrinsically safe field communication intercom stations",
-        "Flameproof acoustic sounders and strobe warning arrays",
+        "PAGA Public Address and General Alarm systems",
         "ATEX-certified specialized handheld thermal diagnostic devices"
       ],
       specHighlight: "Fully certified by European ATEX, International IECEx, and local maritime regulators."
