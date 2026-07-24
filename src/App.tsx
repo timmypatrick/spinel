@@ -14,6 +14,9 @@ import About from "./pages/About";
 import ThankYou from "./pages/ThankYou";
 import AdminDashboard from "./pages/AdminDashboard";
 import CategoryPage from "./pages/CategoryPage";
+import SecuritySolutions from "./pages/SecuritySolutions";
+import TelecomSolutions from "./pages/TelecomSolutions";
+import MultimediaSolutions from "./pages/MultimediaSolutions";
 
 import { Product, CartItem, UserSession } from "./types";
 
@@ -237,6 +240,36 @@ export default function App() {
 
         {currentView === "about" && (
           <About setCurrentView={setCurrentView} />
+        )}
+
+        {currentView === "solution-security" && (
+          <SecuritySolutions
+            setCurrentView={setCurrentView}
+            setSelectedProductId={setSelectedProductId}
+            addToCart={handleAddToCart}
+            currency={currency}
+            onRequestQuote={handleRequestQuote}
+          />
+        )}
+
+        {currentView === "solution-telecom" && (
+          <TelecomSolutions
+            setCurrentView={setCurrentView}
+            setSelectedProductId={setSelectedProductId}
+            addToCart={handleAddToCart}
+            currency={currency}
+            onRequestQuote={handleRequestQuote}
+          />
+        )}
+
+        {currentView === "solution-multimedia" && (
+          <MultimediaSolutions
+            setCurrentView={setCurrentView}
+            setSelectedProductId={setSelectedProductId}
+            addToCart={handleAddToCart}
+            currency={currency}
+            onRequestQuote={handleRequestQuote}
+          />
         )}
 
         {currentView === "thank-you" && lastOrderDetails && (

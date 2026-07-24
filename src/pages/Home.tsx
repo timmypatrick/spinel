@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Shield, Sun, Server, Cpu, Network, ArrowRight, Zap, Award, Star, BookOpen, Clock, Globe, CheckCircle2, ShoppingCart } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Shield, Sun, Server, Cpu, Network, ArrowRight, Zap, Award, Star, BookOpen, Clock, Globe, CheckCircle2, ShoppingCart, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { Product, BlogArticle } from "../types";
 import { safeFetch } from "../lib/dataService";
 import { VortexParticlesCanvas } from "../components/VortexParticlesCanvas";
@@ -95,6 +95,23 @@ export default function Home({
 }: HomeProps) {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [shopMoreProducts, setShopMoreProducts] = useState<Product[]>([]);
+  const [newArrivals, setNewArrivals] = useState<Product[]>([]);
+  const newArrivalsRef = useRef<HTMLDivElement>(null);
+
+  const slideRight = () => {
+    if (newArrivalsRef.current) {
+      const scrollAmount = newArrivalsRef.current.clientWidth * 0.75;
+      newArrivalsRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
+  };
+
+  const slideLeft = () => {
+    if (newArrivalsRef.current) {
+      const scrollAmount = newArrivalsRef.current.clientWidth * 0.75;
+      newArrivalsRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+    }
+  };
+
   const [articles, setArticles] = useState<BlogArticle[]>([]);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -119,6 +136,11 @@ export default function Home({
       .then((res) => res.json())
       .then((data: Product[]) => {
         setFeaturedProducts(data.filter((p) => p.featured).slice(0, 3));
+        
+        // Random display of products for New Arrivals slider (18 items)
+        const shuffledArrivals = [...data].sort(() => Math.random() - 0.5).slice(0, 18);
+        setNewArrivals(shuffledArrivals);
+
         // Shuffle and take 50 products randomly
         const shuffled = [...data].sort(() => Math.random() - 0.5).slice(0, 50);
         setShopMoreProducts(shuffled);
@@ -311,6 +333,115 @@ export default function Home({
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* New Arrival Slider Section */}
+      <section className="bg-gradient-to-b from-gray-50/80 to-white py-16 border-y border-gray-100" id="new-arrivals">
+        <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] space-y-8">
+          {/* Section Header */}
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-gray-200 pb-5">
+            <div className="space-y-1.5">
+              <div className="inline-flex items-center space-x-1.5 bg-orange-100 border border-orange-200 rounded-full px-3 py-1 text-xs font-extrabold text-[#FF7A20] uppercase tracking-wider">
+                <Sparkles className="w-3.5 h-3.5 text-[#FF7A20]" />
+                <span>Featured Hardware</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-gray-900">
+                New Arrival
+              </h2>
+              <p className="text-gray-500 text-sm max-w-xl">
+                Explore a random selection of enterprise hardware from our store. Use the navigation buttons to slide through products manually.
+              </p>
+            </div>
+
+            {/* Slider Controls (Left & Right Buttons) */}
+            <div className="flex items-center space-x-3 shrink-0">
+              <button
+                onClick={slideLeft}
+                className="w-11 h-11 bg-white hover:bg-[#FF7A20] text-gray-700 hover:text-white border border-gray-200 hover:border-[#FF7A20] rounded-xl shadow-xs transition duration-200 flex items-center justify-center cursor-pointer group"
+                aria-label="Slide Left"
+                title="Previous Products"
+              >
+                <ChevronLeft className="w-5 h-5 transition-transform group-hover:-translate-x-0.5" />
+              </button>
+              <button
+                onClick={slideRight}
+                className="w-12 h-12 bg-[#FF7A20] hover:bg-orange-600 text-white rounded-xl shadow-md transition duration-200 flex items-center justify-center cursor-pointer group"
+                aria-label="Slide Right"
+                title="Next Products (Slide)"
+              >
+                <ChevronRight className="w-6 h-6 transition-transform group-hover:translate-x-0.5" />
+              </button>
+            </div>
+          </div>
+
+          {/* Slider Horizontal Track */}
+          <div
+            ref={newArrivalsRef}
+            className="flex space-x-6 overflow-x-auto scroll-smooth py-2 px-1 snap-x snap-mandatory"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            {newArrivals.map((p) => (
+              <div
+                key={p.id}
+                onClick={() => handleProductDetails(p.id)}
+                className="shrink-0 w-[230px] sm:w-[270px] md:w-[290px] bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-xl hover:border-[#FF7A20]/50 transition-all duration-300 transform flex flex-col justify-between cursor-pointer snap-start group"
+              >
+                <div>
+                  <div className="relative aspect-square bg-slate-50 flex items-center justify-center p-4 overflow-hidden border-b border-gray-100">
+                    <span className="absolute top-3 left-3 bg-[#FF7A20] text-white font-extrabold text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md z-10 shadow-xs">
+                      NEW
+                    </span>
+                    {p.brand && (
+                      <span className="absolute top-3 right-3 bg-gray-900/80 text-white font-bold text-[10px] px-2 py-0.5 rounded-md z-10 font-mono">
+                        {p.brand}
+                      </span>
+                    )}
+                    <img
+                      src={p.images[0]}
+                      alt={p.name}
+                      className="max-h-full max-w-full object-contain mx-auto group-hover:scale-108 transition-transform duration-300"
+                      referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        e.currentTarget.src = "https://i.ibb.co/5WPKmPXS/Avigilon-Generic-500x500-1.png";
+                      }}
+                    />
+                  </div>
+
+                  <div className="p-4 space-y-2">
+                    <div className="flex items-center justify-between text-[10px] font-mono text-gray-500">
+                      <span className="bg-gray-100 px-2 py-0.5 rounded font-semibold text-gray-700">{p.sku}</span>
+                      <span className="text-gray-400 truncate max-w-[110px]">{p.subcategory || p.category}</span>
+                    </div>
+
+                    <h3 className="font-bold text-sm text-gray-900 group-hover:text-[#FF7A20] transition-colors line-clamp-2 leading-snug min-h-[2.5rem]">
+                      {p.name}
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="p-4 border-t border-gray-100 bg-gray-50/50 flex justify-between items-center mt-auto">
+                  <div>
+                    <span className="text-[10px] text-gray-400 block font-sans">Price</span>
+                    <span className="font-extrabold text-[#FF7A20] text-sm sm:text-base">
+                      {p.priceUSD === 0 || p.isQuoteOnly ? "Quote Only" : (currency === "USD" ? `$${p.priceUSD.toLocaleString()}` : `₦${p.priceNGN.toLocaleString()}`)}
+                    </span>
+                  </div>
+
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      addToCart(p);
+                    }}
+                    className="bg-[#FF7A20] hover:bg-orange-600 text-white p-2.5 rounded-xl transition duration-200 shadow-sm flex items-center justify-center cursor-pointer"
+                    title="Add to Quote Cart"
+                  >
+                    <ShoppingCart className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

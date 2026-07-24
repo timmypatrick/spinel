@@ -334,21 +334,21 @@ export default function Header({
             {isSolutionsMenuOpen && (
               <div className="absolute top-10 left-0 w-88 bg-white border border-gray-100 rounded-xl shadow-2xl z-50 p-5 space-y-4" id="solutions-mega-menu">
                 <div
-                  onClick={() => { handleNavigate("about"); setIsSolutionsMenuOpen(false); }}
+                  onClick={() => { handleNavigate("solution-security"); setIsSolutionsMenuOpen(false); }}
                   className="p-3 hover:bg-orange-50 rounded-lg cursor-pointer transition"
                 >
                   <p className="text-base font-bold text-gray-900">Security Solutions</p>
                   <p className="text-sm text-gray-500 mt-0.5">CCTV, Access Control, Intrusion Detection, Fire Detection </p>
                 </div>
                 <div
-                  onClick={() => { handleNavigate("about"); setIsSolutionsMenuOpen(false); }}
+                  onClick={() => { handleNavigate("solution-telecom"); setIsSolutionsMenuOpen(false); }}
                   className="p-3 hover:bg-orange-50 rounded-lg cursor-pointer transition"
                 >
                   <p className="text-base font-bold text-gray-900">Telecommunication</p>
                   <p className="text-sm text-gray-500 mt-0.5">Wireless Solution, Microwave & Radio</p>
                 </div>
                 <div
-                  onClick={() => { handleNavigate("about"); setIsSolutionsMenuOpen(false); }}
+                  onClick={() => { handleNavigate("solution-multimedia"); setIsSolutionsMenuOpen(false); }}
                   className="p-3 hover:bg-orange-50 rounded-lg cursor-pointer transition"
                 >
                   <p className="text-base font-bold text-gray-900">Multimedia Solutions</p>
@@ -599,9 +599,9 @@ export default function Header({
               
               {isMobileSolutionsOpen && (
                 <div className="pl-3 mt-2 space-y-2 border-l-2 border-orange-100 animate-fade-in text-xs">
-                  <button onClick={() => { handleNavigate("about"); setIsMobileMenuOpen(false); }} className="text-left w-full py-1 text-gray-600 hover:text-[#FF7A20] block font-semibold">Security Solutions</button>
-                  <button onClick={() => { handleNavigate("about"); setIsMobileMenuOpen(false); }} className="text-left w-full py-1 text-gray-600 hover:text-[#FF7A20] block font-semibold">Telecommunication</button>
-                  <button onClick={() => { handleNavigate("about"); setIsMobileMenuOpen(false); }} className="text-left w-full py-1 text-gray-600 hover:text-[#FF7A20] block font-semibold">Multimedia Solutions</button>
+                  <button onClick={() => { handleNavigate("solution-security"); setIsMobileMenuOpen(false); }} className="text-left w-full py-1 text-gray-600 hover:text-[#FF7A20] block font-semibold">Security Solutions</button>
+                  <button onClick={() => { handleNavigate("solution-telecom"); setIsMobileMenuOpen(false); }} className="text-left w-full py-1 text-gray-600 hover:text-[#FF7A20] block font-semibold">Telecommunication</button>
+                  <button onClick={() => { handleNavigate("solution-multimedia"); setIsMobileMenuOpen(false); }} className="text-left w-full py-1 text-gray-600 hover:text-[#FF7A20] block font-semibold">Multimedia Solutions</button>
                 </div>
               )}
             </div>

@@ -134,10 +134,10 @@ export default function Footer({
         <div className="lg:col-span-2 space-y-4">
           <h4 className="text-white font-extrabold text-sm uppercase tracking-wider">Our Solutions</h4>
           <ul className="space-y-2 text-sm text-gray-400">
-            <li><button onClick={() => setCurrentView("about")} className="hover:text-white block py-0.5">Access Control</button></li>
-            <li><button onClick={() => setCurrentView("about")} className="hover:text-white block py-0.5">Intrusion Detection</button></li>
-            <li><button onClick={() => setCurrentView("about")} className="hover:text-white block py-0.5">Fire Detection</button></li>
-            <li><button onClick={() => setCurrentView("about")} className="hover:text-white block py-0.5">Telecommunication</button></li>
+            <li><button onClick={() => setCurrentView("solution-security")} className="hover:text-white block py-0.5 text-left">Security Solutions</button></li>
+            <li><button onClick={() => setCurrentView("solution-telecom")} className="hover:text-white block py-0.5 text-left">Telecommunication</button></li>
+            <li><button onClick={() => setCurrentView("solution-multimedia")} className="hover:text-white block py-0.5 text-left">Multimedia Solutions</button></li>
+            <li><button onClick={() => setCurrentView("request-quote")} className="hover:text-white block py-0.5 text-left">Custom Engineering</button></li>
           </ul>
         </div>
 
