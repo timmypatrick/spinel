@@ -18628,6 +18628,1188 @@ export const SMART_HYBRID_INVERTERS_PRODUCTS: Product[] = [
   }
 ];
 
+export const SMALL_ENCLOSURES_PRODUCTS: Product[] = [
+  {
+    id: "se-enclosure-01",
+    sku: "SE-YA-HA-101",
+    name: "Terminal box HD",
+    slug: "terminal-box-hd-se-ya-ha-101",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "Small Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "All-round gap-free silicone seal between enclosure and cover. Hygiene-compliant quick-release hexagon fastener",
+    images: ["https://i.ibb.co/X60H7q2/c3dba6a5-0fc2-41ff-8820-7017e699bf98.png"],
+    specifications: [
+      { label: "SKU", value: "SE-YA-HA-101" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "Small Enclosures" },
+      { label: "Features", value: "Hygiene-compliant quick-release hexagon fastener" }
+    ],
+    stock: 605,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SE-YA-HA-101 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "se-enclosure-02",
+    sku: "SE-YA-HA-102",
+    name: "Terminal box KX, sheet steel, with gland plate",
+    slug: "terminal-box-kx-sheet-steel-with-gland-plate-se-ya-ha-102",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "Small Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "The small enclosure KX, terminal box KX, with a gland plate allows for flexible interior installation and simple cable entry with optimum use of space.",
+    images: ["https://i.ibb.co/q31008mD/b0e60deb-8338-460d-a62b-9aa2c485d392.png"],
+    specifications: [
+      { label: "SKU", value: "SE-YA-HA-102" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "Small Enclosures" },
+      { label: "Material", value: "Sheet steel" }
+    ],
+    stock: 783,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SE-YA-HA-102 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "se-enclosure-03",
+    sku: "SE-YA-HA-103",
+    name: "Bus enclosures KX, sheet steel, with mini cam lock",
+    slug: "bus-enclosures-kx-sheet-steel-with-mini-cam-lock-se-ya-ha-103",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "Small Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "Wall-mounted enclosure made from sheet steel, with cover and viewing panel. Protection category IP 65/NEMA 12. For installing most brands of bus modules and sensors.",
+    images: ["https://i.ibb.co/s9yBThs1/be723d92-68d3-4d4c-ac4d-7d90ca1b2563.png"],
+    specifications: [
+      { label: "SKU", value: "SE-YA-HA-103" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "Small Enclosures" },
+      { label: "Protection Category", value: "IP 65 / NEMA 12" }
+    ],
+    stock: 409,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: false,
+    popular: true,
+    downloads: [
+      { title: "SE-YA-HA-103 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "se-enclosure-04",
+    sku: "SE-YA-HA-104",
+    name: "Terminal box KX, sheet steel, without gland plate",
+    slug: "terminal-box-kx-sheet-steel-without-gland-plate-se-ya-ha-104",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "Small Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "The small enclosure KX, terminal box KX, without a gland plate allows for flexible interior installation while maintaining a high protection category.",
+    images: ["https://i.ibb.co/fVGrP3zn/e701941d-7717-4617-95c2-fbd95bfa5d3f.png"],
+    specifications: [
+      { label: "SKU", value: "SE-YA-HA-104" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "Small Enclosures" },
+      { label: "Material", value: "Sheet steel" }
+    ],
+    stock: 885,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SE-YA-HA-104 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "se-enclosure-05",
+    sku: "SE-YA-HA-105",
+    name: "Terminal box KX Stainless steel",
+    slug: "terminal-box-kx-stainless-steel-se-ya-ha-105",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "Small Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "The stainless steel terminal box KX delivers maximum data quality and consistency of engineering while ensuring flexibility and reliability across a wide range of applications.",
+    images: ["https://i.ibb.co/V0TrQ65P/f6299221-6020-4636-8215-a96a45f9057e.png"],
+    specifications: [
+      { label: "SKU", value: "SE-YA-HA-105" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "Small Enclosures" },
+      { label: "Material", value: "Stainless Steel" }
+    ],
+    stock: 494,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SE-YA-HA-105 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "se-enclosure-06",
+    sku: "SE-YA-HA-106",
+    name: "Bus enclosures KX Stainless steel",
+    slug: "bus-enclosures-kx-stainless-steel-se-ya-ha-106",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "Small Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "The stainless steel bus enclosure KX offers excellent accessibility with 180° hinges as standard, plus a high protection category of IP 66.",
+    images: ["https://i.ibb.co/m5K5J2Pm/315925d7-41df-49ac-9d99-8889d51e7c48.png"],
+    specifications: [
+      { label: "SKU", value: "SE-YA-HA-106" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "Small Enclosures" },
+      { label: "Protection Category", value: "IP 66" }
+    ],
+    stock: 209,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: false,
+    popular: true,
+    downloads: [
+      { title: "SE-YA-HA-106 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "se-enclosure-07",
+    sku: "SE-YA-HA-107",
+    name: "E-Box KX, sheet steel",
+    slug: "e-box-kx-sheet-steel-se-ya-ha-107",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "Small Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "The small enclosure KX, E-Box KX (sheet steel), offers remarkable ease of assembly and flexibility when selecting lock systems.",
+    images: ["https://i.ibb.co/SwywQLLN/78ea388d-2b4d-46ef-b594-ee46d4d90f7c.png"],
+    specifications: [
+      { label: "SKU", value: "SE-YA-HA-107" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "Small Enclosures" },
+      { label: "Material", value: "Sheet Steel" }
+    ],
+    stock: 158,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SE-YA-HA-107 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "se-enclosure-08",
+    sku: "SE-YA-HA-108",
+    name: "E-Box KX Stainless steel",
+    slug: "e-box-kx-stainless-steel-se-ya-ha-108",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "Small Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "The stainless steel E-Box KX provides user-friendly assembly as well as flexibility when choosing your lock system. The 180° hinges supplied as standard provide excellent accessibility to the enclosure interior.",
+    images: ["https://i.ibb.co/k2Mn2mqr/fff52a14-10ae-4876-8e41-9c2dffa588c0.png"],
+    specifications: [
+      { label: "SKU", value: "SE-YA-HA-108" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "Small Enclosures" },
+      { label: "Material", value: "Stainless Steel" }
+    ],
+    stock: 681,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SE-YA-HA-108 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "se-enclosure-09",
+    sku: "SE-YA-HA-109",
+    name: "Polycarbonate enclosures PK with knockouts",
+    slug: "polycarbonate-enclosures-pk-with-knockouts-se-ya-ha-109",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "Small Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "Wall-mounted enclosure of fibreglass-reinforced polycarbonate. Protection category IP 66. Covers feature quick-release fasteners for speedy maintenance. Self-extinguishing material for safety.",
+    images: ["https://i.ibb.co/JjRrvT30/1483e277-030e-42c0-8cfc-5f20481b00ce.png"],
+    specifications: [
+      { label: "SKU", value: "SE-YA-HA-109" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "Small Enclosures" },
+      { label: "Protection Category", value: "IP 66 Polycarbonate" }
+    ],
+    stock: 362,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SE-YA-HA-109 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "se-enclosure-10",
+    sku: "SE-YA-HA-110",
+    name: "Bus enclosures KX, sheet steel, with double-bit insert",
+    slug: "bus-enclosures-kx-sheet-steel-with-double-bit-insert-se-ya-ha-110",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "Small Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "Wall-mounted enclosure made from sheet steel, with cover and viewing panel. Protection category IP 65/NEMA 12. For installing most brands of bus modules and sensors.",
+    images: ["https://i.ibb.co/sJCXj4nL/5dd0f73b-f980-4ef0-a928-8ae5054322af.png"],
+    specifications: [
+      { label: "SKU", value: "SE-YA-HA-110" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "Small Enclosures" },
+      { label: "Protection Category", value: "IP 65 / NEMA 12" }
+    ],
+    stock: 561,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SE-YA-HA-110 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  }
+];
+
+export const IT_ENCLOSURES_PRODUCTS: Product[] = [
+  {
+    id: "ie-enclosure-01",
+    sku: "IE-YA-HA-101",
+    name: 'Enclosures AX IT with 482.6 mm (19") mounting angles',
+    slug: "enclosures-ax-it-with-482-6-mm-19-mounting-angles-ie-ya-ha-101",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "IT Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: 'IT wall-mounted enclosure with high protection category, for use in industrial environments. With depth-variable 482.6 mm (19") mounting angle and gland plate with brush strip for cable entry in the enclosure base. Protection category up to IP 66 (depending on the selected gland pate).',
+    images: ["https://i.ibb.co/1tZ1VqPX/918720f6-c67b-441b-9349-628b155d36bf.png"],
+    specifications: [
+      { label: "SKU", value: "IE-YA-HA-101" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "IT Enclosures" }
+    ],
+    stock: 605,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "IE-YA-HA-101 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "ie-enclosure-02",
+    sku: "IE-YA-HA-102",
+    name: "FlatBox",
+    slug: "flatbox-ie-ya-ha-102",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "IT Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "Flat-packed enclosure. For optimum access and flexible use as a wall-mounted or floor-standing enclosure.",
+    images: ["https://i.ibb.co/6JcznWtj/e3d526f6-4c05-4ec0-99b7-ec2f382e7ca5.png"],
+    specifications: [
+      { label: "SKU", value: "IE-YA-HA-102" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "IT Enclosures" }
+    ],
+    stock: 783,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "IE-YA-HA-102 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "ie-enclosure-03",
+    sku: "IE-YA-HA-103",
+    name: "AX wall-mounted enclosure, 3-part",
+    slug: "ax-wall-mounted-enclosure-3-part-ie-ya-ha-103",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "IT Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "The delivery concept of the three-part AX wall-mounted enclosures reduces complexity and enhances flexibility. The AX/VX modular system makes these enclosures suitable for a range of applications. The three-part structure ensures easy access.",
+    images: ["https://i.ibb.co/hFM7bnT6/f531bb55-3509-499f-82a9-4e50adbfb180.png"],
+    specifications: [
+      { label: "SKU", value: "IE-YA-HA-103" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "IT Enclosures" }
+    ],
+    stock: 409,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: false,
+    popular: true,
+    downloads: [
+      { title: "IE-YA-HA-103 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "ie-enclosure-04",
+    sku: "IE-YA-HA-104",
+    name: "Wall-mounted enclosures EL, 3-part pre-configured",
+    slug: "wall-mounted-enclosures-el-3-part-pre-configured-ie-ya-ha-104",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "IT Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "Wall-mounted enclosure 3-part, pre-configured with: Solid gland plate, top, with brush strip at the bottom, mounting rails, C rails, outlet filter, earth rail, wall-mounting bracket",
+    images: ["https://i.ibb.co/xKVXzVG5/157a3fd1-4e64-4320-8903-8bafafcdebf8.png"],
+    specifications: [
+      { label: "SKU", value: "IE-YA-HA-104" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "IT Enclosures" }
+    ],
+    stock: 885,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "IE-YA-HA-104 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "ie-enclosure-05",
+    sku: "IE-YA-HA-105",
+    name: "Wall-mounted enclosure AX IT, Nano Data Center",
+    slug: "wall-mounted-enclosure-ax-it-nano-data-center-ie-ya-ha-105",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "IT Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "IT wall-mounted enclosure based on AX, designed for compact edge applications in industrial environments. The enclosure allows the IT infrastructure to be securely and efficiently integrated into the production zone, with flexible mounting options and integral cooling.",
+    images: ["https://i.ibb.co/XMGNpw5/96e0768d-2858-4574-a360-e5279ca65b78.png"],
+    specifications: [
+      { label: "SKU", value: "IE-YA-HA-105" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "IT Enclosures" }
+    ],
+    stock: 494,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "IE-YA-HA-105 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "ie-enclosure-06",
+    sku: "IE-YA-HA-106",
+    name: "AX wall-mounted enclosure, 3-part With Blue e+ outlet filter",
+    slug: "ax-wall-mounted-enclosure-3-part-with-blue-e-outlet-filter-ie-ya-ha-106",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "IT Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "The delivery concept behind the three-part AX wall-mounted enclosures reduces complexity and enhances flexibility. The AX/VX modular system makes these enclosures suitable for a range of applications. The three-part structure ensures easy access.",
+    images: ["https://i.ibb.co/bRBh4n3M/1daabe98-30dc-4fa6-817a-b2b10612c2e5.png"],
+    specifications: [
+      { label: "SKU", value: "IE-YA-HA-106" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "IT Enclosures" }
+    ],
+    stock: 209,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: false,
+    popular: true,
+    downloads: [
+      { title: "IE-YA-HA-106 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "ie-enclosure-07",
+    sku: "IE-YA-HA-107",
+    name: "VerticalBox",
+    slug: "verticalbox-ie-ya-ha-107",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "IT Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: 'Compact 482.6 mm (19") enclosure for small networks that may be used as a wall-mounted, under-desk or desktop enclosure.',
+    images: ["https://i.ibb.co/99k2NpCS/4a70abc1-a2eb-42e1-989f-aa26a9355898.png"],
+    specifications: [
+      { label: "SKU", value: "IE-YA-HA-107" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "IT Enclosures" }
+    ],
+    stock: 158,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "IE-YA-HA-107 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "ie-enclosure-08",
+    sku: "IE-YA-HA-108",
+    name: "Wall-mounted enclosures EL, 3-part with punched rails",
+    slug: "wall-mounted-enclosures-el-3-part-with-punched-rails-ie-ya-ha-108",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "IT Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "Wall-mounted enclosure 3-part, pre-configured with: Solid gland plate, top and bottom, punched rails, C rails, wall mounting bracket. Protection category IP 55.",
+    images: ["https://i.ibb.co/mFhvtvPh/bf8d88c8-1f22-4501-9c4b-17dfe3e3bb42.png"],
+    specifications: [
+      { label: "SKU", value: "IE-YA-HA-108" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "IT Enclosures" }
+    ],
+    stock: 681,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "IE-YA-HA-108 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "ie-enclosure-09",
+    sku: "IE-YA-HA-109",
+    name: "Wall-mounted enclosures EL, 3-part with mounting plate",
+    slug: "wall-mounted-enclosures-el-3-part-with-mounting-plate-ie-ya-ha-109",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "IT Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "Wall-mounted enclosure 3-part, pre-configured with: Solid gland plate, top and bottom, mounting plate is supplied loose. Protection category IP 55.",
+    images: ["https://i.ibb.co/d4dRdMdV/6036b15f-d246-4155-b65b-6f9469571f71.png"],
+    specifications: [
+      { label: "SKU", value: "IE-YA-HA-109" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "IT Enclosures" }
+    ],
+    stock: 362,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "IE-YA-HA-109 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "ie-enclosure-10",
+    sku: "IE-YA-HA-110",
+    name: "Small fibre-optic distributor with mounting plate",
+    slug: "small-fibre-optic-distributor-with-mounting-plate-ie-ya-ha-110",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "IT Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "Small fibre-optic distributor of fibre-glass reinforced polycarbonate with mounting plate and PG cable glands. Protection category IP 66.",
+    images: ["https://i.ibb.co/WND3NBqm/4a94868d-8b63-4325-be29-608a7d5afe72.png"],
+    specifications: [
+      { label: "SKU", value: "IE-YA-HA-110" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "IT Enclosures" }
+    ],
+    stock: 561,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "IE-YA-HA-110 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  }
+];
+
+export const WALL_MOUNTED_ENCLOSURES_PRODUCTS: Product[] = [
+  {
+    id: "we-enclosure-01",
+    sku: "WE-YA-HA-101",
+    name: 'Operating housing AX for desktop TFT up to 24"',
+    slug: "operating-housing-ax-for-desktop-tft-up-to-24-we-ya-ha-101",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "Wall-Mounted Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: 'The operating housing for desktop TFT up to 24" based on AX, sheet steel, with an integrated VESA 75/100 bracket. Effective and appealing protection for standard desktop TFTs up to 24" in the formats 16:9/16:10. High protection category IP 65.',
+    images: ["https://i.ibb.co/FkQSCdS1/18261551-fc22-4c78-a195-e56639a4ca9e.png"],
+    specifications: [
+      { label: "SKU", value: "WE-YA-HA-101" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "Wall-Mounted Enclosures" }
+    ],
+    stock: 805,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "WE-YA-HA-101 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "we-enclosure-02",
+    sku: "WE-YA-HA-102",
+    name: "Operating housing AX with handle strips",
+    slug: "operating-housing-ax-with-handle-strips-we-ya-ha-102",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "Wall-Mounted Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "Operating housing with sheet steel handle strips based on AX, with support arm cut-out Ø 130 mm to fit support arm system CP 60/120/180, service access optionally from the front or rear, aluminium front panel easily removable for machining, protection category IP 55.",
+    images: ["https://i.ibb.co/zHCqVr6X/2c5fa2d5-f705-492c-97f5-215c9b7b33be.png"],
+    specifications: [
+      { label: "SKU", value: "WE-YA-HA-102" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "Wall-Mounted Enclosures" }
+    ],
+    stock: 283,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "WE-YA-HA-102 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "we-enclosure-03",
+    sku: "WE-YA-HA-103",
+    name: "E-Box KX Stainless steel",
+    slug: "e-box-kx-stainless-steel-we-ya-ha-103",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "Wall-Mounted Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "The stainless steel E-Box KX provides user-friendly assembly as well as flexibility when choosing your lock system. The 180° hinges supplied as standard provide excellent accessibility to the enclosure interior.",
+    images: ["https://i.ibb.co/qF7bvNdb/6c2351d2-764d-4ab0-b64e-825a4ead853c.png"],
+    specifications: [
+      { label: "SKU", value: "WE-YA-HA-103" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "Wall-Mounted Enclosures" }
+    ],
+    stock: 109,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: false,
+    popular: true,
+    downloads: [
+      { title: "WE-YA-HA-103 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "we-enclosure-04",
+    sku: "WE-YA-HA-104",
+    name: 'Wall-mounted enclosures AX IT with 482.6 mm (19") mounting angles',
+    slug: "wall-mounted-enclosures-ax-it-with-482-6-mm-19-mounting-angles-we-ya-ha-104",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "Wall-Mounted Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: 'IT wall-mounted enclosure with high protection category, for use in industrial environments. With depth-variable 482.6 mm (19") mounting angle and gland plate with brush strip for cable entry in the enclosure base. Protection category up to IP 66 (depending on the selected gland pate).',
+    images: ["https://i.ibb.co/YSgxQxq/70aa8ab8-b44f-48ac-b855-3d6cf919f552.png"],
+    specifications: [
+      { label: "SKU", value: "WE-YA-HA-104" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "Wall-Mounted Enclosures" }
+    ],
+    stock: 585,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "WE-YA-HA-104 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "we-enclosure-05",
+    sku: "WE-YA-HA-105",
+    name: "AX wall-mounted enclosure, 3-part With Blue e+ outlet filter",
+    slug: "ax-wall-mounted-enclosure-3-part-with-blue-e-outlet-filter-we-ya-ha-105",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "Wall-Mounted Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "The delivery concept behind the three-part AX wall-mounted enclosures reduces complexity and enhances flexibility. The AX/VX modular system makes these enclosures suitable for a range of applications.",
+    images: ["https://i.ibb.co/ZRXY87DC/d9c06427-700b-486b-939b-c2d8f5784640.png"],
+    specifications: [
+      { label: "SKU", value: "WE-YA-HA-105" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "Wall-Mounted Enclosures" }
+    ],
+    stock: 994,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "WE-YA-HA-105 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "we-enclosure-06",
+    sku: "WE-YA-HA-106",
+    name: "AX wall-mounted enclosure, 3-part",
+    slug: "ax-wall-mounted-enclosure-3-part-we-ya-ha-106",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "Wall-Mounted Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "The delivery concept of the three-part AX wall-mounted enclosures reduces complexity and enhances flexibility. The AX/VX modular system makes these enclosures suitable for a range of applications. The three-part structure ensures easy access.",
+    images: ["https://i.ibb.co/xSq961yH/e8f2272b-7870-41ad-8bd8-07ad7eb9e612.png"],
+    specifications: [
+      { label: "SKU", value: "WE-YA-HA-106" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "Wall-Mounted Enclosures" }
+    ],
+    stock: 259,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: false,
+    popular: true,
+    downloads: [
+      { title: "WE-YA-HA-106 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "we-enclosure-07",
+    sku: "WE-YA-HA-107",
+    name: "Plastic enclosures AX with viewing window",
+    slug: "plastic-enclosures-ax-with-viewing-window-we-ya-ha-107",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "Wall-Mounted Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "AX plastic enclosures with viewing window are ideal for applications in challenging situations. Numerous mounting bosses inside the enclosure allow individual interior configuration on a 25 mm pitch pattern",
+    images: ["https://i.ibb.co/HT3qH7mH/86fbf259-1084-4a06-98ce-c36c429ce762.png"],
+    specifications: [
+      { label: "SKU", value: "WE-YA-HA-107" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "Wall-Mounted Enclosures" }
+    ],
+    stock: 358,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "WE-YA-HA-107 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "we-enclosure-08",
+    sku: "WE-YA-HA-108",
+    name: "Plastic enclosures AX without viewing window",
+    slug: "plastic-enclosures-ax-without-viewing-window-we-ya-ha-108",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "Wall-Mounted Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "AX plastic enclosures are ideal for applications in challenging situations. Numerous mounting bosses inside the enclosure allow individual interior configuration on a 25 mm pitch pattern, e.g. with punched sections and rails.",
+    images: ["https://i.ibb.co/ynmFNPZM/4b4318cd-6963-4f55-8ebb-11772f5bd992.png"],
+    specifications: [
+      { label: "SKU", value: "WE-YA-HA-108" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "Wall-Mounted Enclosures" }
+    ],
+    stock: 281,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "WE-YA-HA-108 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "we-enclosure-09",
+    sku: "WE-YA-HA-109",
+    name: "Basic enclosure AX, stainless steel",
+    slug: "basic-enclosure-ax-stainless-steel-we-ya-ha-109",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "Wall-Mounted Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "The robust stainless steel enclosure features an integral locator system, enabling fast, easy, reliable and extensive system configuration with no drilling required.",
+    images: ["https://i.ibb.co/pvS6NFRc/8312409d-d849-431d-bf09-7bfc653274b2.png"],
+    specifications: [
+      { label: "SKU", value: "WE-YA-HA-109" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "Wall-Mounted Enclosures" }
+    ],
+    stock: 562,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "WE-YA-HA-109 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "we-enclosure-10",
+    sku: "WE-YA-HA-110",
+    name: "Basic enclosure AX, sheet steel",
+    slug: "basic-enclosure-ax-sheet-steel-we-ya-ha-110",
+    brand: "Rittal",
+    category: "Industrial Enclosures",
+    subcategory: "Wall-Mounted Enclosures",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "The compact enclosure AX with integral enclosure locators in the roof, base and side forms the familiar 25 mm system pitch pattern from the VX25 large enclosure. With this unique, patented system, AX compact enclosures are prepared for all types of configurations and refits.",
+    images: ["https://i.ibb.co/3Y743YWB/122ecdd8-885e-46d9-aaa9-fa018ed7f661.png"],
+    specifications: [
+      { label: "SKU", value: "WE-YA-HA-110" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Industrial Enclosures" },
+      { label: "Subcategory", value: "Wall-Mounted Enclosures" }
+    ],
+    stock: 161,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "WE-YA-HA-110 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  }
+];
+
+export const SERVER_RACKS_PRODUCTS: Product[] = [
+  {
+    id: "sr-rack-01",
+    sku: "SR-YA-HA-101",
+    name: 'Network/server rack VX IT with glazed door, pre-configured, with 482.6 mm (19") swing frame',
+    slug: "network-server-rack-vx-it-with-glazed-door-pre-configured-with-482-6-mm-19-swing-frame-sr-ya-ha-101",
+    brand: "Rittal",
+    category: "Racks & Enclosures",
+    subcategory: "Server Racks",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: 'VX IT network/server enclosure, closed, for direct climate control tailored to the specific enclosure. Supplied pre-assembled with a selection of practical equipment. 482.6 mm (19") interior installation with 482.6 mm (19") swing frame for direct access to the rear of 482.6 mm (19") components, thanks to an opening angle of 130°.',
+    images: ["https://i.ibb.co/Y79Rtj9L/debc0507-48ee-4fa0-b782-f4afbf2b5893.png"],
+    specifications: [
+      { label: "SKU", value: "SR-YA-HA-101" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Racks & Enclosures" },
+      { label: "Subcategory", value: "Server Racks" }
+    ],
+    stock: 865,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SR-YA-HA-101 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sr-rack-02",
+    sku: "SR-YA-HA-102",
+    name: "Cable management rack VX IT",
+    slug: "cable-management-rack-vx-it-sr-ya-ha-102",
+    brand: "Rittal",
+    category: "Racks & Enclosures",
+    subcategory: "Server Racks",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "For laying, securing and storing cables or as an empty enclosure with uneven LCP installations.",
+    images: ["https://i.ibb.co/v60vLmqv/234dabb4-1fe4-42bc-95c4-ba27aa2ec859.png"],
+    specifications: [
+      { label: "SKU", value: "SR-YA-HA-102" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Racks & Enclosures" },
+      { label: "Subcategory", value: "Server Racks" }
+    ],
+    stock: 223,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SR-YA-HA-102 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sr-rack-03",
+    sku: "SR-YA-HA-103",
+    name: "Network rack TX CableNet with vented door",
+    slug: "network-rack-tx-cablenet-with-vented-door-sr-ya-ha-103",
+    brand: "Rittal",
+    category: "Racks & Enclosures",
+    subcategory: "Server Racks",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "Taking cable management to a new level: The TX CableNet unites many years of expertise in an IT rack which meets every requirement in terms of functionality and quality, prepared for individual interior installation.",
+    images: ["https://i.ibb.co/271S6H1F/30df8946-ac56-4238-b23f-cf388e1a2ef4.png"],
+    specifications: [
+      { label: "SKU", value: "SR-YA-HA-103" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Racks & Enclosures" },
+      { label: "Subcategory", value: "Server Racks" }
+    ],
+    stock: 179,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: false,
+    popular: true,
+    downloads: [
+      { title: "SR-YA-HA-103 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sr-rack-04",
+    sku: "SR-YA-HA-104",
+    name: "Compartment Rack VX IT divided into four, vented",
+    slug: "compartment-rack-vx-it-divided-into-four-vented-sr-ya-ha-104",
+    brand: "Rittal",
+    category: "Racks & Enclosures",
+    subcategory: "Server Racks",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "VX IT rack with four independent installation compartments, providing for independent cable routing to each compartment, optionally from above or below, and vented sheet steel front and rear doors for each compartment.",
+    images: ["https://i.ibb.co/fVLYmggD/dabb184c-caf6-43b4-9045-39ad94512ae0.png"],
+    specifications: [
+      { label: "SKU", value: "SR-YA-HA-104" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Racks & Enclosures" },
+      { label: "Subcategory", value: "Server Racks" }
+    ],
+    stock: 515,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SR-YA-HA-104 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sr-rack-05",
+    sku: "SR-YA-HA-105",
+    name: "VX IT Open",
+    slug: "vx-it-open-sr-ya-ha-105",
+    brand: "Rittal",
+    category: "Racks & Enclosures",
+    subcategory: "Server Racks",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: 'VX IT standard version, without front and rear door. Usable either as an open 482.6 mm (19") frame in a secure environment or as the basis for fast configurations in the Rittal RiPanel configuration system using existing accessories (such as doors and side panels) from the Rittal modular range.',
+    images: ["https://i.ibb.co/21grSkQ3/d7146bb3-a788-4cb7-86b8-9939856dc228.png"],
+    specifications: [
+      { label: "SKU", value: "SR-YA-HA-105" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Racks & Enclosures" },
+      { label: "Subcategory", value: "Server Racks" }
+    ],
+    stock: 294,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SR-YA-HA-105 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sr-rack-06",
+    sku: "SR-YA-HA-106",
+    name: "TX Colocation rack",
+    slug: "tx-colocation-rack-sr-ya-ha-106",
+    brand: "Rittal",
+    category: "Racks & Enclosures",
+    subcategory: "Server Racks",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "The world of IT is changing, and the centralisation of IT in large data centres has become a long-term trend. The TX Colo, which is perfectly adapted to use in a large data centre, is our response. Thanks to its forward-thinking configuration, the TX Colo is ready for immediate use to suit your application!",
+    images: ["https://i.ibb.co/TDd0NsJ2/854d787d-3de5-4c6b-9446-59706a14118b.png"],
+    specifications: [
+      { label: "SKU", value: "SR-YA-HA-106" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Racks & Enclosures" },
+      { label: "Subcategory", value: "Server Racks" }
+    ],
+    stock: 299,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: false,
+    popular: true,
+    downloads: [
+      { title: "SR-YA-HA-106 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sr-rack-07",
+    sku: "SR-YA-HA-107",
+    name: "Network rack TX CableNet with glazed door",
+    slug: "network-rack-tx-cablenet-with-glazed-door-sr-ya-ha-107",
+    brand: "Rittal",
+    category: "Racks & Enclosures",
+    subcategory: "Server Racks",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "The TX CableNet - places extra space at your disposal by avoiding the problem of unnecessarily wide or deep IT racks. This IT network rack is thus also suitable for use in smaller IT environments and is already optimally prepared for individual interior installation.",
+    images: ["https://i.ibb.co/271GzWh9/a123293d-3778-492f-a900-b502bfd70b54.png"],
+    specifications: [
+      { label: "SKU", value: "SR-YA-HA-107" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Racks & Enclosures" },
+      { label: "Subcategory", value: "Server Racks" }
+    ],
+    stock: 318,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SR-YA-HA-107 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sr-rack-08",
+    sku: "SR-YA-HA-108",
+    name: "Compartment Rack VX IT divided into two, vented",
+    slug: "compartment-rack-vx-it-divided-into-two-vented-sr-ya-ha-108",
+    brand: "Rittal",
+    category: "Racks & Enclosures",
+    subcategory: "Server Racks",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: "VX IT rack with two independent installation compartments, providing for independent cable routing to each compartment, optionally from above or below, and vented sheet steel front and rear doors for each compartment.",
+    images: ["https://i.ibb.co/PpNf5Zp/c186a59b-7092-40c3-9f2e-dea59449797a.png"],
+    specifications: [
+      { label: "SKU", value: "SR-YA-HA-108" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Racks & Enclosures" },
+      { label: "Subcategory", value: "Server Racks" }
+    ],
+    stock: 241,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SR-YA-HA-108 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sr-rack-09",
+    sku: "SR-YA-HA-109",
+    name: "Network/server rack VX IT with glazed door, IP 55",
+    slug: "network-server-rack-vx-it-with-glazed-door-ip-55-sr-ya-ha-109",
+    brand: "Rittal",
+    category: "Racks & Enclosures",
+    subcategory: "Server Racks",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: 'VX IT network/server enclosure, closed, for direct climate control tailored to the specific enclosure. 482.6 mm (19") interior installation with 482.6 mm (19") mounting angles in the standard version, available in a range of size variants and with a protection category of up to IP 55.',
+    images: ["https://i.ibb.co/fY32bprv/1ad59ef5-3af7-4b0e-a024-ca819b3013cf.png"],
+    specifications: [
+      { label: "SKU", value: "SR-YA-HA-109" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Racks & Enclosures" },
+      { label: "Subcategory", value: "Server Racks" }
+    ],
+    stock: 542,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SR-YA-HA-109 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
+    id: "sr-rack-10",
+    sku: "SR-YA-HA-110",
+    name: "Network/server rack VX IT with glazed door",
+    slug: "network-server-rack-vx-it-with-glazed-door-sr-ya-ha-110",
+    brand: "Rittal",
+    category: "Racks & Enclosures",
+    subcategory: "Server Racks",
+    priceUSD: 0,
+    priceNGN: 0,
+    isQuoteOnly: true,
+    description: 'VX IT network/server enclosure, closed, for direct climate control tailored to the specific enclosure. 482.6 mm (19") interior installation with depth-variable 482.6 mm (19") mounting angles in the standard version, available in a range of size variants.',
+    images: ["https://i.ibb.co/JRQLLTpD/c7aa6aba-4696-43d8-899d-e17d160f99a8.png"],
+    specifications: [
+      { label: "SKU", value: "SR-YA-HA-110" },
+      { label: "Brand", value: "Rittal" },
+      { label: "Category", value: "Racks & Enclosures" },
+      { label: "Subcategory", value: "Server Racks" }
+    ],
+    stock: 351,
+    oem: "Rittal",
+    productType: "Enterprise",
+    featured: true,
+    popular: true,
+    downloads: [
+      { title: "SR-YA-HA-110 Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  }
+];
+
 export const ACCESSORIES_PRODUCTS: Product[] = [
   ...mappedAccessories,
   ...PTZ_CAMERA_PRODUCTS,
@@ -18644,6 +19826,10 @@ export const ACCESSORIES_PRODUCTS: Product[] = [
   ...UPS_PDU_PRODUCTS,
   ...INDUSTRIAL_SOLAR_PANELS_PRODUCTS,
   ...LITHIUM_BATTERIES_PRODUCTS,
-  ...SMART_HYBRID_INVERTERS_PRODUCTS
+  ...SMART_HYBRID_INVERTERS_PRODUCTS,
+  ...SMALL_ENCLOSURES_PRODUCTS,
+  ...IT_ENCLOSURES_PRODUCTS,
+  ...WALL_MOUNTED_ENCLOSURES_PRODUCTS,
+  ...SERVER_RACKS_PRODUCTS
 ];
 

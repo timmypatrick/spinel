@@ -102,6 +102,40 @@ const matchProduct = (p: Product, subName: string) => {
     return subcatLower === "smart hybrid inverters" || catLower === "smart hybrid inverters";
   }
 
+  if (
+    nameLower.includes("it enclosure") ||
+    nameLower.includes("it-enclosure") ||
+    nameLower === "it enclosures" ||
+    nameLower === "it-enclosures"
+  ) {
+    if (p.sku && p.sku.startsWith("IE-YA-HA-")) return true;
+    if (subcatLower.includes("it enclosure") || subcatLower === "it enclosures") return true;
+    return subcatLower === "it enclosures" || catLower === "it enclosures";
+  }
+
+  if (
+    nameLower.includes("wall-mounted enclosure") ||
+    nameLower.includes("wall mounted enclosure") ||
+    nameLower === "wall-mounted enclosures" ||
+    nameLower === "wall mounted enclosures" ||
+    nameLower === "wall-mounted-enclosures"
+  ) {
+    if (p.sku && p.sku.startsWith("WE-YA-HA-")) return true;
+    if (subcatLower.includes("wall-mounted enclosure") || subcatLower.includes("wall mounted enclosure")) return true;
+    return subcatLower === "wall-mounted enclosures" || catLower === "wall-mounted enclosures";
+  }
+
+  if (
+    nameLower.includes("server rack") ||
+    nameLower.includes("server-rack") ||
+    nameLower === "server racks" ||
+    nameLower === "server-racks"
+  ) {
+    if (p.sku && p.sku.startsWith("SR-YA-HA-")) return true;
+    if (subcatLower.includes("server rack") || subcatLower === "server racks") return true;
+    return subcatLower === "server racks" || catLower === "server racks";
+  }
+
   // Direct exact match
   if (catLower === nameLower || subcatLower === nameLower) return true;
 
