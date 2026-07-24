@@ -17782,6 +17782,34 @@ export const UPS_PDU_PRODUCTS: Product[] = [
     reviews: []
   },
   {
+    id: "sp-ups-pdu-srv5kilz",
+    sku: "SRV5KILZ",
+    name: "APC Essential SurgeArrest Tester",
+    slug: "apc-essential-surgearrest-tester-srv5kilz",
+    brand: "APC",
+    category: "UPS & PDU",
+    subcategory: "UPS & PDU",
+    priceUSD: 0.006,
+    priceNGN: 0.006 * 1500,
+    description: "APC Essential SurgeArrest 5 outlets 230V UK - Protection Against Lightning & Power Surges for Computers and Electronics Tester",
+    images: ["https://i.ibb.co/VcKSgDdK/apc-essential-surgearrest-5-outlets-230v-pm5-uk-surge-protector.jpg"],
+    specifications: [
+      { label: "SKU", value: "SRV5KILZ" },
+      { label: "Brand", value: "APC" },
+      { label: "Category", value: "UPS & PDU" },
+      { label: "Subcategory", value: "UPS & PDU" }
+    ],
+    stock: 3289,
+    oem: "APC",
+    productType: "Enterprise",
+    featured: false,
+    popular: true,
+    downloads: [
+      { title: "SRV5KILZ Datasheet", type: "Data Sheet", url: "#" }
+    ],
+    reviews: []
+  },
+  {
     id: "sp-ups-pdu-04",
     sku: "SRV6KIL",
     name: "APC Smart-UPS C 1500VA LCD 230V",

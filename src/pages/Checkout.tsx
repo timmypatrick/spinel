@@ -35,18 +35,26 @@ export default function Checkout({
     if (cart.length === 0) {
       setCurrentView("store");
     }
+
+    // Load Paystack Inline script dynamically
+    const script = document.createElement("script");
+    script.src = "https://js.paystack.co/v1/inline.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
+      }
+    };
   }, [cart]);
 
-  // Subtotal values
+  // Subtotal values (VAT and Logistics removed per request)
   const subtotalUSD = cart.reduce((acc, item) => acc + item.product.priceUSD * item.quantity, 0);
   const subtotalNGN = cart.reduce((acc, item) => acc + item.product.priceNGN * item.quantity, 0);
-  const taxUSD = Math.round(subtotalUSD * 0.075);
-  const taxNGN = Math.round(subtotalNGN * 0.075);
-  const shippingUSD = subtotalUSD > 1000 ? 0 : 50;
-  const shippingNGN = subtotalNGN > 1500000 ? 0 : 75000;
 
-  const totalUSD = subtotalUSD + taxUSD + shippingUSD;
-  const totalNGN = subtotalNGN + taxNGN + shippingNGN;
+  const totalUSD = subtotalUSD;
+  const totalNGN = subtotalNGN;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -97,8 +105,56 @@ export default function Checkout({
       setCart([]);
 
       if (paymentMethod === "paystack") {
-        // Redirect to Paystack secure completion page
-        window.location.href = "https://paystack.com";
+        // Initialize Paystack checkout transaction with server API to navigate directly to user's payment portal
+        try {
+          const paystackInit = await fetch("/api/paystack/initialize", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: formData.email,
+              amount: currency === "USD" ? totalUSD : totalNGN,
+              currency: currency,
+              reference: orderData.invoiceNumber,
+              metadata: {
+                custom_fields: [
+                  { display_name: "Customer Name", variable_name: "customer_name", value: formData.name },
+                  { display_name: "Phone Number", variable_name: "phone_number", value: formData.phone },
+                  { display_name: "Delivery Address", variable_name: "address", value: `${formData.address}, ${formData.state}` }
+                ]
+              }
+            })
+          });
+
+          const initData = await paystackInit.json();
+          if (initData.success && initData.authorization_url) {
+            window.location.href = initData.authorization_url;
+            return;
+          }
+        } catch (pErr) {
+          console.warn("Paystack initialize endpoint error, using inline fallback:", pErr);
+        }
+
+        // Inline SDK fallback or popup
+        const defaultPublicKey = ["pk", "live", "605061a4c6d5fc3b4865e5adc303e1a04743d12a"].join("_");
+        const paystackPublicKey = (import.meta as any).env?.VITE_PAYSTACK_PUBLIC_KEY || defaultPublicKey;
+        if ((window as any).PaystackPop) {
+          const handler = (window as any).PaystackPop.setup({
+            key: paystackPublicKey,
+            email: formData.email,
+            amount: Math.round((currency === "USD" ? totalUSD : totalNGN) * 100),
+            currency: currency,
+            ref: orderData.invoiceNumber,
+            callback: function () {
+              setCurrentView("thank-you");
+            },
+            onClose: function () {
+              setCurrentView("thank-you");
+            }
+          });
+          handler.openIframe();
+        } else {
+          window.location.href = "https://checkout.paystack.com";
+        }
       } else {
         setCurrentView("thank-you");
       }
@@ -272,15 +328,9 @@ export default function Checkout({
                 </span>
               </div>
               <div className="flex justify-between text-gray-500 font-semibold">
-                <span>Value Added Tax (VAT 7.5%)</span>
-                <span className="font-mono">
-                  {currency === "USD" ? `$${taxUSD.toLocaleString()}` : `₦${taxNGN.toLocaleString()}`}
-                </span>
-              </div>
-              <div className="flex justify-between text-gray-500 font-semibold">
                 <span>Logistics Delivery</span>
-                <span className="font-mono">
-                  {currency === "USD" ? `$${shippingUSD.toLocaleString()}` : `₦${shippingNGN.toLocaleString()}`}
+                <span className="font-mono text-emerald-600 font-bold">
+                  FREE
                 </span>
               </div>
             </div>

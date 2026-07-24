@@ -23,16 +23,8 @@ export default function Cart({ cart, setCart, currency, setCurrentView }: CartPr
   const subtotalUSD = cart.reduce((acc, item) => acc + item.product.priceUSD * item.quantity, 0);
   const subtotalNGN = cart.reduce((acc, item) => acc + item.product.priceNGN * item.quantity, 0);
 
-  // VAT 7.5%
-  const taxUSD = Math.round(subtotalUSD * 0.075);
-  const taxNGN = Math.round(subtotalNGN * 0.075);
-
-  // Free shipping over $1000 or ₦1,500,000
-  const shippingUSD = subtotalUSD > 1000 || subtotalUSD === 0 ? 0 : 50;
-  const shippingNGN = subtotalNGN > 1500000 || subtotalNGN === 0 ? 0 : 75000;
-
-  const totalUSD = subtotalUSD + taxUSD + shippingUSD;
-  const totalNGN = subtotalNGN + taxNGN + shippingNGN;
+  const totalUSD = subtotalUSD;
+  const totalNGN = subtotalNGN;
 
   if (cart.length === 0) {
     return (
@@ -137,17 +129,9 @@ export default function Cart({ cart, setCart, currency, setCurrentView }: CartPr
                 </span>
               </div>
               <div className="flex justify-between text-gray-500 font-semibold">
-                <span>Value Added Tax (VAT 7.5%)</span>
-                <span className="font-mono text-gray-950 font-bold">
-                  {currency === "USD" ? `$${taxUSD.toLocaleString()}` : `₦${taxNGN.toLocaleString()}`}
-                </span>
-              </div>
-              <div className="flex justify-between text-gray-500 font-semibold">
                 <span>Logistics Delivery</span>
-                <span className="font-mono text-gray-950 font-bold">
-                  {currency === "USD"
-                    ? shippingUSD === 0 ? "FREE" : `$${shippingUSD.toLocaleString()}`
-                    : shippingNGN === 0 ? "FREE" : `₦${shippingNGN.toLocaleString()}`}
+                <span className="font-mono text-emerald-600 font-bold">
+                  FREE
                 </span>
               </div>
             </div>

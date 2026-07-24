@@ -52657,9 +52657,4129 @@
         }
       ],
       "reviews": []
+    },
+    {
+      "id": "sp-prod-1",
+      "sku": "SKU",
+      "name": "Name",
+      "slug": "name-sku",
+      "brand": "Accessories",
+      "category": "Electrical Systems",
+      "subcategory": "Accessories",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "description": "Description",
+      "images": [
+        "Image"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SKU"
+        },
+        {
+          "label": "Brand",
+          "value": "Accessories"
+        },
+        {
+          "label": "Category",
+          "value": "Accessories"
+        }
+      ],
+      "stock": 0,
+      "oem": "Accessories",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "Name Technical Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "sp-prod-60",
+      "sku": "AC-SW-ACM-DEMO-30D-6-P",
+      "name": "Access Control Manager 6 30 Day Demo License",
+      "slug": "access-control-manager-6-30-day-demo-license-ac-sw-acm-demo-30d-6-p",
+      "brand": "Accessories",
+      "category": "Electrical Systems",
+      "subcategory": "Accessories",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "description": "Access Control Manager 6 License 30 Day Demonstration: includes licensing for  Badging; Exacq; Milestone; one Bosch intrusion panel; ViRIDI BEManager integration; Replication; Hot Stand By Auto Failover; SQL collaboration; Oracle collaboration; LDAP collaboration; XML collaboration; REST collaboration",
+      "images": [
+        "http://avoweb1.s3-us-west-2.amazonaws.com/Prod/VS/eCommerce-Site_Generic-Image_Access-Control-Hardware-and-Accessories_070720.jpg"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "AC-SW-ACM-DEMO-30D-6-P"
+        },
+        {
+          "label": "Brand",
+          "value": "Accessories"
+        },
+        {
+          "label": "Category",
+          "value": "Accessories"
+        }
+      ],
+      "stock": 103,
+      "oem": "Accessories",
+      "productType": "Enterprise",
+      "featured": false,
+      "popular": false,
+      "downloads": [
+        {
+          "title": "Access Control Manager 6 30 Day Demo License Technical Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "sp-prod-568",
+      "sku": "AC-SW-ACM-DEMO-30D-6-P",
+      "name": "Access Control Manager 6 30 Day Demo License",
+      "slug": "access-control-manager-6-30-day-demo-license-ac-sw-acm-demo-30d-6-p",
+      "brand": "Accessories",
+      "category": "Electrical Systems",
+      "subcategory": "Accessories",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "description": "Access Control Manager 6 License 30 Day Demonstration: includes licensing for  Badging; Exacq; Milestone; one Bosch intrusion panel; ViRIDI BEManager integration; Replication; Hot Stand By Auto Failover; SQL collaboration; Oracle collaboration; LDAP collaboration; XML collaboration; REST collaboration",
+      "images": [
+        "http://avoweb1.s3-us-west-2.amazonaws.com/Prod/VS/eCommerce-Site_Generic-Image_Access-Control-Hardware-and-Accessories_070720.jpg"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "AC-SW-ACM-DEMO-30D-6-P"
+        },
+        {
+          "label": "Brand",
+          "value": "Accessories"
+        },
+        {
+          "label": "Category",
+          "value": "Accessories"
+        }
+      ],
+      "stock": 103,
+      "oem": "Accessories",
+      "productType": "Enterprise",
+      "featured": false,
+      "popular": false,
+      "downloads": [
+        {
+          "title": "Access Control Manager 6 30 Day Demo License Technical Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "sp-solar-panel-01",
+      "sku": "SP-YA-HA-100",
+      "name": "Canadian Solar 705w Watts Mono Solar Panel",
+      "slug": "canadian-solar-705w-watts-mono-solar-panel-sp-ya-ha-100",
+      "brand": "Canadian Solar",
+      "category": "Renewable Energy",
+      "subcategory": "Industrial Solar Panels",
+      "priceUSD": 805,
+      "priceNGN": 1207500,
+      "isQuoteOnly": true,
+      "description": "705W Module efficiency up to 23.2 %. 30 Linear Power Performance Warranty. Excellent anti-LeTID & anti-PID performance. Low power degradation, high energy yield",
+      "images": [
+        "https://i.ibb.co/Mxv48vjy/panel-1.jpg"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SP-YA-HA-100"
+        },
+        {
+          "label": "Brand",
+          "value": "Canadian Solar"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Industrial Solar Panels"
+        },
+        {
+          "label": "Power Output",
+          "value": "705W"
+        }
+      ],
+      "stock": 805,
+      "oem": "Canadian Solar",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SP-YA-HA-100 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "sp-solar-panel-02",
+      "sku": "SP-YA-HA-101",
+      "name": "Canadian Solar 655w Watts Mono Solar Panel",
+      "slug": "canadian-solar-655w-watts-mono-solar-panel-sp-ya-ha-101",
+      "brand": "Canadian Solar",
+      "category": "Renewable Energy",
+      "subcategory": "Industrial Solar Panels",
+      "priceUSD": 583,
+      "priceNGN": 874500,
+      "isQuoteOnly": true,
+      "description": "665W module efficiency up to 21.7%. 25 years linear power output warranty. Comprehensive LID / LeTID mitigation technology, up to 50% lower degradation",
+      "images": [
+        "https://i.ibb.co/Jwqj7Lz7/panel-2.jpg"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SP-YA-HA-101"
+        },
+        {
+          "label": "Brand",
+          "value": "Canadian Solar"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Industrial Solar Panels"
+        },
+        {
+          "label": "Power Output",
+          "value": "655W"
+        }
+      ],
+      "stock": 583,
+      "oem": "Canadian Solar",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SP-YA-HA-101 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "sp-solar-panel-03",
+      "sku": "SP-YA-HA-102",
+      "name": "Canadian Solar 600w Watts Mono Solar Panel",
+      "slug": "canadian-solar-600w-watts-mono-solar-panel-sp-ya-ha-102",
+      "brand": "Canadian Solar",
+      "category": "Renewable Energy",
+      "subcategory": "Industrial Solar Panels",
+      "priceUSD": 209,
+      "priceNGN": 313500,
+      "isQuoteOnly": true,
+      "description": "600W module efficiency up to 21.6%. 25 years linear power output warranty. Comprehensive LID / LeTID mitigation technology, up to 50% lower degradation",
+      "images": [
+        "https://i.ibb.co/67XDZ89L/panel-3.jpg"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SP-YA-HA-102"
+        },
+        {
+          "label": "Brand",
+          "value": "Canadian Solar"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Industrial Solar Panels"
+        },
+        {
+          "label": "Power Output",
+          "value": "600W"
+        }
+      ],
+      "stock": 209,
+      "oem": "Canadian Solar",
+      "productType": "Enterprise",
+      "featured": false,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SP-YA-HA-102 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "sp-solar-panel-04",
+      "sku": "SP-YA-HA-103",
+      "name": "Canadian Solar Panel 605w – CS7L (Monocrystalline)",
+      "slug": "canadian-solar-panel-605w-cs7l-monocrystalline-sp-ya-ha-103",
+      "brand": "Canadian Solar",
+      "category": "Renewable Energy",
+      "subcategory": "Industrial Solar Panels",
+      "priceUSD": 385,
+      "priceNGN": 577500,
+      "isQuoteOnly": true,
+      "description": "Canadian Solar 605w Solar Panel. Comprehensive LID / LeTID mitigation technology, up to 50% lower degradation",
+      "images": [
+        "https://i.ibb.co/fVKg7hFy/panel-4.jpg"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SP-YA-HA-103"
+        },
+        {
+          "label": "Brand",
+          "value": "Canadian Solar"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Industrial Solar Panels"
+        },
+        {
+          "label": "Power Output",
+          "value": "605W"
+        }
+      ],
+      "stock": 385,
+      "oem": "Canadian Solar",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SP-YA-HA-103 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "sp-solar-panel-05",
+      "sku": "SP-YA-HA-104",
+      "name": "Canadian Solar 670w Watts Mono Solar Panel",
+      "slug": "canadian-solar-670w-watts-mono-solar-panel-sp-ya-ha-104",
+      "brand": "Canadian Solar",
+      "category": "Renewable Energy",
+      "subcategory": "Industrial Solar Panels",
+      "priceUSD": 194,
+      "priceNGN": 291000,
+      "isQuoteOnly": true,
+      "description": "670W module efficiency up to 21.7%. 25 years linear power output warranty. Comprehensive LID / LeTID mitigation technology, up to 50% lower degradation",
+      "images": [
+        "https://i.ibb.co/bjpfkV6Z/panel-5.jpg"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SP-YA-HA-104"
+        },
+        {
+          "label": "Brand",
+          "value": "Canadian Solar"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Industrial Solar Panels"
+        },
+        {
+          "label": "Power Output",
+          "value": "670W"
+        }
+      ],
+      "stock": 194,
+      "oem": "Canadian Solar",
+      "productType": "Enterprise",
+      "featured": false,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SP-YA-HA-104 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "sp-solar-panel-06",
+      "sku": "SP-YA-HA-105",
+      "name": "660 Watts Canadian Solar Panel",
+      "slug": "660-watts-canadian-solar-panel-sp-ya-ha-105",
+      "brand": "Canadian Solar",
+      "category": "Renewable Energy",
+      "subcategory": "Industrial Solar Panels",
+      "priceUSD": 609,
+      "priceNGN": 913500,
+      "isQuoteOnly": true,
+      "description": "660W module efficiency up to 21.6%. 25 years linear power output warranty. Comprehensive LID / LeTID mitigation technology, up to 50% lower degradation",
+      "images": [
+        "https://i.ibb.co/Mxsf2xtQ/panel-6.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SP-YA-HA-105"
+        },
+        {
+          "label": "Brand",
+          "value": "Canadian Solar"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Industrial Solar Panels"
+        },
+        {
+          "label": "Power Output",
+          "value": "660W"
+        }
+      ],
+      "stock": 609,
+      "oem": "Canadian Solar",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SP-YA-HA-105 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "sp-solar-panel-07",
+      "sku": "SP-YA-HA-106",
+      "name": "595 Watts HiKu7 Mono PERC Canadian Solar Panel",
+      "slug": "595-watts-hiku7-mono-perc-canadian-solar-panel-sp-ya-ha-106",
+      "brand": "Canadian Solar",
+      "category": "Renewable Energy",
+      "subcategory": "Industrial Solar Panels",
+      "priceUSD": 352,
+      "priceNGN": 528000,
+      "isQuoteOnly": true,
+      "description": "Module power up to 610 W. 25 years linear power output warranty. Comprehensive LID / LeTID mitigation technology, up to 50% lower degradation",
+      "images": [
+        "https://i.ibb.co/PZfdTFKk/panel-7.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SP-YA-HA-106"
+        },
+        {
+          "label": "Brand",
+          "value": "Canadian Solar"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Industrial Solar Panels"
+        },
+        {
+          "label": "Power Output",
+          "value": "595W"
+        }
+      ],
+      "stock": 352,
+      "oem": "Canadian Solar",
+      "productType": "Enterprise",
+      "featured": false,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SP-YA-HA-106 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "sp-solar-panel-08",
+      "sku": "SP-YA-HA-107",
+      "name": "Canadian Solar 550w BiHiKu6 Mono PERC Solar Panel",
+      "slug": "canadian-solar-550w-bihiku6-mono-perc-solar-panel-sp-ya-ha-107",
+      "brand": "Canadian Solar",
+      "category": "Renewable Energy",
+      "subcategory": "Industrial Solar Panels",
+      "priceUSD": 581,
+      "priceNGN": 871500,
+      "isQuoteOnly": true,
+      "description": "550W module efficiency up to 20.6%. 25 years linear power output warranty. Comprehensive LID / LeTID mitigation technology, up to 50% lower degradation",
+      "images": [
+        "https://i.ibb.co/k2XhpdyF/panel-8.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SP-YA-HA-107"
+        },
+        {
+          "label": "Brand",
+          "value": "Canadian Solar"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Industrial Solar Panels"
+        },
+        {
+          "label": "Power Output",
+          "value": "550W"
+        }
+      ],
+      "stock": 581,
+      "oem": "Canadian Solar",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SP-YA-HA-107 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "sp-solar-panel-09",
+      "sku": "SP-YA-HA-108",
+      "name": "415 Watts HiKu Mono PERC Canadian Solar Panel",
+      "slug": "415-watts-hiku-mono-perc-canadian-solar-panel-sp-ya-ha-108",
+      "brand": "Canadian Solar",
+      "category": "Renewable Energy",
+      "subcategory": "Industrial Solar Panels",
+      "priceUSD": 957,
+      "priceNGN": 1435500,
+      "isQuoteOnly": true,
+      "description": "415W Canadian Solar - Super High Power Mono PERC HiKU. Heavy snow load up to 5400 Pa, enhanced wind load up to 2400 Pa. 1st year power degradation no more than 2%. Subsequent annual power degradation no more than 0.55%",
+      "images": [
+        "https://i.ibb.co/xKz8Pd15/panel-9.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SP-YA-HA-108"
+        },
+        {
+          "label": "Brand",
+          "value": "Canadian Solar"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Industrial Solar Panels"
+        },
+        {
+          "label": "Power Output",
+          "value": "415W"
+        }
+      ],
+      "stock": 957,
+      "oem": "Canadian Solar",
+      "productType": "Enterprise",
+      "featured": false,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SP-YA-HA-108 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "lb-battery-01",
+      "sku": "LB-YA-HA-101",
+      "name": "SVC LiFePO4 16 kwh Lithium Battery",
+      "slug": "svc-lifepo4-16-kwh-lithium-battery-lb-ya-ha-101",
+      "brand": "SVC",
+      "category": "Renewable Energy",
+      "subcategory": "Lithium LiFePO4 Batteries",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "16 kWh Lithium Battery - 51.2V 314Ah SVC LiFePO4 Lithium Battery (Floor Mounted)",
+      "images": [
+        "https://i.ibb.co/6Rm87VYh/battery-2.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "LB-YA-HA-101"
+        },
+        {
+          "label": "Brand",
+          "value": "SVC"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Lithium LiFePO4 Batteries"
+        },
+        {
+          "label": "Capacity",
+          "value": "16 kWh (51.2V 314Ah)"
+        }
+      ],
+      "stock": 705,
+      "oem": "SVC",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "LB-YA-HA-101 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "lb-battery-02",
+      "sku": "LB-YA-HA-102",
+      "name": "SVC 11.8 kWh LiFePO4 Solar Battery",
+      "slug": "svc-11-8-kwh-lifepo4-solar-battery-lb-ya-ha-102",
+      "brand": "SVC",
+      "category": "Renewable Energy",
+      "subcategory": "Lithium LiFePO4 Batteries",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "11.8kWh Lithium Battery (51.2V 230Ah SVC Floor Mounted Battery). The 11.8kWh 51.2V LiFePO4 Lithium Battery by SVC is a modern energy storage solution for solar systems and backup power for home nad businesses",
+      "images": [
+        "https://i.ibb.co/1tJvPRHN/battery-3.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "LB-YA-HA-102"
+        },
+        {
+          "label": "Brand",
+          "value": "SVC"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Lithium LiFePO4 Batteries"
+        },
+        {
+          "label": "Capacity",
+          "value": "11.8 kWh (51.2V 230Ah)"
+        }
+      ],
+      "stock": 683,
+      "oem": "SVC",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "LB-YA-HA-102 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "lb-battery-03",
+      "sku": "LB-YA-HA-103",
+      "name": "SVC 8 kWh LiFePO4 Solar Battery",
+      "slug": "svc-8-kwh-lifepo4-solar-battery-lb-ya-ha-103",
+      "brand": "SVC",
+      "category": "Renewable Energy",
+      "subcategory": "Lithium LiFePO4 Batteries",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "8 kWh Lithium Battery (25.6V SVC Floor Mounted Battery). 360 degree protection: such as SOC/SOH/ Anti-theft function. High discharge rate currents, suitable for on-grid or off-grid solar system and other loads.",
+      "images": [
+        "https://i.ibb.co/DPsDT0rV/battery-5.jpg"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "LB-YA-HA-103"
+        },
+        {
+          "label": "Brand",
+          "value": "SVC"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Lithium LiFePO4 Batteries"
+        },
+        {
+          "label": "Capacity",
+          "value": "8 kWh (25.6V)"
+        }
+      ],
+      "stock": 309,
+      "oem": "SVC",
+      "productType": "Enterprise",
+      "featured": false,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "LB-YA-HA-103 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "lb-battery-04",
+      "sku": "LB-YA-HA-104",
+      "name": "SVC 10.5kWh LiFePO4 Solar Battery",
+      "slug": "svc-10-5kwh-lifepo4-solar-battery-lb-ya-ha-104",
+      "brand": "SVC",
+      "category": "Renewable Energy",
+      "subcategory": "Lithium LiFePO4 Batteries",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "10.5kWh LiFePO4 - 51.2V 205AH Lithium Battery (BMP - Floor/Wall Mounted). Ensures real-time monitoring of voltage, current, and battery status.",
+      "images": [
+        "https://i.ibb.co/BVWKS1vd/battery-6.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "LB-YA-HA-104"
+        },
+        {
+          "label": "Brand",
+          "value": "SVC"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Lithium LiFePO4 Batteries"
+        },
+        {
+          "label": "Capacity",
+          "value": "10.5 kWh (51.2V 205Ah)"
+        }
+      ],
+      "stock": 585,
+      "oem": "SVC",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "LB-YA-HA-104 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "lb-battery-05",
+      "sku": "LB-YA-HA-105",
+      "name": "SVC LiFePO4 15 kwh Lithium Battery",
+      "slug": "svc-lifepo4-15-kwh-lithium-battery-lb-ya-ha-105",
+      "brand": "SVC",
+      "category": "Renewable Energy",
+      "subcategory": "Lithium LiFePO4 Batteries",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "15 kWh lithium battery - 48V 200AH SVC LiFePO4 Lithium Battery (Floor Mounted). Featuring a built-in intelligent Battery Management System (BMS), it optimize and safeguards the battery while extending its service life.",
+      "images": [
+        "https://i.ibb.co/Fb30n4gx/battery-7.jpg"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "LB-YA-HA-105"
+        },
+        {
+          "label": "Brand",
+          "value": "SVC"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Lithium LiFePO4 Batteries"
+        },
+        {
+          "label": "Capacity",
+          "value": "15 kWh (48V 200Ah)"
+        }
+      ],
+      "stock": 794,
+      "oem": "SVC",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "LB-YA-HA-105 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "lb-battery-06",
+      "sku": "LB-YA-HA-106",
+      "name": "SVC 10kWh LiFePO4 Solar Battery",
+      "slug": "svc-10kwh-lifepo4-solar-battery-lb-ya-ha-106",
+      "brand": "SVC",
+      "category": "Renewable Energy",
+      "subcategory": "Lithium LiFePO4 Batteries",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "10kWh LiFePO4 - 48V 200AH Lithium Battery (BMV - Wall Mounted) With 100A Max Charge/Discharge Current. Elegant and Stylish, wall-mounted installation",
+      "images": [
+        "https://i.ibb.co/Fb30n4gx/battery-7.jpg"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "LB-YA-HA-106"
+        },
+        {
+          "label": "Brand",
+          "value": "SVC"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Lithium LiFePO4 Batteries"
+        },
+        {
+          "label": "Capacity",
+          "value": "10 kWh (48V 200Ah)"
+        }
+      ],
+      "stock": 209,
+      "oem": "SVC",
+      "productType": "Enterprise",
+      "featured": false,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "LB-YA-HA-106 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "lb-battery-07",
+      "sku": "LB-YA-HA-107",
+      "name": "SVC 5kWh LiFePO4 Solar Battery",
+      "slug": "svc-5kwh-lifepo4-solar-battery-lb-ya-ha-107",
+      "brand": "SVC",
+      "category": "Renewable Energy",
+      "subcategory": "Lithium LiFePO4 Batteries",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "5kWh LiFePO4 - 48V 100AH Lithium Battery (BMV - Wall Mounted). Manufactured to withstand the most rigorous conditions of renewable energy applications and usage the 5kWh - 48V 100AH LiFePO4 lithium battery gives you the best value and performance for your installation.",
+      "images": [
+        "https://i.ibb.co/DH1c6nTj/battery-9.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "LB-YA-HA-107"
+        },
+        {
+          "label": "Brand",
+          "value": "SVC"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Lithium LiFePO4 Batteries"
+        },
+        {
+          "label": "Capacity",
+          "value": "5 kWh (48V 100Ah)"
+        }
+      ],
+      "stock": 358,
+      "oem": "SVC",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "LB-YA-HA-107 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "lb-battery-08",
+      "sku": "LB-YA-HA-108",
+      "name": "Rack Mounted Battery – BMR Series",
+      "slug": "rack-mounted-battery-bmr-series-lb-ya-ha-108",
+      "brand": "SVC",
+      "category": "Renewable Energy",
+      "subcategory": "Lithium LiFePO4 Batteries",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "LiFePO4 Lithium Battery: 5.12kWh - 48V 100AH (Floor and Rack Mounted). Manufactured to withstand the most rigorous conditions of renewable energy applications and usage this 5kWh - 48V 100AH LiFePO4 lithium battery gives you best value for your money and longer life-cycle.",
+      "images": [
+        "https://i.ibb.co/Wpdq26p2/battery-1.jpg"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "LB-YA-HA-108"
+        },
+        {
+          "label": "Brand",
+          "value": "SVC"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Lithium LiFePO4 Batteries"
+        },
+        {
+          "label": "Capacity",
+          "value": "5.12 kWh (48V 100Ah)"
+        }
+      ],
+      "stock": 781,
+      "oem": "SVC",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "LB-YA-HA-108 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "si-inverter-01",
+      "sku": "SI-YA-HA-101",
+      "name": "Infinisolar 15KVA Hybrid Inverter",
+      "slug": "infinisolar-15kva-hybrid-inverter-si-ya-ha-101",
+      "brand": "Infinisolar",
+      "category": "Renewable Energy",
+      "subcategory": "Smart Hybrid Inverters",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "15KVA Inverter - 48V 3 Phase Hybrid Solar Inverter. It is a multifunctional 3 Phase 15kw inverter that combines the functions of inverter, solar charger and battery charge controller to provide uninterrupted power supply.",
+      "images": [
+        "https://i.ibb.co/n8LDsyjn/15kva-Inverter-3phase-48v.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SI-YA-HA-101"
+        },
+        {
+          "label": "Brand",
+          "value": "Infinisolar"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Smart Hybrid Inverters"
+        },
+        {
+          "label": "Capacity",
+          "value": "15 KVA (48V 3 Phase)"
+        }
+      ],
+      "stock": 305,
+      "oem": "Infinisolar",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SI-YA-HA-101 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "si-inverter-02",
+      "sku": "SI-YA-HA-102",
+      "name": "5KW/48V VMII Hybrid Inverter",
+      "slug": "5kw-48v-vmii-hybrid-inverter-si-ya-ha-102",
+      "brand": "Gennex",
+      "category": "Renewable Energy",
+      "subcategory": "Smart Hybrid Inverters",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "Gennex 5KW/48V VMII With 5,000W Inbuilt MPPT Charge Controller. With fast transfer time to protect mission-critical loads such as servers and ATM the 5KW/48V VMII is the best of its kind. Our Inverters are all compatible with mains voltage, solar and generator.",
+      "images": [
+        "https://i.ibb.co/Rpt0y2Qy/5-KVA-VMII-Inverter2.jpg"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SI-YA-HA-102"
+        },
+        {
+          "label": "Brand",
+          "value": "Gennex"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Smart Hybrid Inverters"
+        },
+        {
+          "label": "Capacity",
+          "value": "5 KW / 48V"
+        }
+      ],
+      "stock": 283,
+      "oem": "Gennex",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SI-YA-HA-102 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "si-inverter-03",
+      "sku": "SI-YA-HA-103",
+      "name": "1.2KVA/12V Inverter",
+      "slug": "1-2kva-12v-inverter-si-ya-ha-103",
+      "brand": "Generic",
+      "category": "Renewable Energy",
+      "subcategory": "Smart Hybrid Inverters",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "1.2KVA/12V Inverter With Built-in 50A PWM Solar Charger. With the 1.2KVA Inverter, you get a customized power backup solution that can power your essential household appliances. It's the perfect solution for homes.",
+      "images": [
+        "https://i.ibb.co/Q3hWwRmx/1-2-KVA-in-Lagos-removebg-preview.jpg"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SI-YA-HA-103"
+        },
+        {
+          "label": "Brand",
+          "value": "Generic"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Smart Hybrid Inverters"
+        },
+        {
+          "label": "Capacity",
+          "value": "1.2 KVA / 12V"
+        }
+      ],
+      "stock": 709,
+      "oem": "Generic",
+      "productType": "Enterprise",
+      "featured": false,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SI-YA-HA-103 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "si-inverter-04",
+      "sku": "SI-YA-HA-104",
+      "name": "2 KVA Hybrid Inverter",
+      "slug": "2-kva-hybrid-inverter-si-ya-ha-104",
+      "brand": "Generic",
+      "category": "Renewable Energy",
+      "subcategory": "Smart Hybrid Inverters",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "2KVA Hybrid inverters are high-quality solar inverters with in-built MPPT solar charge controller design to withstand harsh environment and last longer. With the 2 kva solar hybrid inverter (24V (1500W/25A MPPT), you get a fully customized power backup or solar solution that can power your specific energy need.",
+      "images": [
+        "https://i.ibb.co/whxN70wn/2kva-inverter.jpg"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SI-YA-HA-104"
+        },
+        {
+          "label": "Brand",
+          "value": "Generic"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Smart Hybrid Inverters"
+        },
+        {
+          "label": "Capacity",
+          "value": "2 KVA (24V 1500W/25A MPPT)"
+        }
+      ],
+      "stock": 185,
+      "oem": "Generic",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SI-YA-HA-104 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "si-inverter-05",
+      "sku": "SI-YA-HA-105",
+      "name": "8KVA Inverter - Axpert MAX",
+      "slug": "8kva-inverter-axpert-max-si-ya-ha-105",
+      "brand": "Axpert",
+      "category": "Renewable Energy",
+      "subcategory": "Smart Hybrid Inverters",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "The Axpert MAX 8kva solar Inverter is manufactured with the most recent technologies in the solar energy space. The Axpert MAX 8kva inverter possesses better durability and is easy to install and use for on/off-grid installations. This 8 kva inverter also contains the feature of battery independence that enables the 8kva solar inverter to operate and run all appliances using just sunlight without a battery connected to it when the sun is up.",
+      "images": [
+        "https://i.ibb.co/svpBmDMm/8kva-inverter-1.jpg"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SI-YA-HA-105"
+        },
+        {
+          "label": "Brand",
+          "value": "Axpert"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Smart Hybrid Inverters"
+        },
+        {
+          "label": "Capacity",
+          "value": "8 KVA"
+        }
+      ],
+      "stock": 894,
+      "oem": "Axpert",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SI-YA-HA-105 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "si-inverter-06",
+      "sku": "SI-YA-HA-106",
+      "name": "6KVA Inverter",
+      "slug": "6kva-inverter-si-ya-ha-106",
+      "brand": "Axpert",
+      "category": "Renewable Energy",
+      "subcategory": "Smart Hybrid Inverters",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "Axpert VM III Twin 6KVA Inverter is an innovative third-generation off-grid solar inverter with rich new functionalities. The 6kva Inverter possesses a detachable LCD control module that can be turned into a remote panel. This 6 kva inverter also contains the feature of battery independency that enables this inverter to operate and run all appliances using just sunlight without a battery connected to it.",
+      "images": [
+        "https://i.ibb.co/zVT2v4Wv/6kva-inverter-1.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SI-YA-HA-106"
+        },
+        {
+          "label": "Brand",
+          "value": "Axpert"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Smart Hybrid Inverters"
+        },
+        {
+          "label": "Capacity",
+          "value": "6 KVA"
+        }
+      ],
+      "stock": 509,
+      "oem": "Axpert",
+      "productType": "Enterprise",
+      "featured": false,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SI-YA-HA-106 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "si-inverter-07",
+      "sku": "SI-YA-HA-107",
+      "name": "5KW/48V VMII Hybrid Inverter",
+      "slug": "5kw-48v-vmii-hybrid-inverter-vmii-si-ya-ha-107",
+      "brand": "Gennex",
+      "category": "Renewable Energy",
+      "subcategory": "Smart Hybrid Inverters",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "Our 5KVA Hybrid Inverter are the new trend in superior quality inverter manufacturing. They are laced with tons of upgrade that makes them, easier to install, user-friendly, last longer, adaptable, etc. With fast transfer time to protect mission-critical loads such as servers and ATM the 5KW/48V VMII is the best of its kind.",
+      "images": [
+        "https://i.ibb.co/1YMrFQdm/Gennex-5-KVA-Inverter-with-MPPT-charge-controller.jpg"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SI-YA-HA-107"
+        },
+        {
+          "label": "Brand",
+          "value": "Gennex"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Smart Hybrid Inverters"
+        },
+        {
+          "label": "Capacity",
+          "value": "5 KW / 48V"
+        }
+      ],
+      "stock": 958,
+      "oem": "Gennex",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SI-YA-HA-107 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "si-inverter-08",
+      "sku": "SI-YA-HA-108",
+      "name": "12kW Off-grid Inverter",
+      "slug": "12kw-off-grid-inverter-si-ya-ha-108",
+      "brand": "Spinel",
+      "category": "Renewable Energy",
+      "subcategory": "Smart Hybrid Inverters",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "12K Hybrid Inverter: Power Your Future with Unmatched Solar Efficiency. Spinel 12kW SNA-EU stand out as the pinnacle of hybrid inverter technology. Engineered for versatility, this high-frequency pure sine wave inverter blend solar, battery, grid, and generator inputs into one intelligent system with guranteed extended durability.",
+      "images": [
+        "https://i.ibb.co/d4fnZm3x/12kva-Gennex-Plus-Hybrid-Inverter.jpg"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SI-YA-HA-108"
+        },
+        {
+          "label": "Brand",
+          "value": "Spinel"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Smart Hybrid Inverters"
+        },
+        {
+          "label": "Capacity",
+          "value": "12 kW"
+        }
+      ],
+      "stock": 381,
+      "oem": "Spinel",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SI-YA-HA-108 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "si-inverter-09",
+      "sku": "SI-YA-HA-109",
+      "name": "8kW Inverter",
+      "slug": "8kw-inverter-si-ya-ha-109",
+      "brand": "Spinel",
+      "category": "Renewable Energy",
+      "subcategory": "Smart Hybrid Inverters",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "Spinel 8kW Hybrid Inverter is a very flexible hybrid solar inverter that is designed to optimise your commercial and residential solar energy efficiency. With an extra-ordinary performance and efficiency, this 8kW solar inverter combines both solar energy generation and faster energy storage, providing a more reliable off-grid and on-grid solar and backup solutions.",
+      "images": [
+        "https://i.ibb.co/Ldd69fZ1/10-Kw-Gennex-Inverter-1.jpg"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SI-YA-HA-109"
+        },
+        {
+          "label": "Brand",
+          "value": "Spinel"
+        },
+        {
+          "label": "Category",
+          "value": "Renewable Energy"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Smart Hybrid Inverters"
+        },
+        {
+          "label": "Capacity",
+          "value": "8 kW"
+        }
+      ],
+      "stock": 462,
+      "oem": "Spinel",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SI-YA-HA-109 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "se-enclosure-01",
+      "sku": "SE-YA-HA-101",
+      "name": "Terminal box HD",
+      "slug": "terminal-box-hd-se-ya-ha-101",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "Small Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "All-round gap-free silicone seal between enclosure and cover. Hygiene-compliant quick-release hexagon fastener",
+      "images": [
+        "https://i.ibb.co/X60H7q2/c3dba6a5-0fc2-41ff-8820-7017e699bf98.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SE-YA-HA-101"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Small Enclosures"
+        },
+        {
+          "label": "Features",
+          "value": "Hygiene-compliant quick-release hexagon fastener"
+        }
+      ],
+      "stock": 605,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SE-YA-HA-101 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "se-enclosure-02",
+      "sku": "SE-YA-HA-102",
+      "name": "Terminal box KX, sheet steel, with gland plate",
+      "slug": "terminal-box-kx-sheet-steel-with-gland-plate-se-ya-ha-102",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "Small Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "The small enclosure KX, terminal box KX, with a gland plate allows for flexible interior installation and simple cable entry with optimum use of space.",
+      "images": [
+        "https://i.ibb.co/q31008mD/b0e60deb-8338-460d-a62b-9aa2c485d392.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SE-YA-HA-102"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Small Enclosures"
+        },
+        {
+          "label": "Material",
+          "value": "Sheet steel"
+        }
+      ],
+      "stock": 783,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SE-YA-HA-102 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "se-enclosure-03",
+      "sku": "SE-YA-HA-103",
+      "name": "Bus enclosures KX, sheet steel, with mini cam lock",
+      "slug": "bus-enclosures-kx-sheet-steel-with-mini-cam-lock-se-ya-ha-103",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "Small Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "Wall-mounted enclosure made from sheet steel, with cover and viewing panel. Protection category IP 65/NEMA 12. For installing most brands of bus modules and sensors.",
+      "images": [
+        "https://i.ibb.co/s9yBThs1/be723d92-68d3-4d4c-ac4d-7d90ca1b2563.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SE-YA-HA-103"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Small Enclosures"
+        },
+        {
+          "label": "Protection Category",
+          "value": "IP 65 / NEMA 12"
+        }
+      ],
+      "stock": 409,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": false,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SE-YA-HA-103 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "se-enclosure-04",
+      "sku": "SE-YA-HA-104",
+      "name": "Terminal box KX, sheet steel, without gland plate",
+      "slug": "terminal-box-kx-sheet-steel-without-gland-plate-se-ya-ha-104",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "Small Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "The small enclosure KX, terminal box KX, without a gland plate allows for flexible interior installation while maintaining a high protection category.",
+      "images": [
+        "https://i.ibb.co/fVGrP3zn/e701941d-7717-4617-95c2-fbd95bfa5d3f.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SE-YA-HA-104"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Small Enclosures"
+        },
+        {
+          "label": "Material",
+          "value": "Sheet steel"
+        }
+      ],
+      "stock": 885,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SE-YA-HA-104 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "se-enclosure-05",
+      "sku": "SE-YA-HA-105",
+      "name": "Terminal box KX Stainless steel",
+      "slug": "terminal-box-kx-stainless-steel-se-ya-ha-105",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "Small Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "The stainless steel terminal box KX delivers maximum data quality and consistency of engineering while ensuring flexibility and reliability across a wide range of applications.",
+      "images": [
+        "https://i.ibb.co/V0TrQ65P/f6299221-6020-4636-8215-a96a45f9057e.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SE-YA-HA-105"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Small Enclosures"
+        },
+        {
+          "label": "Material",
+          "value": "Stainless Steel"
+        }
+      ],
+      "stock": 494,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SE-YA-HA-105 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "se-enclosure-06",
+      "sku": "SE-YA-HA-106",
+      "name": "Bus enclosures KX Stainless steel",
+      "slug": "bus-enclosures-kx-stainless-steel-se-ya-ha-106",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "Small Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "The stainless steel bus enclosure KX offers excellent accessibility with 180° hinges as standard, plus a high protection category of IP 66.",
+      "images": [
+        "https://i.ibb.co/m5K5J2Pm/315925d7-41df-49ac-9d99-8889d51e7c48.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SE-YA-HA-106"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Small Enclosures"
+        },
+        {
+          "label": "Protection Category",
+          "value": "IP 66"
+        }
+      ],
+      "stock": 209,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": false,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SE-YA-HA-106 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "se-enclosure-07",
+      "sku": "SE-YA-HA-107",
+      "name": "E-Box KX, sheet steel",
+      "slug": "e-box-kx-sheet-steel-se-ya-ha-107",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "Small Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "The small enclosure KX, E-Box KX (sheet steel), offers remarkable ease of assembly and flexibility when selecting lock systems.",
+      "images": [
+        "https://i.ibb.co/SwywQLLN/78ea388d-2b4d-46ef-b594-ee46d4d90f7c.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SE-YA-HA-107"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Small Enclosures"
+        },
+        {
+          "label": "Material",
+          "value": "Sheet Steel"
+        }
+      ],
+      "stock": 158,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SE-YA-HA-107 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "se-enclosure-08",
+      "sku": "SE-YA-HA-108",
+      "name": "E-Box KX Stainless steel",
+      "slug": "e-box-kx-stainless-steel-se-ya-ha-108",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "Small Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "The stainless steel E-Box KX provides user-friendly assembly as well as flexibility when choosing your lock system. The 180° hinges supplied as standard provide excellent accessibility to the enclosure interior.",
+      "images": [
+        "https://i.ibb.co/k2Mn2mqr/fff52a14-10ae-4876-8e41-9c2dffa588c0.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SE-YA-HA-108"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Small Enclosures"
+        },
+        {
+          "label": "Material",
+          "value": "Stainless Steel"
+        }
+      ],
+      "stock": 681,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SE-YA-HA-108 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "se-enclosure-09",
+      "sku": "SE-YA-HA-109",
+      "name": "Polycarbonate enclosures PK with knockouts",
+      "slug": "polycarbonate-enclosures-pk-with-knockouts-se-ya-ha-109",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "Small Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "Wall-mounted enclosure of fibreglass-reinforced polycarbonate. Protection category IP 66. Covers feature quick-release fasteners for speedy maintenance. Self-extinguishing material for safety.",
+      "images": [
+        "https://i.ibb.co/JjRrvT30/1483e277-030e-42c0-8cfc-5f20481b00ce.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SE-YA-HA-109"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Small Enclosures"
+        },
+        {
+          "label": "Protection Category",
+          "value": "IP 66 Polycarbonate"
+        }
+      ],
+      "stock": 362,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SE-YA-HA-109 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "se-enclosure-10",
+      "sku": "SE-YA-HA-110",
+      "name": "Bus enclosures KX, sheet steel, with double-bit insert",
+      "slug": "bus-enclosures-kx-sheet-steel-with-double-bit-insert-se-ya-ha-110",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "Small Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "Wall-mounted enclosure made from sheet steel, with cover and viewing panel. Protection category IP 65/NEMA 12. For installing most brands of bus modules and sensors.",
+      "images": [
+        "https://i.ibb.co/sJCXj4nL/5dd0f73b-f980-4ef0-a928-8ae5054322af.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SE-YA-HA-110"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Small Enclosures"
+        },
+        {
+          "label": "Protection Category",
+          "value": "IP 65 / NEMA 12"
+        }
+      ],
+      "stock": 561,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SE-YA-HA-110 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "ie-enclosure-01",
+      "sku": "IE-YA-HA-101",
+      "name": "Enclosures AX IT with 482.6 mm (19\") mounting angles",
+      "slug": "enclosures-ax-it-with-482-6-mm-19-mounting-angles-ie-ya-ha-101",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "IT Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "IT wall-mounted enclosure with high protection category, for use in industrial environments. With depth-variable 482.6 mm (19\") mounting angle and gland plate with brush strip for cable entry in the enclosure base. Protection category up to IP 66 (depending on the selected gland pate).",
+      "images": [
+        "https://i.ibb.co/1tZ1VqPX/918720f6-c67b-441b-9349-628b155d36bf.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "IE-YA-HA-101"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "IT Enclosures"
+        }
+      ],
+      "stock": 605,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "IE-YA-HA-101 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "ie-enclosure-02",
+      "sku": "IE-YA-HA-102",
+      "name": "FlatBox",
+      "slug": "flatbox-ie-ya-ha-102",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "IT Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "Flat-packed enclosure. For optimum access and flexible use as a wall-mounted or floor-standing enclosure.",
+      "images": [
+        "https://i.ibb.co/6JcznWtj/e3d526f6-4c05-4ec0-99b7-ec2f382e7ca5.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "IE-YA-HA-102"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "IT Enclosures"
+        }
+      ],
+      "stock": 783,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "IE-YA-HA-102 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "ie-enclosure-03",
+      "sku": "IE-YA-HA-103",
+      "name": "AX wall-mounted enclosure, 3-part",
+      "slug": "ax-wall-mounted-enclosure-3-part-ie-ya-ha-103",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "IT Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "The delivery concept of the three-part AX wall-mounted enclosures reduces complexity and enhances flexibility. The AX/VX modular system makes these enclosures suitable for a range of applications. The three-part structure ensures easy access.",
+      "images": [
+        "https://i.ibb.co/hFM7bnT6/f531bb55-3509-499f-82a9-4e50adbfb180.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "IE-YA-HA-103"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "IT Enclosures"
+        }
+      ],
+      "stock": 409,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": false,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "IE-YA-HA-103 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "ie-enclosure-04",
+      "sku": "IE-YA-HA-104",
+      "name": "Wall-mounted enclosures EL, 3-part pre-configured",
+      "slug": "wall-mounted-enclosures-el-3-part-pre-configured-ie-ya-ha-104",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "IT Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "Wall-mounted enclosure 3-part, pre-configured with: Solid gland plate, top, with brush strip at the bottom, mounting rails, C rails, outlet filter, earth rail, wall-mounting bracket",
+      "images": [
+        "https://i.ibb.co/xKVXzVG5/157a3fd1-4e64-4320-8903-8bafafcdebf8.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "IE-YA-HA-104"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "IT Enclosures"
+        }
+      ],
+      "stock": 885,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "IE-YA-HA-104 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "ie-enclosure-05",
+      "sku": "IE-YA-HA-105",
+      "name": "Wall-mounted enclosure AX IT, Nano Data Center",
+      "slug": "wall-mounted-enclosure-ax-it-nano-data-center-ie-ya-ha-105",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "IT Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "IT wall-mounted enclosure based on AX, designed for compact edge applications in industrial environments. The enclosure allows the IT infrastructure to be securely and efficiently integrated into the production zone, with flexible mounting options and integral cooling.",
+      "images": [
+        "https://i.ibb.co/XMGNpw5/96e0768d-2858-4574-a360-e5279ca65b78.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "IE-YA-HA-105"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "IT Enclosures"
+        }
+      ],
+      "stock": 494,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "IE-YA-HA-105 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "ie-enclosure-06",
+      "sku": "IE-YA-HA-106",
+      "name": "AX wall-mounted enclosure, 3-part With Blue e+ outlet filter",
+      "slug": "ax-wall-mounted-enclosure-3-part-with-blue-e-outlet-filter-ie-ya-ha-106",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "IT Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "The delivery concept behind the three-part AX wall-mounted enclosures reduces complexity and enhances flexibility. The AX/VX modular system makes these enclosures suitable for a range of applications. The three-part structure ensures easy access.",
+      "images": [
+        "https://i.ibb.co/bRBh4n3M/1daabe98-30dc-4fa6-817a-b2b10612c2e5.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "IE-YA-HA-106"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "IT Enclosures"
+        }
+      ],
+      "stock": 209,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": false,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "IE-YA-HA-106 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "ie-enclosure-07",
+      "sku": "IE-YA-HA-107",
+      "name": "VerticalBox",
+      "slug": "verticalbox-ie-ya-ha-107",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "IT Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "Compact 482.6 mm (19\") enclosure for small networks that may be used as a wall-mounted, under-desk or desktop enclosure.",
+      "images": [
+        "https://i.ibb.co/99k2NpCS/4a70abc1-a2eb-42e1-989f-aa26a9355898.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "IE-YA-HA-107"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "IT Enclosures"
+        }
+      ],
+      "stock": 158,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "IE-YA-HA-107 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "ie-enclosure-08",
+      "sku": "IE-YA-HA-108",
+      "name": "Wall-mounted enclosures EL, 3-part with punched rails",
+      "slug": "wall-mounted-enclosures-el-3-part-with-punched-rails-ie-ya-ha-108",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "IT Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "Wall-mounted enclosure 3-part, pre-configured with: Solid gland plate, top and bottom, punched rails, C rails, wall mounting bracket. Protection category IP 55.",
+      "images": [
+        "https://i.ibb.co/mFhvtvPh/bf8d88c8-1f22-4501-9c4b-17dfe3e3bb42.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "IE-YA-HA-108"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "IT Enclosures"
+        }
+      ],
+      "stock": 681,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "IE-YA-HA-108 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "ie-enclosure-09",
+      "sku": "IE-YA-HA-109",
+      "name": "Wall-mounted enclosures EL, 3-part with mounting plate",
+      "slug": "wall-mounted-enclosures-el-3-part-with-mounting-plate-ie-ya-ha-109",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "IT Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "Wall-mounted enclosure 3-part, pre-configured with: Solid gland plate, top and bottom, mounting plate is supplied loose. Protection category IP 55.",
+      "images": [
+        "https://i.ibb.co/d4dRdMdV/6036b15f-d246-4155-b65b-6f9469571f71.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "IE-YA-HA-109"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "IT Enclosures"
+        }
+      ],
+      "stock": 362,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "IE-YA-HA-109 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "ie-enclosure-10",
+      "sku": "IE-YA-HA-110",
+      "name": "Small fibre-optic distributor with mounting plate",
+      "slug": "small-fibre-optic-distributor-with-mounting-plate-ie-ya-ha-110",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "IT Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "Small fibre-optic distributor of fibre-glass reinforced polycarbonate with mounting plate and PG cable glands. Protection category IP 66.",
+      "images": [
+        "https://i.ibb.co/WND3NBqm/4a94868d-8b63-4325-be29-608a7d5afe72.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "IE-YA-HA-110"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "IT Enclosures"
+        }
+      ],
+      "stock": 561,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "IE-YA-HA-110 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "we-enclosure-01",
+      "sku": "WE-YA-HA-101",
+      "name": "Operating housing AX for desktop TFT up to 24\"",
+      "slug": "operating-housing-ax-for-desktop-tft-up-to-24-we-ya-ha-101",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "Wall-Mounted Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "The operating housing for desktop TFT up to 24\" based on AX, sheet steel, with an integrated VESA 75/100 bracket. Effective and appealing protection for standard desktop TFTs up to 24\" in the formats 16:9/16:10. High protection category IP 65.",
+      "images": [
+        "https://i.ibb.co/FkQSCdS1/18261551-fc22-4c78-a195-e56639a4ca9e.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "WE-YA-HA-101"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Wall-Mounted Enclosures"
+        }
+      ],
+      "stock": 805,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "WE-YA-HA-101 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "we-enclosure-02",
+      "sku": "WE-YA-HA-102",
+      "name": "Operating housing AX with handle strips",
+      "slug": "operating-housing-ax-with-handle-strips-we-ya-ha-102",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "Wall-Mounted Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "Operating housing with sheet steel handle strips based on AX, with support arm cut-out Ø 130 mm to fit support arm system CP 60/120/180, service access optionally from the front or rear, aluminium front panel easily removable for machining, protection category IP 55.",
+      "images": [
+        "https://i.ibb.co/zHCqVr6X/2c5fa2d5-f705-492c-97f5-215c9b7b33be.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "WE-YA-HA-102"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Wall-Mounted Enclosures"
+        }
+      ],
+      "stock": 283,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "WE-YA-HA-102 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "we-enclosure-03",
+      "sku": "WE-YA-HA-103",
+      "name": "E-Box KX Stainless steel",
+      "slug": "e-box-kx-stainless-steel-we-ya-ha-103",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "Wall-Mounted Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "The stainless steel E-Box KX provides user-friendly assembly as well as flexibility when choosing your lock system. The 180° hinges supplied as standard provide excellent accessibility to the enclosure interior.",
+      "images": [
+        "https://i.ibb.co/qF7bvNdb/6c2351d2-764d-4ab0-b64e-825a4ead853c.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "WE-YA-HA-103"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Wall-Mounted Enclosures"
+        }
+      ],
+      "stock": 109,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": false,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "WE-YA-HA-103 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "we-enclosure-04",
+      "sku": "WE-YA-HA-104",
+      "name": "Wall-mounted enclosures AX IT with 482.6 mm (19\") mounting angles",
+      "slug": "wall-mounted-enclosures-ax-it-with-482-6-mm-19-mounting-angles-we-ya-ha-104",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "Wall-Mounted Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "IT wall-mounted enclosure with high protection category, for use in industrial environments. With depth-variable 482.6 mm (19\") mounting angle and gland plate with brush strip for cable entry in the enclosure base. Protection category up to IP 66 (depending on the selected gland pate).",
+      "images": [
+        "https://i.ibb.co/YSgxQxq/70aa8ab8-b44f-48ac-b855-3d6cf919f552.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "WE-YA-HA-104"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Wall-Mounted Enclosures"
+        }
+      ],
+      "stock": 585,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "WE-YA-HA-104 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "we-enclosure-05",
+      "sku": "WE-YA-HA-105",
+      "name": "AX wall-mounted enclosure, 3-part With Blue e+ outlet filter",
+      "slug": "ax-wall-mounted-enclosure-3-part-with-blue-e-outlet-filter-we-ya-ha-105",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "Wall-Mounted Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "The delivery concept behind the three-part AX wall-mounted enclosures reduces complexity and enhances flexibility. The AX/VX modular system makes these enclosures suitable for a range of applications.",
+      "images": [
+        "https://i.ibb.co/ZRXY87DC/d9c06427-700b-486b-939b-c2d8f5784640.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "WE-YA-HA-105"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Wall-Mounted Enclosures"
+        }
+      ],
+      "stock": 994,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "WE-YA-HA-105 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "we-enclosure-06",
+      "sku": "WE-YA-HA-106",
+      "name": "AX wall-mounted enclosure, 3-part",
+      "slug": "ax-wall-mounted-enclosure-3-part-we-ya-ha-106",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "Wall-Mounted Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "The delivery concept of the three-part AX wall-mounted enclosures reduces complexity and enhances flexibility. The AX/VX modular system makes these enclosures suitable for a range of applications. The three-part structure ensures easy access.",
+      "images": [
+        "https://i.ibb.co/xSq961yH/e8f2272b-7870-41ad-8bd8-07ad7eb9e612.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "WE-YA-HA-106"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Wall-Mounted Enclosures"
+        }
+      ],
+      "stock": 259,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": false,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "WE-YA-HA-106 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "we-enclosure-07",
+      "sku": "WE-YA-HA-107",
+      "name": "Plastic enclosures AX with viewing window",
+      "slug": "plastic-enclosures-ax-with-viewing-window-we-ya-ha-107",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "Wall-Mounted Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "AX plastic enclosures with viewing window are ideal for applications in challenging situations. Numerous mounting bosses inside the enclosure allow individual interior configuration on a 25 mm pitch pattern",
+      "images": [
+        "https://i.ibb.co/HT3qH7mH/86fbf259-1084-4a06-98ce-c36c429ce762.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "WE-YA-HA-107"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Wall-Mounted Enclosures"
+        }
+      ],
+      "stock": 358,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "WE-YA-HA-107 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "we-enclosure-08",
+      "sku": "WE-YA-HA-108",
+      "name": "Plastic enclosures AX without viewing window",
+      "slug": "plastic-enclosures-ax-without-viewing-window-we-ya-ha-108",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "Wall-Mounted Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "AX plastic enclosures are ideal for applications in challenging situations. Numerous mounting bosses inside the enclosure allow individual interior configuration on a 25 mm pitch pattern, e.g. with punched sections and rails.",
+      "images": [
+        "https://i.ibb.co/ynmFNPZM/4b4318cd-6963-4f55-8ebb-11772f5bd992.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "WE-YA-HA-108"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Wall-Mounted Enclosures"
+        }
+      ],
+      "stock": 281,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "WE-YA-HA-108 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "we-enclosure-09",
+      "sku": "WE-YA-HA-109",
+      "name": "Basic enclosure AX, stainless steel",
+      "slug": "basic-enclosure-ax-stainless-steel-we-ya-ha-109",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "Wall-Mounted Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "The robust stainless steel enclosure features an integral locator system, enabling fast, easy, reliable and extensive system configuration with no drilling required.",
+      "images": [
+        "https://i.ibb.co/pvS6NFRc/8312409d-d849-431d-bf09-7bfc653274b2.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "WE-YA-HA-109"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Wall-Mounted Enclosures"
+        }
+      ],
+      "stock": 562,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "WE-YA-HA-109 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "we-enclosure-10",
+      "sku": "WE-YA-HA-110",
+      "name": "Basic enclosure AX, sheet steel",
+      "slug": "basic-enclosure-ax-sheet-steel-we-ya-ha-110",
+      "brand": "Rittal",
+      "category": "Industrial Enclosures",
+      "subcategory": "Wall-Mounted Enclosures",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "The compact enclosure AX with integral enclosure locators in the roof, base and side forms the familiar 25 mm system pitch pattern from the VX25 large enclosure. With this unique, patented system, AX compact enclosures are prepared for all types of configurations and refits.",
+      "images": [
+        "https://i.ibb.co/3Y743YWB/122ecdd8-885e-46d9-aaa9-fa018ed7f661.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "WE-YA-HA-110"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Industrial Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Wall-Mounted Enclosures"
+        }
+      ],
+      "stock": 161,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "WE-YA-HA-110 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "sr-rack-01",
+      "sku": "SR-YA-HA-101",
+      "name": "Network/server rack VX IT with glazed door, pre-configured, with 482.6 mm (19\") swing frame",
+      "slug": "network-server-rack-vx-it-with-glazed-door-pre-configured-with-482-6-mm-19-swing-frame-sr-ya-ha-101",
+      "brand": "Rittal",
+      "category": "Racks & Enclosures",
+      "subcategory": "Server Racks",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "VX IT network/server enclosure, closed, for direct climate control tailored to the specific enclosure. Supplied pre-assembled with a selection of practical equipment. 482.6 mm (19\") interior installation with 482.6 mm (19\") swing frame for direct access to the rear of 482.6 mm (19\") components, thanks to an opening angle of 130°.",
+      "images": [
+        "https://i.ibb.co/Y79Rtj9L/debc0507-48ee-4fa0-b782-f4afbf2b5893.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SR-YA-HA-101"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Racks & Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Server Racks"
+        }
+      ],
+      "stock": 865,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SR-YA-HA-101 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "sr-rack-02",
+      "sku": "SR-YA-HA-102",
+      "name": "Cable management rack VX IT",
+      "slug": "cable-management-rack-vx-it-sr-ya-ha-102",
+      "brand": "Rittal",
+      "category": "Racks & Enclosures",
+      "subcategory": "Server Racks",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "For laying, securing and storing cables or as an empty enclosure with uneven LCP installations.",
+      "images": [
+        "https://i.ibb.co/v60vLmqv/234dabb4-1fe4-42bc-95c4-ba27aa2ec859.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SR-YA-HA-102"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Racks & Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Server Racks"
+        }
+      ],
+      "stock": 223,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SR-YA-HA-102 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "sr-rack-03",
+      "sku": "SR-YA-HA-103",
+      "name": "Network rack TX CableNet with vented door",
+      "slug": "network-rack-tx-cablenet-with-vented-door-sr-ya-ha-103",
+      "brand": "Rittal",
+      "category": "Racks & Enclosures",
+      "subcategory": "Server Racks",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "Taking cable management to a new level: The TX CableNet unites many years of expertise in an IT rack which meets every requirement in terms of functionality and quality, prepared for individual interior installation.",
+      "images": [
+        "https://i.ibb.co/271S6H1F/30df8946-ac56-4238-b23f-cf388e1a2ef4.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SR-YA-HA-103"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Racks & Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Server Racks"
+        }
+      ],
+      "stock": 179,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": false,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SR-YA-HA-103 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "sr-rack-04",
+      "sku": "SR-YA-HA-104",
+      "name": "Compartment Rack VX IT divided into four, vented",
+      "slug": "compartment-rack-vx-it-divided-into-four-vented-sr-ya-ha-104",
+      "brand": "Rittal",
+      "category": "Racks & Enclosures",
+      "subcategory": "Server Racks",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "VX IT rack with four independent installation compartments, providing for independent cable routing to each compartment, optionally from above or below, and vented sheet steel front and rear doors for each compartment.",
+      "images": [
+        "https://i.ibb.co/fVLYmggD/dabb184c-caf6-43b4-9045-39ad94512ae0.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SR-YA-HA-104"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Racks & Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Server Racks"
+        }
+      ],
+      "stock": 515,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SR-YA-HA-104 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "sr-rack-05",
+      "sku": "SR-YA-HA-105",
+      "name": "VX IT Open",
+      "slug": "vx-it-open-sr-ya-ha-105",
+      "brand": "Rittal",
+      "category": "Racks & Enclosures",
+      "subcategory": "Server Racks",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "VX IT standard version, without front and rear door. Usable either as an open 482.6 mm (19\") frame in a secure environment or as the basis for fast configurations in the Rittal RiPanel configuration system using existing accessories (such as doors and side panels) from the Rittal modular range.",
+      "images": [
+        "https://i.ibb.co/21grSkQ3/d7146bb3-a788-4cb7-86b8-9939856dc228.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SR-YA-HA-105"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Racks & Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Server Racks"
+        }
+      ],
+      "stock": 294,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SR-YA-HA-105 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "sr-rack-06",
+      "sku": "SR-YA-HA-106",
+      "name": "TX Colocation rack",
+      "slug": "tx-colocation-rack-sr-ya-ha-106",
+      "brand": "Rittal",
+      "category": "Racks & Enclosures",
+      "subcategory": "Server Racks",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "The world of IT is changing, and the centralisation of IT in large data centres has become a long-term trend. The TX Colo, which is perfectly adapted to use in a large data centre, is our response. Thanks to its forward-thinking configuration, the TX Colo is ready for immediate use to suit your application!",
+      "images": [
+        "https://i.ibb.co/TDd0NsJ2/854d787d-3de5-4c6b-9446-59706a14118b.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SR-YA-HA-106"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Racks & Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Server Racks"
+        }
+      ],
+      "stock": 299,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": false,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SR-YA-HA-106 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "sr-rack-07",
+      "sku": "SR-YA-HA-107",
+      "name": "Network rack TX CableNet with glazed door",
+      "slug": "network-rack-tx-cablenet-with-glazed-door-sr-ya-ha-107",
+      "brand": "Rittal",
+      "category": "Racks & Enclosures",
+      "subcategory": "Server Racks",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "The TX CableNet - places extra space at your disposal by avoiding the problem of unnecessarily wide or deep IT racks. This IT network rack is thus also suitable for use in smaller IT environments and is already optimally prepared for individual interior installation.",
+      "images": [
+        "https://i.ibb.co/271GzWh9/a123293d-3778-492f-a900-b502bfd70b54.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SR-YA-HA-107"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Racks & Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Server Racks"
+        }
+      ],
+      "stock": 318,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SR-YA-HA-107 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "sr-rack-08",
+      "sku": "SR-YA-HA-108",
+      "name": "Compartment Rack VX IT divided into two, vented",
+      "slug": "compartment-rack-vx-it-divided-into-two-vented-sr-ya-ha-108",
+      "brand": "Rittal",
+      "category": "Racks & Enclosures",
+      "subcategory": "Server Racks",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "VX IT rack with two independent installation compartments, providing for independent cable routing to each compartment, optionally from above or below, and vented sheet steel front and rear doors for each compartment.",
+      "images": [
+        "https://i.ibb.co/PpNf5Zp/c186a59b-7092-40c3-9f2e-dea59449797a.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SR-YA-HA-108"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Racks & Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Server Racks"
+        }
+      ],
+      "stock": 241,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SR-YA-HA-108 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "sr-rack-09",
+      "sku": "SR-YA-HA-109",
+      "name": "Network/server rack VX IT with glazed door, IP 55",
+      "slug": "network-server-rack-vx-it-with-glazed-door-ip-55-sr-ya-ha-109",
+      "brand": "Rittal",
+      "category": "Racks & Enclosures",
+      "subcategory": "Server Racks",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "VX IT network/server enclosure, closed, for direct climate control tailored to the specific enclosure. 482.6 mm (19\") interior installation with 482.6 mm (19\") mounting angles in the standard version, available in a range of size variants and with a protection category of up to IP 55.",
+      "images": [
+        "https://i.ibb.co/fY32bprv/1ad59ef5-3af7-4b0e-a024-ca819b3013cf.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SR-YA-HA-109"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Racks & Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Server Racks"
+        }
+      ],
+      "stock": 542,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SR-YA-HA-109 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "sr-rack-10",
+      "sku": "SR-YA-HA-110",
+      "name": "Network/server rack VX IT with glazed door",
+      "slug": "network-server-rack-vx-it-with-glazed-door-sr-ya-ha-110",
+      "brand": "Rittal",
+      "category": "Racks & Enclosures",
+      "subcategory": "Server Racks",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "VX IT network/server enclosure, closed, for direct climate control tailored to the specific enclosure. 482.6 mm (19\") interior installation with depth-variable 482.6 mm (19\") mounting angles in the standard version, available in a range of size variants.",
+      "images": [
+        "https://i.ibb.co/JRQLLTpD/c7aa6aba-4696-43d8-899d-e17d160f99a8.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SR-YA-HA-110"
+        },
+        {
+          "label": "Brand",
+          "value": "Rittal"
+        },
+        {
+          "label": "Category",
+          "value": "Racks & Enclosures"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Server Racks"
+        }
+      ],
+      "stock": 351,
+      "oem": "Rittal",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SR-YA-HA-110 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "ex-cctv-01",
+      "sku": "EC-YA-HA-101",
+      "name": "ExSite Pro Bullet",
+      "slug": "exsite-pro-bullet-ec-ya-ha-101",
+      "brand": "Pelco",
+      "category": "Ex-Proof Equipments",
+      "subcategory": "Ex-CCTV Camera",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "ExSite Pro Bullet. Explosion-proof and dust-ignition-proof. Rugged for tough conditions. Built-in IR to see in darkness. Rated from -40° to 65°C (-40° to 149°F). Robust built-in cybersecurity features. Flexible mounting options for easy install",
+      "images": [
+        "https://i.ibb.co/1Ywh43dR/3067e8d9-957d-4338-97a4-d1bd5034e890.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "EC-YA-HA-101"
+        },
+        {
+          "label": "Brand",
+          "value": "Pelco"
+        },
+        {
+          "label": "Category",
+          "value": "Ex-Proof Equipments"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Ex-CCTV Camera"
+        }
+      ],
+      "stock": 805,
+      "oem": "Pelco",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "EC-YA-HA-101 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "ex-cctv-02",
+      "sku": "EC-YA-HA-102",
+      "name": "ExSite Enhanced 2 Series PTZ",
+      "slug": "exsite-enhanced-2-series-ptz-ec-ya-ha-102",
+      "brand": "Pelco",
+      "category": "Ex-Proof Equipments",
+      "subcategory": "Ex-CCTV Camera",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "ExSite Enhanced 2 Series PTZ. Explosion-proof and dust-ignition-proof. Heavy-duty stainless steel housing. Long-range zoom. Rated from -40° to 70°C (-40° to 158°F). High-quality imaging. Various accessories for easy installation",
+      "images": [
+        "https://i.ibb.co/Y76LnzYd/908e1246-d2a3-40ae-9fa7-848b7a18db9e.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "EC-YA-HA-102"
+        },
+        {
+          "label": "Brand",
+          "value": "Pelco"
+        },
+        {
+          "label": "Category",
+          "value": "Ex-Proof Equipments"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Ex-CCTV Camera"
+        }
+      ],
+      "stock": 283,
+      "oem": "Pelco",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "EC-YA-HA-102 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "ex-cctv-03",
+      "sku": "EC-YA-HA-103",
+      "name": "ExSite Pro IR PTZ",
+      "slug": "exsite-pro-ir-ptz-ec-ya-ha-103",
+      "brand": "Pelco",
+      "category": "Ex-Proof Equipments",
+      "subcategory": "Ex-CCTV Camera",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "ExSite Pro IR PTZ. Explosion-proof and dust-ignition-proof. Cost-saving with aluminum housing. Long-range built-in infrared illuminator. Large area coverage with smooth PTZ. Easy installation with various accessories. Rated from -40° to 60°C (-40° to 140°F)",
+      "images": [
+        "https://i.ibb.co/gM0mzpRY/1d4b95b1-9dae-4314-a4ee-981663599802.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "EC-YA-HA-103"
+        },
+        {
+          "label": "Brand",
+          "value": "Pelco"
+        },
+        {
+          "label": "Category",
+          "value": "Ex-Proof Equipments"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Ex-CCTV Camera"
+        }
+      ],
+      "stock": 109,
+      "oem": "Pelco",
+      "productType": "Enterprise",
+      "featured": false,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "EC-YA-HA-103 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "ex-cctv-04",
+      "sku": "EC-YA-HA-104",
+      "name": "ExSite Enhanced Thermal 2 Series Fixed",
+      "slug": "exsite-enhanced-thermal-2-series-fixed-ec-ya-ha-104",
+      "brand": "Pelco",
+      "category": "Ex-Proof Equipments",
+      "subcategory": "Ex-CCTV Camera",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "ExSite Enhanced Thermal 2 Series Fixed. Explosion-proof and dust-ignition-proof. Heavy-duty stainless steel housing. Wide and long-range thermal views. Radiometrics available on select models. Rated from -50° to 65°C (-58° to 149°F). Flexible mounting options for easy install",
+      "images": [
+        "https://i.ibb.co/4gw7sr9m/8fc00249-2a4c-45f6-bebf-1baa7dce2fda.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "EC-YA-HA-104"
+        },
+        {
+          "label": "Brand",
+          "value": "Pelco"
+        },
+        {
+          "label": "Category",
+          "value": "Ex-Proof Equipments"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Ex-CCTV Camera"
+        }
+      ],
+      "stock": 585,
+      "oem": "Pelco",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "EC-YA-HA-104 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "ex-cctv-05",
+      "sku": "EC-YA-HA-105",
+      "name": "ExSite Enhanced 2 Series Fixed",
+      "slug": "exsite-enhanced-2-series-fixed-ec-ya-ha-105",
+      "brand": "Pelco",
+      "category": "Ex-Proof Equipments",
+      "subcategory": "Ex-CCTV Camera",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "ExSite Enhanced 2 Series Fixed. Explosion-proof and dust-ignition-proof. Heavy-duty stainless steel housing. Rated from -50° to 65°C (-58° to 149°F). Wiper and sun shield for extra protection. Electronic Image Stabilization. Flexible mounting options for easy install",
+      "images": [
+        "https://i.ibb.co/XkLDMCyN/e2baadb1-07c3-48cd-8325-af124b075c9c.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "EC-YA-HA-105"
+        },
+        {
+          "label": "Brand",
+          "value": "Pelco"
+        },
+        {
+          "label": "Category",
+          "value": "Ex-Proof Equipments"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Ex-CCTV Camera"
+        }
+      ],
+      "stock": 994,
+      "oem": "Pelco",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "EC-YA-HA-105 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "ex-cctv-06",
+      "sku": "EC-YA-HA-106",
+      "name": "ExSite Enhanced IR 2 Series PTZ",
+      "slug": "exsite-enhanced-ir-2-series-ptz-ec-ya-ha-106",
+      "brand": "Pelco",
+      "category": "Ex-Proof Equipments",
+      "subcategory": "Ex-CCTV Camera",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "ExSite Enhanced IR 2 Series PTZ. Explosion-proof and dust-ignition-proof. Heavy-duty stainless steel housing. Long-range varifocal IR illumination. Rated from -40° to 70°C (-40° to 158°F). Electronic Image Stabilization. Easy to install with multiple accessories",
+      "images": [
+        "https://i.ibb.co/s9XDdYrM/9f2af2bc-19ec-4f1c-97e4-88ddd79b8ab7.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "EC-YA-HA-106"
+        },
+        {
+          "label": "Brand",
+          "value": "Pelco"
+        },
+        {
+          "label": "Category",
+          "value": "Ex-Proof Equipments"
+        },
+        {
+          "label": "Subcategory",
+          "value": "Ex-CCTV Camera"
+        }
+      ],
+      "stock": 259,
+      "oem": "Pelco",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "EC-YA-HA-106 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "paga-system-01",
+      "sku": "PS-YA-HA-101",
+      "name": "ExResistTel Explosion Proof Telephone IP4",
+      "slug": "exresisttel-explosion-proof-telephone-ip4-ps-ya-ha-101",
+      "brand": "FHF",
+      "category": "Ex-Proof Equipments",
+      "subcategory": "PAGA System",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "ExResistTel IP4 is suitable for all indoor and outdoor installations. This device is ideal for every weather condition and numerous operation sites, including exposure to seawater, high humidity or extensive mechanical strain. The ExResistTel range comprises our most high-performance and rugged models for the most demanding environments.",
+      "images": [
+        "https://i.ibb.co/vx7FXPmp/f9669fef-1d28-4ba8-89e7-516f01bb2c5b.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "PS-YA-HA-101"
+        },
+        {
+          "label": "Brand",
+          "value": "FHF"
+        },
+        {
+          "label": "Category",
+          "value": "Ex-Proof Equipments"
+        },
+        {
+          "label": "Subcategory",
+          "value": "PAGA System"
+        }
+      ],
+      "stock": 105,
+      "oem": "FHF",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "PS-YA-HA-101 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "paga-system-02",
+      "sku": "PS-YA-HA-102",
+      "name": "FernTel IP Z2 Explosionproof Telephone IP",
+      "slug": "ferntel-ip-z2-explosionproof-telephone-ip-ps-ya-ha-102",
+      "brand": "FHF",
+      "category": "Ex-Proof Equipments",
+      "subcategory": "PAGA System",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "FHF FernTel IP Z2 is an IP desk/wall telephone for applications in potentially explosive areas in Zone 2 and 22. The FernTel IP Z2 is manufactured from Polycarbonate an impact-resistant thermoplastic which is certified according to ATEX. The housing prevents corrosion and provides longevity minimising the overall maintenance costs.",
+      "images": [
+        "https://i.ibb.co/RT6kr8S4/60f7bec3-c7f5-4e00-aa4e-5b1358894f82.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "PS-YA-HA-102"
+        },
+        {
+          "label": "Brand",
+          "value": "FHF"
+        },
+        {
+          "label": "Category",
+          "value": "Ex-Proof Equipments"
+        },
+        {
+          "label": "Subcategory",
+          "value": "PAGA System"
+        }
+      ],
+      "stock": 183,
+      "oem": "FHF",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "PS-YA-HA-102 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "paga-system-03",
+      "sku": "PS-YA-HA-103",
+      "name": "ResistTel Weatherproof Telephone IP4",
+      "slug": "resisttel-weatherproof-telephone-ip4-ps-ya-ha-103",
+      "brand": "FHF",
+      "category": "Ex-Proof Equipments",
+      "subcategory": "PAGA System",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "FHF ResistTel IP4 is a weatherproof VoIP telephone suitable for indoor and outdoor use for rough environmental conditions with the highest degree of safety in industrial areas. Our telephone is resistant to seawater as well as alkali, acids and lubricants. The ResistTel range comprises our most high-performance and rugged models for the most demanding environments.",
+      "images": [
+        "https://i.ibb.co/RpbNvMRT/1139ea96-d406-46d6-a0f9-a0ea772a25a0.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "PS-YA-HA-103"
+        },
+        {
+          "label": "Brand",
+          "value": "FHF"
+        },
+        {
+          "label": "Category",
+          "value": "Ex-Proof Equipments"
+        },
+        {
+          "label": "Subcategory",
+          "value": "PAGA System"
+        }
+      ],
+      "stock": 209,
+      "oem": "FHF",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "PS-YA-HA-103 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "paga-system-04",
+      "sku": "PS-YA-HA-104",
+      "name": "MEDC CU1 Combination Sounder Beacon Range",
+      "slug": "medc-cu1-combination-sounder-beacon-range-ps-ya-ha-104",
+      "brand": "MEDC",
+      "category": "Ex-Proof Equipments",
+      "subcategory": "PAGA System",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "Spinel Crouse-Hinds series MEDC CU1 combination sounder/beacon range is engineered for hazardous and potentially explosive atmospheres. Designed for oil, gas, and petrochemical industries, it is suitable for marine, onshore, and offshore environments. The CU1 delivers a powerful sound output of up to 116dB(A) and beacon tube energy of up to 10 joules, ensuring clear audible and visual warnings in critical conditions.",
+      "images": [
+        "https://i.ibb.co/hJYHT7xN/4752181e-d34a-4a2b-9071-51fb8fa3f426.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "PS-YA-HA-104"
+        },
+        {
+          "label": "Brand",
+          "value": "MEDC"
+        },
+        {
+          "label": "Category",
+          "value": "Ex-Proof Equipments"
+        },
+        {
+          "label": "Subcategory",
+          "value": "PAGA System"
+        }
+      ],
+      "stock": 185,
+      "oem": "Eaton MEDC",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "PS-YA-HA-104 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "paga-system-05",
+      "sku": "PS-YA-HA-105",
+      "name": "MEDC DB1 Metallic Sounder Range",
+      "slug": "medc-db1-metallic-sounder-range-ps-ya-ha-105",
+      "brand": "MEDC",
+      "category": "Ex-Proof Equipments",
+      "subcategory": "PAGA System",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "Spinel's Crouse-Hinds series MEDC DB1 range of lightweight, flame-proof sounders is designed for use in potentially explosive atmospheres and has been designed with a high weatherproof rating to cope with the harsh environmental conditions found offshore and onshore in the oil, gas and petrochemical industries. The DB1P and DB1HP can be switched between two selectable tones by either reversing the supply polarity, or connecting a second voltage supply. The higher output DB1H and DB1HP are particularly suitable for noisy environments.",
+      "images": [
+        "https://i.ibb.co/WvxnQsC0/11a18456-b882-41b2-b339-9d1aedaf8465.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "PS-YA-HA-105"
+        },
+        {
+          "label": "Brand",
+          "value": "MEDC"
+        },
+        {
+          "label": "Category",
+          "value": "Ex-Proof Equipments"
+        },
+        {
+          "label": "Subcategory",
+          "value": "PAGA System"
+        }
+      ],
+      "stock": 194,
+      "oem": "Eaton MEDC",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "PS-YA-HA-105 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "paga-system-06",
+      "sku": "PS-YA-HA-106",
+      "name": "MEDC DB3B Explosion Proof Sounder Range",
+      "slug": "medc-db3b-explosion-proof-sounder-range-ps-ya-ha-106",
+      "brand": "MEDC",
+      "category": "Ex-Proof Equipments",
+      "subcategory": "PAGA System",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "isQuoteOnly": true,
+      "description": "Crouse-Hinds series MEDC DB3B is a high-power explosion proof sounder which is provided with versatile control options allowing compatibility with a wide range of control methods and PLCs. Certified for use from -55°C to +85°C, the DB3B can withstand the harshest conditions. With an Ex enclosure manufactured from GRP and a rugged thermoplastic flare, it is lightweight and corrosion-resistant without compromising on durability.",
+      "images": [
+        "https://i.ibb.co/d4zNW4z0/49017f6b-f3a7-43c5-ac57-d062f5ada936.png"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "PS-YA-HA-106"
+        },
+        {
+          "label": "Brand",
+          "value": "MEDC"
+        },
+        {
+          "label": "Category",
+          "value": "Ex-Proof Equipments"
+        },
+        {
+          "label": "Subcategory",
+          "value": "PAGA System"
+        }
+      ],
+      "stock": 159,
+      "oem": "Eaton MEDC",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "PS-YA-HA-106 Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "sp-ups-pdu-srv5kilz",
+      "sku": "SRV5KILZ",
+      "name": "APC Essential SurgeArrest Tester",
+      "slug": "apc-essential-surgearrest-tester-srv5kilz",
+      "brand": "APC",
+      "category": "UPS & PDU",
+      "subcategory": "UPS & PDU",
+      "priceUSD": 0.006,
+      "priceNGN": 9,
+      "description": "APC Essential SurgeArrest 5 outlets 230V UK - Protection Against Lightning & Power Surges for Computers and Electronics Tester",
+      "images": [
+        "https://i.ibb.co/VcKSgDdK/apc-essential-surgearrest-5-outlets-230v-pm5-uk-surge-protector.jpg"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SRV5KILZ"
+        },
+        {
+          "label": "Brand",
+          "value": "APC"
+        },
+        {
+          "label": "Category",
+          "value": "UPS & PDU"
+        },
+        {
+          "label": "Subcategory",
+          "value": "UPS & PDU"
+        }
+      ],
+      "stock": 3289,
+      "oem": "APC",
+      "productType": "Enterprise",
+      "featured": false,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SRV5KILZ Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
     }
   ],
   "orders": [
+    {
+      "id": "ord-1784928747915",
+      "orderNumber": "SP-ORD-2026-89099",
+      "date": "2026-07-24",
+      "customerName": "Timmy Patrick",
+      "customerEmail": "timi.patrick@dataset.ng",
+      "billingAddress": {
+        "fullName": "Timmy Patrick",
+        "email": "timi.patrick@dataset.ng",
+        "phone": "+2348128561607",
+        "addressLine1": "1 Asenuga Street, off Liasu Road",
+        "city": "Lagos",
+        "state": "Lagos",
+        "country": "Nigeria"
+      },
+      "shippingAddress": {
+        "fullName": "Timmy Patrick",
+        "email": "timi.patrick@dataset.ng",
+        "phone": "+2348128561607",
+        "addressLine1": "1 Asenuga Street, off Liasu Road",
+        "city": "Lagos",
+        "state": "Lagos",
+        "country": "Nigeria"
+      },
+      "items": [
+        {
+          "productId": "sp-ups-pdu-03",
+          "productName": "APC Essential SurgeArrest",
+          "sku": "SRV5KIL",
+          "quantity": 1,
+          "priceUSD": 52,
+          "priceNGN": 78000
+        }
+      ],
+      "subtotalUSD": 52,
+      "subtotalNGN": 78000,
+      "taxUSD": 0,
+      "taxNGN": 0,
+      "shippingUSD": 0,
+      "shippingNGN": 0,
+      "totalUSD": 52,
+      "totalNGN": 78000,
+      "status": "Paid",
+      "paymentMethod": "paystack",
+      "paymentReference": "REF-1784928747915"
+    },
+    {
+      "id": "ord-1784928702538",
+      "orderNumber": "SP-ORD-2026-82952",
+      "date": "2026-07-24",
+      "customerName": "Timmy Patrick",
+      "customerEmail": "timi.patrick@dataset.ng",
+      "billingAddress": {
+        "fullName": "Timmy Patrick",
+        "email": "timi.patrick@dataset.ng",
+        "phone": "+2348128561607",
+        "addressLine1": "1 Asenuga Street, off Liasu Road",
+        "city": "Lagos",
+        "state": "Lagos",
+        "country": "Nigeria"
+      },
+      "shippingAddress": {
+        "fullName": "Timmy Patrick",
+        "email": "timi.patrick@dataset.ng",
+        "phone": "+2348128561607",
+        "addressLine1": "1 Asenuga Street, off Liasu Road",
+        "city": "Lagos",
+        "state": "Lagos",
+        "country": "Nigeria"
+      },
+      "items": [
+        {
+          "productId": "sp-prod-113",
+          "productName": "2 Year Extended Warranty for UA Enterprise Appliance",
+          "sku": "UA-APP-ENT-WARR-EXTEND-2YR",
+          "quantity": 6,
+          "priceUSD": 1760.21,
+          "priceNGN": 2640315
+        }
+      ],
+      "subtotalUSD": 10561.26,
+      "subtotalNGN": 15841890,
+      "taxUSD": 0,
+      "taxNGN": 0,
+      "shippingUSD": 0,
+      "shippingNGN": 0,
+      "totalUSD": 10561.26,
+      "totalNGN": 15841890,
+      "status": "Paid",
+      "paymentMethod": "paystack",
+      "paymentReference": "REF-1784928702538"
+    },
+    {
+      "id": "ord-1784928673497",
+      "orderNumber": "SP-ORD-2026-47312",
+      "date": "2026-07-24",
+      "customerName": "Timmy Patrick",
+      "customerEmail": "timi.patrick@dataset.ng",
+      "billingAddress": {
+        "fullName": "Timmy Patrick",
+        "email": "timi.patrick@dataset.ng",
+        "phone": "+2348128561607",
+        "addressLine1": "1 Asenuga Street, off Liasu Road",
+        "city": "Lagos",
+        "state": "Lagos",
+        "country": "Nigeria"
+      },
+      "shippingAddress": {
+        "fullName": "Timmy Patrick",
+        "email": "timi.patrick@dataset.ng",
+        "phone": "+2348128561607",
+        "addressLine1": "1 Asenuga Street, off Liasu Road",
+        "city": "Lagos",
+        "state": "Lagos",
+        "country": "Nigeria"
+      },
+      "items": [
+        {
+          "productId": "sp-bullet-23",
+          "productName": "QVGA H5A Thermal; Bullet Camera with 18mm Lens; 30Hz",
+          "sku": "320F-H5A-THC-BO12-B",
+          "quantity": 5,
+          "priceUSD": 7777.98,
+          "priceNGN": 11666970
+        }
+      ],
+      "subtotalUSD": 38889.899999999994,
+      "subtotalNGN": 58334850,
+      "taxUSD": 0,
+      "taxNGN": 0,
+      "shippingUSD": 0,
+      "shippingNGN": 0,
+      "totalUSD": 38889.899999999994,
+      "totalNGN": 58334850,
+      "status": "Pending",
+      "paymentMethod": "bank-transfer",
+      "paymentReference": "REF-1784928673497"
+    },
     {
       "id": "ord-1",
       "orderNumber": "SP-ORD-2026-0001",

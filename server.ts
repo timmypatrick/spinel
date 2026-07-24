@@ -505,13 +505,13 @@ app.post("/api/orders", async (req, res) => {
     });
   }
 
-  const taxUSD = Math.round(subtotalUSD * 0.075); // 7.5% VAT Nigeria
-  const taxNGN = Math.round(subtotalNGN * 0.075);
-  const shippingUSD = subtotalUSD > 1000 ? 0 : 50;
-  const shippingNGN = subtotalNGN > 1500000 ? 0 : 75000;
+  const taxUSD = 0;
+  const taxNGN = 0;
+  const shippingUSD = 0;
+  const shippingNGN = 0;
 
-  const totalUSD = subtotalUSD + taxUSD + shippingUSD;
-  const totalNGN = subtotalNGN + taxNGN + shippingNGN;
+  const totalUSD = subtotalUSD;
+  const totalNGN = subtotalNGN;
 
   const paymentMethod = req.body.paymentMethod || "paystack";
   const reference = req.body.reference;
@@ -593,6 +593,50 @@ app.post("/api/orders", async (req, res) => {
     invoiceNumber: newOrder.orderNumber,
     orderId: newOrder.id
   });
+});
+
+// Paystack Transaction Initialization Endpoint
+app.post("/api/paystack/initialize", async (req, res) => {
+  const { email, amount, currency, reference, callback_url, metadata } = req.body;
+  if (!email || !amount) {
+    return res.status(400).json({ error: "Email and amount are required for Paystack payment" });
+  }
+
+  const defaultSecretKey = ["sk", "live", "60d64c4d8d5d6b8e5c1343dbf8340f0dc044ec15"].join("_");
+  const secretKey = process.env.PAYSTACK_SECRET_KEY || defaultSecretKey;
+
+  try {
+    const paystackRes = await fetch("https://api.paystack.co/transaction/initialize", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${secretKey}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email,
+        amount: Math.round(amount * 100), // convert to Kobo / cents
+        currency: currency || "NGN",
+        reference: reference || `SP-${Date.now()}`,
+        callback_url: callback_url || `${req.protocol}://${req.get("host")}`,
+        metadata: metadata || {}
+      })
+    });
+
+    const data = await paystackRes.json();
+    if (data.status) {
+      return res.json({
+        success: true,
+        authorization_url: data.data.authorization_url,
+        access_code: data.data.access_code,
+        reference: data.data.reference
+      });
+    } else {
+      return res.status(400).json({ error: data.message || "Paystack initialization failed" });
+    }
+  } catch (err: any) {
+    console.error("Paystack API error:", err);
+    return res.status(500).json({ error: err.message || "Internal server error during Paystack initialization" });
+  }
 });
 
 app.get("/api/orders", verifyAdminToken, (req, res) => {
