@@ -171,6 +171,7 @@ export default function App() {
             setSelectedProductId={setSelectedProductId}
             currency={currency}
             addToCart={handleAddToCart}
+            onRequestQuote={handleRequestQuote}
           />
         )}
 

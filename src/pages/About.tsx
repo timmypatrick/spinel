@@ -277,7 +277,7 @@ export default function About({ setCurrentView }: AboutProps) {
       image: "https://i.ibb.co/gMGdhQfd/Exploration-for-oil-and-gas-is-very-expensive-and-risky.jpg"
     },
     {
-      name: "Telecommunications",
+      name: "Telecom",
       icon: Radio,
       summary: "Cellular Towers, Signal Distribution Arrays, and Central Nodes.",
       solution: "Provision of high-performance off-grid solar energy systems utilizing Vantage hybrid solar inverters, dual-MPPT smart controllers, and stackable lithium-iron phosphate (LiFePO4) battery systems to guarantee continuous cellular tower operations and eliminate operational diesel expenditure.",
@@ -348,7 +348,7 @@ export default function About({ setCurrentView }: AboutProps) {
         <div className="lg:col-span-7 space-y-6">
           <span className="text-[#FF7A20] font-bold text-xs uppercase tracking-widest font-mono">About Spinel Distribution</span>
           <h1 className="text-3xl sm:text-4xl font-black text-gray-900 leading-tight uppercase">
-           ICT & Electronic Security Distribution Across Africa
+           ICT & Security Distribution Across Africa
           </h1>
           <p className="text-gray-600 text-sm leading-relaxed font-sans">
             Spinel is a leading ICT and engineering Distribution company, delivering high-quality ICT products, renewable energy systems, industrial communication system, networking equipment, and power distribution infrastructure. Through strategic partnerships with globally recognized OEMs, we help businesses across Africa build secured, connected, and future-ready infrastructures.
@@ -357,12 +357,12 @@ export default function About({ setCurrentView }: AboutProps) {
             Our company is not merely a supplier; we are an engineering-led team that conducts site studies, design checks, and regulatory assessments to ensure that when hardware leaves our warehouses, it thrives in active environments.
           </p>
         </div>
-        <div className="lg:col-span-5 relative hidden lg:block">
+        <div className="lg:col-span-5 relative block w-full">
           <div className="border border-gray-100 p-2.5 rounded-2xl bg-gray-50/50 shadow-xs">
             <img
               src="https://i.ibb.co/SwCdYPGr/spinel-team-1.png"
               alt="Systems Testing Bench"
-              className="rounded-xl object-cover w-full h-[280px]"
+              className="rounded-xl object-cover w-full h-[240px] sm:h-[280px]"
               referrerPolicy="no-referrer"
             />
           </div>

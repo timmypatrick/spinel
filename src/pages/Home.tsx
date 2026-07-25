@@ -85,13 +85,15 @@ interface HomeProps {
   setSelectedProductId: (id: string | null) => void;
   currency: "USD" | "NGN";
   addToCart: (product: Product, quantity?: number) => void;
+  onRequestQuote?: (product: Product) => void;
 }
 
 export default function Home({
   setCurrentView,
   setSelectedProductId,
   currency,
-  addToCart
+  addToCart,
+  onRequestQuote
 }: HomeProps) {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [shopMoreProducts, setShopMoreProducts] = useState<Product[]>([]);
@@ -280,7 +282,7 @@ export default function Home({
               onClick={() => setCurrentView("store")}
               className="text-lg sm:text-xl font-bold tracking-tight text-gray-900 hover:text-[#FF7A20] cursor-pointer transition flex items-center gap-2"
             >
-              <span>View More Products</span>
+              <span>Browse All Products ⭐</span>
               <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF7A20]" />
             </h2>
           </div>
@@ -317,19 +319,38 @@ export default function Home({
                 </div>
               </div>
               <div className="p-4 border-t border-gray-100 bg-gray-50/40 flex justify-between items-center">
-                <span className="font-extrabold text-[#FF7A20] text-sm sm:text-base">
-                  {currency === "USD" ? `$${p.priceUSD.toLocaleString()}` : `₦${p.priceNGN.toLocaleString()}`}
-                </span>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    addToCart(p);
-                  }}
-                  className="bg-[#FF7A20] hover:bg-orange-600 text-white p-2.5 rounded-lg transition-all duration-200 shadow-sm flex items-center justify-center"
-                  title="Add to Quote Cart"
-                >
-                  <ShoppingCart className="w-4 h-4" />
-                </button>
+                {p.priceUSD === 0 || p.isQuoteOnly || p.category === "Industrial Solar Panels" ? (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (onRequestQuote) {
+                        onRequestQuote(p);
+                      } else {
+                        setCurrentView("request-quote");
+                      }
+                    }}
+                    className="w-full bg-[#FF7A20] hover:bg-orange-600 text-white font-bold text-xs py-2.5 px-3 rounded-lg transition duration-200 flex items-center justify-center space-x-1.5 cursor-pointer shadow-sm"
+                  >
+                    <span>Request Quote</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                ) : (
+                  <>
+                    <span className="font-extrabold text-[#FF7A20] text-sm sm:text-base">
+                      {currency === "USD" ? `$${p.priceUSD.toLocaleString()}` : `₦${p.priceNGN.toLocaleString()}`}
+                    </span>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        addToCart(p);
+                      }}
+                      className="bg-[#FF7A20] hover:bg-orange-600 text-white p-2.5 rounded-lg transition-all duration-200 shadow-sm flex items-center justify-center cursor-pointer"
+                      title="Add to Cart"
+                    >
+                      <ShoppingCart className="w-4 h-4" />
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           ))}
@@ -344,13 +365,13 @@ export default function Home({
             <div className="space-y-1.5">
               <div className="inline-flex items-center space-x-1.5 bg-orange-100 border border-orange-200 rounded-full px-3 py-1 text-xs font-extrabold text-[#FF7A20] uppercase tracking-wider">
                 <Sparkles className="w-3.5 h-3.5 text-[#FF7A20]" />
-                <span>Featured Hardware</span>
+                <span>Featured ICT & Engineering Products</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-gray-900">
-                New Arrival
+                New Arrivals
               </h2>
               <p className="text-gray-500 text-sm max-w-xl">
-                Explore a random selection of enterprise hardware from our store. Use the navigation buttons to slide through products manually.
+                Explore the latest ICT, electronic security, renewable energy, and engineering products from trusted global OEM partners, designed to meet the evolving needs of businesses across Africa.
               </p>
             </div>
 
@@ -421,23 +442,42 @@ export default function Home({
                 </div>
 
                 <div className="p-4 border-t border-gray-100 bg-gray-50/50 flex justify-between items-center mt-auto">
-                  <div>
-                    <span className="text-[10px] text-gray-400 block font-sans">Price</span>
-                    <span className="font-extrabold text-[#FF7A20] text-sm sm:text-base">
-                      {p.priceUSD === 0 || p.isQuoteOnly ? "Quote Only" : (currency === "USD" ? `$${p.priceUSD.toLocaleString()}` : `₦${p.priceNGN.toLocaleString()}`)}
-                    </span>
-                  </div>
+                  {p.priceUSD === 0 || p.isQuoteOnly || p.category === "Industrial Solar Panels" ? (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (onRequestQuote) {
+                          onRequestQuote(p);
+                        } else {
+                          setCurrentView("request-quote");
+                        }
+                      }}
+                      className="w-full bg-[#FF7A20] hover:bg-orange-600 text-white font-bold text-xs py-2.5 px-3 rounded-xl transition duration-200 flex items-center justify-center space-x-1.5 cursor-pointer shadow-sm"
+                    >
+                      <span>Request Quote</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  ) : (
+                    <>
+                      <div>
+                        <span className="text-[10px] text-gray-400 block font-sans">Price</span>
+                        <span className="font-extrabold text-[#FF7A20] text-sm sm:text-base">
+                          {currency === "USD" ? `$${p.priceUSD.toLocaleString()}` : `₦${p.priceNGN.toLocaleString()}`}
+                        </span>
+                      </div>
 
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      addToCart(p);
-                    }}
-                    className="bg-[#FF7A20] hover:bg-orange-600 text-white p-2.5 rounded-xl transition duration-200 shadow-sm flex items-center justify-center cursor-pointer"
-                    title="Add to Quote Cart"
-                  >
-                    <ShoppingCart className="w-4 h-4" />
-                  </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          addToCart(p);
+                        }}
+                        className="bg-[#FF7A20] hover:bg-orange-600 text-white p-2.5 rounded-xl transition duration-200 shadow-sm flex items-center justify-center cursor-pointer"
+                        title="Add to Cart"
+                      >
+                        <ShoppingCart className="w-4 h-4" />
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             ))}
@@ -448,8 +488,8 @@ export default function Home({
       {/* 8. FAQ Accordion Grid */}
       <section className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] py-20 space-y-12" id="faqs">
         <div className="text-center space-y-2">
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">ICT, Security & Renewable Energy FAQs</h2>
-          <p className="text-gray-500 text-sm sm:text-base max-w-md mx-auto">Learn more about our electronic security products, hazardous-area communication systems, renewable energy equipment, networking solutions, delivery, quotations, and after-sales support.</p>
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">Frequently Asked Questions</h2>
+          <p className="text-gray-500 text-sm sm:text-base max-w-lg mx-auto">Find answers to common questions about our ICT products, quotations, ordering, delivery, and technical support.</p>
         </div>
         <div className="max-w-4xl lg:max-w-5xl mx-auto space-y-3">
           {faqs.map((faq, idx) => (

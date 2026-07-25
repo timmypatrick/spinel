@@ -89,7 +89,7 @@ export default function RequestQuote({ currency, setCurrentView, quotePrefill }:
           <Sparkles className="w-4.5 h-4.5 animate-pulse" />
           <span>Receive a Custom Quote</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-gray-900 uppercase">Request a Quote for ICT Infrastructures</h1>
+        <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-gray-900 uppercase">Request a Quote    for  ICT Infrastructures</h1>
         <p className="text-gray-500 text-sm sm:text-base mx-auto">Submit your project specifications, our sales and engineering specialists will review your request and provide a quotation tailored to your requirements.</p>
       </div>
 
@@ -207,7 +207,7 @@ export default function RequestQuote({ currency, setCurrentView, quotePrefill }:
         </div>
 
         {/* Action Buttons */}
-        <div className="pt-4 border-t border-gray-100 flex justify-end">
+        <div className="pt-4 border-t border-gray-100 flex justify-start">
           <button
             type="submit"
             disabled={loading}

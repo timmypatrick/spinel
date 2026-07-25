@@ -123,31 +123,31 @@ export default function Footer({
         <div className="lg:col-span-2 space-y-4">
           <h4 className="text-white font-extrabold text-sm uppercase tracking-wider">Our Product</h4>
           <ul className="space-y-2 text-sm text-gray-400">
-            <li><button onClick={() => setCurrentView("store")} className="hover:text-white block py-0.5">CCTV Surveillance</button></li>
-            <li><button onClick={() => setCurrentView("store")} className="hover:text-white block py-0.5">Electrical Systems</button></li>
-            <li><button onClick={() => setCurrentView("store")} className="hover:text-white block py-0.5">Renewable Energy</button></li>
-            <li><button onClick={() => setCurrentView("store")} className="hover:text-white block py-0.5">Rack & Enclosures</button></li>
-            <li><button onClick={() => setCurrentView("store")} className="hover:text-white block py-0.5">Ex-Proof Equipments</button></li>
+            <li><button onClick={() => setCurrentView("category-Box Camera")} className="hover:text-white block py-0.5 text-left cursor-pointer">CCTV Surveillance</button></li>
+            <li><button onClick={() => setCurrentView("category-Network Video Recorders")} className="hover:text-white block py-0.5 text-left cursor-pointer">Electrical Systems</button></li>
+            <li><button onClick={() => setCurrentView("category-Industrial Solar Panels")} className="hover:text-white block py-0.5 text-left cursor-pointer">Renewable Energy</button></li>
+            <li><button onClick={() => setCurrentView("category-Server Racks")} className="hover:text-white block py-0.5 text-left cursor-pointer">Rack & Enclosures</button></li>
+            <li><button onClick={() => setCurrentView("category-PAGA System")} className="hover:text-white block py-0.5 text-left cursor-pointer">Ex-Proof Equipments</button></li>
           </ul>
         </div>
 
         <div className="lg:col-span-2 space-y-4">
           <h4 className="text-white font-extrabold text-sm uppercase tracking-wider">Our Solutions</h4>
           <ul className="space-y-2 text-sm text-gray-400">
-            <li><button onClick={() => setCurrentView("solution-security")} className="hover:text-white block py-0.5 text-left">Security Solutions</button></li>
-            <li><button onClick={() => setCurrentView("solution-telecom")} className="hover:text-white block py-0.5 text-left">Telecommunication</button></li>
-            <li><button onClick={() => setCurrentView("solution-multimedia")} className="hover:text-white block py-0.5 text-left">Multimedia Solutions</button></li>
-            <li><button onClick={() => setCurrentView("request-quote")} className="hover:text-white block py-0.5 text-left">Custom Engineering</button></li>
+            <li><button onClick={() => setCurrentView("solution-security")} className="hover:text-white block py-0.5 text-left cursor-pointer">Security Solutions</button></li>
+            <li><button onClick={() => setCurrentView("solution-telecom")} className="hover:text-white block py-0.5 text-left cursor-pointer">Telecommunication</button></li>
+            <li><button onClick={() => setCurrentView("solution-multimedia")} className="hover:text-white block py-0.5 text-left cursor-pointer">Multimedia Solutions</button></li>
+            <li><button onClick={() => setCurrentView("request-quote")} className="hover:text-white block py-0.5 text-left cursor-pointer">Custom Engineering</button></li>
           </ul>
         </div>
 
         <div className="lg:col-span-2 space-y-4">
           <h4 className="text-white font-extrabold text-sm uppercase tracking-wider">Quick Links</h4>
           <ul className="space-y-2 text-sm text-gray-400">
-            <li><button onClick={() => setCurrentView("store")} className="hover:text-white block py-0.5">Enterprise Store</button></li>
-            <li><button onClick={() => setCurrentView("about")} className="hover:text-white block py-0.5">About Us</button></li>
-            <li><button onClick={() => setCurrentView("request-quote")} className="hover:text-white block py-0.5">Request Quote</button></li>
-            <li><button onClick={() => setCurrentView("contact")} className="hover:text-white block py-0.5">Contact Us</button></li>
+            <li><button onClick={() => setCurrentView("store")} className="hover:text-white block py-0.5 text-left cursor-pointer">Enterprise Store</button></li>
+            <li><button onClick={() => setCurrentView("about")} className="hover:text-white block py-0.5 text-left cursor-pointer">About Us</button></li>
+            <li><button onClick={() => setCurrentView("request-quote")} className="hover:text-white block py-0.5 text-left cursor-pointer">Request Quote</button></li>
+            <li><button onClick={() => setCurrentView("contact")} className="hover:text-white block py-0.5 text-left cursor-pointer">Contact Us</button></li>
           </ul>
         </div>
 

@@ -607,9 +607,9 @@ export default function Header({
             </div>
 
             {/* Hardware Store direct link */}
-            <button onClick={() => { handleNavigate("store"); setIsMobileMenuOpen(false); }} className="text-left py-1.5 font-bold hover:text-[#FF7A20] border-b border-gray-100 pb-2">Our Store</button>
-            <button onClick={() => { handleNavigate("oems"); setIsMobileMenuOpen(false); }} className="text-left py-1.5 font-bold hover:text-[#FF7A20] border-b border-gray-100 pb-2">OEMs</button>
-            <button onClick={() => { handleNavigate("about"); setIsMobileMenuOpen(false); }} className="text-left py-1.5 font-bold hover:text-[#FF7A20] border-b border-gray-100 pb-2">About Company</button>
+            <button onClick={() => { handleNavigate("store"); setIsMobileMenuOpen(false); }} className="text-left py-1.5 font-bold hover:text-[#FF7A20] border-b border-gray-100 pb-2">Catalog Store</button>
+            <button onClick={() => { handleNavigate("oems"); setIsMobileMenuOpen(false); }} className="text-left py-1.5 font-bold hover:text-[#FF7A20] border-b border-gray-100 pb-2">Our OEMs</button>
+            <button onClick={() => { handleNavigate("about"); setIsMobileMenuOpen(false); }} className="text-left py-1.5 font-bold hover:text-[#FF7A20] border-b border-gray-100 pb-2">About Us</button>
             <button onClick={() => { handleNavigate("contact"); setIsMobileMenuOpen(false); }} className="text-left py-1.5 font-bold hover:text-[#FF7A20] border-b border-gray-100 pb-2">Contact Us</button>
             {currentView !== "admin" && (
               <button onClick={() => { handleNavigate("request-quote"); setIsMobileMenuOpen(false); }} className="text-left text-[#FF7A20] py-1.5 font-bold">Request Quote</button>

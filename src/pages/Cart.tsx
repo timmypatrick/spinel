@@ -29,7 +29,7 @@ export default function Cart({ cart, setCart, currency, setCurrentView }: CartPr
   if (cart.length === 0) {
     return (
       <div className="max-w-xl mx-auto px-4 py-24 text-center space-y-4" id="cart-empty-state">
-        <p className="text-gray-400 text-sm font-semibold">Your quote shopping cart is currently empty.</p>
+        <p className="text-gray-400 text-sm font-semibold">Your shopping cart is currently empty.</p>
         <button
           onClick={() => setCurrentView("store")}
           className="bg-[#FF7A20] text-white font-bold text-xs px-6 py-2.5 rounded-lg flex items-center space-x-1.5 mx-auto cursor-pointer"
@@ -43,7 +43,7 @@ export default function Cart({ cart, setCart, currency, setCurrentView }: CartPr
 
   return (
     <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] py-12 space-y-8" id="cart-view">
-      <h1 className="text-2xl font-black text-gray-900 tracking-tight uppercase">Your Project Hardware Cart</h1>
+      <h1 className="text-2xl font-black text-gray-900 tracking-tight uppercase">Your Shopping Cart ⭐</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
         {/* Left item rows (Cols 8) */}
@@ -112,18 +112,18 @@ export default function Cart({ cart, setCart, currency, setCurrentView }: CartPr
             className="text-gray-500 hover:text-gray-800 text-xs font-semibold flex items-center space-x-1.5"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Continue Shopping and Selecting</span>
+            <span>Continue Shopping ⭐</span>
           </button>
         </div>
 
         {/* Right subtotal summaries (Cols 4) */}
         <div className="lg:col-span-4" id="cart-summary-box">
           <div className="bg-gray-50 border border-gray-100 p-6 rounded-2xl space-y-5">
-            <h3 className="font-bold text-sm text-gray-900 border-b border-gray-200 pb-3 uppercase tracking-wider">Order Valuation</h3>
+            <h3 className="font-bold text-sm text-gray-900 border-b border-gray-200 pb-3 uppercase tracking-wider">Order Summary</h3>
             
             <div className="space-y-2.5 text-xs">
               <div className="flex justify-between text-gray-500 font-semibold">
-                <span>Hardware Subtotal</span>
+                <span>Products Subtotal</span>
                 <span className="font-mono text-gray-950 font-bold">
                   {currency === "USD" ? `$${subtotalUSD.toLocaleString()}` : `₦${subtotalNGN.toLocaleString()}`}
                 </span>
@@ -137,7 +137,7 @@ export default function Cart({ cart, setCart, currency, setCurrentView }: CartPr
             </div>
 
             <div className="border-t border-gray-200 pt-4 flex justify-between items-center text-sm">
-              <span className="font-bold text-gray-900">Total Valuation</span>
+              <span className="font-bold text-gray-900">Order Total</span>
               <span className="font-black text-lg text-[#FF7A20] font-mono">
                 {currency === "USD" ? `$${totalUSD.toLocaleString()}` : `₦${totalNGN.toLocaleString()}`}
               </span>
@@ -149,12 +149,12 @@ export default function Cart({ cart, setCart, currency, setCurrentView }: CartPr
                 className="w-full bg-gray-950 hover:bg-[#FF7A20] text-white font-bold py-3 px-4 rounded-xl text-xs uppercase tracking-wider transition duration-150 flex items-center justify-center space-x-1.5 cursor-pointer shadow-md"
                 id="btn-cart-checkout"
               >
-                <span>Proceed to Secured Checkout</span>
+                <span>Proceed to Checkout</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
               <div className="flex justify-center items-center space-x-1.5 text-[10px] text-gray-400 font-semibold">
                 <ShieldCheck className="w-4 h-4 text-emerald-500" />
-                <span>Complies with Paystack API Encryption</span>
+                <span>Secure payments powered by industry-standard encryption</span>
               </div>
             </div>
           </div>
