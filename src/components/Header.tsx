@@ -186,7 +186,7 @@ export default function Header({
         <form onSubmit={handleSearchSubmit} className="hidden md:flex flex-1 max-w-lg mx-8 relative" ref={searchRef} id="global-search-form">
           <input
             type="text"
-            placeholder="Search enterprise ICT hardware by brand, specs or SKU..."
+            placeholder="Search ICT Products..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => setIsSearchFocused(true)}

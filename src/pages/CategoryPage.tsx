@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ArrowLeft, ShoppingCart, Info, Search, RefreshCw, ShieldCheck, Send } from "lucide-react";
+import { ShoppingCart, Info, Search, RefreshCw, Send } from "lucide-react";
 import { Product } from "../types";
 import { safeFetch } from "../lib/dataService";
 
@@ -310,54 +310,201 @@ export default function CategoryPage({
     return "https://i.ibb.co/gMGdhQfd/Exploration-for-oil-and-gas-is-very-expensive-and-risky.jpg";
   };
 
+  const getCategorySEOContent = (name: string) => {
+    const nameLower = name.toLowerCase();
+
+    if (nameLower.includes("box camera") || nameLower.includes("box-camera")) {
+      return {
+        heading: "Enterprise Box Cameras & High-Definition Optical Surveillance Systems",
+        description: "Explore enterprise-grade Box IP Cameras engineered for long-range surveillance, extreme light sensitivity, and customized telephoto lens integration. Built for traffic monitoring, industrial perimeters, and high-security facility inspection."
+      };
+    }
+    if (nameLower.includes("dome camera")) {
+      return {
+        heading: "Vandal-Proof Dome Cameras & Indoor/Outdoor IP Surveillance",
+        description: "Discover IK10 vandal-resistant and IP67 weather-rated Dome Cameras featuring infrared night vision, wide-angle coverage, and AI edge analytics. Ideal for corporate buildings, transport hubs, and public safety infrastructure."
+      };
+    }
+    if (nameLower.includes("bullet camera")) {
+      return {
+        heading: "Ruggedized Bullet Cameras & Long-Range Infrared Security Systems",
+        description: "Deploy heavy-duty Bullet IP Cameras equipped with deep learning vehicle/person detection, long-range IR illuminators, and weather-sealed housings for perimeter security, industrial gates, and harsh outdoor environments."
+      };
+    }
+    if (nameLower.includes("ptz camera") || nameLower.includes("speed dome")) {
+      return {
+        heading: "Pan-Tilt-Zoom (PTZ) Speed Dome Cameras & Active Tracking Systems",
+        description: "High-speed Pan-Tilt-Zoom (PTZ) IP cameras with 30x+ optical zoom, 360-degree continuous pan, auto-tracking algorithms, and long-range laser IR. Purpose-built for critical infrastructure, airports, ports, and wide-area monitoring."
+      };
+    }
+    if (nameLower.includes("panoramic camera")) {
+      return {
+        heading: "360-Degree Panoramic & Multi-Directional Security Cameras",
+        description: "Achieve total situational awareness with zero blind spots using multi-sensor 180° and 360° Panoramic Cameras. Reduce total camera count while maintaining seamless high-resolution coverage across expansive industrial fields."
+      };
+    }
+    if (nameLower.includes("thermal camera")) {
+      return {
+        heading: "Radiometric Thermal Imaging Cameras & Early Fire Protection Systems",
+        description: "Advanced dual-spectrum thermal cameras designed for border surveillance, thermal flare stack inspection, electrical overheating detection, and early fire prevention in hazardous, zero-visibility operational zones."
+      };
+    }
+    if (nameLower.includes("fisheye camera")) {
+      return {
+        heading: "Ultra-Wide Fisheye Cameras & 360° Hemispheric Overview Surveillance",
+        description: "Compact single-sensor 360° Fisheye Cameras delivering high-megapixel hemispheric views with client-side and hardware dewarping. Efficient, cost-effective monitoring for control rooms, retail hubs, and server halls."
+      };
+    }
+    if (nameLower.includes("bundle")) {
+      return {
+        heading: "Turnkey IP Camera Bundles & Multi-Channel Surveillance Kits",
+        description: "Complete plug-and-play CCTV camera bundles paired with Network Video Recorders (NVR), High-Power PoE cabling, and pre-configured management software for rapid commercial security deployments and facility retrofits."
+      };
+    }
+    if (nameLower.includes("multi-sensor") || nameLower.includes("multisensor")) {
+      return {
+        heading: "High-Density Multi-Sensor IP Cameras & Multi-Directional Coverage",
+        description: "Flexible multi-sensor camera systems housing multiple adjustable lenses in a single IP node. Ideal for monitoring multi-intersection roads, expansive building corners, and critical perimeter checkpoints."
+      };
+    }
+    if (nameLower.includes("industrial switch") || nameLower.includes("switches")) {
+      return {
+        heading: "Hardened Industrial Ethernet Switches & Heavy-Duty PoE Networks",
+        description: "DIN-rail and rack-mounted Managed Industrial Ethernet Switches with wide temperature tolerance, redundant power inputs, ring protection protocols, and High-Power PoE+ for mission-critical industrial automation."
+      };
+    }
+    if (nameLower.includes("ex-junction") || nameLower.includes("ex junction") || nameLower.includes("ex-junction box")) {
+      return {
+        heading: "ATEX & IECEx Certified Explosion-Proof Junction Boxes",
+        description: "Heavy-duty GRP and 316L stainless steel Ex-d / Ex-e explosion-proof terminal boxes certified for hazardous gas and dust atmospheres. Ensuring maximum safety and compliance for industrial field wiring."
+      };
+    }
+    if (nameLower.includes("junction box") || nameLower.includes("junction")) {
+      return {
+        heading: "Weatherproof Industrial Junction Boxes & Cable Termination Enclosures",
+        description: "IP66/IP67 heavy-duty junction boxes and terminal enclosures for safe electrical splicing, fiber patch distribution, and outdoor CCTV mounting in rugged commercial and marine environments."
+      };
+    }
+    if (nameLower.includes("network video recorder") || nameLower.includes("nvr") || nameLower.includes("video recorder")) {
+      return {
+        heading: "Enterprise Network Video Recorders (NVR) & High-Capacity Storage Vaults",
+        description: "High-throughput, multi-channel NVR video management servers with RAID 0/1/5/10 hardware redundancy, AI face recognition indexing, hot-swappable hard drive bays, and multi-node central monitoring."
+      };
+    }
+    if (nameLower.includes("workstation") || nameLower.includes("electrical workstation")) {
+      return {
+        heading: "Industrial Electrical Workstations & Ergonomic Control Center Desks",
+        description: "Heavy-duty technical consoles and electrical testing workstations designed for SCADA operators, power dispatch centers, network operations centers (NOC), and industrial assembly lines."
+      };
+    }
+    if (nameLower.includes("ups") || nameLower.includes("pdu")) {
+      return {
+        heading: "Uninterruptible Power Supplies (UPS) & Smart Rack Power Distribution (PDU)",
+        description: "Double-conversion online UPS systems and rack-mountable intelligent PDUs with remote outlet metering, environmental monitoring, and surge protection for server infrastructure and telecom backbones."
+      };
+    }
+    if (nameLower.includes("hybrid composite cable") || nameLower.includes("composite cable") || nameLower.includes("cable")) {
+      return {
+        heading: "Armored Hybrid Composite Cables (Fiber Optic + Power Conductors)",
+        description: "Ruggedized hybrid composite cables integrating singlemode/multimode optical fiber with copper power cores. Streamline long-distance remote camera and wireless antenna installations over a single jacket."
+      };
+    }
+    if (nameLower.includes("accessories") || nameLower.includes("accessory")) {
+      return {
+        heading: "ICT & Security Installation Accessories, Brackets & Cable Glands",
+        description: "OEM-certified mounting brackets, corner mounts, pole clamps, explosion-proof cable glands, power adaptors, and patch cords for seamless, standardized ICT field deployments."
+      };
+    }
+    if (nameLower.includes("solar")) {
+      return {
+        heading: "High-Efficiency Industrial Solar PV Modules & Off-Grid Energy Systems",
+        description: "Tier-1 monocrystalline industrial solar panels designed for extreme wind loads, PID resistance, and maximum power generation in off-grid telecom towers, oilfield monitoring, and remote microgrids."
+      };
+    }
+    if (nameLower.includes("batter") || nameLower.includes("lifepo4") || nameLower.includes("lithium")) {
+      return {
+        heading: "Industrial Lithium Iron Phosphate (LiFePO4) Battery Energy Storage",
+        description: "High-density LiFePO4 energy storage batteries featuring built-in smart BMS, 6000+ deep charge cycles, rapid charging capabilities, and thermal stability for critical backup power and solar storage."
+      };
+    }
+    if (nameLower.includes("inverter")) {
+      return {
+        heading: "Pure Sine Wave Smart Hybrid Inverters & Microgrid Power Systems",
+        description: "Commercial pure sine wave hybrid inverters with MPPT solar controllers, grid-feed capabilities, generator auto-start integration, and remote cloud management for uninterrupted facility power."
+      };
+    }
+    if (nameLower.includes("small enclosure")) {
+      return {
+        heading: "Compact Industrial Enclosures & NEMA/IP Protected Field Cabinets",
+        description: "Durable stainless steel, polycarbonate, and sheet metal small enclosures protecting sensitive electronics, relays, and field controllers against dust, moisture, and chemical exposure."
+      };
+    }
+    if (nameLower.includes("it enclosure")) {
+      return {
+        heading: "Server Room IT Enclosures & High-Density Equipment Cabinets",
+        description: "Standardized 19-inch IT equipment enclosures with optimized airflow ventilation, integrated cable management, locking security doors, and high-load capacities for modern data centers."
+      };
+    }
+    if (nameLower.includes("wall-mounted enclosure") || nameLower.includes("wall mounted enclosure")) {
+      return {
+        heading: "Wall-Mounted Network Enclosures & Compact Telecom Cabinets",
+        description: "Space-saving wall-mounted rack enclosures for edge networking equipment, patch panels, compact switches, and local security recorders in offices, branches, and floor distribution rooms."
+      };
+    }
+    if (nameLower.includes("server rack") || nameLower.includes("rack")) {
+      return {
+        heading: "Data Center Server Racks & Heavy-Duty Modular Rack Frameworks",
+        description: "Professional 42U to 48U server racks built with heavy-gauge steel, high perforation airflow doors, seismic rating options, and toolless mounting rails for high-density enterprise IT hardware."
+      };
+    }
+    if (nameLower.includes("paga")) {
+      return {
+        heading: "Public Address & General Alarm (PAGA) Systems for Hazardous Facilities",
+        description: "Fully redundant EN 54-16 certified PAGA communication systems delivering clear voice messaging, emergency tones, and acoustic beacon integration across offshore rigs, refineries, and industrial plants."
+      };
+    }
+    if (nameLower.includes("ex-cctv") || nameLower.includes("ex cctv")) {
+      return {
+        heading: "Explosion-Proof (Ex-CCTV) Hazardous Area Security Cameras",
+        description: "ATEX and IECEx certified explosion-proof stainless steel camera stations designed for Zone 1, 2, 21, and 22 flammable environments in oil, gas, chemical, and offshore installations."
+      };
+    }
+
+    // Default Fallback for custom or newly added categories
+    return {
+      heading: `${name} Hardware Systems & Enterprise ICT Infrastructure`,
+      description: `Explore certified high-performance ${name} solutions engineered for demanding enterprise, telecommunications, and industrial operations. Guaranteed OEM authenticity, international standardizations, and long-term service support.`
+    };
+  };
+
   return (
-    <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] py-10 space-y-8" id="category-page">
-      {/* Back button & SEO title section */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <button
-          onClick={() => setCurrentView("store")}
-          className="flex items-center space-x-2 text-[#FF7A20] font-bold text-xs hover:underline cursor-pointer bg-orange-50 px-3 py-1.5 rounded-lg border border-orange-100 transition"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to Store</span>
-        </button>
-
-        <div className="flex items-center space-x-2 bg-slate-50 border border-slate-100 rounded-full px-3 py-1 text-[11px] font-semibold text-slate-500 font-mono">
-          <ShieldCheck className="w-3.5 h-3.5 text-[#FF7A20]" />
-          <span>Authorized Distribution Page - Spinel Distribution Ltd</span>
-        </div>
-      </div>
-
-      {/* Category Banner with rich background image hero section */}
+    <div className="w-full" id="category-page">
+      {/* Category Banner with rich background image hero section - Full Width & Full Height minus Header on Desktop */}
       {(() => {
         const heroBg = getHeroBgImage(subcategoryName);
+        const seo = getCategorySEOContent(subcategoryName);
         return (
           <div
-            className="relative rounded-2xl p-6 sm:p-10 lg:p-12 overflow-hidden shadow-xl border border-gray-800 bg-gray-950 bg-cover bg-center bg-no-repeat min-h-[220px] sm:min-h-[260px] flex items-center"
+            className="relative w-full overflow-hidden border-b border-gray-800 bg-gray-950 bg-cover bg-center bg-no-repeat min-h-[360px] lg:min-h-[calc(100vh-88px)] lg:h-[calc(100vh-88px)] flex items-center justify-center px-4 md:px-[100px] lg:px-[100px] py-12"
             style={{ backgroundImage: `url('${heroBg}')` }}
           >
             {/* Gradient overlay for contrast & legibility */}
-            <div className="absolute inset-0 bg-gradient-to-r from-gray-950 via-gray-950/85 to-gray-950/40 z-0"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-gray-950/95 via-gray-950/80 to-gray-950/50 z-0"></div>
 
-            <div className="max-w-2xl relative z-10 space-y-3">
-              <span className="text-[10px] sm:text-xs text-[#FF7A20] uppercase font-mono tracking-widest bg-orange-950/70 border border-orange-800/70 px-3 py-1 rounded-md inline-block font-extrabold backdrop-blur-sm">
-                Industrial Systems Catalog
-              </span>
-              <h1 className="text-2xl sm:text-4xl font-extrabold uppercase tracking-tight text-white leading-none drop-shadow-md">
-                {subcategoryName} Page
+            <div className="max-w-[1536px] w-full mx-auto relative z-10 space-y-4 text-left">
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold uppercase tracking-tight text-white leading-tight drop-shadow-md">
+                {seo.heading}
               </h1>
-              <p className="text-xs sm:text-sm text-gray-200 leading-relaxed max-w-xl drop-shadow">
-                Welcome to the official, dedicated distribution showcase for certified high-performance{" "}
-                <span className="font-semibold text-white">{subcategoryName}</span> hardware systems. 
-                All models are fully compliant with stringent IECEx, ATEX, and global industrial reliability standardizations. 
-                Engineered specifically to endure salt-mist corrosion, extreme pressure, and tropical climates.
+              <p className="text-sm sm:text-base lg:text-lg text-gray-200 leading-relaxed max-w-2xl drop-shadow">
+                {seo.description}
               </p>
             </div>
           </div>
         );
       })()}
 
-      {/* Local search filter pane */}
+      <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] py-10 space-y-8">
+        {/* Local search filter pane */}
       <div className="flex flex-col sm:flex-row gap-4 bg-white border border-gray-100 p-4 rounded-xl items-center justify-between">
         <div className="relative w-full sm:max-w-sm">
           <input
@@ -510,6 +657,7 @@ export default function CategoryPage({
           )}
         </div>
       )}
+      </div>
     </div>
   );
 }

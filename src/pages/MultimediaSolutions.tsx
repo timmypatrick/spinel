@@ -52,34 +52,49 @@ export default function MultimediaSolutions({
   return (
     <div className="w-full bg-white flex flex-col min-h-screen" id="multimedia-solutions-page">
       {/* 1. Hero Section */}
-      <section className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-zinc-950 text-white py-20 lg:py-28 overflow-hidden border-b border-gray-800">
+      <section className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-zinc-950 text-white py-16 lg:py-24 overflow-hidden border-b border-gray-800">
         <div className="absolute inset-0 bg-[radial-gradient(#FF7A20_1px,transparent_1px)] [background-size:24px_24px] opacity-10"></div>
         <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] relative z-10">
-          <div className="max-w-3xl space-y-6">
-            <div className="inline-flex items-center space-x-2 bg-orange-500/10 border border-[#FF7A20]/30 rounded-full px-4 py-1.5 text-xs font-bold text-[#FF7A20] uppercase tracking-wider">
-              <Volume2 className="w-4 h-4" />
-              <span>Industrial Multimedia & PAGA Systems</span>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <div className="lg:col-span-7 space-y-6">
+              <div className="inline-flex items-center space-x-2 bg-orange-500/10 border border-[#FF7A20]/30 rounded-full px-4 py-1.5 text-xs font-bold text-[#FF7A20] uppercase tracking-wider">
+                <Volume2 className="w-4 h-4" />
+                <span>Industrial Multimedia & PAGA Systems</span>
+              </div>
+              <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
+                Public Address, General Alarm & Control Room Video Wall Systems
+              </h1>
+              <p className="text-base sm:text-lg text-gray-300 font-normal leading-relaxed">
+                ATEX & IECEx certified Public Address and General Alarm (PAGA) systems engineered for zero-fail emergency broadcasting in high-noise refineries, offshore platforms, and corporate control room video walls.
+              </p>
+              <div className="flex flex-wrap gap-4 pt-2">
+                <button
+                  onClick={() => onRequestQuote()}
+                  className="bg-[#FF7A20] hover:bg-orange-600 text-white font-bold px-8 py-3.5 rounded-xl shadow-lg transition duration-200 cursor-pointer flex items-center space-x-2 text-sm sm:text-base"
+                >
+                  <span>Request PAGA & AV Proposal</span>
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={() => setCurrentView("store")}
+                  className="bg-slate-800 hover:bg-slate-700 text-gray-200 border border-slate-700 font-bold px-8 py-3.5 rounded-xl transition duration-200 cursor-pointer text-sm sm:text-base"
+                >
+                  Explore PAGA & AV Store
+                </button>
+              </div>
             </div>
-            <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
-              Public Address, General Alarm & Control Room Video Wall Systems
-            </h1>
-            <p className="text-base sm:text-xl text-gray-300 font-normal leading-relaxed">
-              ATEX & IECEx certified Public Address and General Alarm (PAGA) systems engineered for zero-fail emergency broadcasting in high-noise refineries, offshore platforms, and corporate control room video walls.
-            </p>
-            <div className="flex flex-wrap gap-4 pt-2">
-              <button
-                onClick={() => onRequestQuote()}
-                className="bg-[#FF7A20] hover:bg-orange-600 text-white font-bold px-8 py-3.5 rounded-xl shadow-lg transition duration-200 cursor-pointer flex items-center space-x-2 text-sm sm:text-base"
-              >
-                <span>Request PAGA & AV Proposal</span>
-                <ArrowRight className="w-5 h-5" />
-              </button>
-              <button
-                onClick={() => setCurrentView("store")}
-                className="bg-slate-800 hover:bg-slate-700 text-gray-200 border border-slate-700 font-bold px-8 py-3.5 rounded-xl transition duration-200 cursor-pointer text-sm sm:text-base"
-              >
-                Explore PAGA & AV Store
-              </button>
+
+            <div className="hidden lg:flex lg:col-span-5 justify-center lg:justify-end">
+              <div className="relative group max-w-lg w-full">
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#FF7A20] to-amber-500 rounded-2xl blur-md opacity-30 group-hover:opacity-50 transition duration-500"></div>
+                <div className="relative rounded-2xl overflow-hidden border border-gray-700/60 bg-gray-900/80 shadow-2xl">
+                  <img
+                    src="https://i.ibb.co/HfBtC4FT/meeting-room-5.png"
+                    alt="Multimedia and Control Room AV Infrastructure"
+                    className="w-full h-[360px] xl:h-[420px] object-cover object-center transform hover:scale-105 transition duration-500"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>

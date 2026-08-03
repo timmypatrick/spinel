@@ -54,34 +54,49 @@ export default function SecuritySolutions({
   return (
     <div className="w-full bg-white flex flex-col min-h-screen" id="security-solutions-page">
       {/* 1. Hero Section */}
-      <section className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-zinc-950 text-white py-20 lg:py-28 overflow-hidden border-b border-gray-800">
+      <section className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-zinc-950 text-white py-16 lg:py-24 overflow-hidden border-b border-gray-800">
         <div className="absolute inset-0 bg-[radial-gradient(#FF7A20_1px,transparent_1px)] [background-size:24px_24px] opacity-10"></div>
         <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] relative z-10">
-          <div className="max-w-3xl space-y-6">
-            <div className="inline-flex items-center space-x-2 bg-orange-500/10 border border-[#FF7A20]/30 rounded-full px-4 py-1.5 text-xs font-bold text-[#FF7A20] uppercase tracking-wider">
-              <Shield className="w-4 h-4" />
-              <span>Enterprise Electronic Security</span>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <div className="lg:col-span-7 space-y-6">
+              <div className="inline-flex items-center space-x-2 bg-orange-500/10 border border-[#FF7A20]/30 rounded-full px-4 py-1.5 text-xs font-bold text-[#FF7A20] uppercase tracking-wider">
+                <Shield className="w-4 h-4" />
+                <span>Enterprise Electronic Security</span>
+              </div>
+              <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
+                Integrated Security & Electronic Surveillance Solutions
+              </h1>
+              <p className="text-base sm:text-lg text-gray-300 font-normal leading-relaxed">
+                From ATEX Zone 1 explosion-proof optics and multi-sensor 4K video surveillance to biometric access matrix systems and perimeter intrusion detection, Spinel delivers military-grade protection for industrial sites, refineries, and corporate headquarters.
+              </p>
+              <div className="flex flex-wrap gap-4 pt-2">
+                <button
+                  onClick={() => onRequestQuote()}
+                  className="bg-[#FF7A20] hover:bg-orange-600 text-white font-bold px-8 py-3.5 rounded-xl shadow-lg transition duration-200 cursor-pointer flex items-center space-x-2 text-sm sm:text-base"
+                >
+                  <span>Request Custom Security Architecture</span>
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={() => setCurrentView("store")}
+                  className="bg-slate-800 hover:bg-slate-700 text-gray-200 border border-slate-700 font-bold px-8 py-3.5 rounded-xl transition duration-200 cursor-pointer text-sm sm:text-base"
+                >
+                  Explore Security Hardware Store
+                </button>
+              </div>
             </div>
-            <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
-              Integrated Security & Electronic Surveillance Solutions
-            </h1>
-            <p className="text-base sm:text-xl text-gray-300 font-normal leading-relaxed">
-              From ATEX Zone 1 explosion-proof optics and multi-sensor 4K video surveillance to biometric access matrix systems and perimeter intrusion detection, Spinel delivers military-grade protection for industrial sites, refineries, and corporate headquarters.
-            </p>
-            <div className="flex flex-wrap gap-4 pt-2">
-              <button
-                onClick={() => onRequestQuote()}
-                className="bg-[#FF7A20] hover:bg-orange-600 text-white font-bold px-8 py-3.5 rounded-xl shadow-lg transition duration-200 cursor-pointer flex items-center space-x-2 text-sm sm:text-base"
-              >
-                <span>Request Custom Security Architecture</span>
-                <ArrowRight className="w-5 h-5" />
-              </button>
-              <button
-                onClick={() => setCurrentView("store")}
-                className="bg-slate-800 hover:bg-slate-700 text-gray-200 border border-slate-700 font-bold px-8 py-3.5 rounded-xl transition duration-200 cursor-pointer text-sm sm:text-base"
-              >
-                Explore Security Hardware Store
-              </button>
+
+            <div className="hidden lg:flex lg:col-span-5 justify-center lg:justify-end">
+              <div className="relative group max-w-lg w-full">
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#FF7A20] to-amber-500 rounded-2xl blur-md opacity-30 group-hover:opacity-50 transition duration-500"></div>
+                <div className="relative rounded-2xl overflow-hidden border border-gray-700/60 bg-gray-900/80 shadow-2xl">
+                  <img
+                    src="https://i.ibb.co/GvvX8p1N/image.png"
+                    alt="Enterprise Security and Access Control System"
+                    className="w-full h-[360px] xl:h-[420px] object-cover object-center transform hover:scale-105 transition duration-500"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -276,7 +291,7 @@ export default function SecuritySolutions({
             onClick={() => onRequestQuote()}
             className="bg-gray-950 hover:bg-gray-900 text-white font-extrabold px-8 py-4 rounded-xl shadow-2xl transition cursor-pointer whitespace-nowrap text-sm sm:text-base"
           >
-            Submit Security RFP / Proposal
+            Submit Security RFQ
           </button>
         </div>
       </section>
