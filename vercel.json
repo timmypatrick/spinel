@@ -1,12 +1,17 @@
 {
+  "version": 2,
   "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/admin",
-      "destination": "/index.html"
+      "source": "/api/(.*)",
+      "destination": "/api"
     },
     {
-      "source": "/(.*)",
+      "source": "/api",
+      "destination": "/api"
+    },
+    {
+      "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
   ]
