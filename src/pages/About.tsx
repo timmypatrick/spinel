@@ -33,7 +33,8 @@ import {
   Building, 
   Briefcase,
   ChevronRight,
-  Info
+  Info,
+  ArrowRight
 } from "lucide-react";
 
 interface AboutProps {
@@ -342,32 +343,58 @@ export default function About({ setCurrentView }: AboutProps) {
   ];
 
   return (
-    <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] py-12 space-y-20" id="about-view">
-      {/* 1. Company Mission/Vision Intro Banner */}
-      <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center" id="about-intro">
-        <div className="lg:col-span-7 space-y-6">
-          <span className="text-[#FF7A20] font-bold text-xs uppercase tracking-widest font-mono">About Spinel Distribution</span>
-          <h1 className="text-3xl sm:text-4xl font-black text-gray-900 leading-tight uppercase">
-           ICT & Security Distribution Across Africa
-          </h1>
-          <p className="text-gray-600 text-sm leading-relaxed font-sans">
-            Spinel is a leading ICT and engineering Distribution company, delivering high-quality ICT products, renewable energy systems, industrial communication system, networking equipment, and power distribution infrastructure. Through strategic partnerships with globally recognized OEMs, we help businesses across Africa build secured, connected, and future-ready infrastructures.
-          </p>
-          <p className="text-gray-600 text-sm leading-relaxed font-sans">
-            Our company is not merely a supplier; we are an engineering-led team that conducts site studies, design checks, and regulatory assessments to ensure that when hardware leaves our warehouses, it thrives in active environments.
-          </p>
-        </div>
-        <div className="lg:col-span-5 relative block w-full">
-          <div className="border border-gray-100 p-2.5 rounded-2xl bg-gray-50/50 shadow-xs">
-            <img
-              src="https://i.ibb.co/SwCdYPGr/spinel-team-1.png"
-              alt="Systems Testing Bench"
-              className="rounded-xl object-cover w-full h-[240px] sm:h-[280px]"
-              referrerPolicy="no-referrer"
-            />
+    <div className="w-full bg-white flex flex-col min-h-screen" id="about-view">
+      {/* 1. Solutions-Style Hero Section */}
+      <section className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-zinc-950 text-white py-16 lg:py-24 overflow-hidden border-b border-gray-800">
+        <div className="absolute inset-0 bg-[radial-gradient(#FF7A20_1px,transparent_1px)] [background-size:24px_24px] opacity-10"></div>
+        <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <div className="lg:col-span-7 space-y-6">
+              <div className="inline-flex items-center space-x-2 bg-orange-500/10 border border-[#FF7A20]/30 rounded-full px-4 py-1.5 text-xs font-bold text-[#FF7A20] uppercase tracking-wider">
+                <Info className="w-4 h-4" />
+                <span>About Spinel Distribution</span>
+              </div>
+              <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
+                Engineering-Led ICT, Security & Infrastructure Distribution
+              </h1>
+              <p className="text-base sm:text-lg text-gray-300 font-normal leading-relaxed">
+                Spinel is a leading ICT and engineering distribution company, delivering high-quality ICT products, renewable energy systems, industrial communication systems, networking equipment, and power distribution infrastructure through strategic partnerships with globally recognized OEMs across Africa.
+              </p>
+              <div className="flex flex-wrap gap-4 pt-2">
+                <button
+                  onClick={() => setCurrentView ? setCurrentView("request-quote") : null}
+                  className="bg-[#FF7A20] hover:bg-orange-600 text-white font-bold px-8 py-3.5 rounded-xl shadow-lg transition duration-200 cursor-pointer flex items-center space-x-2 text-sm sm:text-base"
+                >
+                  <span>Request Custom Architecture</span>
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={() => setCurrentView ? setCurrentView("oems") : null}
+                  className="bg-slate-800 hover:bg-slate-700 text-gray-200 border border-slate-700 font-bold px-8 py-3.5 rounded-xl transition duration-200 cursor-pointer text-sm sm:text-base"
+                >
+                  Explore OEM Partners
+                </button>
+              </div>
+            </div>
+
+            <div className="hidden lg:flex lg:col-span-5 justify-center lg:justify-end">
+              <div className="relative group max-w-lg w-full">
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#FF7A20] to-amber-500 rounded-2xl blur-md opacity-30 group-hover:opacity-50 transition duration-500"></div>
+                <div className="relative rounded-2xl overflow-hidden border border-gray-700/60 bg-gray-900/80 shadow-2xl">
+                  <img
+                    src="https://i.ibb.co/SwCdYPGr/spinel-team-1.png"
+                    alt="Spinel Engineering and Distribution Team"
+                    className="w-full h-[360px] xl:h-[420px] object-cover object-center transform hover:scale-105 transition duration-500"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
+
+      <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] py-16 space-y-20">
 
       {/* 2. Interactive Strategic Direction: Our Vision & Our Mission Section */}
       <section className="space-y-8 bg-gray-50 border border-gray-100 p-8 sm:p-10 rounded-3xl" id="vision-mission-strategic">
@@ -714,6 +741,7 @@ export default function About({ setCurrentView }: AboutProps) {
           </div>
         </div>
       </section>
+      </div>
     </div>
   );
 }

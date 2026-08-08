@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Building2 } from "lucide-react";
 
 const oemBanner = "https://i.ibb.co/mZH3GMt/pokecutweb-17843025187811.jpg";
 
@@ -127,7 +127,7 @@ const OEMS_LIST = [
 
 export default function Oems({ setCurrentView }: OemsProps) {
   return (
-    <div className="bg-transparent min-h-screen py-12 px-4 sm:px-6 md:px-[100px] lg:px-[100px]" id="oems-page">
+    <div className="w-full bg-white flex flex-col min-h-screen" id="oems-page">
       {/* Injecting marquee animation rules */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes marquee {
@@ -144,29 +144,57 @@ export default function Oems({ setCurrentView }: OemsProps) {
         }
       `}} />
 
-      <div className="max-w-[1536px] mx-auto space-y-16">
-        {/* Page Header */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center bg-gray-50 p-6 sm:p-8 lg:p-10 rounded-3xl border border-gray-100">
-          <div className="lg:col-span-7 space-y-4 text-left">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 tracking-tight leading-tight uppercase">
-              Our <span className="text-[#FF7A20]">OEM</span> Partners
-            </h1>
-            <p className="text-gray-600 text-base leading-relaxed font-sans">
-              Spinel Distribution collaborate with globally recognized Original Equipment Manufacturers (OEMs) to deliver reliable, innovative, and industry-best practice. Our strategic partnerships enable us to provide authentic products, cutting-edge innovations, and comprehensive technical support across ICT, electronic security, telecommunications, networking, renewable energy, and industrial infrastructure. By working closely with trusted OEMs, we ensure our customers receive reliable products that meet international quality standards, backed by expert guidance, warranty support, and dependable after-sales support.
-            </p>
-          </div>
-          <div className="lg:col-span-5">
-            <div className="relative overflow-hidden rounded-2xl border border-gray-100 shadow-lg bg-white p-2 group hover:border-orange-100 transition duration-300">
-              <img 
-                src={oemBanner} 
-                alt="OEM Partnership" 
-                className="w-full h-auto rounded-xl object-cover transform group-hover:scale-[1.02] transition duration-500"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none rounded-xl" />
+      {/* 1. Solutions-Style Hero Section */}
+      <section className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-zinc-950 text-white py-16 lg:py-24 overflow-hidden border-b border-gray-800">
+        <div className="absolute inset-0 bg-[radial-gradient(#FF7A20_1px,transparent_1px)] [background-size:24px_24px] opacity-10"></div>
+        <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <div className="lg:col-span-7 space-y-6">
+              <div className="inline-flex items-center space-x-2 bg-orange-500/10 border border-[#FF7A20]/30 rounded-full px-4 py-1.5 text-xs font-bold text-[#FF7A20] uppercase tracking-wider">
+                <Building2 className="w-4 h-4" />
+                <span>Authorized Global OEM Network</span>
+              </div>
+              <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
+                Strategic OEM Partnerships & Global Manufacturer Network
+              </h1>
+              <p className="text-base sm:text-lg text-gray-300 font-normal leading-relaxed">
+                Spinel Distribution collaborates with globally recognized Original Equipment Manufacturers (OEMs) to deliver authentic products, cutting-edge innovations, and comprehensive technical support across ICT, electronic security, telecommunications, networking, renewable energy, and industrial infrastructure.
+              </p>
+              <div className="flex flex-wrap gap-4 pt-2">
+                <button
+                  onClick={() => setCurrentView("request-quote")}
+                  className="bg-[#FF7A20] hover:bg-orange-600 text-white font-bold px-8 py-3.5 rounded-xl shadow-lg transition duration-200 cursor-pointer flex items-center space-x-2 text-sm sm:text-base"
+                >
+                  <span>Request Official OEM Quote</span>
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={() => setCurrentView("store")}
+                  className="bg-slate-800 hover:bg-slate-700 text-gray-200 border border-slate-700 font-bold px-8 py-3.5 rounded-xl transition duration-200 cursor-pointer text-sm sm:text-base"
+                >
+                  Explore Hardware Store
+                </button>
+              </div>
+            </div>
+
+            <div className="hidden lg:flex lg:col-span-5 justify-center lg:justify-end">
+              <div className="relative group max-w-lg w-full">
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#FF7A20] to-amber-500 rounded-2xl blur-md opacity-30 group-hover:opacity-50 transition duration-500"></div>
+                <div className="relative rounded-2xl overflow-hidden border border-gray-700/60 bg-gray-900/80 shadow-2xl">
+                  <img
+                    src={oemBanner}
+                    alt="Global OEM Partnerships"
+                    className="w-full h-[360px] xl:h-[420px] object-cover object-center transform hover:scale-105 transition duration-500"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
+      </section>
+
+      <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] py-16 space-y-16">
 
         {/* 23 Partners Grid */}
         <div className="space-y-6">
