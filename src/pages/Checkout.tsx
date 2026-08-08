@@ -135,9 +135,8 @@ export default function Checkout({
         }
 
         // Inline SDK fallback or popup
-        const defaultPublicKey = ["pk", "live", "605061a4c6d5fc3b4865e5adc303e1a04743d12a"].join("_");
-        const paystackPublicKey = (import.meta as any).env?.VITE_PAYSTACK_PUBLIC_KEY || defaultPublicKey;
-        if ((window as any).PaystackPop) {
+        const paystackPublicKey = (import.meta as any).env?.VITE_PAYSTACK_PUBLIC_KEY || "";
+        if (paystackPublicKey && (window as any).PaystackPop) {
           const handler = (window as any).PaystackPop.setup({
             key: paystackPublicKey,
             email: formData.email,
@@ -153,7 +152,8 @@ export default function Checkout({
           });
           handler.openIframe();
         } else {
-          window.location.href = "https://checkout.paystack.com";
+          // Navigates to Thank You view with pending payment instructions when public key is not set
+          setCurrentView("thank-you");
         }
       } else {
         setCurrentView("thank-you");

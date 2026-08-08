@@ -94,6 +94,7 @@ export default function SecuritySolutions({
                     src="https://i.ibb.co/GvvX8p1N/image.png"
                     alt="Enterprise Security and Access Control System"
                     className="w-full h-[360px] xl:h-[420px] object-cover object-center transform hover:scale-105 transition duration-500"
+                    referrerPolicy="no-referrer"
                   />
                 </div>
               </div>

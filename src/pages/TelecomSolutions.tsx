@@ -93,6 +93,7 @@ export default function TelecomSolutions({
                     src="https://i.ibb.co/HTYsLdMv/image.png"
                     alt="Enterprise Telecommunication Infrastructure"
                     className="w-full h-[360px] xl:h-[420px] object-cover object-center transform hover:scale-105 transition duration-500"
+                    referrerPolicy="no-referrer"
                   />
                 </div>
               </div>

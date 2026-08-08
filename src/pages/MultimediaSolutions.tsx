@@ -92,6 +92,7 @@ export default function MultimediaSolutions({
                     src="https://i.ibb.co/HfBtC4FT/meeting-room-5.png"
                     alt="Multimedia and Control Room AV Infrastructure"
                     className="w-full h-[360px] xl:h-[420px] object-cover object-center transform hover:scale-105 transition duration-500"
+                    referrerPolicy="no-referrer"
                   />
                 </div>
               </div>

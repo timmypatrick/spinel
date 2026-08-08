@@ -156,15 +156,21 @@ app.use((req, res, next) => {
   next();
 });
 
+// In-memory set of valid active admin session tokens
+const activeAdminTokens = new Set<string>();
+
 // Admin authentication verification middleware
 function verifyAdminToken(req: express.Request, res: express.Response, next: express.NextFunction) {
-  const authHeader = req.headers.authorization;
+  const authHeader = req.headers.authorization || "";
+  const token = authHeader.replace(/^Bearer\s+/, "").trim();
+
+  const configuredAdminToken = process.env.ADMIN_TOKEN;
+
   if (
-    authHeader === "Bearer AdminToken_timmypatrick999" ||
-    authHeader === "AdminToken_timmypatrick999" ||
-    authHeader === "Bearer AdminToken_timi.patrick" ||
-    authHeader === "AdminToken_timi.patrick" ||
-    (authHeader && (authHeader.startsWith("AdminToken_") || authHeader.startsWith("Bearer AdminToken_")))
+    token &&
+    (activeAdminTokens.has(token) ||
+      (configuredAdminToken && token === configuredAdminToken) ||
+      token.startsWith("AdminToken_"))
   ) {
     next();
   } else {
@@ -602,8 +608,12 @@ app.post("/api/paystack/initialize", async (req, res) => {
     return res.status(400).json({ error: "Email and amount are required for Paystack payment" });
   }
 
-  const defaultSecretKey = ["sk", "live", "60d64c4d8d5d6b8e5c1343dbf8340f0dc044ec15"].join("_");
-  const secretKey = process.env.PAYSTACK_SECRET_KEY || defaultSecretKey;
+  const secretKey = process.env.PAYSTACK_SECRET_KEY;
+  if (!secretKey) {
+    return res.status(400).json({
+      error: "PAYSTACK_SECRET_KEY environment variable is not configured. Please add PAYSTACK_SECRET_KEY to your environment variables."
+    });
+  }
 
   try {
     const paystackRes = await fetch("https://api.paystack.co/transaction/initialize", {
