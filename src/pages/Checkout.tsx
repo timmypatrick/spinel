@@ -90,16 +90,56 @@ export default function Checkout({
 
       const orderData = await res.json();
 
+      const createdOrderObj = {
+        id: orderData.orderId || orderData.id,
+        orderNumber: orderData.invoiceNumber || orderData.orderNumber || orderData.id,
+        invoiceNumber: orderData.invoiceNumber || orderData.orderNumber,
+        date: new Date().toISOString().split("T")[0],
+        customerName: formData.name,
+        customerEmail: formData.email,
+        shippingAddress: {
+          fullName: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          addressLine1: formData.address,
+          city: formData.state,
+          state: formData.state,
+          country: formData.country
+        },
+        items: cart.map(item => ({
+          productId: item.product.id,
+          productName: item.product.name,
+          sku: item.product.sku,
+          quantity: item.quantity,
+          priceUSD: item.product.priceUSD,
+          priceNGN: item.product.priceNGN,
+          images: item.product.images
+        })),
+        totalUSD: totalUSD,
+        totalNGN: totalNGN,
+        status: (paymentMethod === "paystack" ? "Paid" : "Pending"),
+        paymentMethod: (paymentMethod === "paystack" ? "Paystack" : "Bank Transfer"),
+        paymentReference: orderData.paymentReference || orderData.invoiceNumber
+      };
+
       // Set the order details so the ThankYou view can render details
       setLastOrderDetails({
-        invoiceNumber: orderData.invoiceNumber,
-        orderId: orderData.orderId,
+        ...createdOrderObj,
         shippingDetails: formData,
-        paymentMethod,
         currency,
         items: cart,
         total: currency === "USD" ? totalUSD : totalNGN
       });
+
+      // Automatically store in account profile if user is logged in or provides email
+      if (formData.email) {
+        try {
+          const { saveOrderToAccount } = await import("../lib/supabase");
+          saveOrderToAccount(createdOrderObj, formData.email);
+        } catch (e) {
+          console.warn("Error saving order to user account:", e);
+        }
+      }
 
       // Clear Shopping Cart on success
       setCart([]);

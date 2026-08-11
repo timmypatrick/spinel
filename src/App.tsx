@@ -17,6 +17,7 @@ import CategoryPage from "./pages/CategoryPage";
 import SecuritySolutions from "./pages/SecuritySolutions";
 import TelecomSolutions from "./pages/TelecomSolutions";
 import MultimediaSolutions from "./pages/MultimediaSolutions";
+import AccountPage from "./pages/AccountPage";
 
 import { Product, CartItem, UserSession } from "./types";
 
@@ -36,6 +37,7 @@ function getPathForView(view: string, productId?: string | null): string {
   if (view === "solution-multimedia") return "/solutions/multimedia";
   if (view === "thank-you") return "/thank-you";
   if (view === "admin") return "/admin";
+  if (view === "account") return "/account";
   if (view.startsWith("category-")) return `/category/${encodeURIComponent(view.substring(9))}`;
   return "/";
 }
@@ -62,6 +64,7 @@ function getViewForPath(pathname: string, search: string, hash: string): { view:
   if (path === "/solutions/telecom" || path === "/telecom") return { view: "solution-telecom", productId: null };
   if (path === "/solutions/multimedia" || path === "/multimedia") return { view: "solution-multimedia", productId: null };
   if (path === "/thank-you") return { view: "thank-you", productId: null };
+  if (path === "/account" || path === "/login" || path === "/signup" || path === "/forgot-password") return { view: "account", productId: null };
 
   if (path.startsWith("/product/")) {
     const rawId = pathname.substring(9);
@@ -346,6 +349,16 @@ export default function App() {
             setUser={setUser}
             currency={currency}
             setCurrentView={setCurrentView}
+          />
+        )}
+
+        {currentView === "account" && (
+          <AccountPage
+            user={user}
+            setUser={setUser}
+            currency={currency}
+            setCurrentView={setCurrentView}
+            setSelectedProductId={setSelectedProductId}
           />
         )}
 

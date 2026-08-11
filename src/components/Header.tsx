@@ -384,12 +384,30 @@ export default function Header({
             onClick={() => setCurrentView("cart")}
             className="text-gray-600 hover:text-[#FF7A20] relative p-1.5 transition duration-150 cursor-pointer"
             id="btn-cart-view"
+            title="View Shopping Cart"
           >
             <ShoppingCart className="w-5 h-5" />
             {totalCartItems > 0 && (
               <span className="absolute -top-1.5 -right-1.5 bg-[#FF7A20] text-white font-bold font-mono text-[10px] w-5 h-5 rounded-full flex items-center justify-center animate-pulse" id="cart-item-count">
                 {totalCartItems}
               </span>
+            )}
+          </button>
+
+          {/* User Account Icon - Placed directly after cart icon */}
+          <button
+            onClick={() => setCurrentView("account")}
+            className={`relative p-1.5 transition duration-150 cursor-pointer ${
+              currentView === "account"
+                ? "text-[#FF7A20]"
+                : "text-gray-600 hover:text-[#FF7A20]"
+            }`}
+            title={user ? `Account Profile (${user.name})` : "Sign In / Login"}
+            id="btn-user-account"
+          >
+            <User className="w-5 h-5" />
+            {user && (
+              <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white" id="user-active-badge" />
             )}
           </button>
 
