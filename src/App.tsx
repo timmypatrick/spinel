@@ -20,19 +20,87 @@ import MultimediaSolutions from "./pages/MultimediaSolutions";
 
 import { Product, CartItem, UserSession } from "./types";
 
+// Route path mapping helper functions
+function getPathForView(view: string, productId?: string | null): string {
+  if (view === "home") return "/";
+  if (view === "store") return "/store";
+  if (view === "oems") return "/oems";
+  if (view === "product-details" && productId) return `/product/${encodeURIComponent(productId)}`;
+  if (view === "cart") return "/cart";
+  if (view === "checkout") return "/checkout";
+  if (view === "request-quote") return "/request-quote";
+  if (view === "contact") return "/contact";
+  if (view === "about") return "/about";
+  if (view === "solution-security") return "/solutions/security";
+  if (view === "solution-telecom") return "/solutions/telecom";
+  if (view === "solution-multimedia") return "/solutions/multimedia";
+  if (view === "thank-you") return "/thank-you";
+  if (view === "admin") return "/admin";
+  if (view.startsWith("category-")) return `/category/${encodeURIComponent(view.substring(9))}`;
+  return "/";
+}
+
+function getViewForPath(pathname: string, search: string, hash: string): { view: string; productId: string | null } {
+  const path = pathname.toLowerCase().replace(/\/$/, "") || "/";
+  const params = new URLSearchParams(search);
+
+  const isCleanAdmin = path === "/admin" || path === "/admin/dashboard" || path.startsWith("/admin");
+  const isHashAdmin = hash === "#admin" || hash === "admin" || hash.includes("admin");
+  if (isCleanAdmin || isHashAdmin) {
+    return { view: "admin", productId: null };
+  }
+
+  if (path === "" || path === "/") return { view: "home", productId: null };
+  if (path === "/store") return { view: "store", productId: null };
+  if (path === "/oems") return { view: "oems", productId: null };
+  if (path === "/cart") return { view: "cart", productId: null };
+  if (path === "/checkout") return { view: "checkout", productId: null };
+  if (path === "/request-quote") return { view: "request-quote", productId: null };
+  if (path === "/contact") return { view: "contact", productId: null };
+  if (path === "/about") return { view: "about", productId: null };
+  if (path === "/solutions/security" || path === "/security") return { view: "solution-security", productId: null };
+  if (path === "/solutions/telecom" || path === "/telecom") return { view: "solution-telecom", productId: null };
+  if (path === "/solutions/multimedia" || path === "/multimedia") return { view: "solution-multimedia", productId: null };
+  if (path === "/thank-you") return { view: "thank-you", productId: null };
+
+  if (path.startsWith("/product/")) {
+    const rawId = pathname.substring(9);
+    const prodId = decodeURIComponent(rawId);
+    return { view: "product-details", productId: prodId };
+  }
+
+  if (path.startsWith("/category/")) {
+    const rawSub = pathname.substring(10);
+    const sub = decodeURIComponent(rawSub);
+    return { view: `category-${sub}`, productId: null };
+  }
+
+  if (params.get("product")) {
+    return { view: "product-details", productId: params.get("product") };
+  }
+
+  return { view: "home", productId: null };
+}
+
 export default function App() {
-  const [currentView, setCurrentView] = useState<string>(() => {
-    if (typeof window !== "undefined") {
-      const path = window.location.pathname.toLowerCase();
-      const hash = window.location.hash.toLowerCase();
-      const isCleanAdmin = path === "/admin" || path === "/admin/" || path.endsWith("/admin") || path.endsWith("/admin/") || path.includes("/admin");
-      const isHashAdmin = hash === "#admin" || hash === "admin" || hash.includes("admin");
-      if (isCleanAdmin || isHashAdmin) {
-        return "admin";
-      }
-    }
-    return "home";
-  });
+  // Initialize route from current window URL
+  const initialRoute = typeof window !== "undefined"
+    ? getViewForPath(window.location.pathname, window.location.search, window.location.hash)
+    : { view: "home", productId: null };
+
+  const [currentView, setCurrentViewInternal] = useState<string>(initialRoute.view);
+  const [selectedProductId, setSelectedProductId] = useState<string | null>(initialRoute.productId);
+
+  // Wrapper setter that forces scroll-to-top on navigation
+  const setCurrentView = (viewOrFn: string | ((prev: string) => string)) => {
+    setCurrentViewInternal(prev => {
+      const nextView = typeof viewOrFn === "function" ? viewOrFn(prev) : viewOrFn;
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      return nextView;
+    });
+  };
 
   // Persistent session states
   const [user, setUser] = useState<UserSession | null>(() => {
@@ -44,7 +112,6 @@ export default function App() {
       return null;
     }
   });
-  const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   
   // Local storage persisted shopping cart
@@ -71,20 +138,17 @@ export default function App() {
     setCurrentView("request-quote");
   };
 
-  // Listen to popstate or route changes if needed
+  // Listen for browser Back/Forward navigation (popstate & hashchange)
   useEffect(() => {
     const handleLocationChange = () => {
-      const path = window.location.pathname.toLowerCase();
-      const hash = window.location.hash.toLowerCase();
-      const isCleanAdmin = path === "/admin" || path === "/admin/" || path.endsWith("/admin") || path.endsWith("/admin/") || path.includes("/admin");
-      const isHashAdmin = hash === "#admin" || hash === "admin" || hash.includes("admin");
-      if (isCleanAdmin || isHashAdmin) {
-        setCurrentView("admin");
-      } else {
-        // Only reset to home if currently viewing admin (other views are virtual in-memory)
-        setCurrentView(prev => (prev === "admin" ? "home" : prev));
-      }
+      const route = getViewForPath(window.location.pathname, window.location.search, window.location.hash);
+      setCurrentViewInternal(route.view);
+      setSelectedProductId(route.productId);
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
     };
+
     window.addEventListener("popstate", handleLocationChange);
     window.addEventListener("hashchange", handleLocationChange);
     return () => {
@@ -93,33 +157,28 @@ export default function App() {
     };
   }, []);
 
-  // Sync currentView changes and user auth state to URL to support manual navigation, bookmarks, and refresh
+  // Sync currentView and selectedProductId changes to browser URL history & scroll to top
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const currentPath = window.location.pathname.toLowerCase();
-    const isAdminView = currentView === "admin";
-    const isLoggedIn = user && user.role === "admin";
+    let targetPath = getPathForView(currentView, selectedProductId);
 
-    if (isAdminView) {
-      if (isLoggedIn) {
-        // Admin is logged in, path should be /admin/dashboard
-        if (currentPath !== "/admin/dashboard" && currentPath !== "/admin/dashboard/") {
-          window.history.pushState(null, "", "/admin/dashboard");
-        }
+    if (currentView === "admin") {
+      if (user && user.role === "admin") {
+        targetPath = "/admin/dashboard";
       } else {
-        // Admin is not logged in, path should be /admin
-        if (currentPath !== "/admin" && currentPath !== "/admin/") {
-          window.history.pushState(null, "", "/admin");
-        }
-      }
-    } else {
-      // Non-admin virtual view. If the URL contains /admin, reset to root /
-      if (currentPath.includes("/admin")) {
-        window.history.pushState(null, "", "/");
+        targetPath = "/admin";
       }
     }
-  }, [currentView, user]);
+
+    if (window.location.pathname !== targetPath) {
+      window.history.pushState({ view: currentView, productId: selectedProductId }, "", targetPath);
+    }
+
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [currentView, selectedProductId, user]);
 
   // Persistent currency state
   const [currency, setCurrency] = useState<"USD" | "NGN">("USD");
