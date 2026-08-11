@@ -159,7 +159,7 @@ export default function Header({
   };
 
   return (
-    <header className="w-full bg-white border-b border-gray-100 sticky top-0 z-50 shadow-xs" id="main-header">
+    <header className="fixed top-0 left-0 right-0 w-full bg-white border-b border-gray-100 z-50 shadow-xs" id="main-header">
       {/* Main Navbar */}
       <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] py-3 flex items-center justify-between relative" id="navbar-container">
         {/* Logo Section (SVG mirroring orange/dark grey interlaced logo) */}

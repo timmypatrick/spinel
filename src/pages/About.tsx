@@ -377,14 +377,14 @@ export default function About({ setCurrentView }: AboutProps) {
               </div>
             </div>
 
-            <div className="hidden lg:flex lg:col-span-5 justify-center lg:justify-end">
-              <div className="relative group max-w-lg w-full">
+            <div className="flex lg:col-span-5 justify-center lg:justify-end mt-4 lg:mt-0 w-full">
+              <div className="relative group max-w-lg w-full mx-auto lg:mx-0">
                 <div className="absolute -inset-1 bg-gradient-to-r from-[#FF7A20] to-amber-500 rounded-2xl blur-md opacity-30 group-hover:opacity-50 transition duration-500"></div>
                 <div className="relative rounded-2xl overflow-hidden border border-gray-700/60 bg-gray-900/80 shadow-2xl">
                   <img
                     src="https://i.ibb.co/SwCdYPGr/spinel-team-1.png"
                     alt="Spinel Engineering and Distribution Team"
-                    className="w-full h-[360px] xl:h-[420px] object-cover object-center transform hover:scale-105 transition duration-500"
+                    className="w-full h-[220px] sm:h-[300px] md:h-[360px] xl:h-[420px] object-cover object-center transform hover:scale-105 transition duration-500"
                     referrerPolicy="no-referrer"
                   />
                 </div>

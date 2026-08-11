@@ -223,7 +223,7 @@ export default function App() {
       />
 
       {/* 2. Primary Page Router Stage */}
-      <main className="flex-1">
+      <main className="flex-1 pt-24 sm:pt-[96px]">
         {currentView === "home" && (
           <Home
             setCurrentView={setCurrentView}
