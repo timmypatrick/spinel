@@ -192,34 +192,10 @@ export async function handleSignIn({ email, password }: { email: string; passwor
 }
 
 export async function handleForgotPassword(email: string) {
-  const client = getSupabase();
   const emailLower = email.toLowerCase().trim();
 
-  if (client) {
-    const { error } = await client.auth.resetPasswordForEmail(emailLower, {
-      redirectTo: `${window.location.origin}/account`
-    });
-
-    if (error) {
-      try {
-        const res = await fetch("/api/auth/forgot-password", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: emailLower })
-        });
-        const dataJson = await res.json();
-        if (res.ok) {
-          return dataJson.message || `A password reset link has been sent to ${emailLower}.`;
-        }
-      } catch (e) {
-        console.warn("Server reset fallback notice:", e);
-      }
-
-      throw new Error(extractErrorMessage(error, "Could not send password reset email. Please try again."));
-    }
-
-    return "A password reset link has been sent to " + emailLower + ". Please check your inbox.";
-  } else {
+  // Call server endpoint first (uses Supabase Admin API to generate recovery state cleanly)
+  try {
     const res = await fetch("/api/auth/forgot-password", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -228,10 +204,31 @@ export async function handleForgotPassword(email: string) {
 
     const data = await res.json();
     if (!res.ok) {
-      throw new Error(extractErrorMessage(data, "Failed to send reset link"));
+      throw new Error(data.error || "Failed to process password reset request");
     }
 
-    return data.message || "A password reset link has been sent to " + emailLower + ". Check your email inbox to reset your password.";
+    return data.message || `A password reset link has been generated for ${emailLower}.`;
+  } catch (serverErr: any) {
+    const parsedServerMsg = extractErrorMessage(serverErr, "");
+    if (parsedServerMsg && !parsedServerMsg.includes("Failed to fetch") && !parsedServerMsg.includes("NetworkError")) {
+      throw new Error(parsedServerMsg);
+    }
+
+    // Client-side fallback
+    const client = getSupabase();
+    if (client) {
+      const { error } = await client.auth.resetPasswordForEmail(emailLower, {
+        redirectTo: `${window.location.origin}/account`
+      });
+
+      if (error) {
+        throw new Error(extractErrorMessage(error, "Could not send password reset email. Please try again."));
+      }
+
+      return "A password reset request has been processed for " + emailLower + ". Please check your email inbox.";
+    }
+
+    throw new Error(parsedServerMsg || "Failed to request password reset.");
   }
 }
 

@@ -1008,24 +1008,66 @@ app.post("/api/auth/forgot-password", async (req, res) => {
   }
 
   const emailLower = email.toLowerCase().trim();
-  const supabase = getSupabaseClient();
+  const adminSupabase = getSupabaseAdminClient();
+  const anonSupabase = getSupabaseClient();
 
-  if (supabase) {
+  if (adminSupabase) {
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(emailLower, {
+      // First check if user exists
+      const { data: userData } = await adminSupabase.auth.admin.listUsers();
+      const usersList = userData?.users || [];
+      const userExists = usersList.some((u: any) => u.email && u.email.toLowerCase() === emailLower);
+
+      if (!userExists) {
+        return res.status(404).json({
+          error: `No registered account was found with email ${emailLower}. Please check the spelling or create a new account.`
+        });
+      }
+
+      // Generate recovery link via Supabase Admin API
+      const { data: linkData, error: linkError } = await adminSupabase.auth.admin.generateLink({
+        type: "recovery",
+        email: emailLower,
+        options: {
+          redirectTo: `${req.protocol}://${req.get("host")}/account`
+        }
+      });
+
+      if (linkError) {
+        return res.status(400).json({ error: linkError.message });
+      }
+
+      const recoveryUrl = linkData?.properties?.action_link;
+
+      return res.json({
+        success: true,
+        message: `Password reset request generated for ${emailLower}! If customized SMTP is active in your Supabase project, check your inbox. You may also click below to proceed with password reset.`,
+        recoveryUrl
+      });
+    } catch (err: any) {
+      console.error("Forgot password admin error:", err);
+      return res.status(500).json({ error: err.message || "Failed to process password reset request" });
+    }
+  } else if (anonSupabase) {
+    try {
+      const { error } = await anonSupabase.auth.resetPasswordForEmail(emailLower, {
         redirectTo: `${req.protocol}://${req.get("host")}/account`
       });
 
       if (error) {
-        return res.status(400).json({ error: error.message });
+        let msg = error.message;
+        if (!msg || msg === "{}" || typeof msg !== "string") {
+          msg = (error as any).msg || (error as any).error_description || "Unable to send password reset email at this time.";
+        }
+        return res.status(400).json({ error: msg });
       }
 
       return res.json({
         success: true,
-        message: `A password reset link has been sent to ${emailLower}. Please check your inbox.`
+        message: `A password reset link has been dispatched to ${emailLower}. Please check your inbox.`
       });
     } catch (err: any) {
-      return res.status(500).json({ error: "Supabase connection error: " + err.message });
+      return res.status(500).json({ error: err.message || "Failed to process password reset request" });
     }
   } else {
     // Demo Mode fallback

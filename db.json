@@ -56895,6 +56895,24 @@
       "role": "customer",
       "companyName": "Lagos Telco Ltd",
       "createdAt": "2026-08-12T00:27:21.251Z"
+    },
+    {
+      "id": "8a082188-8122-422a-a463-e76f67ebb3e2",
+      "name": "Timmy Patrick",
+      "email": "timi.patrick@dataset.ng",
+      "password": "asdfgh",
+      "role": "customer",
+      "companyName": "Customer Account",
+      "createdAt": "2026-08-12T00:29:52.442Z"
+    },
+    {
+      "id": "521e2c81-4cd0-4aa2-b3a2-66195c49fbf7",
+      "name": "Timmy Patrick",
+      "email": "timmypatrick999@gmail.com",
+      "password": "programmer999",
+      "role": "customer",
+      "companyName": "Customer Account",
+      "createdAt": "2026-08-12T00:44:07.019Z"
     }
   ]
 }
