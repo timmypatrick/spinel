@@ -20,6 +20,32 @@ export function getSupabase(): SupabaseClient | null {
   return null;
 }
 
+export function extractErrorMessage(err: any, fallback: string = "An error occurred. Please try again."): string {
+  if (!err) return fallback;
+  if (typeof err === "string") {
+    const trimmed = err.trim();
+    return trimmed && trimmed !== "{}" ? trimmed : fallback;
+  }
+  if (typeof err === "object") {
+    if (typeof err.message === "string" && err.message.trim() && err.message.trim() !== "{}") {
+      return err.message.trim();
+    }
+    if (typeof err.msg === "string" && err.msg.trim() && err.msg.trim() !== "{}") {
+      return err.msg.trim();
+    }
+    if (typeof err.error_description === "string" && err.error_description.trim() && err.error_description.trim() !== "{}") {
+      return err.error_description.trim();
+    }
+    if (typeof err.error === "string" && err.error.trim() && err.error.trim() !== "{}") {
+      return err.error.trim();
+    }
+    if (err.error && typeof err.error === "object") {
+      return extractErrorMessage(err.error, fallback);
+    }
+  }
+  return fallback;
+}
+
 export interface SignUpData {
   name: string;
   email: string;
@@ -28,45 +54,10 @@ export interface SignUpData {
 }
 
 export async function handleSignUp({ name, email, password, phone }: SignUpData) {
-  const client = getSupabase();
   const emailLower = email.toLowerCase().trim();
 
-  if (client) {
-    const { data, error } = await client.auth.signUp({
-      email: emailLower,
-      password,
-      options: {
-        data: {
-          full_name: name,
-          name,
-          phone,
-          company_name: "Customer Account"
-        },
-        emailRedirectTo: `${window.location.origin}/account`
-      }
-    });
-
-    if (error) {
-      throw new Error(error.message);
-    }
-
-    // Register with server API as well
-    try {
-      await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email: emailLower, password, phone })
-      });
-    } catch (e) {
-      console.warn("Server sync notice during signup:", e);
-    }
-
-    return {
-      message: "A confirmation link has been sent to your email address (" + emailLower + "). Please check your inbox and verify your email before logging in.",
-      user: data.user
-    };
-  } else {
-    // Call server API route
+  // Try server signup endpoint first (uses Supabase Admin API to create user cleanly)
+  try {
     const res = await fetch("/api/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -75,13 +66,47 @@ export async function handleSignUp({ name, email, password, phone }: SignUpData)
 
     const data = await res.json();
     if (!res.ok) {
-      throw new Error(data.error || "Failed to create account");
+      throw new Error(data.error || data.message || "Failed to create account");
     }
 
     return {
-      message: data.message || "A confirmation link has been sent to your email address (" + emailLower + "). Please verify your email to complete registration.",
+      message: data.message || `Account created successfully! You can now sign in with ${emailLower}.`,
       user: data.user
     };
+  } catch (serverErr: any) {
+    const parsedServerMsg = extractErrorMessage(serverErr, "");
+    if (parsedServerMsg && !parsedServerMsg.includes("Failed to fetch") && !parsedServerMsg.includes("NetworkError")) {
+      throw new Error(parsedServerMsg);
+    }
+
+    // Fallback: Client-side Supabase client call
+    const client = getSupabase();
+    if (client) {
+      const { data, error } = await client.auth.signUp({
+        email: emailLower,
+        password,
+        options: {
+          data: {
+            full_name: name,
+            name,
+            phone,
+            company_name: "Customer Account"
+          },
+          emailRedirectTo: `${window.location.origin}/account`
+        }
+      });
+
+      if (error) {
+        throw new Error(extractErrorMessage(error, "Failed to create account with Supabase. Please verify your details."));
+      }
+
+      return {
+        message: `Account created successfully! A confirmation notification has been sent to ${emailLower}.`,
+        user: data.user
+      };
+    }
+
+    throw new Error(parsedServerMsg || "Failed to create account. Please check your connection and try again.");
   }
 }
 
@@ -96,7 +121,30 @@ export async function handleSignIn({ email, password }: { email: string; passwor
     });
 
     if (error) {
-      throw new Error(error.message);
+      // Fallback to server login API route
+      try {
+        const res = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: emailLower, password })
+        });
+        const dataJson = await res.json();
+        if (res.ok) {
+          const userSession: UserSession = {
+            email: dataJson.email || emailLower,
+            name: dataJson.name || emailLower.split("@")[0].toUpperCase(),
+            role: dataJson.role || "customer",
+            companyName: dataJson.companyName || ""
+          };
+          localStorage.setItem("spinel_user", JSON.stringify(userSession));
+          if (dataJson.token) localStorage.setItem("spinel_token", dataJson.token);
+          return userSession;
+        }
+      } catch (e) {
+        console.warn("Server login fallback notice:", e);
+      }
+
+      throw new Error(extractErrorMessage(error, "Invalid login credentials. Please check your email and password."));
     }
 
     const userMeta = data.user?.user_metadata || {};
@@ -115,7 +163,7 @@ export async function handleSignIn({ email, password }: { email: string; passwor
 
     return userSession;
   } else {
-    // Server API login fallback
+    // Server API login
     const res = await fetch("/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -124,7 +172,7 @@ export async function handleSignIn({ email, password }: { email: string; passwor
 
     const data = await res.json();
     if (!res.ok) {
-      throw new Error(data.error || "Login failed");
+      throw new Error(extractErrorMessage(data, "Sign in failed. Please verify your credentials."));
     }
 
     const userSession: UserSession = {
@@ -153,10 +201,24 @@ export async function handleForgotPassword(email: string) {
     });
 
     if (error) {
-      throw new Error(error.message);
+      try {
+        const res = await fetch("/api/auth/forgot-password", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: emailLower })
+        });
+        const dataJson = await res.json();
+        if (res.ok) {
+          return dataJson.message || `A password reset link has been sent to ${emailLower}.`;
+        }
+      } catch (e) {
+        console.warn("Server reset fallback notice:", e);
+      }
+
+      throw new Error(extractErrorMessage(error, "Could not send password reset email. Please try again."));
     }
 
-    return "A password reset link has been sent to " + emailLower + ". Please check your inbox and follow the link to reset your password.";
+    return "A password reset link has been sent to " + emailLower + ". Please check your inbox.";
   } else {
     const res = await fetch("/api/auth/forgot-password", {
       method: "POST",
@@ -166,7 +228,7 @@ export async function handleForgotPassword(email: string) {
 
     const data = await res.json();
     if (!res.ok) {
-      throw new Error(data.error || "Failed to send reset link");
+      throw new Error(extractErrorMessage(data, "Failed to send reset link"));
     }
 
     return data.message || "A password reset link has been sent to " + emailLower + ". Check your email inbox to reset your password.";

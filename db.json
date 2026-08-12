@@ -56886,6 +56886,15 @@
       "password": "password123",
       "role": "customer",
       "companyName": "Lagos Enterprise ICT"
+    },
+    {
+      "id": "852e230f-ae04-47ae-bc00-044293586cc0",
+      "name": "Chinedu Okeke",
+      "email": "user_e2e_1786494440924@spineldistribution.com",
+      "password": "Password123!",
+      "role": "customer",
+      "companyName": "Lagos Telco Ltd",
+      "createdAt": "2026-08-12T00:27:21.251Z"
     }
   ]
 }

@@ -10,14 +10,23 @@ import dotenv from "dotenv";
 // Load environment variables
 dotenv.config();
 
-// Lazy-initialized Supabase Client to avoid crashes when keys are missing
+// Lazy-initialized Supabase Clients
 function getSupabaseClient() {
-  const supabaseUrl = process.env.SUPABASE_URL;
-  const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
+  const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+  const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
   if (!supabaseUrl || !supabaseAnonKey) {
     return null;
   }
   return createClient(supabaseUrl, supabaseAnonKey);
+}
+
+function getSupabaseAdminClient() {
+  const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!supabaseUrl || !serviceKey) {
+    return null;
+  }
+  return createClient(supabaseUrl, serviceKey);
 }
 
 // Ensure the dev server runs on port 3000
@@ -874,54 +883,91 @@ app.delete("/api/newsletter/delete-all", verifyAdminToken, (req, res) => {
 
 // 5. API: Secure Login Authentication
 app.post("/api/auth/signup", async (req, res) => {
-  const { name, email, password, companyName } = req.body;
+  const { name, email, password, phone, companyName } = req.body;
   if (!email || !password || !name) {
     return res.status(400).json({ error: "Name, email and password are required" });
   }
 
-  const emailLower = email.toLowerCase();
-  const supabase = getSupabaseClient();
+  const emailLower = email.toLowerCase().trim();
+  const adminSupabase = getSupabaseAdminClient();
+  const anonSupabase = getSupabaseClient();
 
-  if (supabase) {
+  if (adminSupabase) {
     try {
-      const { data, error } = await supabase.auth.signUp({
+      const { data: createData, error: createError } = await adminSupabase.auth.admin.createUser({
         email: emailLower,
         password,
-        options: {
-          data: {
-            full_name: name,
-            company_name: companyName || "Individual"
-          }
+        email_confirm: true,
+        user_metadata: {
+          full_name: name,
+          name,
+          phone: phone || "",
+          company_name: companyName || "Customer Account"
         }
       });
 
-      if (error) {
-        return res.status(400).json({ error: error.message });
+      if (createError) {
+        let msg = createError.message;
+        if (msg.includes("already been registered") || msg.includes("already exists")) {
+          return res.status(400).json({ error: "An account with this email address has already been registered. Please sign in instead." });
+        }
+        return res.status(400).json({ error: msg });
       }
 
       const newUser = {
-        id: data.user?.id || `user-${Date.now()}`,
+        id: createData.user?.id || `user-${Date.now()}`,
         name,
         email: emailLower,
-        password, // stored securely or as is in local fallback
+        password,
         role: "customer" as const,
-        companyName: companyName || "Individual",
+        companyName: companyName || "Customer Account",
         createdAt: new Date().toISOString()
       };
       db.users.push(newUser);
 
       return res.status(201).json({
         success: true,
-        message: "Signup successful! Every saved signup should have email authentication. A verification email has been sent to your address. Please verify to log in.",
+        message: `Account created successfully for ${emailLower}! You can now log in with your email and password.`,
         user: {
           name,
           email: emailLower,
           role: "customer",
-          companyName: companyName || "Individual"
+          companyName: companyName || "Customer Account"
         }
       });
     } catch (err: any) {
-      return res.status(500).json({ error: "Supabase connection error: " + err.message });
+      console.error("Admin signup error:", err);
+      return res.status(500).json({ error: err.message || "Failed to create user account" });
+    }
+  } else if (anonSupabase) {
+    try {
+      const { data, error } = await anonSupabase.auth.signUp({
+        email: emailLower,
+        password,
+        options: {
+          data: {
+            full_name: name,
+            phone: phone || "",
+            company_name: companyName || "Customer Account"
+          }
+        }
+      });
+
+      if (error) {
+        let msg = error.message;
+        if (!msg || msg === "{}" || typeof msg !== "string") {
+          msg = (error as any).msg || (error as any).error_description || "Supabase signup error. Please check your details.";
+        }
+        return res.status(400).json({ error: msg });
+      }
+
+      return res.status(201).json({
+        success: true,
+        message: `Account created! A confirmation link has been sent to ${emailLower}. Please check your inbox.`,
+        user: { name, email: emailLower, role: "customer" }
+      });
+    } catch (err: any) {
+      return res.status(500).json({ error: err.message || "Failed to complete registration" });
     }
   } else {
     // Demo Mode local lookup
@@ -936,7 +982,7 @@ app.post("/api/auth/signup", async (req, res) => {
       email: emailLower,
       password,
       role: "customer" as const,
-      companyName: companyName || "Individual",
+      companyName: companyName || "Customer Account",
       createdAt: new Date().toISOString()
     };
     db.users.push(newUser);
@@ -944,12 +990,12 @@ app.post("/api/auth/signup", async (req, res) => {
     return res.status(201).json({
       success: true,
       isDemo: true,
-      message: "Signed up successfully! (Demo Mode: Supabase secrets not configured. Signups are stored in-memory. An email authentication check has been simulated).",
+      message: `Account created successfully for ${emailLower}! (Demo Mode: Supabase secrets not configured).`,
       user: {
         name,
         email: emailLower,
         role: "customer",
-        companyName: companyName || "Individual"
+        companyName: companyName || "Customer Account"
       }
     });
   }

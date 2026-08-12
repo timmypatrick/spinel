@@ -29,7 +29,8 @@ import {
   handleSignIn,
   handleForgotPassword,
   handleSignOut,
-  getUserOrders
+  getUserOrders,
+  extractErrorMessage
 } from "../lib/supabase";
 
 interface AccountPageProps {
@@ -111,7 +112,7 @@ export default function AccountPage({
       setUser(session);
       setSuccessMessage("Signed in successfully! Welcome back.");
     } catch (err: any) {
-      setErrorMessage(err.message || "Failed to sign in. Please verify your credentials.");
+      setErrorMessage(extractErrorMessage(err, "Failed to sign in. Please verify your credentials."));
     } finally {
       setLoading(false);
     }
@@ -149,7 +150,7 @@ export default function AccountPage({
       setSignupPassword("");
       setSignupPhone("");
     } catch (err: any) {
-      setErrorMessage(err.message || "Failed to register account. Please try again.");
+      setErrorMessage(extractErrorMessage(err, "Failed to register account. Please try again."));
     } finally {
       setLoading(false);
     }
@@ -169,7 +170,7 @@ export default function AccountPage({
       const msg = await handleForgotPassword(forgotEmail);
       setSuccessMessage(msg);
     } catch (err: any) {
-      setErrorMessage(err.message || "Could not process password reset request. Please check your email.");
+      setErrorMessage(extractErrorMessage(err, "Could not process password reset request. Please check your email."));
     } finally {
       setLoading(false);
     }
