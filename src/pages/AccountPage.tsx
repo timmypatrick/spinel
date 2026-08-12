@@ -21,7 +21,8 @@ import {
   CreditCard,
   Building,
   KeyRound,
-  FileText
+  FileText,
+  Trash2
 } from "lucide-react";
 import { UserSession, Order } from "../types";
 import {
@@ -72,6 +73,80 @@ export default function AccountPage({
   const [orderSearchQuery, setOrderSearchQuery] = useState("");
   const [selectedOrderTab, setSelectedOrderTab] = useState<"all" | "paid" | "pending">("all");
   const [activeSubTab, setActiveSubTab] = useState<"orders" | "profile">("orders");
+
+  // User Profile Edit State
+  const [profileName, setProfileName] = useState(user?.name || "");
+  const [profilePhone, setProfilePhone] = useState(user?.phone || "");
+  const [profileCompany, setProfileCompany] = useState(user?.companyName || "");
+  const [savingProfile, setSavingProfile] = useState(false);
+  const [profileSuccessMsg, setProfileSuccessMsg] = useState<string | null>(null);
+  const [profileErrorMsg, setProfileErrorMsg] = useState<string | null>(null);
+
+  // Sync profile state when user object updates
+  useEffect(() => {
+    if (user) {
+      setProfileName(user.name || "");
+      setProfilePhone(user.phone || "");
+      setProfileCompany(user.companyName || "");
+
+      // Auto-populate phone number and latest profile details from server
+      fetch(`/api/user/profile?email=${encodeURIComponent(user.email)}`)
+        .then(res => res.ok ? res.json() : null)
+        .then(data => {
+          if (data) {
+            if (data.phone) setProfilePhone(data.phone);
+            if (data.name) setProfileName(data.name);
+            if (data.companyName) setProfileCompany(data.companyName);
+          }
+        })
+        .catch(err => console.warn("Error fetching user profile:", err));
+    }
+  }, [user]);
+
+  const handleSaveProfile = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setProfileSuccessMsg(null);
+    setProfileErrorMsg(null);
+
+    if (!profileName.trim()) {
+      setProfileErrorMsg("Full Name cannot be blank.");
+      return;
+    }
+
+    setSavingProfile(true);
+    try {
+      const res = await fetch("/api/user/profile", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: user?.email,
+          name: profileName.trim(),
+          phone: profilePhone.trim(),
+          companyName: profileCompany.trim()
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed updating profile details.");
+      }
+
+      const updatedUser: UserSession = {
+        ...user!,
+        name: profileName.trim(),
+        phone: profilePhone.trim(),
+        companyName: profileCompany.trim()
+      };
+
+      setUser(updatedUser);
+      localStorage.setItem("spinel_user_session", JSON.stringify(updatedUser));
+      setProfileSuccessMsg("Profile details saved successfully! Updates are synced across your account and admin dashboard.");
+    } catch (err: any) {
+      setProfileErrorMsg(err.message || "Failed saving profile changes.");
+    } finally {
+      setSavingProfile(false);
+    }
+  };
 
   // Fetch orders on mount or user change
   useEffect(() => {
@@ -183,21 +258,55 @@ export default function AccountPage({
     resetFormState();
   };
 
-  // Order Filtering
+  // Order Filtering (Supports All, Completed/Paid, and Pending orders)
   const filteredOrders = orders.filter((o) => {
+    const statusLower = (o.status || "").toLowerCase();
+    const isCompleted = statusLower === "paid" || statusLower === "completed";
+    const isPending = statusLower === "pending";
+
+    if (selectedOrderTab === "paid" && !isCompleted) return false;
+    if (selectedOrderTab === "pending" && !isPending) return false;
+
     const matchesSearch =
+      !orderSearchQuery ||
       (o.orderNumber && o.orderNumber.toLowerCase().includes(orderSearchQuery.toLowerCase())) ||
       (o.id && o.id.toLowerCase().includes(orderSearchQuery.toLowerCase())) ||
       (o.items && o.items.some((it) => it.productName.toLowerCase().includes(orderSearchQuery.toLowerCase())));
 
-    if (selectedOrderTab === "paid") {
-      return matchesSearch && (o.status === "Paid" || o.status === "Completed");
-    }
-    if (selectedOrderTab === "pending") {
-      return matchesSearch && (o.status === "Pending" || o.status === "Processing");
-    }
     return matchesSearch;
   });
+
+  const handleDeleteOrder = async (orderId: string) => {
+    if (!confirm("Are you sure you want to delete this order record? This will permanently remove it from your account and admin dashboard.")) {
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/orders/${orderId}`, {
+        method: "DELETE"
+      });
+
+      // Remove from state
+      setOrders(prev => prev.filter(o => o.id !== orderId && o.orderNumber !== orderId));
+
+      // Remove from local storage cache if present
+      if (user?.email) {
+        const userOrdersKey = `spinel_user_orders_${user.email.toLowerCase().trim()}`;
+        const cached = localStorage.getItem(userOrdersKey);
+        if (cached) {
+          try {
+            const parsed = JSON.parse(cached);
+            const updated = parsed.filter((o: any) => o.id !== orderId && o.orderNumber !== orderId);
+            localStorage.setItem(userOrdersKey, JSON.stringify(updated));
+          } catch (e) {}
+        }
+      }
+
+      setSuccessMessage("Order record deleted successfully.");
+    } catch (err: any) {
+      setErrorMessage(err.message || "Could not delete order.");
+    }
+  };
 
   // Calculate stats
   const totalSpentUSD = orders.reduce((acc, o) => acc + (o.totalUSD || 0), 0);
@@ -287,7 +396,7 @@ export default function AccountPage({
               }`}
             >
               <Package className="w-4 h-4" />
-              <span>My Orders & Live Tracking ({orders.length})</span>
+              <span>Completed Orders ({filteredOrders.length})</span>
             </button>
             <button
               onClick={() => setActiveSubTab("profile")}
@@ -302,47 +411,52 @@ export default function AccountPage({
             </button>
           </div>
 
-          {/* TAB 1: ORDERS LIST & TRACKING */}
+          {/* TAB 1: COMPLETED ORDERS LIST */}
           {activeSubTab === "orders" && (
             <div className="space-y-6">
               
-              {/* Search & Filters */}
-              <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 bg-white p-4 rounded-xl border border-gray-200 shadow-2xs">
+              {/* Search Bar & Order Filter Tabs */}
+              <div className="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4 bg-white p-4 rounded-xl border border-gray-200 shadow-2xs">
                 <div className="relative flex-1">
                   <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-3" />
                   <input
                     type="text"
-                    placeholder="Search by Order Number or Product Name..."
+                    placeholder="Search orders by order reference or product term..."
                     value={orderSearchQuery}
                     onChange={(e) => setOrderSearchQuery(e.target.value)}
                     className="w-full pl-10 pr-4 py-2 text-xs border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF7A20]"
                   />
                 </div>
 
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center gap-1.5 bg-gray-100 p-1 rounded-lg shrink-0 text-xs font-semibold">
                   <button
+                    type="button"
                     onClick={() => setSelectedOrderTab("all")}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition ${
-                      selectedOrderTab === "all" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                    className={`px-3 py-1.5 rounded-md transition cursor-pointer ${
+                      selectedOrderTab === "all" ? "bg-white text-gray-900 shadow-xs font-bold" : "text-gray-500 hover:text-gray-900"
                     }`}
                   >
-                    All ({orders.length})
+                    All Orders ({orders.length})
                   </button>
                   <button
+                    type="button"
                     onClick={() => setSelectedOrderTab("paid")}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition ${
-                      selectedOrderTab === "paid" ? "bg-emerald-600 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                    className={`px-3 py-1.5 rounded-md transition cursor-pointer flex items-center gap-1 ${
+                      selectedOrderTab === "paid" ? "bg-white text-emerald-800 shadow-xs font-bold" : "text-gray-500 hover:text-gray-900"
                     }`}
                   >
-                    Paid / Completed
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>Completed</span>
                   </button>
                   <button
+                    type="button"
                     onClick={() => setSelectedOrderTab("pending")}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition ${
-                      selectedOrderTab === "pending" ? "bg-amber-600 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                    className={`px-3 py-1.5 rounded-md transition cursor-pointer flex items-center gap-1 ${
+                      selectedOrderTab === "pending" ? "bg-white text-amber-800 shadow-xs font-bold" : "text-gray-500 hover:text-gray-900"
                     }`}
                   >
-                    Pending
+                    <Clock className="w-3.5 h-3.5 text-amber-600" />
+                    <span>Pending</span>
                   </button>
                 </div>
               </div>
@@ -351,7 +465,7 @@ export default function AccountPage({
               {ordersLoading ? (
                 <div className="bg-white p-12 rounded-2xl text-center border border-gray-100 shadow-2xs space-y-3">
                   <RefreshCw className="w-8 h-8 text-[#FF7A20] animate-spin mx-auto" />
-                  <p className="text-xs text-gray-500 font-medium">Fetching account orders from Supabase...</p>
+                  <p className="text-xs text-gray-500 font-medium">Fetching completed orders from database...</p>
                 </div>
               ) : filteredOrders.length === 0 ? (
                 <div className="bg-white p-12 rounded-2xl text-center border border-gray-100 shadow-2xs space-y-4">
@@ -359,11 +473,11 @@ export default function AccountPage({
                     <Package className="w-8 h-8" />
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-gray-900">No Orders Found</h3>
+                    <h3 className="text-base font-bold text-gray-900">No Completed Orders Found</h3>
                     <p className="text-xs text-gray-500 max-w-md mx-auto mt-1">
                       {orderSearchQuery
-                        ? "No orders match your search criteria. Try a different order number or product term."
-                        : "You haven't placed any orders under this user account yet. When you purchase products while logged in, your full order history and live tracking details will appear right here."}
+                        ? "No completed orders match your search query."
+                        : "You have no completed purchases recorded. Completed Paystack orders will appear here automatically."}
                     </p>
                   </div>
                   <button
@@ -377,12 +491,11 @@ export default function AccountPage({
               ) : (
                 <div className="space-y-6">
                   {filteredOrders.map((order) => {
-                    const isPaid = order.status === "Paid" || order.status === "Completed";
-                    const isPending = order.status === "Pending";
+                    const orderId = order.id || order.orderNumber;
 
                     return (
                       <div
-                        key={order.id || order.orderNumber}
+                        key={orderId}
                         className="bg-white rounded-2xl border border-gray-200 shadow-2xs overflow-hidden transition hover:border-gray-300"
                       >
                         {/* Order Header */}
@@ -393,86 +506,38 @@ export default function AccountPage({
                               <span className="font-mono font-bold text-gray-900 text-sm">{order.orderNumber || order.id}</span>
                             </div>
                             <div className="border-l border-gray-200 pl-4">
-                              <span className="text-gray-400 uppercase tracking-wider text-[10px] block font-semibold">Date Placed</span>
-                              <span className="text-gray-700 font-medium">{order.date || "Recent"}</span>
+                              <span className="text-gray-400 uppercase tracking-wider text-[10px] block font-semibold">Date & Time Placed</span>
+                              <span className="text-gray-700 font-medium font-mono text-xs">{order.date || "Recent"}</span>
                             </div>
                           </div>
 
                           <div className="flex items-center space-x-3">
-                            <span
-                              className={`px-3 py-1 rounded-full text-xs font-bold inline-flex items-center gap-1.5 ${
-                                isPaid
-                                  ? "bg-emerald-100 text-emerald-800 border border-emerald-200"
-                                  : isPending
-                                  ? "bg-amber-100 text-amber-800 border border-amber-200"
-                                  : "bg-blue-100 text-blue-800 border border-blue-200"
-                              }`}
-                            >
-                              <span className={`w-2 h-2 rounded-full ${isPaid ? "bg-emerald-500" : "bg-amber-500"}`}></span>
-                              {order.status || "Paid"}
-                            </span>
-
-                            <span className="bg-gray-200/60 text-gray-700 px-2.5 py-1 rounded-md font-mono text-[11px] font-semibold">
-                              {order.paymentMethod || "Paystack"}
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Order Tracking Progress Bar */}
-                        <div className="p-6 border-b border-gray-100 bg-gradient-to-r from-orange-50/30 to-amber-50/30">
-                          <div className="text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-1.5">
-                            <Truck className="w-4 h-4 text-[#FF7A20]" />
-                            <span>Order Status Timeline</span>
-                          </div>
-                          
-                          <div className="grid grid-cols-4 gap-2 text-center text-[11px] font-semibold relative">
-                            {/* Step 1: Placed */}
-                            <div className="flex flex-col items-center">
-                              <div className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-xs shadow-xs mb-1">
-                                <CheckCircle2 className="w-4 h-4" />
-                              </div>
-                              <span className="text-gray-900">Order Placed</span>
-                              <span className="text-[10px] text-gray-400 font-normal">Confirmed</span>
-                            </div>
-
-                            {/* Step 2: Payment Verified */}
-                            <div className="flex flex-col items-center">
-                              <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shadow-xs mb-1 ${
-                                isPaid ? "bg-emerald-500 text-white" : "bg-amber-500 text-white animate-pulse"
-                              }`}>
-                                {isPaid ? <CheckCircle2 className="w-4 h-4" /> : "2"}
-                              </div>
-                              <span className={isPaid ? "text-gray-900" : "text-amber-700 font-bold"}>
-                                {isPaid ? "Payment Confirmed" : "Awaiting Verification"}
+                            {(order.status === "Paid" || order.status === "Completed") ? (
+                              <span className="bg-emerald-100 text-emerald-800 border border-emerald-200 px-3 py-1 rounded-full text-xs font-bold inline-flex items-center gap-1.5">
+                                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                                <span>Completed</span>
                               </span>
-                              <span className="text-[10px] text-gray-400 font-normal">{order.paymentMethod || "Paystack"}</span>
-                            </div>
+                            ) : (
+                              <span className="bg-amber-100 text-amber-800 border border-amber-200 px-3 py-1 rounded-full text-xs font-bold inline-flex items-center gap-1.5">
+                                <Clock className="w-3.5 h-3.5 text-amber-600" />
+                                <span>Pending Payment</span>
+                              </span>
+                            )}
 
-                            {/* Step 3: Dispatched */}
-                            <div className="flex flex-col items-center">
-                              <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shadow-xs mb-1 ${
-                                isPaid ? "bg-emerald-500 text-white" : "bg-gray-200 text-gray-500"
-                              }`}>
-                                {isPaid ? <Truck className="w-4 h-4" /> : "3"}
-                              </div>
-                              <span className={isPaid ? "text-gray-900" : "text-gray-400"}>Dispatch Ready</span>
-                              <span className="text-[10px] text-gray-400 font-normal">Logistics Warehouse</span>
-                            </div>
-
-                            {/* Step 4: Delivered */}
-                            <div className="flex flex-col items-center">
-                              <div className="w-8 h-8 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-bold text-xs mb-1">
-                                4
-                              </div>
-                              <span className="text-gray-400">Delivered</span>
-                              <span className="text-[10px] text-gray-400 font-normal">Final Address</span>
-                            </div>
+                            <button
+                              onClick={() => handleDeleteOrder(orderId)}
+                              className="bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 px-3 py-1 rounded-lg text-xs font-bold transition cursor-pointer flex items-center space-x-1.5 shadow-xs"
+                              title="Delete Order Record"
+                            >
+                              <Trash2 className="w-3.5 h-3.5 text-red-600" />
+                              <span>Delete Order</span>
+                            </button>
                           </div>
                         </div>
 
                         {/* Items Purchased List */}
                         <div className="p-6 space-y-4">
-                          <h4 className="text-xs font-bold text-gray-900 uppercase tracking-wider">Ordered Hardware Items</h4>
+                          <h4 className="text-xs font-bold text-gray-900 uppercase tracking-wider">Purchased Hardware Items</h4>
                           
                           <div className="divide-y divide-gray-100">
                             {order.items && order.items.map((item, idx) => (
@@ -543,57 +608,123 @@ export default function AccountPage({
           {/* TAB 2: PROFILE SETTINGS */}
           {activeSubTab === "profile" && (
             <div className="bg-white rounded-2xl p-6 md:p-8 border border-gray-200 shadow-2xs space-y-6">
-              <h3 className="text-base font-bold text-gray-900 border-b border-gray-100 pb-3">User Profile Information</h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+              <div className="border-b border-gray-100 pb-3 flex items-center justify-between">
                 <div>
-                  <label className="block text-gray-500 font-semibold mb-1">Full Name</label>
-                  <input
-                    type="text"
-                    readOnly
-                    value={user.name}
-                    className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl font-medium text-gray-900"
-                  />
+                  <h3 className="text-base font-bold text-gray-900">User Profile Details</h3>
+                  <p className="text-xs text-gray-500 mt-0.5">Manage your personal details. You can update your Name and Phone Number anytime.</p>
                 </div>
+                <span className="bg-[#FF7A20]/10 text-[#FF7A20] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                  Customer Profile
+                </span>
+              </div>
 
-                <div>
-                  <label className="block text-gray-500 font-semibold mb-1">Email Address</label>
-                  <input
-                    type="text"
-                    readOnly
-                    value={user.email}
-                    className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl font-medium text-gray-900"
-                  />
+              {profileErrorMsg && (
+                <div className="bg-red-50 border border-red-200 text-red-800 p-4 rounded-xl text-xs flex items-center space-x-2">
+                  <AlertCircle className="w-4 h-4 text-red-500 shrink-0" />
+                  <span>{profileErrorMsg}</span>
                 </div>
+              )}
 
-                <div>
-                  <label className="block text-gray-500 font-semibold mb-1">Account Role</label>
-                  <input
-                    type="text"
-                    readOnly
-                    value={user.role.toUpperCase()}
-                    className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl font-medium text-gray-900"
-                  />
+              {profileSuccessMsg && (
+                <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-4 rounded-xl text-xs flex items-center space-x-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>{profileSuccessMsg}</span>
                 </div>
+              )}
 
-                <div>
-                  <label className="block text-gray-500 font-semibold mb-1">Authentication Provider</label>
-                  <div className="w-full p-3 bg-emerald-50 border border-emerald-200 rounded-xl font-semibold text-emerald-800 flex items-center space-x-2">
-                    <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                    <span>Supabase Secured Email Authentication</span>
+              <form onSubmit={handleSaveProfile} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+                  {/* Name Input (Editable) */}
+                  <div>
+                    <label className="block text-gray-700 font-bold mb-1.5 flex items-center gap-1.5">
+                      <User className="w-3.5 h-3.5 text-[#FF7A20]" />
+                      <span>Full Name (Editable)</span>
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={profileName}
+                      onChange={(e) => setProfileName(e.target.value)}
+                      className="w-full p-3 bg-white border border-gray-300 rounded-xl font-medium text-gray-900 focus:ring-2 focus:ring-[#FF7A20] focus:border-transparent transition"
+                      placeholder="e.g. Engr. Gbenga Adebayo"
+                      id="input-profile-name"
+                    />
+                  </div>
+
+                  {/* Phone Number Input (Editable) */}
+                  <div>
+                    <label className="block text-gray-700 font-bold mb-1.5 flex items-center gap-1.5">
+                      <Phone className="w-3.5 h-3.5 text-[#FF7A20]" />
+                      <span>Phone Number (Editable)</span>
+                    </label>
+                    <input
+                      type="tel"
+                      value={profilePhone}
+                      onChange={(e) => setProfilePhone(e.target.value)}
+                      className="w-full p-3 bg-white border border-gray-300 rounded-xl font-medium text-gray-900 focus:ring-2 focus:ring-[#FF7A20] focus:border-transparent transition"
+                      placeholder="e.g. +234 803 123 4567"
+                      id="input-profile-phone"
+                    />
+                  </div>
+
+                  {/* Email Address (Non-Editable / Locked) */}
+                  <div>
+                    <label className="block text-gray-500 font-bold mb-1.5 flex items-center justify-between">
+                      <span className="flex items-center gap-1.5">
+                        <Mail className="w-3.5 h-3.5 text-gray-400" />
+                        <span>Email Address (Locked)</span>
+                      </span>
+                      <span className="text-[10px] text-gray-400 flex items-center gap-1">
+                        <Lock className="w-3 h-3 text-gray-400" /> Non-editable
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      disabled
+                      value={user.email}
+                      className="w-full p-3 bg-gray-100 border border-gray-200 rounded-xl font-semibold text-gray-500 cursor-not-allowed select-none"
+                    />
+                  </div>
+
+                  {/* Company Name (Editable) */}
+                  <div>
+                    <label className="block text-gray-700 font-bold mb-1.5 flex items-center gap-1.5">
+                      <Building className="w-3.5 h-3.5 text-[#FF7A20]" />
+                      <span>Company Name (Optional)</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={profileCompany}
+                      onChange={(e) => setProfileCompany(e.target.value)}
+                      className="w-full p-3 bg-white border border-gray-300 rounded-xl font-medium text-gray-900 focus:ring-2 focus:ring-[#FF7A20] focus:border-transparent transition"
+                      placeholder="e.g. Lagos Telecommunications Ltd"
+                    />
                   </div>
                 </div>
-              </div>
 
-              <div className="pt-4 border-t border-gray-100 flex justify-end">
-                <button
-                  onClick={onLogout}
-                  className="bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer flex items-center space-x-2 shadow-sm"
-                >
-                  <LogOut className="w-4 h-4" />
-                  <span>Sign Out of Account</span>
-                </button>
-              </div>
+                <div className="pt-4 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4">
+                  <div className="text-[11px] text-gray-400 flex items-center gap-1.5">
+                    <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Edits are automatically synced to your dashboard and administrator view</span>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={savingProfile}
+                    className="w-full sm:w-auto bg-[#FF7A20] hover:bg-[#e06816] text-white px-6 py-3 rounded-xl text-xs font-bold transition cursor-pointer shadow-md flex items-center justify-center space-x-2 disabled:opacity-50"
+                    id="btn-save-profile"
+                  >
+                    {savingProfile ? (
+                      <RefreshCw className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <>
+                        <CheckCircle2 className="w-4 h-4" />
+                        <span>Save Profile Changes</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
             </div>
           )}
 

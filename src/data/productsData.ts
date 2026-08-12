@@ -17789,8 +17789,8 @@ export const UPS_PDU_PRODUCTS: Product[] = [
     brand: "APC",
     category: "UPS & PDU",
     subcategory: "UPS & PDU",
-    priceUSD: 0.06,
-    priceNGN: 0.06 * 1500,
+    priceUSD: 0.67,
+    priceNGN: 1000,
     description: "APC Essential SurgeArrest 5 outlets 230V UK - Protection Against Lightning & Power Surges for Computers and Electronics Tester",
     images: ["https://i.ibb.co/VcKSgDdK/apc-essential-surgearrest-5-outlets-230v-pm5-uk-surge-protector.jpg"],
     specifications: [

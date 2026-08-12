@@ -90,6 +90,7 @@ export async function handleSignUp({ name, email, password, phone }: SignUpData)
             full_name: name,
             name,
             phone,
+            password,
             company_name: "Customer Account"
           },
           emailRedirectTo: `${window.location.origin}/account`
@@ -251,17 +252,7 @@ export async function getUserOrders(email: string): Promise<Order[]> {
 
   let orders: Order[] = [];
 
-  // 1. Check local storage saved orders
-  try {
-    const local = localStorage.getItem(`spinel_user_orders_${emailLower}`);
-    if (local) {
-      orders = JSON.parse(local);
-    }
-  } catch (err) {
-    console.warn("Failed to parse local user orders:", err);
-  }
-
-  // 2. Fetch from server API
+  // 1. Fetch from server API (Source of truth)
   try {
     const res = await fetch(`/api/orders/user?email=${encodeURIComponent(emailLower)}`, {
       headers: {
@@ -270,16 +261,20 @@ export async function getUserOrders(email: string): Promise<Order[]> {
     });
     if (res.ok) {
       const serverOrders: Order[] = await res.json();
-      if (Array.isArray(serverOrders) && serverOrders.length > 0) {
-        // Merge without duplicates
-        const map = new Map<string, Order>();
-        serverOrders.forEach(o => map.set(o.id || o.orderNumber, o));
-        orders.forEach(o => map.set(o.id || o.orderNumber, o));
-        orders = Array.from(map.values());
+      if (Array.isArray(serverOrders)) {
+        orders = serverOrders;
+        // Keep local cache in sync with server state
+        localStorage.setItem(`spinel_user_orders_${emailLower}`, JSON.stringify(serverOrders));
       }
     }
   } catch (err) {
-    console.warn("Server user orders fetch failed:", err);
+    console.warn("Server user orders fetch failed, falling back to local storage:", err);
+    try {
+      const local = localStorage.getItem(`spinel_user_orders_${emailLower}`);
+      if (local) {
+        orders = JSON.parse(local);
+      }
+    } catch (e) {}
   }
 
   // Sort orders descending by date
@@ -297,15 +292,18 @@ export function saveOrderToAccount(orderData: any, userEmail: string) {
     const raw = localStorage.getItem(existingKey);
     const list: any[] = raw ? JSON.parse(raw) : [];
 
+    const now = new Date();
+    const formattedDate = orderData.date || `${now.toISOString().split("T")[0]} ${now.toLocaleTimeString("en-US", { hour12: true, hour: "2-digit", minute: "2-digit" })}`;
+
     // Avoid duplicates
     const index = list.findIndex(o => o.id === orderData.id || o.orderNumber === orderData.orderNumber || o.invoiceNumber === orderData.invoiceNumber);
     if (index >= 0) {
-      list[index] = { ...list[index], ...orderData, date: orderData.date || new Date().toISOString().split("T")[0] };
+      list[index] = { ...list[index], ...orderData, date: formattedDate };
     } else {
       list.unshift({
         ...orderData,
-        date: orderData.date || new Date().toISOString().split("T")[0],
-        status: orderData.status || "Paid"
+        date: formattedDate,
+        status: orderData.status || "Pending"
       });
     }
 

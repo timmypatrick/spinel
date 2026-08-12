@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { ShieldAlert, Cpu, Layers, DollarSign, FileCheck, CheckCircle, Trash, Plus, FileText, Send, UserCheck, RefreshCw, Layers3, FolderEdit, Image as ImageIcon, Mail, Search } from "lucide-react";
+import {
+  ShieldAlert, Cpu, Layers, DollarSign, FileCheck, CheckCircle, CheckCircle2,
+  Trash, Plus, FileText, Send, UserCheck, RefreshCw, Layers3, FolderEdit,
+  Image as ImageIcon, Mail, Search, Package, Menu, X, BarChart3, UploadCloud,
+  Download, LogOut, Users, ShoppingBag, KeyRound, Clock
+} from "lucide-react";
 import { Product, QuoteRequest, Order, ContactMessage, UserSession } from "../types";
 import { safeFetch } from "../lib/dataService";
 import * as XLSX from "xlsx";
@@ -74,14 +79,21 @@ export default function AdminDashboard({
   const [authError, setAuthError] = useState("");
   const [authLoading, setAuthLoading] = useState(false);
 
-  // Cockpit States
-  const [activeTab, setActiveTab] = useState<"products" | "quotes" | "orders" | "messages">("products");
+  // Cockpit Sidebar States
+  const [activeTab, setActiveTab] = useState<"overview" | "products" | "quotes" | "orders" | "messages" | "subscribers">("overview");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [quotes, setQuotes] = useState<QuoteRequest[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
   const [messages, setMessages] = useState<ContactMessage[]>([]);
   const [subscribers, setSubscribers] = useState<{ id: string; email: string; subscribedAt: string }[]>([]);
   const [loading, setLoading] = useState(false);
+
+  // CSV Bulk Upload Modal State
+  const [isCsvModalOpen, setIsCsvModalOpen] = useState(false);
+  const [csvPreview, setCsvPreview] = useState<any[]>([]);
+  const [csvUploading, setCsvUploading] = useState(false);
+  const [csvImportMessage, setCsvImportMessage] = useState<string | null>(null);
 
   // Redesigned: Selected Category Section for filtering
   const [selectedCategorySection, setSelectedCategorySection] = useState<string>("All Products (Store Page)");
@@ -162,6 +174,102 @@ export default function AdminDashboard({
       console.error("Cockpit loading error", err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleCsvFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      try {
+        const bstr = evt.target?.result;
+        const wb = XLSX.read(bstr, { type: "binary" });
+        const wsname = wb.SheetNames[0];
+        const ws = wb.Sheets[wsname];
+        const data: any[] = XLSX.utils.sheet_to_json(ws);
+
+        if (data && data.length > 0) {
+          setCsvPreview(data);
+          setCsvImportMessage(`Parsed ${data.length} product rows from CSV. Review preview below before confirming bulk upload.`);
+        } else {
+          alert("No valid product data found in the selected CSV file.");
+        }
+      } catch (err: any) {
+        alert("Failed to parse CSV file: " + err.message);
+      }
+    };
+    reader.readAsBinaryString(file);
+  };
+
+  const handleDownloadCsvTemplate = () => {
+    const templateData = [
+      {
+        SKU: "SP-CAM-2026-X",
+        Name: "SpinelShield ATEX Explosion-Proof Camera 4K",
+        Brand: "Spinel Hardware",
+        Category: "Electronic Security",
+        Subcategory: "Ex-CCTV Camera",
+        PriceUSD: 1850,
+        PriceNGN: 2775000,
+        IsQuoteOnly: "FALSE",
+        Stock: 25,
+        Image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=600&auto=format&fit=crop",
+        Description: "Industrial ATEX certified 4K optical camera for Zone 1 hazardous environments.",
+        ProductType: "Hazardous Area"
+      },
+      {
+        SKU: "SP-EX-PAGA-101",
+        Name: "Spinel PAGA Station Control Unit",
+        Brand: "FHF",
+        Category: "Ex-Proof Equipments",
+        Subcategory: "PAGA System",
+        PriceUSD: 0,
+        PriceNGN: 0,
+        IsQuoteOnly: "TRUE",
+        Stock: 100,
+        Image: "https://i.ibb.co/RT6kr8S4/60f7bec3-c7f5-4e00-aa4e-5b1358894f82.png",
+        Description: "Heavy-duty explosionproof station control unit for offshore oil rigs. Request a custom quote.",
+        ProductType: "Enterprise"
+      }
+    ];
+
+    const ws = XLSX.utils.json_to_sheet(templateData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "ProductTemplate");
+    XLSX.writeFile(wb, "Spinel_Products_Bulk_Upload_Template.csv");
+  };
+
+  const handleConfirmCsvImport = async () => {
+    if (csvPreview.length === 0) return;
+    setCsvUploading(true);
+    const token = localStorage.getItem("spinel_token") || "";
+
+    try {
+      const res = await safeFetch("/api/products/bulk-csv", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": token
+        },
+        body: JSON.stringify({ products: csvPreview })
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "CSV Bulk Import failed.");
+      }
+
+      alert(data.message || "CSV Bulk Import completed successfully!");
+      setIsCsvModalOpen(false);
+      setCsvPreview([]);
+      setCsvImportMessage(null);
+      loadCockpitData();
+    } catch (err: any) {
+      alert(err.message || "Failed importing products from CSV.");
+    } finally {
+      setCsvUploading(false);
     }
   };
 
@@ -323,6 +431,85 @@ export default function AdminDashboard({
   const handleReleaseLogistics = async (id: string) => {
     alert("Order released. Cargo cleared for dispatch.");
     setOrders(orders.map(o => o.id === id ? { ...o, status: "completed" } : o));
+  };
+
+  // RFQ Quote Proposal Deletion
+  const handleDeleteQuote = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this RFQ proposal record?")) return;
+    const token = localStorage.getItem("spinel_token") || "";
+    try {
+      const res = await safeFetch(`/api/quotes/${id}`, {
+        method: "DELETE",
+        headers: { "Authorization": token }
+      });
+      if (res.ok) {
+        setQuotes(quotes.filter(q => q.id !== id && (q as any).quoteNumber !== id && (q as any).rfqNumber !== id));
+      } else {
+        alert("Failed to delete quote proposal");
+      }
+    } catch (err) {
+      console.error("Delete quote error", err);
+      setQuotes(quotes.filter(q => q.id !== id));
+    }
+  };
+
+  // Contact Details Submission Deletion
+  const handleDeleteMessage = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this contact details submission?")) return;
+    const token = localStorage.getItem("spinel_token") || "";
+    try {
+      const res = await safeFetch(`/api/contact/${id}`, {
+        method: "DELETE",
+        headers: { "Authorization": token }
+      });
+      if (res.ok) {
+        setMessages(messages.filter(m => m.id !== id));
+      } else {
+        alert("Failed to delete contact details entry");
+      }
+    } catch (err) {
+      console.error("Delete message error", err);
+      setMessages(messages.filter(m => m.id !== id));
+    }
+  };
+
+  // Order Status Update
+  const handleUpdateOrderStatusAdmin = async (id: string, newStatus: string) => {
+    const token = localStorage.getItem("spinel_token") || "";
+    try {
+      const res = await safeFetch(`/api/orders/${id}/status`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": token
+        },
+        body: JSON.stringify({ status: newStatus })
+      });
+      if (res.ok) {
+        setOrders(orders.map(o => (o.id === id || o.orderNumber === id) ? { ...o, status: newStatus as any } : o));
+      }
+    } catch (err) {
+      console.error("Update order status error", err);
+      setOrders(orders.map(o => (o.id === id || o.orderNumber === id) ? { ...o, status: newStatus as any } : o));
+    }
+  };
+
+  // Order Deletion
+  const handleDeleteOrderAdmin = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this order record from the admin dashboard?")) return;
+    const token = localStorage.getItem("spinel_token") || "";
+    try {
+      const res = await safeFetch(`/api/orders/${id}`, {
+        method: "DELETE",
+        headers: { "Authorization": token }
+      });
+      if (res.ok) {
+        setOrders(orders.filter(o => o.id !== id && o.orderNumber !== id));
+      }
+    } catch (err) {
+      console.error("Delete order admin error", err);
+      setOrders(orders.filter(o => o.id !== id && o.orderNumber !== id));
+    }
   };
 
   const handleEditSubscriber = async (id: string, newEmail: string) => {
@@ -651,25 +838,152 @@ export default function AdminDashboard({
     );
   }
 
+  const sidebarMenuItems = [
+    { id: "overview", label: "Dashboard Overview", icon: BarChart3, count: null, color: "text-blue-400" },
+    { id: "products", label: "Supply Inventory", icon: Layers, count: products.length, color: "text-[#FF7A20]" },
+    { id: "orders", label: "Paystack Orders", icon: FileCheck, count: orders.length, color: "text-teal-400" },
+    { id: "quotes", label: "RFQ Proposals", icon: DollarSign, count: quotes.length, color: "text-amber-400" },
+    { id: "subscribers", label: "Briefing Catalog", icon: Mail, count: subscribers.length, color: "text-purple-400" },
+    { id: "messages", label: "Contact Details", icon: Send, count: messages.length, color: "text-rose-400" },
+  ];
+
+  const totalRevenueNGN = orders.reduce((sum, o) => sum + (o.totalNGN || 0), 0);
+  const totalRevenueUSD = orders.reduce((sum, o) => sum + (o.totalUSD || 0), 0);
+
   return (
-    <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] py-10 space-y-10" id="admin-cockpit-view">
-      {/* Cockpit Title Banner */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-gray-950 text-white p-6 rounded-2xl">
+    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row text-gray-900" id="admin-cockpit-view">
+      {/* MOBILE TOP BAR */}
+      <div className="md:hidden bg-gray-950 text-white p-4 flex items-center justify-between border-b border-gray-800 sticky top-0 z-30">
         <div className="flex items-center space-x-3">
-          <div className="bg-[#FF7A20] p-2.5 rounded-xl text-white">
-            <Cpu className="w-7 h-7 animate-pulse" />
+          <div className="bg-[#FF7A20] p-2 rounded-lg text-white">
+            <Cpu className="w-5 h-5 animate-pulse" />
           </div>
           <div>
-            <h1 className="text-2xl font-black uppercase tracking-tight">Welcome back, Timmy Patrick</h1>
+            <h1 className="font-extrabold text-sm uppercase tracking-wider text-white">Mainframe Admin</h1>
+            <p className="text-[10px] text-gray-400">Timmy Patrick (Admin)</p>
           </div>
         </div>
-        <div className="flex space-x-3 shrink-0">
+        <button
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          className="p-2 rounded-lg bg-gray-900 text-gray-300 hover:text-white cursor-pointer border border-gray-800"
+        >
+          {isSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
+      </div>
+
+      {/* MOBILE SIDEBAR BACKDROP */}
+      {isSidebarOpen && (
+        <div
+          onClick={() => setIsSidebarOpen(false)}
+          className="fixed inset-0 bg-black/60 backdrop-blur-xs z-25 md:hidden"
+        />
+      )}
+
+      {/* ADMIN SIDEBAR - FIXED, REQUISITE HEIGHT BELOW HEADER */}
+      <aside
+        className={`fixed top-20 sm:top-[96px] left-0 bottom-0 w-64 lg:w-72 bg-gray-950 text-white flex flex-col justify-between z-30 transition-transform duration-300 shrink-0 border-r border-gray-800 ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+        }`}
+      >
+        <div className="p-6 space-y-6 overflow-y-auto flex-1">
+          {/* Brand Header */}
+          <div className="flex items-center justify-between pb-4 border-b border-gray-800">
+            <div className="flex items-center space-x-3">
+              <div className="bg-[#FF7A20] p-2.5 rounded-xl text-white shadow-lg shadow-orange-950">
+                <Cpu className="w-6 h-6 animate-pulse" />
+              </div>
+              <div>
+                <h2 className="font-black text-base uppercase tracking-wider text-white">Spinel Admin</h2>
+                <span className="inline-block bg-orange-950/80 text-[#FF7A20] border border-orange-800/50 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
+                  Master Control
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* User Badge */}
+          <div className="bg-gray-900/90 border border-gray-800 p-3.5 rounded-xl flex items-center space-x-3">
+            <div className="w-9 h-9 rounded-full bg-[#FF7A20]/20 text-[#FF7A20] border border-[#FF7A20]/40 flex items-center justify-center font-black text-sm">
+              TP
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="text-xs font-bold text-white truncate">Timmy Patrick</p>
+              <p className="text-[10px] text-gray-400 truncate">System Administrator</p>
+            </div>
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" title="Session Active" />
+          </div>
+
+          {/* Navigation Items */}
+          <div className="space-y-1.5">
+            <span className="text-[10px] font-extrabold uppercase tracking-widest text-gray-500 px-3 block">
+              Cockpit Navigation
+            </span>
+            {sidebarMenuItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeTab === item.id;
+
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    setActiveTab(item.id as any);
+                    setIsSidebarOpen(false);
+                  }}
+                  className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-xs transition cursor-pointer ${
+                    isActive
+                      ? "bg-[#FF7A20] text-white shadow-md shadow-orange-950"
+                      : "text-gray-400 hover:text-white hover:bg-gray-900"
+                  }`}
+                >
+                  <div className="flex items-center space-x-3 min-w-0">
+                    <Icon className={`w-4 h-4 shrink-0 ${isActive ? "text-white" : item.color}`} />
+                    <span className="truncate">{item.label}</span>
+                  </div>
+                  {item.count !== null && (
+                    <span
+                      className={`text-[10px] font-mono font-extrabold px-2 py-0.5 rounded-full ${
+                        isActive
+                          ? "bg-white/20 text-white"
+                          : "bg-gray-900 text-gray-300 border border-gray-800"
+                      }`}
+                    >
+                      {item.count}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Quick Actions Card in Sidebar */}
+          <div className="bg-gradient-to-br from-gray-900 to-gray-900/60 border border-gray-800 p-4 rounded-xl space-y-3">
+            <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#FF7A20] block">
+              Quick CSV Import
+            </span>
+            <p className="text-[11px] text-gray-400 leading-snug">
+              Massive upload products across all store pages using a CSV file.
+            </p>
+            <button
+              onClick={() => {
+                setIsCsvModalOpen(true);
+                setIsSidebarOpen(false);
+              }}
+              className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-2.5 px-3 rounded-lg flex items-center justify-center space-x-2 transition cursor-pointer shadow-sm"
+            >
+              <UploadCloud className="w-4 h-4" />
+              <span>Massive CSV Upload</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Sidebar Footer */}
+        <div className="p-4 border-t border-gray-800 bg-gray-950/80 space-y-2 shrink-0">
           <button
             onClick={loadCockpitData}
-            className="p-2.5 bg-gray-900 border border-gray-800 rounded-xl text-gray-400 hover:text-white transition cursor-pointer"
-            title="Refresh Core registers"
+            className="w-full bg-gray-900 hover:bg-gray-800 border border-gray-800 text-gray-300 hover:text-white text-xs font-bold py-2 px-3 rounded-lg transition cursor-pointer flex items-center justify-center space-x-2"
           >
-            <RefreshCw className="w-4 h-4" />
+            <RefreshCw className="w-3.5 h-3.5" />
+            <span>Refresh All Data</span>
           </button>
           <button
             onClick={() => {
@@ -678,48 +992,262 @@ export default function AdminDashboard({
               setUser(null);
               setCurrentView("home");
             }}
-            className="bg-[#FF7A20] hover:bg-[#e06512] text-white text-xs font-bold px-4 py-2.5 rounded-xl transition cursor-pointer"
+            className="w-full bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 border border-rose-900/50 text-xs font-bold py-2 px-3 rounded-lg transition cursor-pointer flex items-center justify-center space-x-2"
           >
-            Terminate Session
+            <LogOut className="w-3.5 h-3.5" />
+            <span>Terminate Session</span>
           </button>
         </div>
-      </div>
+      </aside>
 
-      {/* Tab Selectors */}
-      <div className="flex border-b border-gray-100 space-x-6 text-xs uppercase font-bold tracking-wider pb-1" id="admin-tab-bar">
-        <button
-          onClick={() => setActiveTab("products")}
-          className={`pb-3 border-b-2 transition cursor-pointer ${activeTab === "products" ? "border-[#FF7A20] text-gray-900 font-bold" : "border-transparent text-gray-400 hover:text-gray-600"}`}
-        >
-          Supply Inventory ({products.length})
-        </button>
-        <button
-          onClick={() => setActiveTab("quotes")}
-          className={`pb-3 border-b-2 transition cursor-pointer ${activeTab === "quotes" ? "border-[#FF7A20] text-gray-900 font-bold" : "border-transparent text-gray-400 hover:text-gray-600"}`}
-        >
-          RFQ Proposals ({quotes.length})
-        </button>
-        <button
-          onClick={() => setActiveTab("orders")}
-          className={`pb-3 border-b-2 transition cursor-pointer ${activeTab === "orders" ? "border-[#FF7A20] text-gray-900 font-bold" : "border-transparent text-gray-400 hover:text-gray-600"}`}
-        >
-          Briefing Catalog ({subscribers.length})
-        </button>
-        <button
-          onClick={() => setActiveTab("messages")}
-          className={`pb-3 border-b-2 transition cursor-pointer ${activeTab === "messages" ? "border-[#FF7A20] text-gray-900 font-bold" : "border-transparent text-gray-400 hover:text-gray-600"}`}
-        >
-          Contact Details ({messages.length})
-        </button>
-      </div>
+      {/* MAIN CONTENT AREA */}
+      <main className="flex-1 md:ml-64 lg:ml-72 min-w-0 p-4 md:p-8 lg:p-10 space-y-8 overflow-y-auto">
+        {/* Top Content Header Bar */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-2xl border border-gray-200 shadow-2xs">
+          <div>
+            <h1 className="text-2xl font-black text-gray-950 uppercase tracking-tight flex items-center gap-2.5">
+              {activeTab === "overview" && <BarChart3 className="w-7 h-7 text-[#FF7A20]" />}
+              {activeTab === "products" && <Layers className="w-7 h-7 text-[#FF7A20]" />}
+              {activeTab === "orders" && <FileCheck className="w-7 h-7 text-[#FF7A20]" />}
+              {activeTab === "quotes" && <DollarSign className="w-7 h-7 text-[#FF7A20]" />}
+              {activeTab === "subscribers" && <Mail className="w-7 h-7 text-[#FF7A20]" />}
+              {activeTab === "messages" && <Send className="w-7 h-7 text-[#FF7A20]" />}
+              <span>
+                {activeTab === "overview" && "Dashboard Overview & System Metrics"}
+                {activeTab === "products" && "Supply Inventory & Product Catalog"}
+                {activeTab === "orders" && "Paystack Orders & Payment Records"}
+                {activeTab === "quotes" && "RFQ Proposals & Custom Quotations"}
+                {activeTab === "subscribers" && "Briefing Catalog Subscriptions"}
+                {activeTab === "messages" && "Customer Contact Messages"}
+              </span>
+            </h1>
+            <p className="text-xs text-gray-500 font-medium mt-1">
+              {activeTab === "overview" && "High-level summary of active store products, verified sales, quote proposals, and inquiries."}
+              {activeTab === "products" && "Manage product items across all store pages and divisions or bulk import hardware via CSV/Excel."}
+              {activeTab === "orders" && "Track Paystack-verified completed hardware purchases and order items."}
+              {activeTab === "quotes" && "Review custom engineering RFQ quote requests submitted by institutional clients."}
+              {activeTab === "subscribers" && "Manage email newsletter subscribers in the Spinel Briefing Catalog."}
+              {activeTab === "messages" && "Review inquiries and contact form submissions sent by prospective clients."}
+            </p>
+          </div>
 
-      {/* Tab Screen Contents */}
-      {loading ? (
-        <div className="py-24 text-center text-xs font-semibold text-gray-400 flex flex-col items-center justify-center space-y-2">
-          <RefreshCw className="w-8 h-8 animate-spin text-[#FF7A20]" />
-          <span>Please wait...</span>
+          <div className="flex items-center space-x-3 shrink-0">
+            {activeTab === "products" && (
+              <>
+                <button
+                  onClick={() => setIsCsvModalOpen(true)}
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition cursor-pointer flex items-center space-x-2 shadow-xs"
+                >
+                  <UploadCloud className="w-4 h-4" />
+                  <span>Massive CSV Upload</span>
+                </button>
+                <button
+                  onClick={handleOpenCreateForm}
+                  className="bg-gray-950 hover:bg-[#FF7A20] text-white font-bold text-xs px-4 py-2.5 rounded-xl transition cursor-pointer flex items-center space-x-2 shadow-xs"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Add Product</span>
+                </button>
+              </>
+            )}
+            <button
+              onClick={loadCockpitData}
+              className="p-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl transition cursor-pointer"
+              title="Refresh Data"
+            >
+              <RefreshCw className="w-4 h-4" />
+            </button>
+          </div>
         </div>
-      ) : activeTab === "products" ? (
+
+        {/* Tab Content Display */}
+        {loading ? (
+          <div className="py-24 text-center text-xs font-semibold text-gray-400 flex flex-col items-center justify-center space-y-2">
+            <RefreshCw className="w-8 h-8 animate-spin text-[#FF7A20]" />
+            <span>Loading cockpit telemetry...</span>
+          </div>
+        ) : activeTab === "overview" ? (
+          /* TAB 0: OVERVIEW METRICS & QUICK ACTIONS */
+          <div className="space-y-8">
+            {/* Stat Cards Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+              <div
+                onClick={() => setActiveTab("orders")}
+                className="bg-white p-5 rounded-2xl border border-gray-200 shadow-2xs hover:border-[#FF7A20] transition cursor-pointer space-y-3"
+              >
+                <div className="flex justify-between items-center">
+                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-gray-400">Total Completed Sales</span>
+                  <div className="p-2 bg-emerald-50 text-emerald-600 rounded-xl">
+                    <FileCheck className="w-5 h-5" />
+                  </div>
+                </div>
+                <div>
+                  <div className="text-2xl font-black text-gray-950 font-mono">
+                    {currency === "USD" ? `$${totalRevenueUSD.toLocaleString()}` : `₦${totalRevenueNGN.toLocaleString()}`}
+                  </div>
+                  <p className="text-[11px] text-emerald-600 font-bold mt-1">
+                    {orders.length} Verified Paystack Orders
+                  </p>
+                </div>
+              </div>
+
+              <div
+                onClick={() => setActiveTab("products")}
+                className="bg-white p-5 rounded-2xl border border-gray-200 shadow-2xs hover:border-[#FF7A20] transition cursor-pointer space-y-3"
+              >
+                <div className="flex justify-between items-center">
+                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-gray-400">Supply Catalog</span>
+                  <div className="p-2 bg-orange-50 text-[#FF7A20] rounded-xl">
+                    <Layers className="w-5 h-5" />
+                  </div>
+                </div>
+                <div>
+                  <div className="text-2xl font-black text-gray-950 font-mono">
+                    {products.length}
+                  </div>
+                  <p className="text-[11px] text-[#FF7A20] font-bold mt-1">
+                    Active Product Models
+                  </p>
+                </div>
+              </div>
+
+              <div
+                onClick={() => setActiveTab("quotes")}
+                className="bg-white p-5 rounded-2xl border border-gray-200 shadow-2xs hover:border-[#FF7A20] transition cursor-pointer space-y-3"
+              >
+                <div className="flex justify-between items-center">
+                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-gray-400">RFQ Requests</span>
+                  <div className="p-2 bg-amber-50 text-amber-600 rounded-xl">
+                    <DollarSign className="w-5 h-5" />
+                  </div>
+                </div>
+                <div>
+                  <div className="text-2xl font-black text-gray-950 font-mono">
+                    {quotes.length}
+                  </div>
+                  <p className="text-[11px] text-amber-600 font-bold mt-1">
+                    Pending Quotes & Proposals
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Action Hub & CSV Upload Trigger */}
+            <div className="bg-gradient-to-r from-gray-950 via-gray-900 to-gray-950 text-white p-6 rounded-2xl space-y-4 shadow-md">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-gray-800 pb-4">
+                <div>
+                  <h3 className="text-lg font-black uppercase tracking-wider text-white flex items-center gap-2">
+                    <UploadCloud className="w-5 h-5 text-[#FF7A20]" />
+                    <span>Massive Product CSV / Excel Upload Hub</span>
+                  </h3>
+                  <p className="text-xs text-gray-400 mt-0.5">
+                    Batch import hundreds of hardware products into store pages automatically using CSV or Excel spreadsheets.
+                  </p>
+                </div>
+                <div className="flex space-x-3 shrink-0">
+                  <button
+                    onClick={handleDownloadCsvTemplate}
+                    className="bg-gray-800 hover:bg-gray-700 text-gray-200 text-xs font-bold px-4 py-2.5 rounded-xl border border-gray-700 transition cursor-pointer flex items-center space-x-1.5"
+                  >
+                    <Download className="w-4 h-4" />
+                    <span>Download Sample Template</span>
+                  </button>
+                  <button
+                    onClick={() => setIsCsvModalOpen(true)}
+                    className="bg-[#FF7A20] hover:bg-[#e06512] text-white text-xs font-bold px-5 py-2.5 rounded-xl transition cursor-pointer flex items-center space-x-2 shadow-md"
+                  >
+                    <UploadCloud className="w-4 h-4" />
+                    <span>Launch CSV Bulk Upload</span>
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                <div className="bg-gray-900/80 border border-gray-800 p-3.5 rounded-xl space-y-1">
+                  <span className="font-bold text-[#FF7A20] block">1. Prepare CSV File</span>
+                  <p className="text-gray-400 text-[11px]">Include SKU, Name, Category, Subcategory, PriceUSD, PriceNGN, IsQuoteOnly, Stock, Image, Description.</p>
+                </div>
+                <div className="bg-gray-900/80 border border-gray-800 p-3.5 rounded-xl space-y-1">
+                  <span className="font-bold text-[#FF7A20] block">2. Automatic Placement</span>
+                  <p className="text-gray-400 text-[11px]">Products automatically route to their Store, Category, Subcategory, and OEM brand pages.</p>
+                </div>
+                <div className="bg-gray-900/80 border border-gray-800 p-3.5 rounded-xl space-y-1">
+                  <span className="font-bold text-[#FF7A20] block">3. Instant Storefront Sync</span>
+                  <p className="text-gray-400 text-[11px]">Supports both priced items and "Request Quote" items with product image links.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Recent RFQs & Paystack Orders Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Recent Pending RFQ Proposals */}
+              <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-2xs space-y-4">
+                <div className="flex justify-between items-center border-b border-gray-100 pb-3">
+                  <h3 className="font-bold text-sm text-gray-950 flex items-center gap-2">
+                    <DollarSign className="w-4 h-4 text-[#FF7A20]" />
+                    <span>Recent RFQ Proposals</span>
+                  </h3>
+                  <button
+                    onClick={() => setActiveTab("quotes")}
+                    className="text-xs font-bold text-[#FF7A20] hover:underline cursor-pointer"
+                  >
+                    View All ({quotes.length})
+                  </button>
+                </div>
+
+                <div className="divide-y divide-gray-100">
+                  {quotes.slice(0, 5).map((q, idx) => (
+                    <div key={q.id || idx} className="py-3 flex items-center justify-between text-xs">
+                      <div className="min-w-0">
+                        <p className="font-bold text-gray-900 truncate">{q.companyName || q.name}</p>
+                        <p className="text-[11px] text-gray-500 font-mono truncate">{q.email}</p>
+                      </div>
+                      <span className="text-[10px] font-mono bg-amber-50 text-amber-800 border border-amber-200 px-2 py-1 rounded font-semibold shrink-0">
+                        {q.productName ? q.productName.slice(0, 20) + "..." : "Custom RFQ"}
+                      </span>
+                    </div>
+                  ))}
+                  {quotes.length === 0 && (
+                    <p className="text-xs text-gray-400 py-4 text-center">No recent RFQ proposals.</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Recent Paystack Completed Orders */}
+              <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-2xs space-y-4">
+                <div className="flex justify-between items-center border-b border-gray-100 pb-3">
+                  <h3 className="font-bold text-sm text-gray-950 flex items-center gap-2">
+                    <FileCheck className="w-4 h-4 text-emerald-600" />
+                    <span>Recent Paystack Orders</span>
+                  </h3>
+                  <button
+                    onClick={() => setActiveTab("orders")}
+                    className="text-xs font-bold text-[#FF7A20] hover:underline cursor-pointer"
+                  >
+                    View All ({orders.length})
+                  </button>
+                </div>
+
+                <div className="divide-y divide-gray-100">
+                  {orders.slice(0, 5).map((o, idx) => (
+                    <div key={o.id || idx} className="py-3 flex items-center justify-between text-xs">
+                      <div className="min-w-0">
+                        <p className="font-mono font-bold text-gray-900 truncate">{o.orderNumber || o.id}</p>
+                        <p className="text-[11px] text-gray-500 truncate">{o.customerEmail || o.billingAddress?.email || "Paystack Customer"}</p>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <span className="font-bold text-emerald-600 font-mono block">
+                          {currency === "USD" ? `$${(o.totalUSD || 0).toLocaleString()}` : `₦${(o.totalNGN || 0).toLocaleString()}`}
+                        </span>
+                        <span className="text-[10px] text-gray-400">{o.date || "Recent"}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : activeTab === "products" ? (
         /* TAB 1: PRODUCT LIST */
         <div className="space-y-6" id="tab-products-content">
           
@@ -891,6 +1419,123 @@ export default function AdminDashboard({
             </div>
           )}
         </div>
+      ) : activeTab === "orders" ? (
+        /* TAB 3: PAYSTACK COMPLETED ORDERS */
+        <div className="space-y-6" id="tab-orders-content">
+          <div className="bg-white border border-gray-100 rounded-xl p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xs">
+            <div>
+              <h3 className="font-black text-gray-950 text-xl flex items-center gap-2">
+                <FileCheck className="w-5 h-5 text-[#FF7A20]" />
+                <span>Paystack Verified Hardware Orders ({orders.length})</span>
+              </h3>
+              <p className="text-xs text-gray-500 mt-1">
+                Completed hardware orders placed by customers displaying exact product breakdown, date, time, and payment reference.
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            {orders.length === 0 ? (
+              <div className="bg-white p-12 rounded-2xl text-center border border-gray-100 shadow-2xs space-y-2">
+                <Package className="w-8 h-8 text-gray-300 mx-auto" />
+                <p className="text-sm font-bold text-gray-900">No Paystack Orders Recorded Yet</p>
+                <p className="text-xs text-gray-400">When customers complete purchases via Paystack, orders will appear here automatically.</p>
+              </div>
+            ) : (
+              orders.map((ord) => (
+                <div key={ord.id || ord.orderNumber} className="bg-white rounded-2xl border border-gray-200 p-6 shadow-2xs space-y-4">
+                  <div className="flex flex-wrap justify-between items-center pb-3 border-b border-gray-100 gap-2">
+                    <div>
+                      <span className="font-mono text-xs font-bold text-gray-900 bg-gray-100 px-2.5 py-1 rounded-md">Order Ref: {ord.orderNumber || ord.id}</span>
+                      <span className="text-xs text-gray-400 ml-3">{ord.date || "Recent"}</span>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      {(ord.status === "Paid" || ord.status === "Completed") ? (
+                        <span className="bg-emerald-100 text-emerald-800 font-bold text-xs px-3 py-1 rounded-full flex items-center gap-1">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                          <span>Completed (Paystack Received)</span>
+                        </span>
+                      ) : (
+                        <div className="flex items-center gap-2">
+                          <span className="bg-amber-100 text-amber-800 font-bold text-xs px-3 py-1 rounded-full flex items-center gap-1">
+                            <Clock className="w-3.5 h-3.5 text-amber-600" />
+                            <span>Pending Payment</span>
+                          </span>
+                          <button
+                            onClick={() => handleUpdateOrderStatusAdmin(ord.id || ord.orderNumber, "Completed")}
+                            className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-2.5 py-1 rounded-lg transition cursor-pointer"
+                            title="Mark Order as Completed"
+                          >
+                            Mark Completed
+                          </button>
+                        </div>
+                      )}
+
+                      <button
+                        onClick={() => handleDeleteOrderAdmin(ord.id || ord.orderNumber)}
+                        className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-bold text-xs px-2.5 py-1 rounded-lg transition cursor-pointer flex items-center gap-1"
+                        title="Delete Order Record"
+                      >
+                        <Trash className="w-3.5 h-3.5" />
+                        <span>Delete</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                    <div>
+                      <span className="text-gray-400 font-bold uppercase text-[10px] block">Customer Details</span>
+                      <p className="font-bold text-gray-900 mt-0.5">{ord.userEmail || "Guest Customer"}</p>
+                      {ord.shippingAddress && (
+                        <p className="text-gray-500 text-[11px] mt-0.5">
+                          Phone: {ord.shippingAddress.phone || "N/A"}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <span className="text-gray-400 font-bold uppercase text-[10px] block">Shipping Destination</span>
+                      {ord.shippingAddress ? (
+                        <p className="text-gray-700 mt-0.5">
+                          {ord.shippingAddress.addressLine1}, {ord.shippingAddress.city}, {ord.shippingAddress.state}, {ord.shippingAddress.country}
+                        </p>
+                      ) : (
+                        <p className="text-gray-400 mt-0.5">Direct Delivery</p>
+                      )}
+                    </div>
+
+                    <div>
+                      <span className="text-gray-400 font-bold uppercase text-[10px] block">Total Amount</span>
+                      <p className="text-lg font-black text-[#FF7A20] font-mono mt-0.5">
+                        {currency === "USD" ? `$${(ord.totalUSD || 0).toLocaleString()}` : `₦${(ord.totalNGN || 0).toLocaleString()}`}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Items List */}
+                  {ord.items && ord.items.length > 0 && (
+                    <div className="bg-gray-50/80 p-4 rounded-xl border border-gray-100 text-xs space-y-2">
+                      <span className="font-bold text-gray-500 uppercase tracking-wider text-[10px] block">Purchased Products ({ord.items.length})</span>
+                      <div className="divide-y divide-gray-200/60">
+                        {ord.items.map((item, idx) => (
+                          <div key={idx} className="py-2 flex justify-between items-center text-xs">
+                            <div className="font-semibold text-gray-900">
+                              {item.productName} <span className="text-gray-400 font-normal font-mono">(Qty: {item.quantity})</span>
+                            </div>
+                            <div className="font-mono font-bold text-gray-800">
+                              {currency === "USD" ? `$${(item.priceUSD * item.quantity).toLocaleString()}` : `₦${(item.priceNGN * item.quantity).toLocaleString()}`}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))
+            )}
+          </div>
+        </div>
       ) : activeTab === "quotes" ? (
         /* TAB 2: QUOTE PROPOSALS */
         <div className="space-y-4" id="tab-quotes-content">
@@ -982,16 +1627,24 @@ export default function AdminDashboard({
                   </div>
                 )}
                 <p className="text-xs text-gray-600 font-sans leading-relaxed bg-gray-50 p-3 rounded-lg border border-gray-200/50">{q.description || q.message}</p>
-                {q.status !== "approved" && (
-                  <div className="flex justify-end pt-2">
+                <div className="flex justify-end gap-2 pt-2 border-t border-gray-100">
+                  {q.status !== "approved" && (
                     <button
                       onClick={() => handleApproveQuote(q.id)}
                       className="bg-gray-950 text-white font-bold text-xs px-4 py-2 rounded-lg hover:bg-[#FF7A20] transition cursor-pointer"
                     >
                       Release Technical Proposal RFQ
                     </button>
-                  </div>
-                )}
+                  )}
+                  <button
+                    onClick={() => handleDeleteQuote(q.id)}
+                    className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-bold text-xs px-3 py-2 rounded-lg transition cursor-pointer flex items-center gap-1.5"
+                    title="Delete RFQ Proposal"
+                  >
+                    <Trash className="w-3.5 h-3.5" />
+                    <span>Delete</span>
+                  </button>
+                </div>
               </div>
             ))
           )}
@@ -1309,7 +1962,17 @@ export default function AdminDashboard({
                     </div>
                   )}
                 </div>
-                <p className="text-xs text-gray-600 leading-normal font-sans bg-gray-50 p-3 rounded">{m.message}</p>
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pt-2 border-t border-gray-100">
+                  <p className="text-xs text-gray-600 leading-normal font-sans bg-gray-50 p-3 rounded flex-1">{m.message}</p>
+                  <button
+                    onClick={() => handleDeleteMessage(m.id)}
+                    className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-bold text-xs px-3 py-2 rounded-lg transition cursor-pointer flex items-center gap-1.5 shrink-0"
+                    title="Delete Contact Ticket"
+                  >
+                    <Trash className="w-3.5 h-3.5" />
+                    <span>Delete Ticket</span>
+                  </button>
+                </div>
               </div>
             ))
           )}
@@ -1348,6 +2011,7 @@ export default function AdminDashboard({
           )}
         </div>
       )}
+      </main>
 
       {/* Redesigned Product Create/Edit Modal Form */}
       {isFormOpen && (
@@ -1510,6 +2174,150 @@ export default function AdminDashboard({
               </button>
             </div>
           </form>
+        </div>
+      )}
+
+      {/* CSV Bulk Product Import Modal */}
+      {isCsvModalOpen && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 relative space-y-6 text-xs border border-gray-100">
+            <button
+              onClick={() => {
+                setIsCsvModalOpen(false);
+                setCsvPreview([]);
+                setCsvImportMessage(null);
+              }}
+              className="absolute top-4 right-4 p-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg cursor-pointer text-gray-500 font-extrabold text-sm"
+            >
+              ×
+            </button>
+
+            <div className="border-b border-gray-100 pb-3 flex justify-between items-center">
+              <div>
+                <h3 className="font-bold text-lg text-gray-900 flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-emerald-600" />
+                  <span>Massive Product CSV / Excel Bulk Upload</span>
+                </h3>
+                <p className="text-gray-500 text-xs mt-0.5">
+                  Upload a CSV file containing hardware product records to enroll or update catalog items in bulk.
+                </p>
+              </div>
+
+              <button
+                onClick={handleDownloadCsvTemplate}
+                className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold px-3 py-1.5 rounded-lg text-xs flex items-center gap-1 transition cursor-pointer shrink-0"
+              >
+                <span>Download Sample CSV Template</span>
+              </button>
+            </div>
+
+            {/* Upload File Box */}
+            <div className="bg-orange-50/40 border-2 border-dashed border-orange-200 rounded-2xl p-6 text-center space-y-3">
+              <FileText className="w-8 h-8 text-[#FF7A20] mx-auto" />
+              <div>
+                <p className="font-bold text-gray-900 text-xs">Select your CSV File (.csv or .xlsx)</p>
+                <p className="text-[11px] text-gray-500 mt-0.5">Expected columns: SKU, Name, Brand, Category, Subcategory, PriceUSD, PriceNGN, IsQuoteOnly, Stock, Image, Description, ProductType</p>
+              </div>
+
+              <input
+                type="file"
+                accept=".csv, .xlsx, .xls"
+                onChange={handleCsvFileUpload}
+                className="text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#FF7A20] file:text-white hover:file:bg-[#e06816] cursor-pointer"
+              />
+            </div>
+
+            {csvImportMessage && (
+              <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-3 rounded-xl text-xs font-semibold flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>{csvImportMessage}</span>
+              </div>
+            )}
+
+            {/* CSV Preview Table */}
+            {csvPreview.length > 0 && (
+              <div className="space-y-3">
+                <h4 className="font-bold text-gray-900 text-xs uppercase tracking-wider">
+                  Parsed Product Preview ({csvPreview.length} items found)
+                </h4>
+
+                <div className="max-h-60 overflow-y-auto border border-gray-200 rounded-xl overflow-x-auto">
+                  <table className="w-full text-left text-[11px]">
+                    <thead className="bg-gray-100 font-bold text-gray-700 border-b border-gray-200">
+                      <tr>
+                        <th className="p-2">SKU</th>
+                        <th className="p-2">Name</th>
+                        <th className="p-2">Category</th>
+                        <th className="p-2">Price (USD)</th>
+                        <th className="p-2">Price (NGN)</th>
+                        <th className="p-2">Quote Only?</th>
+                        <th className="p-2">Stock</th>
+                        <th className="p-2">Image Link</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100">
+                      {csvPreview.slice(0, 50).map((row: any, idx: number) => {
+                        const isQuoteRaw = row.IsQuoteOnly ?? row.isQuoteOnly ?? row["Is Quote Only"] ?? row.RequestQuote ?? row["Request Quote"];
+                        const isQuote = String(isQuoteRaw).toLowerCase() === "true" || String(isQuoteRaw) === "1" || isQuoteRaw === true || (Number(row.PriceUSD || row.priceUSD || 0) === 0 && Number(row.PriceNGN || row.priceNGN || 0) === 0);
+                        const imgUrl = row.Image || row.image || row.Images || row.images || row["Image Link"] || row["Image URL"] || "No Image Link";
+
+                        return (
+                          <tr key={idx} className="hover:bg-gray-50 font-mono text-gray-800">
+                            <td className="p-2 font-bold">{row.SKU || row.sku || `SP-HARDWARE-${idx}`}</td>
+                            <td className="p-2 font-sans font-medium text-gray-900">{row.Name || row.name || "Hardware Model"}</td>
+                            <td className="p-2 font-sans text-gray-600">{row.Category || row.category || "Electronic Security"}</td>
+                            <td className="p-2">${row.PriceUSD || row.priceUSD || 0}</td>
+                            <td className="p-2">₦{row.PriceNGN || row.priceNGN || 0}</td>
+                            <td className="p-2 font-sans">
+                              {isQuote ? (
+                                <span className="bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded text-[10px]">YES (Quote)</span>
+                              ) : (
+                                <span className="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded text-[10px]">NO (Priced)</span>
+                              )}
+                            </td>
+                            <td className="p-2 font-bold">{row.Stock || row.stock || 10}</td>
+                            <td className="p-2 font-mono text-[10px] text-gray-500 max-w-[140px] truncate">{String(imgUrl)}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            <div className="pt-4 border-t border-gray-100 flex justify-between items-center">
+              <span className="text-[11px] text-gray-400">Products are added or updated matching SKUs</span>
+              <div className="flex space-x-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsCsvModalOpen(false);
+                    setCsvPreview([]);
+                    setCsvImportMessage(null);
+                  }}
+                  className="border border-gray-200 hover:bg-gray-50 text-gray-600 px-4 py-2 rounded-xl font-bold cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleConfirmCsvImport}
+                  disabled={csvPreview.length === 0 || csvUploading}
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-xl font-bold transition cursor-pointer disabled:opacity-50 flex items-center space-x-2"
+                >
+                  {csvUploading ? (
+                    <RefreshCw className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <>
+                      <CheckCircle className="w-4 h-4" />
+                      <span>Confirm & Import All Products</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>

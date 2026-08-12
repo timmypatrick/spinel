@@ -158,6 +158,8 @@ export interface UserSession {
   name: string;
   role: "admin" | "customer" | "guest";
   companyName?: string;
+  phone?: string;
+  password?: string;
 }
 
 export interface NewsletterSubscriber {

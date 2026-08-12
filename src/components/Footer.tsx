@@ -41,11 +41,20 @@ export default function Footer({
     }
   };
 
+  const containerPadding = currentView === "admin"
+    ? "px-4 md:px-8 lg:px-10"
+    : "px-4 md:px-[100px] lg:px-[100px]";
+
   return (
-    <footer className="w-full bg-gradient-to-r from-gray-900 to-gray-800 text-gray-400 text-sm border-t border-gray-800" id="main-footer">
+    <footer
+      className={`bg-gradient-to-r from-gray-900 to-gray-800 text-gray-400 text-sm border-t border-gray-800 transition-all ${
+        currentView === "admin" ? "md:ml-64 lg:ml-72" : "w-full"
+      }`}
+      id="main-footer"
+    >
       {/* Newsletter signup top band */}
       <div className="w-full border-gray-800 py-10">
-        <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className={`max-w-[1536px] mx-auto ${containerPadding} grid grid-cols-1 lg:grid-cols-12 gap-8 items-center`}>
           <div className="lg:col-span-6">
             <h3 className="text-white font-extrabold text-xl sm:text-2xl leading-tight">Subscribe to Spinel Distribution Briefings</h3>
             <p className="text-gray-300 text-sm sm:text-base mt-2">Stay informed with the latest product launches, industry insights, and exclusive offers, from Spinel Distribution Ltd</p>
@@ -80,7 +89,7 @@ export default function Footer({
       </div>
 
       {/* Main Footer Sitemap Grid */}
-      <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
+      <div className={`max-w-[1536px] mx-auto ${containerPadding} py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10`}>
         {/* Spinel Identity Column */}
         <div className="lg:col-span-4 space-y-4">
           <div className="flex items-center space-x-2">
@@ -173,13 +182,15 @@ export default function Footer({
 
       {/* Compliance & Copyright Bottom */}
       <div className="w-full border-gray-800 py-6 bg-gray-950">
-        <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] flex items-center justify-center text-xs text-gray-500">
+        <div className={`max-w-[1536px] mx-auto ${containerPadding} flex items-center justify-center text-xs text-gray-500`}>
           <span className="text-center text-sm">© 2026 Spinel Distribution Limited. All Rights Reserved.</span>
         </div>
       </div>
 
       {/* Dynamic Currency Toggle Widget */}
-      <div className="fixed bottom-[46px] left-4 z-40 bg-gray-900 border border-gray-800 p-1.5 rounded-full shadow-2xl flex items-center space-x-1">
+      <div className={`fixed bottom-[46px] z-40 bg-gray-900 border border-gray-800 p-1.5 rounded-full shadow-2xl flex items-center space-x-1 ${
+        currentView === "admin" ? "left-4 md:left-[280px] lg:left-[310px]" : "left-4"
+      }`}>
         <button
           onClick={() => setCurrency("USD")}
           className={`flex items-center space-x-2 px-3 py-1.5 rounded-full text-xs font-bold transition duration-200 cursor-pointer ${

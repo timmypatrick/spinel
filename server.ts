@@ -44,41 +44,7 @@ const generatedBackendProducts = ACCESSORIES_PRODUCTS;
 
 const db = {
   products: generatedBackendProducts,
-  orders: [
-    {
-      id: "ord-1",
-      orderNumber: "SP-ORD-2026-0001",
-      date: "2026-07-01",
-      customerName: "Gbenga Adebayo",
-      customerEmail: "gbenga@adebayotech.com",
-      status: "Paid",
-      paymentMethod: "Paystack",
-      totalUSD: 3300,
-      totalNGN: 4950000,
-      items: [
-        { productId: "sp-ex-dome-01", productName: "SpinelShield ATEX Explosion-Proof Dome Camera", sku: "SP-EXD-9100", quantity: 1, priceUSD: 1850, priceNGN: 2775000 },
-        { productId: "sp-ex-phn-01", productName: "Spinel Intrinsically Safe ATEX Explosion-Proof IP Telephone", sku: "SP-EX-PHN100", quantity: 1, priceUSD: 1450, priceNGN: 2175000 }
-      ],
-      billingAddress: { fullName: "Gbenga Adebayo", email: "gbenga@adebayotech.com", phone: "+2348031234567", addressLine1: "15 Marina Street", city: "Lagos Island", state: "Lagos", country: "Nigeria" },
-      shippingAddress: { fullName: "Gbenga Adebayo", email: "gbenga@adebayotech.com", phone: "+2348031234567", addressLine1: "15 Marina Street", city: "Lagos Island", state: "Lagos", country: "Nigeria" }
-    },
-    {
-      id: "ord-2",
-      orderNumber: "SP-ORD-2026-0002",
-      date: "2026-07-08",
-      customerName: "Tim Patrick",
-      customerEmail: "timi.patrick@dataset.ng",
-      status: "Pending",
-      paymentMethod: "Bank Transfer",
-      totalUSD: 14500,
-      totalNGN: 21750000,
-      items: [
-        { productId: "sp-sol-bat-10", productName: "Spinel Titan-X 50kWh Lithium Iron Phosphate (LiFePO4) Power Storage System", sku: "SP-TITAN-L50", quantity: 1, priceUSD: 1450, priceNGN: 21750000 }
-      ],
-      billingAddress: { fullName: "Tim Patrick", email: "timi.patrick@dataset.ng", phone: "+2347069876543", addressLine1: "Plot 104, Industrial Layout", city: "Port Harcourt", state: "Rivers", country: "Nigeria" },
-      shippingAddress: { fullName: "Tim Patrick", email: "timi.patrick@dataset.ng", phone: "+2347069876543", addressLine1: "Plot 104, Industrial Layout", city: "Port Harcourt", state: "Rivers", country: "Nigeria" }
-    }
-  ],
+  orders: [],
   quotes: [],
   messages: [],
   subscribers: [],
@@ -90,14 +56,6 @@ const db = {
       password: "spineldistribution@123",
       role: "admin",
       companyName: "Spinel Distribution"
-    },
-    {
-      id: "user-demo",
-      name: "Demo Customer",
-      email: "customer@spineldistribution.com",
-      password: "password123",
-      role: "customer",
-      companyName: "Lagos Enterprise ICT"
     }
   ]
 };
@@ -129,16 +87,23 @@ function loadDb() {
           ACCESSORIES_PRODUCTS.forEach(p => map.set(p.id, p));
           db.products = Array.from(map.values());
         }
-        if (Array.isArray(parsed.orders)) db.orders = parsed.orders;
-        // Force clean start by removing previous details as requested
+        // Force completely clear orders as requested by user
+        db.orders = [];
         db.quotes = [];
         db.messages = [];
         if (Array.isArray(parsed.subscribers)) db.subscribers = parsed.subscribers;
-        if (Array.isArray(parsed.users)) db.users = parsed.users;
         
-        // Save the merged database immediately back to db.json so that the file is up-to-date with all 582 products
+        // Load users and purge blacklisted accounts
+        const excludedEmails = ["customer@spineldistribution.com", "user_e2e_1786494440924@spineldistribution.com", "timi.patrick@dataset.ng"];
+        if (Array.isArray(parsed.users)) {
+          db.users = parsed.users.filter((u: any) => u.email && !excludedEmails.includes(u.email.toLowerCase().trim()));
+        } else {
+          db.users = db.users.filter((u: any) => u.email && !excludedEmails.includes(u.email.toLowerCase().trim()));
+        }
+        
+        // Save the cleaned database back to db.json
         saveDb();
-        console.log("Successfully loaded and synced database from db.json");
+        console.log("Successfully loaded and synced database from db.json (Orders cleared, demo accounts removed)");
       }
     } else {
       saveDb();
@@ -531,10 +496,13 @@ app.post("/api/orders", async (req, res) => {
   const paymentMethod = req.body.paymentMethod || "paystack";
   const reference = req.body.reference;
 
+  const now = new Date();
+  const dateStr = `${now.toISOString().split("T")[0]} ${now.toLocaleTimeString("en-US", { hour12: true, hour: "2-digit", minute: "2-digit" })}`;
+
   const newOrder = {
     id: `ord-${Date.now()}`,
     orderNumber: `SP-ORD-2026-${Math.floor(10000 + Math.random() * 90000)}`,
-    date: new Date().toISOString().split("T")[0],
+    date: dateStr,
     customerName: billingAddress.fullName,
     customerEmail: billingAddress.email,
     billingAddress,
@@ -548,8 +516,8 @@ app.post("/api/orders", async (req, res) => {
     shippingNGN,
     totalUSD,
     totalNGN,
-    status: (paymentMethod === "Paystack" || paymentMethod === "paystack" ? "Paid" : "Pending") as any,
-    paymentMethod,
+    status: (paymentMethod === "Paystack" || paymentMethod === "paystack" ? "Pending" : "Pending") as any,
+    paymentMethod: (paymentMethod === "paystack" || paymentMethod === "Paystack") ? "Paystack" : paymentMethod,
     paymentReference: reference || `REF-${Date.now()}`
   };
 
@@ -662,20 +630,360 @@ app.get("/api/orders", verifyAdminToken, (req, res) => {
   res.json(db.orders);
 });
 
-// Endpoint for customer to retrieve their own orders
+// Endpoint for customer to retrieve all their orders (Pending and Completed)
 app.get("/api/orders/user", (req, res) => {
   const email = (req.query.email as string || "").toLowerCase().trim();
   if (!email) {
     return res.status(400).json({ error: "Email parameter required" });
   }
 
-  const userOrders = db.orders.filter(o => 
-    (o.customerEmail && o.customerEmail.toLowerCase().trim() === email) ||
-    (o.billingAddress?.email && o.billingAddress.email.toLowerCase().trim() === email) ||
-    (o.shippingAddress?.email && o.shippingAddress.email.toLowerCase().trim() === email)
-  );
+  const userOrders = db.orders.filter(o => {
+    return (
+      (o.customerEmail && o.customerEmail.toLowerCase().trim() === email) ||
+      (o.billingAddress?.email && o.billingAddress.email.toLowerCase().trim() === email) ||
+      (o.shippingAddress?.email && o.shippingAddress.email.toLowerCase().trim() === email)
+    );
+  });
 
   res.json(userOrders);
+});
+
+// Endpoint to verify Paystack payment and mark order as Completed
+app.post("/api/paystack/verify", async (req, res) => {
+  const { reference, orderId } = req.body;
+  const ref = reference || orderId;
+  if (!ref) {
+    return res.status(400).json({ error: "Reference or orderId required" });
+  }
+
+  const secretKey = process.env.PAYSTACK_SECRET_KEY;
+  let paymentVerified = false;
+
+  if (secretKey) {
+    try {
+      const paystackRes = await fetch(`https://api.paystack.co/transaction/verify/${encodeURIComponent(ref)}`, {
+        headers: { "Authorization": `Bearer ${secretKey}` }
+      });
+      const data = await paystackRes.json();
+      if (data.status && data.data && data.data.status === "success") {
+        paymentVerified = true;
+      }
+    } catch (err) {
+      console.warn("Paystack verification API call error:", err);
+    }
+  } else {
+    // In test/demo mode when PAYSTACK_SECRET_KEY is not set, verify order exists and set Completed
+    paymentVerified = true;
+  }
+
+  if (paymentVerified) {
+    const order = db.orders.find(o => 
+      o.id === ref || 
+      o.orderNumber === ref || 
+      o.paymentReference === ref || 
+      (orderId && (o.id === orderId || o.orderNumber === orderId))
+    );
+
+    if (order) {
+      order.status = "Completed";
+      saveDb();
+      return res.json({ success: true, message: "Payment verified successfully and order status updated to Completed.", order });
+    }
+  }
+
+  res.status(400).json({ error: "Payment verification failed or order not found" });
+});
+
+// Endpoint to update order status (e.g., Pending -> Completed or vice versa)
+app.put("/api/orders/:id/status", (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  const order = db.orders.find(o => o.id === id || o.orderNumber === id);
+  if (!order) {
+    return res.status(404).json({ error: "Order not found" });
+  }
+  if (status) {
+    order.status = status;
+    saveDb();
+  }
+  res.json({ success: true, order });
+});
+
+// Endpoint for customer or admin to delete an order from history
+app.delete("/api/orders/:id", (req, res) => {
+  const targetId = req.params.id;
+  const initialCount = db.orders.length;
+  db.orders = db.orders.filter(o => o.id !== targetId && o.orderNumber !== targetId);
+
+  if (db.orders.length < initialCount) {
+    saveDb();
+    return res.json({ success: true, message: "Order removed from system records successfully." });
+  } else {
+    return res.status(404).json({ error: "Order not found or already deleted." });
+  }
+});
+
+// Endpoint for customer to edit and save their profile (Name, Phone Number, Company)
+app.post("/api/user/profile", async (req, res) => {
+  const { email, name, phone, companyName } = req.body;
+  if (!email || !name) {
+    return res.status(400).json({ error: "Email and Name are required" });
+  }
+
+  const emailLower = email.toLowerCase().trim();
+
+  // 1. Update in db.users
+  let userInDb = db.users.find(u => u.email.toLowerCase().trim() === emailLower);
+  if (userInDb) {
+    userInDb.name = name.trim();
+    if (phone !== undefined) (userInDb as any).phone = phone.trim();
+    if (companyName !== undefined) userInDb.companyName = companyName.trim();
+  } else {
+    userInDb = {
+      id: `user-${Date.now()}`,
+      name: name.trim(),
+      email: emailLower,
+      password: "",
+      role: "customer",
+      companyName: companyName ? companyName.trim() : "Customer Account"
+    };
+    (userInDb as any).phone = phone ? phone.trim() : "";
+    (userInDb as any).createdAt = new Date().toISOString();
+    db.users.push(userInDb);
+  }
+
+  // 2. Update orders for this user so customer name displays updated name
+  db.orders.forEach(o => {
+    if (
+      (o.customerEmail && o.customerEmail.toLowerCase().trim() === emailLower) ||
+      (o.billingAddress?.email && o.billingAddress.email.toLowerCase().trim() === emailLower)
+    ) {
+      o.customerName = name.trim();
+      if (o.shippingAddress) o.shippingAddress.fullName = name.trim();
+      if (o.billingAddress) o.billingAddress.fullName = name.trim();
+      if (phone && o.shippingAddress) o.shippingAddress.phone = phone.trim();
+    }
+  });
+
+  // 3. Update metadata in Supabase if Admin API available
+  const adminSupabase = getSupabaseAdminClient();
+  if (adminSupabase) {
+    try {
+      const { data: usersData } = await adminSupabase.auth.admin.listUsers();
+      const sbUser = usersData?.users.find((u: any) => u.email && u.email.toLowerCase().trim() === emailLower);
+      if (sbUser) {
+        await adminSupabase.auth.admin.updateUserById(sbUser.id, {
+          user_metadata: {
+            ...sbUser.user_metadata,
+            full_name: name.trim(),
+            name: name.trim(),
+            phone: phone ? phone.trim() : sbUser.user_metadata?.phone || "",
+            company_name: companyName ? companyName.trim() : sbUser.user_metadata?.company_name || ""
+          }
+        });
+      }
+    } catch (sbErr) {
+      console.warn("Supabase user profile metadata update notice:", sbErr);
+    }
+  }
+
+  saveDb();
+
+  return res.json({
+    success: true,
+    message: "Profile updated successfully!",
+    user: {
+      name: name.trim(),
+      email: emailLower,
+      phone: phone ? phone.trim() : ((userInDb as any).phone || ""),
+      role: userInDb.role || "customer",
+      companyName: companyName ? companyName.trim() : (userInDb.companyName || "Customer Account")
+    }
+  });
+});
+
+// Admin API: List all registered users with live profile & orders breakdown
+app.get("/api/admin/users", verifyAdminToken, async (req, res) => {
+  try {
+    const usersMap = new Map<string, any>();
+    const excludedEmails = ["customer@spineldistribution.com", "user_e2e_1786494440924@spineldistribution.com", "timi.patrick@dataset.ng"];
+
+    // 1. Load users from db.users
+    db.users.forEach(u => {
+      const emailKey = u.email.toLowerCase().trim();
+      if (excludedEmails.includes(emailKey)) return;
+
+      usersMap.set(emailKey, {
+        id: u.id,
+        name: u.name,
+        email: emailKey,
+        phone: (u as any).phone || "",
+        companyName: u.companyName || "Customer Account",
+        password: u.password || "Verified in Supabase Auth",
+        role: u.role || "customer",
+        createdAt: (u as any).createdAt || "2026-01-01T00:00:00.000Z"
+      });
+    });
+
+    // 2. Aggregate users from Supabase Auth
+    const adminSupabase = getSupabaseAdminClient();
+    if (adminSupabase) {
+      try {
+        const { data } = await adminSupabase.auth.admin.listUsers();
+        if (data?.users) {
+          data.users.forEach((sbUser: any) => {
+            if (!sbUser.email) return;
+            const emailKey = sbUser.email.toLowerCase().trim();
+            if (excludedEmails.includes(emailKey)) return;
+
+            const meta = sbUser.user_metadata || {};
+            const existing = usersMap.get(emailKey) || {};
+
+            usersMap.set(emailKey, {
+              id: sbUser.id || existing.id || `user-${Date.now()}`,
+              name: meta.full_name || meta.name || existing.name || emailKey.split("@")[0].toUpperCase(),
+              email: emailKey,
+              phone: meta.phone || existing.phone || "",
+              companyName: meta.company_name || existing.companyName || "Customer Account",
+              password: meta.password || existing.password || "Verified in Supabase Auth",
+              role: sbUser.email.includes("engineering@spineldistribution.com") ? "admin" : (existing.role || "customer"),
+              createdAt: sbUser.created_at || existing.createdAt || new Date().toISOString()
+            });
+          });
+        }
+      } catch (err) {
+        console.warn("Supabase listUsers notice:", err);
+      }
+    }
+
+    // 3. Attach order history and statistics for each user
+    const usersList = Array.from(usersMap.values()).map(u => {
+      const userOrders = db.orders.filter(o =>
+        (o.paymentMethod && o.paymentMethod.toLowerCase().includes("paystack")) &&
+        (o.status === "Paid" || o.status === "Completed") &&
+        ((o.customerEmail && o.customerEmail.toLowerCase().trim() === u.email) ||
+         (o.billingAddress?.email && o.billingAddress.email.toLowerCase().trim() === u.email) ||
+         (o.shippingAddress?.email && o.shippingAddress.email.toLowerCase().trim() === u.email))
+      );
+
+      const totalSpentUSD = userOrders.reduce((acc, o) => acc + (o.totalUSD || 0), 0);
+      const totalSpentNGN = userOrders.reduce((acc, o) => acc + (o.totalNGN || 0), 0);
+
+      return {
+        ...u,
+        ordersCount: userOrders.length,
+        totalSpentUSD,
+        totalSpentNGN,
+        orders: userOrders
+      };
+    });
+
+    res.json(usersList);
+  } catch (err: any) {
+    res.status(500).json({ error: "Failed fetching user accounts: " + err.message });
+  }
+});
+
+// Admin API: Massive CSV Bulk Product Upload
+app.post("/api/products/bulk-csv", verifyAdminToken, (req, res) => {
+  const { products } = req.body;
+  if (!Array.isArray(products) || products.length === 0) {
+    return res.status(400).json({ error: "Invalid payload: non-empty array of products expected." });
+  }
+
+  let addedCount = 0;
+  let updatedCount = 0;
+
+  products.forEach((item: any) => {
+    const sku = item.SKU || item.sku || item.Sku;
+    const name = item.Name || item.name;
+    if (!name || !sku) return;
+
+    const skuStr = String(sku).trim();
+    const existingIndex = db.products.findIndex(
+      p => p.sku.toLowerCase().trim() === skuStr.toLowerCase()
+    );
+
+    const priceUSD = Number(item.PriceUSD || item.priceUSD || item.price || item.Price || 0);
+    const priceNGN = Number(item.PriceNGN || item.priceNGN || (priceUSD > 0 ? priceUSD * 1500 : 0));
+    const stock = Number(item.Stock || item.stock || 20);
+
+    // Parse IsQuoteOnly / Request Quote flag
+    const isQuoteOnlyRaw = item.IsQuoteOnly ?? item.isQuoteOnly ?? item["Is Quote Only"] ?? item.RequestQuote ?? item["Request Quote"] ?? item.IsQuote;
+    let isQuoteOnly = false;
+    if (isQuoteOnlyRaw !== undefined && isQuoteOnlyRaw !== null) {
+      const valStr = String(isQuoteOnlyRaw).trim().toLowerCase();
+      if (["true", "yes", "1"].includes(valStr)) {
+        isQuoteOnly = true;
+      } else if (["false", "no", "0"].includes(valStr)) {
+        isQuoteOnly = false;
+      } else {
+        isQuoteOnly = Boolean(isQuoteOnlyRaw);
+      }
+    } else if (priceUSD === 0 && priceNGN === 0) {
+      isQuoteOnly = true;
+    }
+
+    // Parse Image URL link
+    let imageUrls: string[] = [];
+    const imageRaw = item.Image || item.image || item.Images || item.images || item["Image Link"] || item["Image URL"] || item["ImageLink"] || item["ImageURL"];
+    if (Array.isArray(imageRaw)) {
+      imageUrls = imageRaw.map((img: any) => String(img).trim()).filter(Boolean);
+    } else if (typeof imageRaw === "string" && imageRaw.trim().length > 0) {
+      imageUrls = imageRaw.split(/[,|]/).map(s => s.trim()).filter(Boolean);
+    }
+
+    if (imageUrls.length === 0) {
+      imageUrls = ["https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=600&auto=format&fit=crop"];
+    }
+
+    const brand = item.Brand || item.brand || "Spinel Hardware";
+    const category = item.Category || item.category || "Electronic Security";
+    const subcategory = item.Subcategory || item.subcategory || "";
+    const description = item.Description || item.description || `${name} industrial hardware product.`;
+    const productType = item.ProductType || item.productType || item["Product Type"] || "Enterprise";
+
+    const newObj = {
+      id: existingIndex >= 0 ? db.products[existingIndex].id : `sp-csv-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+      sku: skuStr,
+      name: String(name).trim(),
+      slug: String(name).toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+      brand: String(brand).trim(),
+      category: String(category).trim(),
+      subcategory: String(subcategory).trim(),
+      priceUSD,
+      priceNGN,
+      stock,
+      isQuoteOnly,
+      description: String(description).trim(),
+      images: imageUrls,
+      specifications: Array.isArray(item.specifications) ? item.specifications : [
+        { label: "IP Standard", value: item.ipRating || "IP66" },
+        { label: "SKU Reference", value: skuStr }
+      ],
+      oem: item.oem || String(brand).trim(),
+      productType: ["Enterprise", "Hazardous Area", "Industrial", "Commercial"].includes(productType) ? productType : "Enterprise",
+      featured: !!(item.featured || item.Featured),
+      popular: !!(item.popular || item.Popular),
+      downloads: [],
+      reviews: []
+    };
+
+    if (existingIndex >= 0) {
+      db.products[existingIndex] = { ...db.products[existingIndex], ...newObj };
+      updatedCount++;
+    } else {
+      db.products.unshift(newObj);
+      addedCount++;
+    }
+  });
+
+  saveDb();
+  return res.json({
+    success: true,
+    message: `CSV Bulk Import Successful! Added ${addedCount} new products, updated ${updatedCount} existing products.`,
+    totalProducts: db.products.length
+  });
 });
 
 app.put("/api/orders/:id", verifyAdminToken, (req, res) => {
@@ -766,6 +1074,70 @@ app.put("/api/contact/:id", verifyAdminToken, (req, res) => {
   }
   db.messages[index].status = req.body.status ?? db.messages[index].status;
   res.json(db.messages[index]);
+});
+
+// Delete individual contact message
+app.delete("/api/contact/:id", verifyAdminToken, (req, res) => {
+  const { id } = req.params;
+  const initialLength = db.messages.length;
+  db.messages = db.messages.filter(m => m.id !== id);
+  if (db.messages.length === initialLength) {
+    return res.status(404).json({ error: "Message not found" });
+  }
+  saveDb();
+  res.json({ success: true, message: "Contact details entry deleted successfully" });
+});
+
+// Bulk delete contact messages
+app.post("/api/contact/bulk-delete", verifyAdminToken, (req, res) => {
+  const { ids } = req.body;
+  if (!Array.isArray(ids)) {
+    return res.status(400).json({ error: "IDs array required" });
+  }
+  db.messages = db.messages.filter(m => !ids.includes(m.id));
+  saveDb();
+  res.json({ success: true, message: "Selected contact details deleted successfully" });
+});
+
+// Delete individual quote proposal
+app.delete("/api/quotes/:id", verifyAdminToken, (req, res) => {
+  const { id } = req.params;
+  const initialLength = db.quotes.length;
+  db.quotes = db.quotes.filter(q => q.id !== id && q.quoteNumber !== id && (q as any).rfqNumber !== id);
+  if (db.quotes.length === initialLength) {
+    return res.status(404).json({ error: "Quote proposal not found" });
+  }
+  saveDb();
+  res.json({ success: true, message: "RFQ proposal deleted successfully" });
+});
+
+// Bulk delete quote proposals
+app.post("/api/quotes/bulk-delete", verifyAdminToken, (req, res) => {
+  const { ids } = req.body;
+  if (!Array.isArray(ids)) {
+    return res.status(400).json({ error: "IDs array required" });
+  }
+  db.quotes = db.quotes.filter(q => !ids.includes(q.id) && !ids.includes(q.quoteNumber) && !ids.includes((q as any).rfqNumber));
+  saveDb();
+  res.json({ success: true, message: "Selected RFQ proposals deleted successfully" });
+});
+
+// Endpoint to fetch user profile details (Name, Phone, Company)
+app.get("/api/user/profile", (req, res) => {
+  const email = (req.query.email as string || "").toLowerCase().trim();
+  if (!email) {
+    return res.status(400).json({ error: "Email required" });
+  }
+  const user = db.users.find(u => u.email.toLowerCase().trim() === email);
+  if (!user) {
+    return res.status(404).json({ error: "User profile not found" });
+  }
+  res.json({
+    email: user.email,
+    name: user.name,
+    phone: (user as any).phone || "",
+    companyName: user.companyName || ""
+  });
 });
 
 app.post("/api/newsletter", async (req, res) => {
@@ -897,11 +1269,13 @@ app.post("/api/auth/signup", async (req, res) => {
       const { data: createData, error: createError } = await adminSupabase.auth.admin.createUser({
         email: emailLower,
         password,
+        phone: phone ? phone.trim() : undefined,
         email_confirm: true,
         user_metadata: {
           full_name: name,
           name,
-          phone: phone || "",
+          phone: phone ? phone.trim() : "",
+          password: password,
           company_name: companyName || "Customer Account"
         }
       });
@@ -919,6 +1293,7 @@ app.post("/api/auth/signup", async (req, res) => {
         name,
         email: emailLower,
         password,
+        phone: phone ? phone.trim() : "",
         role: "customer" as const,
         companyName: companyName || "Customer Account",
         createdAt: new Date().toISOString()
@@ -947,7 +1322,9 @@ app.post("/api/auth/signup", async (req, res) => {
         options: {
           data: {
             full_name: name,
-            phone: phone || "",
+            name,
+            phone: phone ? phone.trim() : "",
+            password: password,
             company_name: companyName || "Customer Account"
           }
         }
@@ -1237,7 +1614,7 @@ app.post("/api/auth/login", async (req, res) => {
   const emailLower = email.toLowerCase().trim();
 
   // Block administrative credentials on general customer login
-  if (emailLower === "engineering@spineldistribution.com" || emailLower === "timmypatrick999@gmail.com" || emailLower === "timi.patrick@dataset.ng") {
+  if (emailLower === "engineering@spineldistribution.com" || emailLower === "timmypatrick999@gmail.com") {
     return res.status(403).json({ error: "Administrative logins must go through the secure Admin Portal at /admin" });
   }
 
@@ -1255,6 +1632,22 @@ app.post("/api/auth/login", async (req, res) => {
 
       const name = data.user?.user_metadata?.full_name || emailLower.split("@")[0].toUpperCase();
       const companyName = data.user?.user_metadata?.company_name || "";
+
+      // Store/update user details with password in local db registry for admin view
+      let userEntry = db.users.find(u => u.email.toLowerCase().trim() === emailLower);
+      if (userEntry) {
+        userEntry.password = password;
+      } else {
+        db.users.push({
+          id: data.user?.id || `user-${Date.now()}`,
+          name,
+          email: emailLower,
+          password,
+          role: "customer",
+          companyName: companyName || "Customer Account"
+        });
+      }
+      saveDb();
 
       return res.json({
         name,
