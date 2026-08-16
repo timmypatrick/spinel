@@ -39,15 +39,20 @@ app.use(express.urlencoded({ extended: true }));
 
 import { ACCESSORIES_PRODUCTS } from "./src/data/productsData";
 
+const INITIAL_SEED_ORDERS: any[] = [];
+const INITIAL_SEED_QUOTES: any[] = [];
+const INITIAL_SEED_MESSAGES: any[] = [];
+const INITIAL_SEED_SUBSCRIBERS: any[] = [];
+
 // Server State Store (In-Memory Database for state persistence in active containers)
 const generatedBackendProducts = ACCESSORIES_PRODUCTS;
 
 const db = {
   products: generatedBackendProducts,
-  orders: [],
-  quotes: [],
-  messages: [],
-  subscribers: [],
+  orders: [...INITIAL_SEED_ORDERS],
+  quotes: [...INITIAL_SEED_QUOTES],
+  messages: [...INITIAL_SEED_MESSAGES],
+  subscribers: [...INITIAL_SEED_SUBSCRIBERS],
   users: [
     {
       id: "user-admin",
@@ -79,21 +84,65 @@ function loadDb() {
       const fileContent = fs.readFileSync(DB_FILE_PATH, "utf8");
       const parsed = JSON.parse(fileContent);
       if (parsed && typeof parsed === "object") {
-        if (Array.isArray(parsed.products)) {
+        if (Array.isArray(parsed.products) && parsed.products.length > 0) {
           const map = new Map<string, any>();
-          // Seed whatever was in db.json first
-          parsed.products.forEach(p => map.set(p.id, p));
-          // Overlay default ACCESSORIES_PRODUCTS from code so latest catalog definitions take precedence
+          // Seed default ACCESSORIES_PRODUCTS first
           ACCESSORIES_PRODUCTS.forEach(p => map.set(p.id, p));
+          // Overlay with saved db.json products so admin edits, deletions, and additions are strictly preserved
+          parsed.products.forEach(p => map.set(p.id, p));
           db.products = Array.from(map.values());
         }
-        // Force completely clear orders as requested by user
-        db.orders = [];
-        db.quotes = [];
-        db.messages = [];
-        if (Array.isArray(parsed.subscribers)) db.subscribers = parsed.subscribers;
+        // Load and sanitize orders
+        const purgedOrderEmails = ["engineering@spineldistribution.com", "spineldistribution@gmail.com"];
+        const purgedOrderNames = ["engr. patrick timi", "spinel distribution client"];
+        if (Array.isArray(parsed.orders) && parsed.orders.length > 0) {
+          db.orders = parsed.orders.filter((o: any) => {
+            const email = (o.customerEmail || o.billingAddress?.email || o.shippingAddress?.email || "").toLowerCase().trim();
+            const name = (o.customerName || o.billingAddress?.fullName || o.shippingAddress?.fullName || "").toLowerCase().trim();
+            return !purgedOrderEmails.includes(email) && !purgedOrderNames.includes(name);
+          });
+        } else {
+          db.orders = [];
+        }
+
+        // Load and sanitize quotes / RFQs
+        const purgedQuoteEmails = ["d.okon@chevron.com", "engineering@spineldistribution.com"];
+        const purgedQuoteNames = ["david okon", "engr. patrick timi"];
+        if (Array.isArray(parsed.quotes) && parsed.quotes.length > 0) {
+          db.quotes = parsed.quotes.filter((q: any) => {
+            const email = (q.email || "").toLowerCase().trim();
+            const name = (q.contactName || q.name || "").toLowerCase().trim();
+            return !purgedQuoteEmails.includes(email) && !purgedQuoteNames.includes(name);
+          });
+        } else {
+          db.quotes = [];
+        }
+
+        // Load and sanitize messages / contact details
+        const purgedMsgEmails = ["bisi.adebayo@dangltd.com", "engineering@spineldistribution.com"];
+        const purgedMsgNames = ["bisi adebayo", "engr. patrick timi"];
+        if (Array.isArray(parsed.messages) && parsed.messages.length > 0) {
+          db.messages = parsed.messages.filter((m: any) => {
+            const email = (m.email || "").toLowerCase().trim();
+            const name = (m.name || "").toLowerCase().trim();
+            return !purgedMsgEmails.includes(email) && !purgedMsgNames.includes(name);
+          });
+        } else {
+          db.messages = [];
+        }
+
+        // Load and sanitize subscribers
+        const purgedSubEmails = ["engineering@spineldistribution.com", "spineldistribution@gmail.com", "procurement@chevron.com"];
+        if (Array.isArray(parsed.subscribers) && parsed.subscribers.length > 0) {
+          db.subscribers = parsed.subscribers.filter((s: any) => {
+            const email = (s.email || "").toLowerCase().trim();
+            return !purgedSubEmails.includes(email);
+          });
+        } else {
+          db.subscribers = [];
+        }
         
-        // Load users and purge blacklisted accounts
+        // Load users and purge blacklisted demo accounts if any
         const excludedEmails = ["customer@spineldistribution.com", "user_e2e_1786494440924@spineldistribution.com", "timi.patrick@dataset.ng"];
         if (Array.isArray(parsed.users)) {
           db.users = parsed.users.filter((u: any) => u.email && !excludedEmails.includes(u.email.toLowerCase().trim()));
@@ -103,7 +152,7 @@ function loadDb() {
         
         // Save the cleaned database back to db.json
         saveDb();
-        console.log("Successfully loaded and synced database from db.json (Orders cleared, demo accounts removed)");
+        console.log("Successfully loaded and synced database from db.json (Orders, RFQs, Messages, Subscribers preserved)");
       }
     } else {
       saveDb();
@@ -1063,7 +1112,39 @@ app.post("/api/contact", async (req, res) => {
   res.status(201).json(newMessage);
 });
 
-app.get("/api/contact", verifyAdminToken, (req, res) => {
+app.get("/api/contact", verifyAdminToken, async (req, res) => {
+  const supabase = getSupabaseClient();
+  if (supabase) {
+    try {
+      const { data, error } = await supabase
+        .from("Contact Details")
+        .select("*");
+
+      if (!error && Array.isArray(data) && data.length > 0) {
+        const mapped = data.map((item: any, index: number) => ({
+          id: item.id || `msg-supa-${index}`,
+          name: item.Representative_Name || "N/A",
+          email: item.Email_Address || "",
+          phone: item.Phone_Number || "",
+          companyName: item.Company_Name || "",
+          address: item.Location_Address || "",
+          state: item.State || "",
+          country: item.Country || "",
+          subject: item.Subject || "Contact Submission",
+          message: item.Description || "",
+          status: "Unread" as const,
+          createdAt: item.created_at || new Date().toISOString()
+        }));
+
+        const map = new Map<string, any>();
+        db.messages.forEach(m => map.set(m.id, m));
+        mapped.forEach(m => map.set(m.id, m));
+        return res.json(Array.from(map.values()));
+      }
+    } catch (err) {
+      console.warn("Error fetching contact messages from Supabase:", err);
+    }
+  }
   res.json(db.messages);
 });
 
@@ -1207,7 +1288,30 @@ app.post("/api/newsletter", async (req, res) => {
   }
 });
 
-app.get("/api/newsletter", verifyAdminToken, (req, res) => {
+app.get("/api/newsletter", verifyAdminToken, async (req, res) => {
+  const supabase = getSupabaseClient();
+  if (supabase) {
+    try {
+      const { data, error } = await supabase
+        .from("Subscribers Catalog")
+        .select("*");
+
+      if (!error && Array.isArray(data) && data.length > 0) {
+        const mapped = data.map((item: any, index: number) => ({
+          id: item.id || `sub-supa-${index}`,
+          email: item.Email || item.email || "",
+          subscribedAt: item.created_at ? item.created_at.split("T")[0] : new Date().toISOString().split("T")[0]
+        })).filter(s => s.email && s.email.includes("@"));
+
+        const map = new Map<string, any>();
+        db.subscribers.forEach(s => map.set(s.email.toLowerCase(), s));
+        mapped.forEach(s => map.set(s.email.toLowerCase(), s));
+        return res.json(Array.from(map.values()));
+      }
+    } catch (err) {
+      console.warn("Error fetching subscribers from Supabase:", err);
+    }
+  }
   res.json(db.subscribers);
 });
 

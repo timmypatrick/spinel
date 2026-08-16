@@ -3,11 +3,12 @@ import {
   ShieldAlert, Cpu, Layers, DollarSign, FileCheck, CheckCircle, CheckCircle2,
   Trash, Plus, FileText, Send, UserCheck, RefreshCw, Layers3, FolderEdit,
   Image as ImageIcon, Mail, Search, Package, Menu, X, BarChart3, UploadCloud,
-  Download, LogOut, Users, ShoppingBag, KeyRound, Clock
+  Download, LogOut, Users, ShoppingBag, KeyRound, Clock, ChevronRight
 } from "lucide-react";
 import { Product, QuoteRequest, Order, ContactMessage, UserSession } from "../types";
 import { safeFetch } from "../lib/dataService";
 import * as XLSX from "xlsx";
+import { ACCESSORIES_PRODUCTS, getOrderProductImage } from "../data/productsData";
 
 interface AdminDashboardProps {
   user: UserSession | null;
@@ -141,6 +142,10 @@ export default function AdminDashboard({
 
   const [messagesSearch, setMessagesSearch] = useState("");
   const [messagesPage, setMessagesPage] = useState(1);
+
+  const [ordersSearch, setOrdersSearch] = useState("");
+  const [ordersPage, setOrdersPage] = useState(1);
+  const ordersPerPage = 10;
 
   // Load Admin dashboard statistics and arrays on login
   useEffect(() => {
@@ -435,7 +440,7 @@ export default function AdminDashboard({
 
   // RFQ Quote Proposal Deletion
   const handleDeleteQuote = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this RFQ proposal record?")) return;
+    if (!confirm("Are you sure you want to delete this RFQ record?")) return;
     const token = localStorage.getItem("spinel_token") || "";
     try {
       const res = await safeFetch(`/api/quotes/${id}`, {
@@ -445,17 +450,17 @@ export default function AdminDashboard({
       if (res.ok) {
         setQuotes(quotes.filter(q => q.id !== id && (q as any).quoteNumber !== id && (q as any).rfqNumber !== id));
       } else {
-        alert("Failed to delete quote proposal");
+        alert("Failed to delete RFQ proposal");
       }
     } catch (err) {
-      console.error("Delete quote error", err);
+      console.error("Delete RFQ error", err);
       setQuotes(quotes.filter(q => q.id !== id));
     }
   };
 
   // Contact Details Submission Deletion
   const handleDeleteMessage = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this contact details submission?")) return;
+    if (!confirm("Are you sure you want to delete this contact details?")) return;
     const token = localStorage.getItem("spinel_token") || "";
     try {
       const res = await safeFetch(`/api/contact/${id}`, {
@@ -465,7 +470,7 @@ export default function AdminDashboard({
       if (res.ok) {
         setMessages(messages.filter(m => m.id !== id));
       } else {
-        alert("Failed to delete contact details entry");
+        alert("Failed to delete contact details");
       }
     } catch (err) {
       console.error("Delete message error", err);
@@ -496,7 +501,7 @@ export default function AdminDashboard({
 
   // Order Deletion
   const handleDeleteOrderAdmin = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this order record from the admin dashboard?")) return;
+    if (!confirm("Are you sure you want to delete this order?")) return;
     const token = localStorage.getItem("spinel_token") || "";
     try {
       const res = await safeFetch(`/api/orders/${id}`, {
@@ -507,7 +512,7 @@ export default function AdminDashboard({
         setOrders(orders.filter(o => o.id !== id && o.orderNumber !== id));
       }
     } catch (err) {
-      console.error("Delete order admin error", err);
+      console.error("Delete order error", err);
       setOrders(orders.filter(o => o.id !== id && o.orderNumber !== id));
     }
   };
@@ -588,7 +593,7 @@ export default function AdminDashboard({
   // Delete All Subscribers from Briefing Catalog
   const handleDeleteAllSubscribers = async () => {
     if (subscribers.length === 0) return;
-    if (!confirm("Are you sure you want to completely delete ALL subscriber details from the Briefing Catalog? This action is irreversible.")) return;
+    if (!confirm("Are you sure you want to completely delete all subscriber details from the Briefing Catalog? This action is irreversible.")) return;
     const token = localStorage.getItem("spinel_token") || "";
     try {
       const res = await safeFetch("/api/newsletter/delete-all", {
@@ -758,6 +763,30 @@ export default function AdminDashboard({
   const safeMessagesPage = Math.min(messagesPage, totalMessagesPages);
   const paginatedMessages = searchedMessages.slice((safeMessagesPage - 1) * itemsPerPage60, safeMessagesPage * itemsPerPage60);
 
+  // 4. Paystack Completed Orders
+  const searchedOrders = orders.filter(o => {
+    if (!ordersSearch.trim()) return true;
+    const query = ordersSearch.toLowerCase().trim();
+    return (
+      (o.id && o.id.toLowerCase().includes(query)) ||
+      (o.orderNumber && o.orderNumber.toLowerCase().includes(query)) ||
+      (o.invoiceNumber && o.invoiceNumber.toLowerCase().includes(query)) ||
+      (o.userEmail && o.userEmail.toLowerCase().includes(query)) ||
+      (o.customerName && o.customerName.toLowerCase().includes(query)) ||
+      (o.customerEmail && o.customerEmail.toLowerCase().includes(query)) ||
+      (o.shippingAddress?.fullName && o.shippingAddress.fullName.toLowerCase().includes(query)) ||
+      (o.shippingAddress?.email && o.shippingAddress.email.toLowerCase().includes(query)) ||
+      (o.items && o.items.some((it: any) => (it.productName || it.name || "").toLowerCase().includes(query)))
+    );
+  });
+  const totalOrdersPages = Math.ceil(searchedOrders.length / ordersPerPage) || 1;
+  const safeOrdersPage = Math.min(ordersPage, totalOrdersPages);
+  const paginatedOrders = searchedOrders.slice((safeOrdersPage - 1) * ordersPerPage, safeOrdersPage * ordersPerPage);
+
+  const getItemImage = (item: any): string => {
+    return getOrderProductImage(item);
+  };
+
   // Login Panel Screen if not authenticated
   if (!user || user.role !== "admin") {
     return (
@@ -766,7 +795,7 @@ export default function AdminDashboard({
           <div className="text-center space-y-2">
             <img
               src="https://i.ibb.co/Q3CC5Rqd/Spinel-Only-Logo.jpg"
-              alt="Spinel Only Logo"
+              alt="Spinel Logo"
               referrerPolicy="no-referrer"
               className="w-12 h-12 object-contain rounded-xl mx-auto border border-gray-100 p-1 bg-white shadow-xs"
             />
@@ -811,10 +840,10 @@ export default function AdminDashboard({
 
             <div className="bg-orange-50 border border-orange-100 p-4 rounded-xl space-y-1 text-gray-600 leading-relaxed text-xs">
               <p className="font-bold text-[#FF7A20] uppercase tracking-wider text-xs">
-                🔐 Secured Mainframe Access
+                🔐 Authorized Administrative Access
               </p>
               <p>
-                Enter your authorized credentials to securely access order tracking, quotes, and inventory controls.
+                Enter your authorized credentials to access order tracking, quotes, and inventory controls.
               </p>
             </div>
 
@@ -859,8 +888,8 @@ export default function AdminDashboard({
             <Cpu className="w-5 h-5 animate-pulse" />
           </div>
           <div>
-            <h1 className="font-extrabold text-sm uppercase tracking-wider text-white">Mainframe Admin</h1>
-            <p className="text-[10px] text-gray-400">Timmy Patrick (Admin)</p>
+            <h1 className="font-extrabold text-sm uppercase tracking-wider text-white">Administrator</h1>
+            <p className="text-[10px] text-gray-400">Timmy Patrick</p>
           </div>
         </div>
         <button
@@ -893,8 +922,8 @@ export default function AdminDashboard({
                 <Cpu className="w-6 h-6 animate-pulse" />
               </div>
               <div>
-                <h2 className="font-black text-base uppercase tracking-wider text-white">Spinel Admin</h2>
-                <span className="inline-block bg-orange-950/80 text-[#FF7A20] border border-orange-800/50 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
+                <h2 className="font-black text-sm uppercase tracking-wider text-white">Administrator</h2>
+                <span className="inline-block bg-orange-950/80 text-[#FF7A20] border border-orange-800/50 text-xs font-bold px-2.5 py-0.5 rounded uppercase">
                   Master Control
                 </span>
               </div>
@@ -903,20 +932,20 @@ export default function AdminDashboard({
 
           {/* User Badge */}
           <div className="bg-gray-900/90 border border-gray-800 p-3.5 rounded-xl flex items-center space-x-3">
-            <div className="w-9 h-9 rounded-full bg-[#FF7A20]/20 text-[#FF7A20] border border-[#FF7A20]/40 flex items-center justify-center font-black text-sm">
+            <div className="w-9 h-9 rounded-full bg-[#FF7A20]/20 text-[#FF7A20] border border-[#FF7A20]/40 flex items-center justify-center font-black text-xs sm:text-sm">
               TP
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-xs font-bold text-white truncate">Timmy Patrick</p>
-              <p className="text-[10px] text-gray-400 truncate">System Administrator</p>
+              <p className="text-xs sm:text-sm font-bold text-white truncate">Timmy Patrick</p>
+              <p className="text-[10px] text-gray-300 truncate font-medium">Administrator</p>
             </div>
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" title="Session Active" />
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" title="Session Active" />
           </div>
 
           {/* Navigation Items */}
           <div className="space-y-1.5">
-            <span className="text-[10px] font-extrabold uppercase tracking-widest text-gray-500 px-3 block">
-              Cockpit Navigation
+            <span className="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 px-3 block">
+              Dashboard Navigation
             </span>
             {sidebarMenuItems.map((item) => {
               const Icon = item.icon;
@@ -929,13 +958,13 @@ export default function AdminDashboard({
                     setActiveTab(item.id as any);
                     setIsSidebarOpen(false);
                   }}
-                  className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-xs transition cursor-pointer ${
+                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition cursor-pointer ${
                     isActive
                       ? "bg-[#FF7A20] text-white shadow-md shadow-orange-950"
-                      : "text-gray-400 hover:text-white hover:bg-gray-900"
+                      : "text-gray-300 hover:text-white hover:bg-gray-900"
                   }`}
                 >
-                  <div className="flex items-center space-x-3 min-w-0">
+                  <div className="flex items-center space-x-2.5 min-w-0">
                     <Icon className={`w-4 h-4 shrink-0 ${isActive ? "text-white" : item.color}`} />
                     <span className="truncate">{item.label}</span>
                   </div>
@@ -944,7 +973,7 @@ export default function AdminDashboard({
                       className={`text-[10px] font-mono font-extrabold px-2 py-0.5 rounded-full ${
                         isActive
                           ? "bg-white/20 text-white"
-                          : "bg-gray-900 text-gray-300 border border-gray-800"
+                          : "bg-gray-900 text-gray-200 border border-gray-800"
                       }`}
                     >
                       {item.count}
@@ -957,21 +986,21 @@ export default function AdminDashboard({
 
           {/* Quick Actions Card in Sidebar */}
           <div className="bg-gradient-to-br from-gray-900 to-gray-900/60 border border-gray-800 p-4 rounded-xl space-y-3">
-            <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#FF7A20] block">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-[#FF7A20] block">
               Quick CSV Import
             </span>
-            <p className="text-[11px] text-gray-400 leading-snug">
-              Massive upload products across all store pages using a CSV file.
+            <p className="text-xs text-gray-300 leading-snug font-medium">
+              Massive products upload across all store pages using a CSV file.
             </p>
             <button
               onClick={() => {
                 setIsCsvModalOpen(true);
                 setIsSidebarOpen(false);
               }}
-              className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-2.5 px-3 rounded-lg flex items-center justify-center space-x-2 transition cursor-pointer shadow-sm"
+              className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm py-2.5 px-3 rounded-lg flex items-center justify-center space-x-2 transition cursor-pointer shadow-sm"
             >
               <UploadCloud className="w-4 h-4" />
-              <span>Massive CSV Upload</span>
+              <span>Upload Products</span>
             </button>
           </div>
         </div>
@@ -980,9 +1009,9 @@ export default function AdminDashboard({
         <div className="p-4 border-t border-gray-800 bg-gray-950/80 space-y-2 shrink-0">
           <button
             onClick={loadCockpitData}
-            className="w-full bg-gray-900 hover:bg-gray-800 border border-gray-800 text-gray-300 hover:text-white text-xs font-bold py-2 px-3 rounded-lg transition cursor-pointer flex items-center justify-center space-x-2"
+            className="w-full bg-gray-900 hover:bg-gray-800 border border-gray-800 text-gray-200 hover:text-white text-xs sm:text-sm font-bold py-2.5 px-3 rounded-lg transition cursor-pointer flex items-center justify-center space-x-2"
           >
-            <RefreshCw className="w-3.5 h-3.5" />
+            <RefreshCw className="w-4 h-4" />
             <span>Refresh All Data</span>
           </button>
           <button
@@ -992,10 +1021,10 @@ export default function AdminDashboard({
               setUser(null);
               setCurrentView("home");
             }}
-            className="w-full bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 border border-rose-900/50 text-xs font-bold py-2 px-3 rounded-lg transition cursor-pointer flex items-center justify-center space-x-2"
+            className="w-full bg-rose-950/40 hover:bg-rose-900/60 text-rose-200 border border-rose-900/50 text-xs sm:text-sm font-bold py-2.5 px-3 rounded-lg transition cursor-pointer flex items-center justify-center space-x-2"
           >
-            <LogOut className="w-3.5 h-3.5" />
-            <span>Terminate Session</span>
+            <LogOut className="w-4 h-4" />
+            <span>Admin Log out</span>
           </button>
         </div>
       </aside>
@@ -1064,7 +1093,7 @@ export default function AdminDashboard({
         {loading ? (
           <div className="py-24 text-center text-xs font-semibold text-gray-400 flex flex-col items-center justify-center space-y-2">
             <RefreshCw className="w-8 h-8 animate-spin text-[#FF7A20]" />
-            <span>Loading cockpit telemetry...</span>
+            <span>Please wait...</span>
           </div>
         ) : activeTab === "overview" ? (
           /* TAB 0: OVERVIEW METRICS & QUICK ACTIONS */
@@ -1073,176 +1102,181 @@ export default function AdminDashboard({
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
               <div
                 onClick={() => setActiveTab("orders")}
-                className="bg-white p-5 rounded-2xl border border-gray-200 shadow-2xs hover:border-[#FF7A20] transition cursor-pointer space-y-3"
+                className="bg-white p-6 rounded-2xl border border-gray-200 shadow-2xs hover:border-[#FF7A20] transition cursor-pointer space-y-3"
               >
                 <div className="flex justify-between items-center">
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-gray-400">Total Completed Sales</span>
-                  <div className="p-2 bg-emerald-50 text-emerald-600 rounded-xl">
-                    <FileCheck className="w-5 h-5" />
+                  <span className="text-xs font-extrabold uppercase tracking-wider text-gray-500">Total Revenue</span>
+                  <div className="p-2.5 bg-emerald-50 text-emerald-600 rounded-xl">
+                    <FileCheck className="w-6 h-6" />
                   </div>
                 </div>
                 <div>
-                  <div className="text-2xl font-black text-gray-950 font-mono">
+                  <div className="text-3xl font-black text-gray-950 font-mono">
                     {currency === "USD" ? `$${totalRevenueUSD.toLocaleString()}` : `₦${totalRevenueNGN.toLocaleString()}`}
                   </div>
-                  <p className="text-[11px] text-emerald-600 font-bold mt-1">
-                    {orders.length} Verified Paystack Orders
+                  <p className="text-xs sm:text-sm text-emerald-600 font-bold mt-1.5">
+                    {orders.length} Orders
                   </p>
                 </div>
               </div>
 
               <div
                 onClick={() => setActiveTab("products")}
-                className="bg-white p-5 rounded-2xl border border-gray-200 shadow-2xs hover:border-[#FF7A20] transition cursor-pointer space-y-3"
+                className="bg-white p-6 rounded-2xl border border-gray-200 shadow-2xs hover:border-[#FF7A20] transition cursor-pointer space-y-3"
               >
                 <div className="flex justify-between items-center">
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-gray-400">Supply Catalog</span>
-                  <div className="p-2 bg-orange-50 text-[#FF7A20] rounded-xl">
-                    <Layers className="w-5 h-5" />
+                  <span className="text-xs font-extrabold uppercase tracking-wider text-gray-500">Store Catalog</span>
+                  <div className="p-2.5 bg-orange-50 text-[#FF7A20] rounded-xl">
+                    <Layers className="w-6 h-6" />
                   </div>
                 </div>
                 <div>
-                  <div className="text-2xl font-black text-gray-950 font-mono">
+                  <div className="text-3xl font-black text-gray-950 font-mono">
                     {products.length}
                   </div>
-                  <p className="text-[11px] text-[#FF7A20] font-bold mt-1">
-                    Active Product Models
+                  <p className="text-xs sm:text-sm text-[#FF7A20] font-bold mt-1.5">
+                    Active Products
                   </p>
                 </div>
               </div>
 
               <div
                 onClick={() => setActiveTab("quotes")}
-                className="bg-white p-5 rounded-2xl border border-gray-200 shadow-2xs hover:border-[#FF7A20] transition cursor-pointer space-y-3"
+                className="bg-white p-6 rounded-2xl border border-gray-200 shadow-2xs hover:border-[#FF7A20] transition cursor-pointer space-y-3"
               >
                 <div className="flex justify-between items-center">
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-gray-400">RFQ Requests</span>
-                  <div className="p-2 bg-amber-50 text-amber-600 rounded-xl">
-                    <DollarSign className="w-5 h-5" />
+                  <span className="text-xs font-extrabold uppercase tracking-wider text-gray-500">RFQ Proposals</span>
+                  <div className="p-2.5 bg-amber-50 text-amber-600 rounded-xl">
+                    <DollarSign className="w-6 h-6" />
                   </div>
                 </div>
                 <div>
-                  <div className="text-2xl font-black text-gray-950 font-mono">
+                  <div className="text-3xl font-black text-gray-950 font-mono">
                     {quotes.length}
                   </div>
-                  <p className="text-[11px] text-amber-600 font-bold mt-1">
-                    Pending Quotes & Proposals
+                  <p className="text-xs sm:text-sm text-amber-600 font-bold mt-1.5">
+                    All RFQs & Proposals
                   </p>
                 </div>
               </div>
             </div>
 
             {/* Quick Action Hub & CSV Upload Trigger */}
-            <div className="bg-gradient-to-r from-gray-950 via-gray-900 to-gray-950 text-white p-6 rounded-2xl space-y-4 shadow-md">
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-gray-800 pb-4">
+            <div className="bg-gradient-to-r from-gray-950 via-gray-900 to-gray-950 text-white p-6 md:p-8 rounded-2xl space-y-5 shadow-md">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-gray-800 pb-5">
                 <div>
-                  <h3 className="text-lg font-black uppercase tracking-wider text-white flex items-center gap-2">
-                    <UploadCloud className="w-5 h-5 text-[#FF7A20]" />
-                    <span>Massive Product CSV / Excel Upload Hub</span>
+                  <h3 className="text-xl font-black uppercase tracking-wider text-white flex items-center gap-2.5">
+                    <UploadCloud className="w-6 h-6 text-[#FF7A20]" />
+                    <span>Massive Product Upload Center</span>
                   </h3>
-                  <p className="text-xs text-gray-400 mt-0.5">
+                  <p className="text-xs sm:text-sm text-gray-300 mt-1">
                     Batch import hundreds of hardware products into store pages automatically using CSV or Excel spreadsheets.
                   </p>
                 </div>
                 <div className="flex space-x-3 shrink-0">
                   <button
                     onClick={handleDownloadCsvTemplate}
-                    className="bg-gray-800 hover:bg-gray-700 text-gray-200 text-xs font-bold px-4 py-2.5 rounded-xl border border-gray-700 transition cursor-pointer flex items-center space-x-1.5"
+                    className="bg-gray-800 hover:bg-gray-700 text-gray-200 text-xs sm:text-sm font-bold px-4 py-3 rounded-xl border border-gray-700 transition cursor-pointer flex items-center space-x-2"
                   >
                     <Download className="w-4 h-4" />
                     <span>Download Sample Template</span>
                   </button>
                   <button
                     onClick={() => setIsCsvModalOpen(true)}
-                    className="bg-[#FF7A20] hover:bg-[#e06512] text-white text-xs font-bold px-5 py-2.5 rounded-xl transition cursor-pointer flex items-center space-x-2 shadow-md"
+                    className="bg-[#FF7A20] hover:bg-[#e06512] text-white text-xs sm:text-sm font-bold px-5 py-3 rounded-xl transition cursor-pointer flex items-center space-x-2 shadow-md"
                   >
                     <UploadCloud className="w-4 h-4" />
-                    <span>Launch CSV Bulk Upload</span>
+                    <span>Begin Product Upload</span>
                   </button>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-                <div className="bg-gray-900/80 border border-gray-800 p-3.5 rounded-xl space-y-1">
-                  <span className="font-bold text-[#FF7A20] block">1. Prepare CSV File</span>
-                  <p className="text-gray-400 text-[11px]">Include SKU, Name, Category, Subcategory, PriceUSD, PriceNGN, IsQuoteOnly, Stock, Image, Description.</p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs sm:text-sm">
+                <div className="bg-gray-900/80 border border-gray-800 p-4 rounded-xl space-y-1.5">
+                  <span className="font-extrabold text-[#FF7A20] block text-xs sm:text-sm">1. Prepare CSV File</span>
+                  <p className="text-gray-300 text-xs leading-relaxed">Include SKU, Name, Category, Subcategory, PriceUSD, PriceNGN, IsQuoteOnly, Stock, Image, Description.</p>
                 </div>
-                <div className="bg-gray-900/80 border border-gray-800 p-3.5 rounded-xl space-y-1">
-                  <span className="font-bold text-[#FF7A20] block">2. Automatic Placement</span>
-                  <p className="text-gray-400 text-[11px]">Products automatically route to their Store, Category, Subcategory, and OEM brand pages.</p>
+                <div className="bg-gray-900/80 border border-gray-800 p-4 rounded-xl space-y-1.5">
+                  <span className="font-extrabold text-[#FF7A20] block text-xs sm:text-sm">2. Automatic Placement</span>
+                  <p className="text-gray-300 text-xs leading-relaxed">Products automatically route to their Store, Category, Subcategory, and OEM brand pages.</p>
                 </div>
-                <div className="bg-gray-900/80 border border-gray-800 p-3.5 rounded-xl space-y-1">
-                  <span className="font-bold text-[#FF7A20] block">3. Instant Storefront Sync</span>
-                  <p className="text-gray-400 text-[11px]">Supports both priced items and "Request Quote" items with product image links.</p>
+                <div className="bg-gray-900/80 border border-gray-800 p-4 rounded-xl space-y-1.5">
+                  <span className="font-extrabold text-[#FF7A20] block text-xs sm:text-sm">3. Instant Storefront Synchronization</span>
+                  <p className="text-gray-300 text-xs leading-relaxed">Supports both priced items and "Request Quote" items with product image.</p>
                 </div>
               </div>
             </div>
 
-            {/* Recent RFQs & Paystack Orders Grid */}
+            {/* Briefing Catalog & Contact Details Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Recent Pending RFQ Proposals */}
+              {/* Briefing Catalog Subscriptions Section */}
               <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-2xs space-y-4">
                 <div className="flex justify-between items-center border-b border-gray-100 pb-3">
-                  <h3 className="font-bold text-sm text-gray-950 flex items-center gap-2">
-                    <DollarSign className="w-4 h-4 text-[#FF7A20]" />
-                    <span>Recent RFQ Proposals</span>
+                  <h3 className="font-extrabold text-base text-gray-950 flex items-center gap-2">
+                    <Mail className="w-5 h-5 text-purple-600" />
+                    <span>Briefing Catalog</span>
                   </h3>
                   <button
-                    onClick={() => setActiveTab("quotes")}
-                    className="text-xs font-bold text-[#FF7A20] hover:underline cursor-pointer"
+                    onClick={() => setActiveTab("subscribers")}
+                    className="text-xs sm:text-sm font-bold text-[#FF7A20] hover:underline cursor-pointer flex items-center gap-1"
                   >
-                    View All ({quotes.length})
+                    <span>View All ({subscribers.length})</span>
+                    <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>
 
                 <div className="divide-y divide-gray-100">
-                  {quotes.slice(0, 5).map((q, idx) => (
-                    <div key={q.id || idx} className="py-3 flex items-center justify-between text-xs">
-                      <div className="min-w-0">
-                        <p className="font-bold text-gray-900 truncate">{q.companyName || q.name}</p>
-                        <p className="text-[11px] text-gray-500 font-mono truncate">{q.email}</p>
+                  {subscribers.slice(0, 5).map((sub, idx) => (
+                    <div key={sub.id || idx} className="py-3.5 flex items-center justify-between text-sm">
+                      <div className="min-w-0 flex-1 pr-3">
+                        <p className="font-bold text-gray-900 font-mono text-sm sm:text-base truncate">{sub.email}</p>
+                        <p className="text-xs text-gray-500 font-medium">Subscribed: {sub.date || "Active Subscriber"}</p>
                       </div>
-                      <span className="text-[10px] font-mono bg-amber-50 text-amber-800 border border-amber-200 px-2 py-1 rounded font-semibold shrink-0">
-                        {q.productName ? q.productName.slice(0, 20) + "..." : "Custom RFQ"}
+                      <span className="text-xs font-mono bg-purple-50 text-purple-800 border border-purple-200 px-2.5 py-1 rounded-lg font-bold shrink-0">
+                        {sub.source || "Briefing List"}
                       </span>
                     </div>
                   ))}
-                  {quotes.length === 0 && (
-                    <p className="text-xs text-gray-400 py-4 text-center">No recent RFQ proposals.</p>
+                  {subscribers.length === 0 && (
+                    <p className="text-sm text-gray-400 py-6 text-center font-medium">No subscribers recorded yet.</p>
                   )}
                 </div>
               </div>
 
-              {/* Recent Paystack Completed Orders */}
+              {/* Contact Details & Client Inquiries Section */}
               <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-2xs space-y-4">
                 <div className="flex justify-between items-center border-b border-gray-100 pb-3">
-                  <h3 className="font-bold text-sm text-gray-950 flex items-center gap-2">
-                    <FileCheck className="w-4 h-4 text-emerald-600" />
-                    <span>Recent Paystack Orders</span>
+                  <h3 className="font-extrabold text-base text-gray-950 flex items-center gap-2">
+                    <Send className="w-5 h-5 text-rose-600" />
+                    <span>Contact Details</span>
                   </h3>
                   <button
-                    onClick={() => setActiveTab("orders")}
-                    className="text-xs font-bold text-[#FF7A20] hover:underline cursor-pointer"
+                    onClick={() => setActiveTab("messages")}
+                    className="text-xs sm:text-sm font-bold text-[#FF7A20] hover:underline cursor-pointer flex items-center gap-1"
                   >
-                    View All ({orders.length})
+                    <span>View All ({messages.length})</span>
+                    <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>
 
                 <div className="divide-y divide-gray-100">
-                  {orders.slice(0, 5).map((o, idx) => (
-                    <div key={o.id || idx} className="py-3 flex items-center justify-between text-xs">
-                      <div className="min-w-0">
-                        <p className="font-mono font-bold text-gray-900 truncate">{o.orderNumber || o.id}</p>
-                        <p className="text-[11px] text-gray-500 truncate">{o.customerEmail || o.billingAddress?.email || "Paystack Customer"}</p>
+                  {messages.slice(0, 5).map((msg, idx) => (
+                    <div key={msg.id || idx} className="py-3.5 flex items-center justify-between text-sm">
+                      <div className="min-w-0 flex-1 pr-3 space-y-0.5">
+                        <p className="font-bold text-gray-900 text-sm sm:text-base truncate">{msg.name || msg.fullName || "Prospective Client"}</p>
+                        <p className="text-xs text-gray-600 font-mono truncate">{msg.email}</p>
+                        <p className="text-xs text-gray-500 line-clamp-1 italic">{msg.subject || msg.message || "Contact form submission"}</p>
                       </div>
                       <div className="text-right shrink-0">
-                        <span className="font-bold text-emerald-600 font-mono block">
-                          {currency === "USD" ? `$${(o.totalUSD || 0).toLocaleString()}` : `₦${(o.totalNGN || 0).toLocaleString()}`}
+                        <span className="text-xs font-mono bg-rose-50 text-rose-700 border border-rose-200 px-2.5 py-1 rounded-lg font-bold block">
+                          {msg.date || "Recent"}
                         </span>
-                        <span className="text-[10px] text-gray-400">{o.date || "Recent"}</span>
                       </div>
                     </div>
                   ))}
+                  {messages.length === 0 && (
+                    <p className="text-sm text-gray-400 py-6 text-center font-medium">No contact submissions yet.</p>
+                  )}
                 </div>
               </div>
             </div>
@@ -1257,10 +1291,10 @@ export default function AdminDashboard({
               <div className="space-y-1">
                 <h3 className="font-black text-gray-950 text-xl lg:text-2xl flex items-center gap-2">
                   <Layers3 className="w-5 h-5 text-[#FF7A20]" />
-                  <span>Interactive Inventory Division Manager</span>
+                  <span>Interactive Inventory Category Manager</span>
                 </h3>
                 <p className="text-xs text-gray-500 leading-normal">
-                  Select a specific header page division or choose the general "Store Page" to upload, update or delete products. Any action syncs globally across all user views instantly.
+                  Select a specific page category or choose the general "Store Page" to upload, update or delete products. Any action syncs globally across all user views instantly.
                 </p>
               </div>
 
@@ -1280,14 +1314,14 @@ export default function AdminDashboard({
             </div>
 
             {/* Visual Indicator of Selected Division */}
-            <div className="bg-orange-50/50 border border-orange-100/50 rounded-lg p-3 flex justify-between items-center">
-              <div className="text-xs">
+            <div className="bg-orange-50/50 border border-orange-100/50 rounded-lg p-3.5 flex justify-between items-center text-sm sm:text-base">
+              <div>
                 Currently Managing: <span className="font-extrabold text-[#FF7A20] uppercase">{selectedCategorySection}</span>
-                <span className="text-gray-400 font-semibold ml-2">({filteredProducts.length} models present)</span>
+                <span className="text-gray-500 font-semibold ml-2 text-xs sm:text-sm">({filteredProducts.length} models present)</span>
               </div>
               <button
                 onClick={handleOpenCreateForm}
-                className="bg-gray-950 text-white font-bold text-xs px-4 py-2 rounded-lg flex items-center space-x-1 hover:bg-[#FF7A20] transition cursor-pointer"
+                className="bg-gray-950 text-white font-bold text-xs sm:text-sm px-4 py-2.5 rounded-lg flex items-center space-x-1.5 hover:bg-[#FF7A20] transition cursor-pointer"
                 id="btn-admin-add-product"
               >
                 <Plus className="w-4 h-4" />
@@ -1296,11 +1330,9 @@ export default function AdminDashboard({
             </div>
           </div>
 
-
-
           {/* Search Bar for Supply Inventory */}
           <div className="flex justify-end bg-white border border-gray-100 rounded-xl p-4 shadow-xs">
-            <div className="relative w-full sm:max-w-xs">
+            <div className="relative w-full sm:max-w-md">
               <input
                 type="text"
                 placeholder="Search inventory by name, SKU, brand, category..."
@@ -1309,9 +1341,9 @@ export default function AdminDashboard({
                   setProductsSearch(e.target.value);
                   setProductsPage(1); // Reset page to 1 on search
                 }}
-                className="w-full bg-gray-50 border border-gray-200 rounded-lg pl-3 pr-8 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-[#FF7A20] focus:border-transparent"
+                className="w-full bg-gray-50 border border-gray-200 rounded-lg pl-4 pr-10 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF7A20] focus:border-transparent"
               />
-              <div className="absolute right-3 top-2.5 text-gray-400">
+              <div className="absolute right-3.5 top-3 text-gray-400">
                 <Search className="w-4 h-4" />
               </div>
             </div>
@@ -1320,14 +1352,14 @@ export default function AdminDashboard({
           <div className="overflow-x-auto bg-white border border-gray-100 rounded-xl shadow-xs">
             {searchedProducts.length === 0 ? (
               <div className="py-16 text-center text-gray-400 space-y-2">
-                <p className="font-bold text-sm text-gray-900">No products found matching filters/search</p>
-                <p className="text-xs">Try adjusting your search criteria or division filter above.</p>
+                <p className="font-bold text-base text-gray-900">No products found</p>
+                <p className="text-sm">Try adjusting your search criteria or category filter above.</p>
               </div>
             ) : (
-              <table className="w-full text-left text-xs text-gray-600">
-                <thead className="bg-gray-50 text-[10px] text-gray-400 font-bold uppercase border-b border-gray-100">
+              <table className="w-full text-left text-xs sm:text-sm text-gray-700">
+                <thead className="bg-gray-100 text-xs text-gray-700 font-extrabold uppercase border-b border-gray-200">
                   <tr>
-                    <th className="p-4">Model Preview</th>
+                    <th className="p-4">Product Image</th>
                     <th className="p-4">SKU Code</th>
                     <th className="p-4">Product Name</th>
                     <th className="p-4">Category</th>
@@ -1339,9 +1371,9 @@ export default function AdminDashboard({
                 </thead>
                 <tbody>
                   {paginatedProducts.map((p) => (
-                    <tr key={p.id} className="border-b border-gray-50 hover:bg-gray-50/50">
+                    <tr key={p.id} className="border-b border-gray-100 hover:bg-gray-50/80">
                       <td className="p-4">
-                        <div className="w-10 h-10 bg-gray-50 border border-gray-100 rounded overflow-hidden flex items-center justify-center">
+                        <div className="w-12 h-12 bg-gray-50 border border-gray-200 rounded-lg overflow-hidden flex items-center justify-center">
                           <img
                             src={p.images && p.images[0]}
                             alt={p.name}
@@ -1353,28 +1385,28 @@ export default function AdminDashboard({
                           />
                         </div>
                       </td>
-                      <td className="p-4 font-mono font-bold text-gray-950">{p.sku}</td>
-                      <td className="p-4 font-bold text-gray-900 max-w-xs truncate">{p.name}</td>
+                      <td className="p-4 font-mono font-extrabold text-gray-950 text-xs sm:text-sm">{p.sku}</td>
+                      <td className="p-4 font-bold text-gray-900 text-xs sm:text-sm max-w-xs truncate">{p.name}</td>
                       <td className="p-4">
-                        <span className="bg-slate-100 text-slate-700 px-2 py-0.5 rounded font-mono text-[10px]">
+                        <span className="bg-slate-100 text-slate-800 px-2.5 py-1 rounded-md font-mono text-xs font-bold">
                           {p.subcategory || p.category || "Uncategorized"}
                         </span>
                       </td>
-                      <td className="p-4 text-right font-mono font-bold">${p.priceUSD.toLocaleString()}</td>
-                      <td className="p-4 text-right font-mono font-bold">₦{p.priceNGN.toLocaleString()}</td>
-                      <td className="p-4 text-center font-bold">
+                      <td className="p-4 text-right font-mono font-extrabold text-xs sm:text-sm text-gray-950">${p.priceUSD.toLocaleString()}</td>
+                      <td className="p-4 text-right font-mono font-extrabold text-xs sm:text-sm text-gray-950">₦{p.priceNGN.toLocaleString()}</td>
+                      <td className="p-4 text-center font-extrabold text-xs sm:text-sm">
                         <span className={p.stock < 10 ? "text-rose-600" : "text-emerald-600"}>{p.stock}</span>
                       </td>
-                      <td className="p-4 text-right space-x-3">
+                      <td className="p-4 text-right space-x-3 text-xs sm:text-sm">
                         <button
                           onClick={() => handleOpenEditForm(p)}
-                          className="text-gray-500 hover:text-[#FF7A20] font-bold cursor-pointer"
+                          className="text-gray-700 hover:text-[#FF7A20] font-extrabold cursor-pointer"
                         >
                           Edit
                         </button>
                         <button
                           onClick={() => handleDeleteProduct(p.id)}
-                          className="text-rose-500 hover:text-rose-700 font-bold cursor-pointer"
+                          className="text-rose-600 hover:text-rose-800 font-extrabold cursor-pointer"
                         >
                           Delete
                         </button>
@@ -1388,11 +1420,11 @@ export default function AdminDashboard({
 
           {/* Pagination Bar */}
           {searchedProducts.length > 0 && (
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 bg-white border border-gray-100 p-4 rounded-xl shadow-xs text-xs text-gray-500">
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 bg-white border border-gray-100 p-4 rounded-xl shadow-xs text-xs sm:text-sm text-gray-600 font-medium">
               <div>
                 Showing <span className="font-bold text-gray-900">{((safeProductsPage - 1) * itemsPerPage60) + 1}</span> to{" "}
                 <span className="font-bold text-gray-900">{Math.min(safeProductsPage * itemsPerPage60, searchedProducts.length)}</span> of{" "}
-                <span className="font-bold text-gray-900">{searchedProducts.length}</span> models
+                <span className="font-bold text-gray-900">{searchedProducts.length}</span> Products
               </div>
               <div className="flex items-center gap-1">
                 <button
@@ -1422,31 +1454,50 @@ export default function AdminDashboard({
       ) : activeTab === "orders" ? (
         /* TAB 3: PAYSTACK COMPLETED ORDERS */
         <div className="space-y-6" id="tab-orders-content">
-          <div className="bg-white border border-gray-100 rounded-xl p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xs">
+          <div className="bg-white border border-gray-100 rounded-xl p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shadow-xs">
             <div>
               <h3 className="font-black text-gray-950 text-xl flex items-center gap-2">
                 <FileCheck className="w-5 h-5 text-[#FF7A20]" />
-                <span>Paystack Verified Hardware Orders ({orders.length})</span>
+                <span>All Product Orders ({searchedOrders.length})</span>
               </h3>
               <p className="text-xs text-gray-500 mt-1">
-                Completed hardware orders placed by customers displaying exact product breakdown, date, time, and payment reference.
+                All orders placed by customers displaying exact product breakdown, date, time, and payment reference.
               </p>
+            </div>
+
+            {/* Search Input for Orders */}
+            <div className="relative w-full sm:max-w-xs">
+              <input
+                type="text"
+                placeholder="Search orders by Ref, Email, Name, Product..."
+                value={ordersSearch}
+                onChange={(e) => {
+                  setOrdersSearch(e.target.value);
+                  setOrdersPage(1);
+                }}
+                className="w-full bg-gray-50 border border-gray-200 rounded-lg pl-3 pr-8 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-[#FF7A20] focus:border-transparent"
+              />
+              <div className="absolute right-3 top-2.5 text-gray-400">
+                <Search className="w-4 h-4" />
+              </div>
             </div>
           </div>
 
           <div className="space-y-4">
-            {orders.length === 0 ? (
+            {paginatedOrders.length === 0 ? (
               <div className="bg-white p-12 rounded-2xl text-center border border-gray-100 shadow-2xs space-y-2">
                 <Package className="w-8 h-8 text-gray-300 mx-auto" />
-                <p className="text-sm font-bold text-gray-900">No Paystack Orders Recorded Yet</p>
-                <p className="text-xs text-gray-400">When customers complete purchases via Paystack, orders will appear here automatically.</p>
+                <p className="text-sm font-bold text-gray-900">No Orders Found</p>
+                <p className="text-xs text-gray-400">No orders match your current query.</p>
               </div>
             ) : (
-              orders.map((ord) => (
-                <div key={ord.id || ord.orderNumber} className="bg-white rounded-2xl border border-gray-200 p-6 shadow-2xs space-y-4">
+              paginatedOrders.map((ord) => (
+                <div key={ord.id || ord.orderNumber} className="bg-white rounded-2xl border border-gray-200 p-6 shadow-2xs space-y-5">
                   <div className="flex flex-wrap justify-between items-center pb-3 border-b border-gray-100 gap-2">
                     <div>
-                      <span className="font-mono text-xs font-bold text-gray-900 bg-gray-100 px-2.5 py-1 rounded-md">Order Ref: {ord.orderNumber || ord.id}</span>
+                      <span className="font-mono text-xs font-bold text-gray-900 bg-gray-100 px-2.5 py-1 rounded-md">
+                        Order Ref: {ord.orderNumber || ord.invoiceNumber || ord.id}
+                      </span>
                       <span className="text-xs text-gray-400 ml-3">{ord.date || "Recent"}</span>
                     </div>
 
@@ -1454,25 +1505,27 @@ export default function AdminDashboard({
                       {(ord.status === "Paid" || ord.status === "Completed") ? (
                         <span className="bg-emerald-100 text-emerald-800 font-bold text-xs px-3 py-1 rounded-full flex items-center gap-1">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                          <span>Completed (Paystack Received)</span>
+                          <span>Order Completed</span>
                         </span>
                       ) : (
                         <div className="flex items-center gap-2">
                           <span className="bg-amber-100 text-amber-800 font-bold text-xs px-3 py-1 rounded-full flex items-center gap-1">
                             <Clock className="w-3.5 h-3.5 text-amber-600" />
-                            <span>Pending Payment</span>
+                            <span>Order Pending</span>
                           </span>
                           <button
+                            type="button"
                             onClick={() => handleUpdateOrderStatusAdmin(ord.id || ord.orderNumber, "Completed")}
                             className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-2.5 py-1 rounded-lg transition cursor-pointer"
                             title="Mark Order as Completed"
                           >
-                            Mark Completed
+                            Verify Order
                           </button>
                         </div>
                       )}
 
                       <button
+                        type="button"
                         onClick={() => handleDeleteOrderAdmin(ord.id || ord.orderNumber)}
                         className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-bold text-xs px-2.5 py-1 rounded-lg transition cursor-pointer flex items-center gap-1"
                         title="Delete Order Record"
@@ -1483,51 +1536,104 @@ export default function AdminDashboard({
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm">
                     <div>
-                      <span className="text-gray-400 font-bold uppercase text-[10px] block">Customer Details</span>
-                      <p className="font-bold text-gray-900 mt-0.5">{ord.userEmail || "Guest Customer"}</p>
+                      <span className="text-gray-500 font-extrabold uppercase text-xs block">Customer Details</span>
+                      <p className="font-bold text-gray-900 mt-0.5 text-sm">{ord.customerName || ord.userEmail || "Guest Customer"}</p>
+                      <p className="text-gray-600 text-xs sm:text-sm mt-0.5">{ord.customerEmail || ord.userEmail || "N/A"}</p>
                       {ord.shippingAddress && (
-                        <p className="text-gray-500 text-[11px] mt-0.5">
-                          Phone: {ord.shippingAddress.phone || "N/A"}
+                        <p className="text-gray-600 text-xs sm:text-sm mt-0.5">
+                          Phone: {ord.shippingAddress.phone || ord.customerPhone || "N/A"}
                         </p>
                       )}
                     </div>
 
                     <div>
-                      <span className="text-gray-400 font-bold uppercase text-[10px] block">Shipping Destination</span>
+                      <span className="text-gray-500 font-extrabold uppercase text-xs block">Shipping Destination</span>
                       {ord.shippingAddress ? (
-                        <p className="text-gray-700 mt-0.5">
-                          {ord.shippingAddress.addressLine1}, {ord.shippingAddress.city}, {ord.shippingAddress.state}, {ord.shippingAddress.country}
+                        <p className="text-gray-800 text-xs sm:text-sm mt-0.5 font-medium">
+                          {ord.shippingAddress.addressLine1 || ord.shippingAddress.address}, {ord.shippingAddress.city}, {ord.shippingAddress.state}, {ord.shippingAddress.country}
                         </p>
                       ) : (
-                        <p className="text-gray-400 mt-0.5">Direct Delivery</p>
+                        <p className="text-gray-500 text-xs sm:text-sm mt-0.5">Direct Site Delivery</p>
                       )}
                     </div>
 
                     <div>
-                      <span className="text-gray-400 font-bold uppercase text-[10px] block">Total Amount</span>
-                      <p className="text-lg font-black text-[#FF7A20] font-mono mt-0.5">
-                        {currency === "USD" ? `$${(ord.totalUSD || 0).toLocaleString()}` : `₦${(ord.totalNGN || 0).toLocaleString()}`}
+                      <span className="text-gray-500 font-extrabold uppercase text-xs block">Total Amount</span>
+                      <p className="text-xl font-black text-[#FF7A20] font-mono mt-0.5">
+                        {currency === "USD"
+                          ? `$${(ord.totalUSD || ord.total || 0).toLocaleString()}`
+                          : `₦${(ord.totalNGN || ord.total || 0).toLocaleString()}`}
                       </p>
                     </div>
                   </div>
 
-                  {/* Items List */}
+                  {/* Purchased Equipment Showcase with Large Product Images */}
                   {ord.items && ord.items.length > 0 && (
-                    <div className="bg-gray-50/80 p-4 rounded-xl border border-gray-100 text-xs space-y-2">
-                      <span className="font-bold text-gray-500 uppercase tracking-wider text-[10px] block">Purchased Products ({ord.items.length})</span>
-                      <div className="divide-y divide-gray-200/60">
-                        {ord.items.map((item, idx) => (
-                          <div key={idx} className="py-2 flex justify-between items-center text-xs">
-                            <div className="font-semibold text-gray-900">
-                              {item.productName} <span className="text-gray-400 font-normal font-mono">(Qty: {item.quantity})</span>
+                    <div className="bg-gray-50/80 p-5 rounded-xl border border-gray-200 text-xs sm:text-sm space-y-4">
+                      <div className="flex justify-between items-center border-b border-gray-200 pb-2.5">
+                        <span className="font-extrabold text-gray-700 uppercase tracking-wider text-xs">
+                          Purchased Product ({ord.items.length} Item{ord.items.length > 1 ? "s" : ""})
+                        </span>
+                        <span className="font-mono text-xs text-gray-500 font-semibold">Verified Product Unit(s)</span>
+                      </div>
+
+                      <div className="space-y-4 divide-y divide-gray-200">
+                        {ord.items.map((item: any, idx: number) => {
+                          const imgUrl = getItemImage(item);
+                          const qty = item.quantity || 1;
+                          const name = item.productName || item.name || item.product?.name || "Hardware Equipment";
+                          const sku = item.sku || item.product?.sku || "SP-HARDWARE";
+                          const priceUSD = item.priceUSD || item.price || item.product?.priceUSD || 0;
+                          const priceNGN = item.priceNGN || item.price || item.product?.priceNGN || 0;
+
+                          return (
+                            <div key={idx} className="pt-4 first:pt-0 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                              {/* Large Product Image Showcase Box */}
+                              <div className="w-20 h-20 sm:w-24 sm:h-24 shrink-0 bg-white border border-gray-200 rounded-xl p-2 flex items-center justify-center overflow-hidden shadow-2xs">
+                                <img
+                                  src={imgUrl}
+                                  alt={name}
+                                  referrerPolicy="no-referrer"
+                                  crossOrigin="anonymous"
+                                  className="w-full h-full object-contain"
+                                  onError={(e) => {
+                                    e.currentTarget.src = "https://i.ibb.co/5WPKmPXS/Avigilon-Generic-500x500-1.png";
+                                  }}
+                                />
+                              </div>
+
+                              {/* Product Info */}
+                              <div className="flex-1 min-w-0 space-y-1">
+                                <p className="font-bold text-gray-950 text-sm sm:text-base leading-snug">{name}</p>
+                                <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs sm:text-sm font-mono text-gray-600">
+                                  <span>SKU: <strong className="text-gray-900">{sku}</strong></span>
+                                  <span>•</span>
+                                  <span>Qty: <strong className="text-gray-900">{qty}</strong></span>
+                                </div>
+                              </div>
+
+                              {/* Price Line Breakdown */}
+                              <div className="text-left sm:text-right shrink-0 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-gray-200 flex sm:flex-col justify-between items-center sm:items-end font-mono">
+                                <div>
+                                  <span className="text-xs text-gray-500 block uppercase font-bold tracking-wider">Unit Price</span>
+                                  <span className="font-semibold text-gray-800 text-xs sm:text-sm">
+                                    {currency === "USD" ? `$${priceUSD.toLocaleString()}` : `₦${priceNGN.toLocaleString()}`}
+                                  </span>
+                                </div>
+                                <div className="sm:mt-1.5">
+                                  <span className="text-xs text-gray-500 block uppercase font-bold tracking-wider">Line Total</span>
+                                  <span className="font-black text-[#FF7A20] text-sm sm:text-base">
+                                    {currency === "USD"
+                                      ? `$${(priceUSD * qty).toLocaleString()}`
+                                      : `₦${(priceNGN * qty).toLocaleString()}`}
+                                  </span>
+                                </div>
+                              </div>
                             </div>
-                            <div className="font-mono font-bold text-gray-800">
-                              {currency === "USD" ? `$${(item.priceUSD * item.quantity).toLocaleString()}` : `₦${(item.priceNGN * item.quantity).toLocaleString()}`}
-                            </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     </div>
                   )}
@@ -1535,17 +1641,50 @@ export default function AdminDashboard({
               ))
             )}
           </div>
+
+          {/* Pagination Controls for Paystack Orders (10 orders per page) */}
+          {searchedOrders.length > 0 && (
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 bg-white border border-gray-100 p-4 rounded-xl shadow-xs text-xs text-gray-500">
+              <div>
+                Showing <span className="font-bold text-gray-900">{((safeOrdersPage - 1) * ordersPerPage) + 1}</span> to{" "}
+                <span className="font-bold text-gray-900">{Math.min(safeOrdersPage * ordersPerPage, searchedOrders.length)}</span> of{" "}
+                <span className="font-bold text-gray-900">{searchedOrders.length}</span> orders
+              </div>
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={() => setOrdersPage(p => Math.max(1, p - 1))}
+                  disabled={safeOrdersPage === 1}
+                  className="px-3 py-1.5 border border-gray-200 rounded-lg hover:bg-gray-50 transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                >
+                  Previous
+                </button>
+                <span className="px-3">
+                  Page <span className="font-bold text-gray-900">{safeOrdersPage}</span> of{" "}
+                  <span className="font-bold text-gray-900">{totalOrdersPages}</span>
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setOrdersPage(p => Math.min(totalOrdersPages, p + 1))}
+                  disabled={safeOrdersPage === totalOrdersPages}
+                  className="px-3 py-1.5 border border-gray-200 rounded-lg hover:bg-gray-50 transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       ) : activeTab === "quotes" ? (
         /* TAB 2: QUOTE PROPOSALS */
         <div className="space-y-4" id="tab-quotes-content">
-          <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-xs flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div className="bg-white border border-gray-100 rounded-xl p-4 sm:p-5 shadow-xs flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
-              <h3 className="font-bold text-gray-900 text-sm">RFQ Proposals ({searchedQuotes.length})</h3>
-              <p className="text-[11px] text-gray-500">Search and manage client requests for quotes.</p>
+              <h3 className="font-extrabold text-gray-950 text-base sm:text-lg">RFQ Proposals ({searchedQuotes.length})</h3>
+              <p className="text-xs sm:text-sm text-gray-600">Search and manage client RFQs.</p>
             </div>
             {/* Search Input */}
-            <div className="relative w-full sm:max-w-xs">
+            <div className="relative w-full sm:max-w-md">
               <input
                 type="text"
                 placeholder="Search quotes by contact, company, email, rfq ref..."
@@ -1554,53 +1693,53 @@ export default function AdminDashboard({
                   setQuotesSearch(e.target.value);
                   setQuotesPage(1); // Reset page to 1 on search
                 }}
-                className="w-full bg-gray-50 border border-gray-200 rounded-lg pl-3 pr-8 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-[#FF7A20] focus:border-transparent"
+                className="w-full bg-gray-50 border border-gray-200 rounded-lg pl-4 pr-10 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF7A20] focus:border-transparent"
               />
-              <div className="absolute right-3 top-2.5 text-gray-400">
+              <div className="absolute right-3.5 top-3 text-gray-400">
                 <Search className="w-4 h-4" />
               </div>
             </div>
           </div>
 
           {searchedQuotes.length === 0 ? (
-            <div className="py-12 text-center text-gray-400">No active RFQs found matching search.</div>
+            <div className="py-12 text-center text-gray-500 font-medium text-sm">No active RFQs found.</div>
           ) : (
             paginatedQuotes.map((q: any) => (
-              <div key={q.id} className="bg-white border border-gray-100 p-6 rounded-2xl shadow-xs space-y-4">
-                <div className="flex justify-between items-center pb-2 border-b border-gray-50">
+              <div key={q.id} className="bg-white border border-gray-200 p-6 rounded-2xl shadow-xs space-y-4">
+                <div className="flex justify-between items-center pb-3 border-b border-gray-100">
                   <div>
-                    <span className="font-mono text-[10px] bg-orange-50 text-[#FF7A20] font-bold px-2 py-0.5 rounded-sm">RFQ Ref: {q.rfqNumber || q.quoteNumber}</span>
-                    <h3 className="font-bold text-sm text-gray-900 mt-1">{q.companyName || q.company || "Enterprise Corp"}</h3>
+                    <span className="font-mono text-xs bg-orange-50 text-[#FF7A20] font-extrabold px-3 py-1 rounded-md">RFQ Ref: {q.rfqNumber || q.quoteNumber}</span>
+                    <h3 className="font-bold text-base sm:text-lg text-gray-950 mt-1.5">{q.companyName || q.company || "Enterprise Corp"}</h3>
                   </div>
-                  <span className={`text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full ${q.status === "approved" ? "bg-emerald-50 text-emerald-600" : "bg-orange-50 text-[#FF7A20]"}`}>
+                  <span className={`text-xs font-bold uppercase px-3 py-1 rounded-full ${q.status === "approved" ? "bg-emerald-100 text-emerald-800" : "bg-orange-100 text-[#FF7A20]"}`}>
                     {q.status === "approved" ? "SLA Design Released" : "Awaiting Engineering review"}
                   </span>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs sm:text-sm">
                   <div>
-                    <span className="text-gray-400 font-bold uppercase text-[9px]">Contact Rep</span>
-                    <p className="font-bold text-gray-900">{q.contactName || q.name || "Representative"}</p>
-                    <p className="text-gray-500 text-[10px]">{q.email}</p>
+                    <span className="text-gray-500 font-extrabold uppercase text-xs">Contact Representative</span>
+                    <p className="font-bold text-gray-950 text-sm">{q.contactName || q.name || "Representative"}</p>
+                    <p className="text-gray-600 text-xs sm:text-sm">{q.email}</p>
                   </div>
                   <div>
-                    <span className="text-gray-400 font-bold uppercase text-[9px]">Project Site Location</span>
-                    <p className="font-bold text-gray-900">{q.location || q.country || "Nigeria"}</p>
+                    <span className="text-gray-500 font-extrabold uppercase text-xs">Project Location</span>
+                    <p className="font-bold text-gray-950 text-sm">{q.location || q.country || "Nigeria"}</p>
                   </div>
                   <div>
-                    <span className="text-gray-400 font-bold uppercase text-[9px]">Product Name</span>
-                    <p className="font-bold text-gray-900">{q.productName || (q.domain ? `Design [${q.domain}]` : "N/A")}</p>
+                    <span className="text-gray-500 font-extrabold uppercase text-xs">Product Name</span>
+                    <p className="font-bold text-gray-950 text-sm">{q.productName || (q.domain ? `Design [${q.domain}]` : "N/A")}</p>
                   </div>
                   <div>
-                    <span className="text-gray-400 font-bold uppercase text-[9px]">SKU</span>
-                    <p className="font-bold text-[#FF7A20]">{q.sku || "N/A"}</p>
+                    <span className="text-gray-500 font-extrabold uppercase text-xs">SKU</span>
+                    <p className="font-extrabold text-[#FF7A20] text-sm">{q.sku || "N/A"}</p>
                   </div>
                 </div>
                 {/* Render selected products if they exist (from cart quote request) */}
                 {q.items && q.items.length > 0 && (
-                  <div className="text-[11px] bg-gray-50/50 p-3 rounded-lg border border-gray-100 space-y-1.5">
-                    <p className="font-bold text-gray-400 uppercase text-[9px]">Requested Inventory Items:</p>
+                  <div className="text-xs sm:text-sm bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-2">
+                    <p className="font-extrabold text-gray-600 uppercase text-xs">Requested Inventory Items:</p>
                     {q.items.map((it: any, idx: number) => (
-                      <div key={idx} className="flex justify-between text-gray-700">
+                      <div key={idx} className="flex justify-between text-gray-800 font-medium">
                         <span>• {it.productName}</span>
                         <span className="font-bold">Qty {it.quantity}</span>
                       </div>
@@ -1608,40 +1747,40 @@ export default function AdminDashboard({
                   </div>
                 )}
                 {q.files && q.files.length > 0 && (
-                  <div className="text-[11px] bg-gray-50/50 p-3 rounded-lg border border-gray-100 space-y-1.5">
-                    <p className="font-bold text-gray-400 uppercase text-[9px]">Annex & Engineering Drawings ({q.files.length}):</p>
-                    <div className="flex flex-wrap gap-2">
+                  <div className="text-xs sm:text-sm bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-2">
+                    <p className="font-extrabold text-gray-600 uppercase text-xs">Engineering Drawings ({q.files.length}):</p>
+                    <div className="flex flex-wrap gap-2.5">
                       {q.files.map((file: any, idx: number) => (
                         <a
                           key={idx}
                           href={file.data}
                           download={file.name}
-                          className="inline-flex items-center space-x-1.5 bg-white border border-gray-200 hover:border-orange-200 px-2.5 py-1.5 rounded-lg text-[10px] font-bold text-gray-700 transition"
+                          className="inline-flex items-center space-x-2 bg-white border border-gray-300 hover:border-orange-400 px-3 py-2 rounded-lg text-xs font-bold text-gray-800 transition"
                         >
-                          <FileText className="w-3.5 h-3.5 text-[#FF7A20] shrink-0" />
-                          <span className="underline max-w-[150px] truncate">{file.name}</span>
-                          <span className="text-gray-400 text-[8px]">({(file.size / (1024 * 1024)).toFixed(2)} MB)</span>
+                          <FileText className="w-4 h-4 text-[#FF7A20] shrink-0" />
+                          <span className="underline max-w-[180px] truncate">{file.name}</span>
+                          <span className="text-gray-500 text-xs">({(file.size / (1024 * 1024)).toFixed(2)} MB)</span>
                         </a>
                       ))}
                     </div>
                   </div>
                 )}
-                <p className="text-xs text-gray-600 font-sans leading-relaxed bg-gray-50 p-3 rounded-lg border border-gray-200/50">{q.description || q.message}</p>
-                <div className="flex justify-end gap-2 pt-2 border-t border-gray-100">
+                <p className="text-xs sm:text-sm text-gray-700 font-sans leading-relaxed bg-gray-50 p-4 rounded-xl border border-gray-200">{q.description || q.message}</p>
+                <div className="flex justify-end gap-2.5 pt-3 border-t border-gray-100">
                   {q.status !== "approved" && (
                     <button
                       onClick={() => handleApproveQuote(q.id)}
-                      className="bg-gray-950 text-white font-bold text-xs px-4 py-2 rounded-lg hover:bg-[#FF7A20] transition cursor-pointer"
+                      className="bg-gray-950 text-white font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl hover:bg-[#FF7A20] transition cursor-pointer"
                     >
-                      Release Technical Proposal RFQ
+                      Release Proposal RFQ
                     </button>
                   )}
                   <button
                     onClick={() => handleDeleteQuote(q.id)}
-                    className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-bold text-xs px-3 py-2 rounded-lg transition cursor-pointer flex items-center gap-1.5"
+                    className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-bold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl transition cursor-pointer flex items-center gap-1.5"
                     title="Delete RFQ Proposal"
                   >
-                    <Trash className="w-3.5 h-3.5" />
+                    <Trash className="w-4 h-4" />
                     <span>Delete</span>
                   </button>
                 </div>
@@ -1655,7 +1794,7 @@ export default function AdminDashboard({
               <div>
                 Showing <span className="font-bold text-gray-900">{((safeQuotesPage - 1) * itemsPerPage60) + 1}</span> to{" "}
                 <span className="font-bold text-gray-900">{Math.min(safeQuotesPage * itemsPerPage60, searchedQuotes.length)}</span> of{" "}
-                <span className="font-bold text-gray-900">{searchedQuotes.length}</span> proposals
+                <span className="font-bold text-gray-900">{searchedQuotes.length}</span> RFQs
               </div>
               <div className="flex items-center gap-1">
                 <button
@@ -1682,7 +1821,7 @@ export default function AdminDashboard({
             </div>
           )}
         </div>
-      ) : activeTab === "orders" ? (
+      ) : activeTab === "subscribers" ? (
         /* TAB 3: BRIEFING CATALOG */
         <div className="space-y-6" id="tab-subscribers-content">
           <div className="bg-white border border-gray-100 rounded-xl p-4 space-y-4 shadow-xs">
@@ -1776,9 +1915,9 @@ export default function AdminDashboard({
                 ) : (
                   <>
                     <div className="overflow-x-auto bg-white border border-gray-100 rounded-2xl shadow-xs">
-                      <table className="w-full text-left text-xs border-collapse">
+                      <table className="w-full text-left text-xs sm:text-sm border-collapse">
                         <thead>
-                          <tr className="bg-gray-50 text-gray-400 uppercase font-bold tracking-wider text-[10px] border-b border-gray-100">
+                          <tr className="bg-gray-100 text-gray-700 uppercase font-extrabold tracking-wider text-xs border-b border-gray-200">
                             <th className="p-4 w-12 text-center">
                               <input
                                 type="checkbox"
@@ -1789,14 +1928,14 @@ export default function AdminDashboard({
                             </th>
                             <th className="p-4">Email Address</th>
                             <th className="p-4 hidden md:table-cell">Joined Date</th>
-                            <th className="p-4 w-28 text-center">Actions</th>
+                            <th className="p-4 w-32 text-center">Actions</th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100">
                           {pageItems.map((sub) => {
                             const isEditing = editingSubscriberId === sub.id;
                             return (
-                              <tr key={sub.id} className="hover:bg-gray-50/50 transition">
+                              <tr key={sub.id} className="hover:bg-gray-50/80 transition">
                                 <td className="p-4 text-center">
                                   <input
                                     type="checkbox"
@@ -1812,14 +1951,14 @@ export default function AdminDashboard({
                                         type="email"
                                         value={editingSubscriberEmail}
                                         onChange={(e) => setEditingSubscriberEmail(e.target.value)}
-                                        className="bg-white border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs w-full focus:outline-none focus:ring-1 focus:ring-[#FF7A20]"
+                                        className="bg-white border border-gray-300 rounded-lg px-3 py-2 text-xs sm:text-sm w-full focus:outline-none focus:ring-2 focus:ring-[#FF7A20]"
                                         placeholder="user@example.com"
                                         autoFocus
                                       />
                                       <button
                                         type="button"
                                         onClick={() => handleEditSubscriber(sub.id, editingSubscriberEmail)}
-                                        className="bg-[#FF7A20] hover:bg-[#e06512] text-white p-1.5 rounded-lg text-xs font-semibold cursor-pointer"
+                                        className="bg-[#FF7A20] hover:bg-[#e06512] text-white px-2.5 py-2 rounded-lg text-xs font-bold cursor-pointer"
                                         title="Save email"
                                       >
                                         ✓
@@ -1827,21 +1966,21 @@ export default function AdminDashboard({
                                       <button
                                         type="button"
                                         onClick={() => setEditingSubscriberId(null)}
-                                        className="bg-gray-100 hover:bg-gray-200 text-gray-500 p-1.5 rounded-lg text-xs font-semibold cursor-pointer"
+                                        className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-2.5 py-2 rounded-lg text-xs font-bold cursor-pointer"
                                         title="Cancel"
                                       >
                                         ✕
                                       </button>
                                     </div>
                                   ) : (
-                                    <span className="font-semibold text-gray-900 break-all">{sub.email}</span>
+                                    <span className="font-extrabold text-gray-950 text-xs sm:text-sm break-all">{sub.email}</span>
                                   )}
                                 </td>
-                                <td className="p-4 text-gray-400 hidden md:table-cell">
+                                <td className="p-4 text-gray-600 font-medium hidden md:table-cell text-xs sm:text-sm">
                                   {formatDateToDDMMYYYY(sub.subscribedAt)}
                                 </td>
                                 <td className="p-4 text-center">
-                                  <div className="flex items-center justify-center gap-1.5">
+                                  <div className="flex items-center justify-center gap-2 text-xs sm:text-sm">
                                     {!isEditing && (
                                       <button
                                         type="button"
@@ -1849,7 +1988,7 @@ export default function AdminDashboard({
                                           setEditingSubscriberId(sub.id);
                                           setEditingSubscriberEmail(sub.email);
                                         }}
-                                        className="text-[#FF7A20] hover:text-[#e06512] font-bold py-1 px-2 hover:bg-orange-50 rounded transition cursor-pointer"
+                                        className="text-[#FF7A20] hover:text-[#e06512] font-extrabold py-1 px-2.5 hover:bg-orange-50 rounded-md transition cursor-pointer"
                                       >
                                         Edit
                                       </button>
@@ -1857,7 +1996,7 @@ export default function AdminDashboard({
                                     <button
                                       type="button"
                                       onClick={() => handleDeleteSubscriber(sub.id)}
-                                      className="text-red-500 hover:text-red-700 font-bold py-1 px-2 hover:bg-red-50 rounded transition cursor-pointer"
+                                      className="text-red-600 hover:text-red-800 font-extrabold py-1 px-2.5 hover:bg-red-50 rounded-md transition cursor-pointer"
                                     >
                                       Delete
                                     </button>
@@ -1909,13 +2048,13 @@ export default function AdminDashboard({
       ) : (
         /* TAB 4: CONTACT TICKETS */
         <div className="space-y-4" id="tab-messages-content">
-          <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-xs flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div className="bg-white border border-gray-100 rounded-xl p-4 sm:p-5 shadow-xs flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
-              <h3 className="font-bold text-gray-900 text-sm">Contact Details ({searchedMessages.length})</h3>
-              <p className="text-[11px] text-gray-500">Review client messages and contact form submissions.</p>
+              <h3 className="font-extrabold text-gray-950 text-base sm:text-lg">Contact Details ({searchedMessages.length})</h3>
+              <p className="text-xs sm:text-sm text-gray-600">Review client messages and contact form submissions.</p>
             </div>
             {/* Search Input */}
-            <div className="relative w-full sm:max-w-xs">
+            <div className="relative w-full sm:max-w-md">
               <input
                 type="text"
                 placeholder="Search tickets by name, email, subject, message..."
@@ -1924,52 +2063,52 @@ export default function AdminDashboard({
                   setMessagesSearch(e.target.value);
                   setMessagesPage(1); // Reset page to 1 on search
                 }}
-                className="w-full bg-gray-50 border border-gray-200 rounded-lg pl-3 pr-8 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-[#FF7A20] focus:border-transparent"
+                className="w-full bg-gray-50 border border-gray-200 rounded-lg pl-4 pr-10 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF7A20] focus:border-transparent"
               />
-              <div className="absolute right-3 top-2.5 text-gray-400">
+              <div className="absolute right-3.5 top-3 text-gray-400">
                 <Search className="w-4 h-4" />
               </div>
             </div>
           </div>
 
           {searchedMessages.length === 0 ? (
-            <div className="py-12 text-center text-gray-400">No active customer tickets found matching search.</div>
+            <div className="py-12 text-center text-gray-500 font-medium text-sm">No active customer details.</div>
           ) : (
             paginatedMessages.map((m: any) => (
-              <div key={m.id} className="bg-white border border-gray-100 p-5 rounded-xl space-y-2.5 shadow-xs">
-                <div className="flex justify-between text-xs">
+              <div key={m.id} className="bg-white border border-gray-200 p-5 sm:p-6 rounded-2xl space-y-3 shadow-xs">
+                <div className="flex justify-between items-center text-xs sm:text-sm">
                   <div>
-                    <span className="font-bold text-gray-900">{m.name}</span>
-                    <span className="text-gray-400 font-semibold ml-2">({m.email})</span>
+                    <span className="font-extrabold text-gray-950 text-sm sm:text-base">{m.name}</span>
+                    <span className="text-gray-600 font-semibold ml-2">({m.email})</span>
                   </div>
-                  <span className="font-bold text-[#FF7A20] bg-orange-50 px-2 py-0.5 rounded text-[9px]">{m.subject}</span>
+                  <span className="font-extrabold text-[#FF7A20] bg-orange-100 px-3 py-1 rounded-md text-xs sm:text-sm">{m.subject}</span>
                 </div>
                 {/* Extra contact details */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-[10px] text-gray-500 bg-gray-50/50 p-2.5 rounded-lg border border-gray-100 font-mono">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs sm:text-sm text-gray-700 bg-gray-50 p-3.5 rounded-xl border border-gray-200 font-mono">
                   {m.companyName && (
                     <div>
-                      <span className="text-gray-400">Company:</span> <span className="font-bold text-gray-700">{m.companyName}</span>
+                      <span className="text-gray-500 font-bold">Company:</span> <span className="font-extrabold text-gray-900">{m.companyName}</span>
                     </div>
                   )}
                   {m.phone && (
                     <div>
-                      <span className="text-gray-400">Phone:</span> <span className="font-bold text-gray-700">{m.phone}</span>
+                      <span className="text-gray-500 font-bold">Phone:</span> <span className="font-extrabold text-gray-900">{m.phone}</span>
                     </div>
                   )}
                   {m.address && (
                     <div className="sm:col-span-1 md:col-span-1">
-                      <span className="text-gray-400">Location:</span> <span className="font-bold text-gray-700">{m.address}, {m.state}, {m.country}</span>
+                      <span className="text-gray-500 font-bold">Location:</span> <span className="font-extrabold text-gray-900">{m.address}, {m.state}, {m.country}</span>
                     </div>
                   )}
                 </div>
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pt-2 border-t border-gray-100">
-                  <p className="text-xs text-gray-600 leading-normal font-sans bg-gray-50 p-3 rounded flex-1">{m.message}</p>
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pt-3 border-t border-gray-100">
+                  <p className="text-xs sm:text-sm text-gray-800 leading-relaxed font-sans bg-gray-50 p-3.5 rounded-xl border border-gray-200 flex-1">{m.message}</p>
                   <button
                     onClick={() => handleDeleteMessage(m.id)}
-                    className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-bold text-xs px-3 py-2 rounded-lg transition cursor-pointer flex items-center gap-1.5 shrink-0"
+                    className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-bold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl transition cursor-pointer flex items-center gap-1.5 shrink-0"
                     title="Delete Contact Ticket"
                   >
-                    <Trash className="w-3.5 h-3.5" />
+                    <Trash className="w-4 h-4" />
                     <span>Delete Ticket</span>
                   </button>
                 </div>
@@ -1983,7 +2122,7 @@ export default function AdminDashboard({
               <div>
                 Showing <span className="font-bold text-gray-900">{((safeMessagesPage - 1) * itemsPerPage60) + 1}</span> to{" "}
                 <span className="font-bold text-gray-900">{Math.min(safeMessagesPage * itemsPerPage60, searchedMessages.length)}</span> of{" "}
-                <span className="font-bold text-gray-900">{searchedMessages.length}</span> tickets
+                <span className="font-bold text-gray-900">{searchedMessages.length}</span> details
               </div>
               <div className="flex items-center gap-1">
                 <button
@@ -2016,36 +2155,36 @@ export default function AdminDashboard({
       {/* Redesigned Product Create/Edit Modal Form */}
       {isFormOpen && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
-          <form onSubmit={handleFormSubmit} className="bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 relative space-y-4 text-xs border border-gray-100">
+          <form onSubmit={handleFormSubmit} className="bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 relative space-y-4 text-xs sm:text-sm border border-gray-100">
             <button
               type="button"
               onClick={() => setIsFormOpen(false)}
-              className="absolute top-4 right-4 p-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg cursor-pointer text-gray-500 font-extrabold text-sm"
+              className="absolute top-4 right-4 p-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg cursor-pointer text-gray-500 font-extrabold text-base"
             >
               ×
             </button>
-            <h3 className="font-bold text-sm text-gray-900 border-b border-gray-100 pb-2 uppercase tracking-wider">
+            <h3 className="font-extrabold text-base sm:text-lg text-gray-950 border-b border-gray-200 pb-2.5 uppercase tracking-wider">
               {isEditMode ? "Modify Hardware Catalog Entry" : `Enroll New Model under: ${selectedCategorySection}`}
             </h3>
 
             <div className="space-y-1.5">
-              <label className="text-gray-500 font-bold uppercase tracking-wider text-[9px]">Equipment Name</label>
+              <label className="text-gray-600 font-extrabold uppercase tracking-wider text-xs">Product Name</label>
               <input
                 type="text"
                 name="name"
                 value={productForm.name}
                 onChange={handleFormInputChange}
                 required
-                placeholder="Titan-V Solar Energy Module"
-                className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:ring-1 focus:ring-[#FF7A20]"
+                placeholder=" "
+                className="w-full bg-gray-50 border border-gray-200 rounded-lg p-3 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF7A20]"
               />
             </div>
 
             {/* Direct Image URL input - Fully fulfilling the requirement */}
-            <div className="space-y-1.5 bg-orange-50/20 border border-orange-100/30 p-3 rounded-lg">
-              <label className="text-gray-600 font-bold uppercase tracking-wider text-[9px] flex items-center gap-1.5">
-                <ImageIcon className="w-3.5 h-3.5 text-[#FF7A20]" />
-                <span>Product Picture (Direct src Link URL)</span>
+            <div className="space-y-1.5 bg-orange-50/30 border border-orange-200 p-3.5 rounded-xl">
+              <label className="text-gray-700 font-extrabold uppercase tracking-wider text-xs flex items-center gap-1.5">
+                <ImageIcon className="w-4 h-4 text-[#FF7A20]" />
+                <span>Product Image</span>
               </label>
               <input
                 type="text"
@@ -2057,31 +2196,31 @@ export default function AdminDashboard({
                   });
                 }}
                 required
-                placeholder="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=600&auto=format&fit=crop"
-                className="w-full bg-white border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:ring-1 focus:ring-[#FF7A20] font-mono text-gray-700"
+                placeholder=" "
+                className="w-full bg-white border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#FF7A20] font-mono text-gray-800 text-xs sm:text-sm"
               />
-              <p className="text-[10px] text-gray-400 mt-1">
+              <p className="text-xs text-gray-500 mt-1">
                 Provide a direct HTTP/HTTPS web address of the image asset.
               </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="text-gray-500 font-bold uppercase tracking-wider text-[9px]">SKU Reference</label>
+                <label className="text-gray-600 font-extrabold uppercase tracking-wider text-xs">SKU Reference</label>
                 <input
                   type="text"
                   name="sku"
                   value={productForm.sku}
                   onChange={handleFormInputChange}
                   required
-                  className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 font-mono font-bold"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg p-3 font-mono font-bold text-xs sm:text-sm text-gray-950"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-gray-500 font-bold uppercase tracking-wider text-[9px] flex items-center gap-1">
-                  <FolderEdit className="w-3.5 h-3.5 text-[#FF7A20]" />
-                  <span>Category (The specific page to upload the product)</span>
+                <label className="text-gray-600 font-extrabold uppercase tracking-wider text-xs flex items-center gap-1">
+                  <FolderEdit className="w-4 h-4 text-[#FF7A20]" />
+                  <span>Category Page</span>
                 </label>
                 <select
                   name="subcategory"
@@ -2096,9 +2235,9 @@ export default function AdminDashboard({
                     });
                   }}
                   required
-                  className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none font-semibold text-gray-800"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg p-3 focus:outline-none font-bold text-gray-900 text-xs sm:text-sm"
                 >
-                  <option value="">-- Choose Target Page --</option>
+                  <option value=""> Choose Category Page </option>
                   {CATEGORY_SECTIONS.filter(s => s !== "All Products (Store Page)").map((sec) => (
                     <option key={sec} value={sec}>{sec}</option>
                   ))}
@@ -2108,45 +2247,45 @@ export default function AdminDashboard({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="text-gray-500 font-bold uppercase tracking-wider text-[9px]">Ex-Stock Qty</label>
+                <label className="text-gray-600 font-extrabold uppercase tracking-wider text-xs">Ex-Stock Qty</label>
                 <input
                   type="number"
                   name="stock"
                   value={productForm.stock}
                   onChange={handleFormInputChange}
                   required
-                  className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none font-bold text-gray-800"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg p-3 focus:outline-none font-bold text-gray-950 text-xs sm:text-sm"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="text-gray-500 font-bold uppercase tracking-wider text-[9px]">Price (USD)</label>
+                <label className="text-gray-600 font-extrabold uppercase tracking-wider text-xs">Price (USD)</label>
                 <input
                   type="number"
                   name="priceUSD"
                   value={productForm.priceUSD}
                   onChange={handleFormInputChange}
                   required
-                  className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none font-mono font-bold"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg p-3 focus:outline-none font-mono font-bold text-xs sm:text-sm text-gray-950"
                 />
               </div>
               <div className="space-y-1.5">
-                <label className="text-gray-500 font-bold uppercase tracking-wider text-[9px]">Price (NGN)</label>
+                <label className="text-gray-600 font-extrabold uppercase tracking-wider text-xs">Price (NGN)</label>
                 <input
                   type="number"
                   name="priceNGN"
                   value={productForm.priceNGN}
                   onChange={handleFormInputChange}
                   required
-                  className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none font-mono font-bold"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg p-3 focus:outline-none font-mono font-bold text-xs sm:text-sm text-gray-950"
                 />
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-gray-500 font-bold uppercase tracking-wider text-[9px]">Detailed Product Specifications Summary</label>
+              <label className="text-gray-600 font-extrabold uppercase tracking-wider text-xs">Detailed Product Specifications Summary</label>
               <textarea
                 name="description"
                 value={productForm.description}
@@ -2154,23 +2293,23 @@ export default function AdminDashboard({
                 required
                 rows={3}
                 placeholder="Describe deployment metrics and standards..."
-                className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:outline-none font-sans"
+                className="w-full bg-gray-50 border border-gray-200 rounded-lg p-3 focus:outline-none font-sans text-xs sm:text-sm text-gray-800"
               />
             </div>
 
-            <div className="pt-4 border-t border-gray-100 flex justify-end space-x-3">
+            <div className="pt-4 border-t border-gray-200 flex justify-end space-x-3">
               <button
                 type="button"
                 onClick={() => setIsFormOpen(false)}
-                className="border border-gray-200 hover:bg-gray-50 text-gray-600 px-4 py-2 rounded-lg font-bold cursor-pointer"
+                className="border border-gray-300 hover:bg-gray-100 text-gray-700 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="bg-gray-900 hover:bg-[#FF7A20] text-white px-6 py-2 rounded-lg font-bold transition cursor-pointer"
+                className="bg-gray-900 hover:bg-[#FF7A20] text-white px-6 py-2.5 rounded-xl font-bold transition cursor-pointer text-xs sm:text-sm"
               >
-                {isEditMode ? "Publish Changes" : "Enroll Hardware Model"}
+                {isEditMode ? "Publish Changes" : "Enroll Product"}
               </button>
             </div>
           </form>
@@ -2180,34 +2319,34 @@ export default function AdminDashboard({
       {/* CSV Bulk Product Import Modal */}
       {isCsvModalOpen && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 relative space-y-6 text-xs border border-gray-100">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 relative space-y-6 text-xs sm:text-sm border border-gray-100">
             <button
               onClick={() => {
                 setIsCsvModalOpen(false);
                 setCsvPreview([]);
                 setCsvImportMessage(null);
               }}
-              className="absolute top-4 right-4 p-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg cursor-pointer text-gray-500 font-extrabold text-sm"
+              className="absolute top-4 right-4 p-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg cursor-pointer text-gray-500 font-extrabold text-base"
             >
               ×
             </button>
 
-            <div className="border-b border-gray-100 pb-3 flex justify-between items-center">
+            <div className="border-b border-gray-200 pb-3 flex justify-between items-center">
               <div>
-                <h3 className="font-bold text-lg text-gray-900 flex items-center gap-2">
+                <h3 className="font-extrabold text-lg sm:text-xl text-gray-950 flex items-center gap-2">
                   <FileText className="w-5 h-5 text-emerald-600" />
-                  <span>Massive Product CSV / Excel Bulk Upload</span>
+                  <span>Massive Product CSV Upload</span>
                 </h3>
-                <p className="text-gray-500 text-xs mt-0.5">
-                  Upload a CSV file containing hardware product records to enroll or update catalog items in bulk.
+                <p className="text-gray-600 text-xs sm:text-sm mt-0.5">
+                  Upload a CSV file containing product records to enroll or update catalog items.
                 </p>
               </div>
 
               <button
                 onClick={handleDownloadCsvTemplate}
-                className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold px-3 py-1.5 rounded-lg text-xs flex items-center gap-1 transition cursor-pointer shrink-0"
+                className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold px-3.5 py-2 rounded-xl text-xs sm:text-sm flex items-center gap-1 transition cursor-pointer shrink-0"
               >
-                <span>Download Sample CSV Template</span>
+                <span>Download CSV Template</span>
               </button>
             </div>
 
@@ -2215,20 +2354,20 @@ export default function AdminDashboard({
             <div className="bg-orange-50/40 border-2 border-dashed border-orange-200 rounded-2xl p-6 text-center space-y-3">
               <FileText className="w-8 h-8 text-[#FF7A20] mx-auto" />
               <div>
-                <p className="font-bold text-gray-900 text-xs">Select your CSV File (.csv or .xlsx)</p>
-                <p className="text-[11px] text-gray-500 mt-0.5">Expected columns: SKU, Name, Brand, Category, Subcategory, PriceUSD, PriceNGN, IsQuoteOnly, Stock, Image, Description, ProductType</p>
+                <p className="font-bold text-gray-900 text-sm sm:text-base">Select your CSV File (.csv)</p>
+                <p className="text-xs text-gray-600 mt-1">Expected columns: SKU, Name, Brand, Category, Subcategory, PriceUSD, PriceNGN, IsQuoteOnly, Stock, Image, Description, ProductType</p>
               </div>
 
               <input
                 type="file"
                 accept=".csv, .xlsx, .xls"
                 onChange={handleCsvFileUpload}
-                className="text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#FF7A20] file:text-white hover:file:bg-[#e06816] cursor-pointer"
+                className="text-xs sm:text-sm text-gray-600 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs sm:file:text-sm file:font-bold file:bg-[#FF7A20] file:text-white hover:file:bg-[#e06816] cursor-pointer"
               />
             </div>
 
             {csvImportMessage && (
-              <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-3 rounded-xl text-xs font-semibold flex items-center gap-2">
+              <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-3.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2">
                 <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
                 <span>{csvImportMessage}</span>
               </div>
@@ -2237,22 +2376,22 @@ export default function AdminDashboard({
             {/* CSV Preview Table */}
             {csvPreview.length > 0 && (
               <div className="space-y-3">
-                <h4 className="font-bold text-gray-900 text-xs uppercase tracking-wider">
+                <h4 className="font-extrabold text-gray-950 text-xs sm:text-sm uppercase tracking-wider">
                   Parsed Product Preview ({csvPreview.length} items found)
                 </h4>
 
                 <div className="max-h-60 overflow-y-auto border border-gray-200 rounded-xl overflow-x-auto">
-                  <table className="w-full text-left text-[11px]">
-                    <thead className="bg-gray-100 font-bold text-gray-700 border-b border-gray-200">
+                  <table className="w-full text-left text-xs sm:text-sm">
+                    <thead className="bg-gray-100 font-extrabold text-gray-700 border-b border-gray-200">
                       <tr>
-                        <th className="p-2">SKU</th>
-                        <th className="p-2">Name</th>
-                        <th className="p-2">Category</th>
-                        <th className="p-2">Price (USD)</th>
-                        <th className="p-2">Price (NGN)</th>
-                        <th className="p-2">Quote Only?</th>
-                        <th className="p-2">Stock</th>
-                        <th className="p-2">Image Link</th>
+                        <th className="p-2.5">SKU</th>
+                        <th className="p-2.5">Name</th>
+                        <th className="p-2.5">Category</th>
+                        <th className="p-2.5">Price (USD)</th>
+                        <th className="p-2.5">Price (NGN)</th>
+                        <th className="p-2.5">Quote Only?</th>
+                        <th className="p-2.5">Stock</th>
+                        <th className="p-2.5">Image Link</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
@@ -2262,21 +2401,21 @@ export default function AdminDashboard({
                         const imgUrl = row.Image || row.image || row.Images || row.images || row["Image Link"] || row["Image URL"] || "No Image Link";
 
                         return (
-                          <tr key={idx} className="hover:bg-gray-50 font-mono text-gray-800">
-                            <td className="p-2 font-bold">{row.SKU || row.sku || `SP-HARDWARE-${idx}`}</td>
-                            <td className="p-2 font-sans font-medium text-gray-900">{row.Name || row.name || "Hardware Model"}</td>
-                            <td className="p-2 font-sans text-gray-600">{row.Category || row.category || "Electronic Security"}</td>
-                            <td className="p-2">${row.PriceUSD || row.priceUSD || 0}</td>
-                            <td className="p-2">₦{row.PriceNGN || row.priceNGN || 0}</td>
-                            <td className="p-2 font-sans">
+                          <tr key={idx} className="hover:bg-gray-50 font-mono text-gray-800 text-xs sm:text-sm">
+                            <td className="p-2.5 font-bold">{row.SKU || row.sku || `SP-HARDWARE-${idx}`}</td>
+                            <td className="p-2.5 font-sans font-medium text-gray-900">{row.Name || row.name || "Hardware Model"}</td>
+                            <td className="p-2.5 font-sans text-gray-600">{row.Category || row.category || "Electronic Security"}</td>
+                            <td className="p-2.5">${row.PriceUSD || row.priceUSD || 0}</td>
+                            <td className="p-2.5">₦{row.PriceNGN || row.priceNGN || 0}</td>
+                            <td className="p-2.5 font-sans">
                               {isQuote ? (
-                                <span className="bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded text-[10px]">YES (Quote)</span>
+                                <span className="bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded text-xs">YES (Quote)</span>
                               ) : (
-                                <span className="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded text-[10px]">NO (Priced)</span>
+                                <span className="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded text-xs">NO (Priced)</span>
                               )}
                             </td>
-                            <td className="p-2 font-bold">{row.Stock || row.stock || 10}</td>
-                            <td className="p-2 font-mono text-[10px] text-gray-500 max-w-[140px] truncate">{String(imgUrl)}</td>
+                            <td className="p-2.5 font-bold">{row.Stock || row.stock || 10}</td>
+                            <td className="p-2.5 font-mono text-xs text-gray-500 max-w-[140px] truncate">{String(imgUrl)}</td>
                           </tr>
                         );
                       })}
@@ -2286,8 +2425,8 @@ export default function AdminDashboard({
               </div>
             )}
 
-            <div className="pt-4 border-t border-gray-100 flex justify-between items-center">
-              <span className="text-[11px] text-gray-400">Products are added or updated matching SKUs</span>
+            <div className="pt-4 border-t border-gray-200 flex justify-between items-center">
+              <span className="text-xs text-gray-500">Products are added or updated matching their SKUs</span>
               <div className="flex space-x-3">
                 <button
                   type="button"
@@ -2296,7 +2435,7 @@ export default function AdminDashboard({
                     setCsvPreview([]);
                     setCsvImportMessage(null);
                   }}
-                  className="border border-gray-200 hover:bg-gray-50 text-gray-600 px-4 py-2 rounded-xl font-bold cursor-pointer"
+                  className="border border-gray-300 hover:bg-gray-100 text-gray-700 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -2304,7 +2443,7 @@ export default function AdminDashboard({
                   type="button"
                   onClick={handleConfirmCsvImport}
                   disabled={csvPreview.length === 0 || csvUploading}
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-xl font-bold transition cursor-pointer disabled:opacity-50 flex items-center space-x-2"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-xl font-bold transition cursor-pointer disabled:opacity-50 flex items-center space-x-2 text-xs sm:text-sm"
                 >
                   {csvUploading ? (
                     <RefreshCw className="w-4 h-4 animate-spin" />

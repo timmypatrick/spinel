@@ -107,23 +107,58 @@ export default function Footer({
           <p className="text-sm text-gray-400 leading-relaxed">
             Spinel Distribution Ltd is a global ICT Distribution company. We are a leading provider of industrial products, security surveillance, solar power system and equipment related to ICT.
           </p>
-          <div className="flex flex-wrap gap-2">
-            <a href="https://web.facebook.com/profile.php?id=61558951755204" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-900 rounded-md text-gray-400 hover:text-[#FF7A20] transition duration-150 flex items-center justify-center" aria-label="Facebook">
-              <Facebook className="w-4 h-4" />
+          <div className="flex flex-wrap gap-2.5 pt-1">
+            <a
+              href="https://web.facebook.com/profile.php?id=61558951755204"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 bg-gray-950/80 border border-gray-800/80 rounded-xl text-gray-400 hover:text-white hover:bg-[#FF7A20] hover:border-[#FF7A20] hover:scale-105 transition-all duration-200 flex items-center justify-center shadow-xs group"
+              aria-label="Facebook"
+              title="Follow Spinel Distribution on Facebook"
+            >
+              <Facebook className="w-4 h-4 transition-transform group-hover:scale-110" />
             </a>
-            <a href="https://www.instagram.com/spineldistribution" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-900 rounded-md text-gray-400 hover:text-[#FF7A20] transition duration-150 flex items-center justify-center" aria-label="Instagram">
-              <Instagram className="w-4 h-4" />
+            <a
+              href="https://www.instagram.com/spineldistribution"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 bg-gray-950/80 border border-gray-800/80 rounded-xl text-gray-400 hover:text-white hover:bg-[#FF7A20] hover:border-[#FF7A20] hover:scale-105 transition-all duration-200 flex items-center justify-center shadow-xs group"
+              aria-label="Instagram"
+              title="Follow Spinel Distribution on Instagram"
+            >
+              <Instagram className="w-4 h-4 transition-transform group-hover:scale-110" />
             </a>
-            <a href="https://x.com/SpinelDistrLtd" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-900 rounded-md text-gray-400 hover:text-[#FF7A20] transition duration-150 flex items-center justify-center" aria-label="X (Twitter)">
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+            <a
+              href="https://x.com/SpinelDistrLtd"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 bg-gray-950/80 border border-gray-800/80 rounded-xl text-gray-400 hover:text-white hover:bg-[#FF7A20] hover:border-[#FF7A20] hover:scale-105 transition-all duration-200 flex items-center justify-center shadow-xs group"
+              aria-label="X (Twitter)"
+              title="Follow Spinel Distribution on X"
+            >
+              <svg className="w-4 h-4 transition-transform group-hover:scale-110" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
               </svg>
             </a>
-            <a href="https://www.linkedin.com/company/spineldistribution" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-900 rounded-md text-gray-400 hover:text-[#FF7A20] transition duration-150 flex items-center justify-center" aria-label="LinkedIn">
-              <Linkedin className="w-4 h-4" />
+            <a
+              href="https://www.linkedin.com/company/spineldistribution"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 bg-gray-950/80 border border-gray-800/80 rounded-xl text-gray-400 hover:text-white hover:bg-[#FF7A20] hover:border-[#FF7A20] hover:scale-105 transition-all duration-200 flex items-center justify-center shadow-xs group"
+              aria-label="LinkedIn"
+              title="Connect with Spinel Distribution on LinkedIn"
+            >
+              <Linkedin className="w-4 h-4 transition-transform group-hover:scale-110" />
             </a>
-            <a href="https://www.youtube.com/@SpinelDistributionLtd" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-900 rounded-md text-gray-400 hover:text-[#FF7A20] transition duration-150 flex items-center justify-center" aria-label="YouTube">
-              <Youtube className="w-4 h-4" />
+            <a
+              href="https://www.youtube.com/@SpinelDistributionLtd"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 bg-gray-950/80 border border-gray-800/80 rounded-xl text-gray-400 hover:text-white hover:bg-[#FF7A20] hover:border-[#FF7A20] hover:scale-105 transition-all duration-200 flex items-center justify-center shadow-xs group"
+              aria-label="YouTube"
+              title="Subscribe to Spinel Distribution on YouTube"
+            >
+              <Youtube className="w-4 h-4 transition-transform group-hover:scale-110" />
             </a>
           </div>
         </div>

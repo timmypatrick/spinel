@@ -11,7 +11,7 @@ import Checkout from "./pages/Checkout";
 import RequestQuote from "./pages/RequestQuote";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
-import ThankYou from "./pages/ThankYou";
+import Invoice from "./pages/Invoice";
 import AdminDashboard from "./pages/AdminDashboard";
 import CategoryPage from "./pages/CategoryPage";
 import SecuritySolutions from "./pages/SecuritySolutions";
@@ -35,7 +35,7 @@ function getPathForView(view: string, productId?: string | null): string {
   if (view === "solution-security") return "/solutions/security";
   if (view === "solution-telecom") return "/solutions/telecom";
   if (view === "solution-multimedia") return "/solutions/multimedia";
-  if (view === "thank-you") return "/thank-you";
+  if (view === "invoice" || view === "thank-you") return "/invoice";
   if (view === "admin") return "/admin";
   if (view === "account") return "/account";
   if (view.startsWith("category-")) return `/category/${encodeURIComponent(view.substring(9))}`;
@@ -63,7 +63,7 @@ function getViewForPath(pathname: string, search: string, hash: string): { view:
   if (path === "/solutions/security" || path === "/security") return { view: "solution-security", productId: null };
   if (path === "/solutions/telecom" || path === "/telecom") return { view: "solution-telecom", productId: null };
   if (path === "/solutions/multimedia" || path === "/multimedia") return { view: "solution-multimedia", productId: null };
-  if (path === "/thank-you") return { view: "thank-you", productId: null };
+  if (path === "/invoice" || path === "/thank-you" || path === "/thankyou") return { view: "invoice", productId: null };
   if (path === "/account" || path === "/login" || path === "/signup" || path === "/forgot-password") return { view: "account", productId: null };
 
   if (path.startsWith("/product/")) {
@@ -186,8 +186,33 @@ export default function App() {
   // Persistent currency state
   const [currency, setCurrency] = useState<"USD" | "NGN">("USD");
 
-  // Completed invoice parameters holding
-  const [lastOrderDetails, setLastOrderDetails] = useState<any | null>(null);
+  // Completed invoice parameters holding with localStorage cache
+  const [lastOrderDetails, setLastOrderDetailsState] = useState<any | null>(() => {
+    try {
+      const cached = localStorage.getItem("spinel_last_order");
+      return cached ? JSON.parse(cached) : null;
+    } catch (e) {
+      console.error("Failed to parse cached last order details", e);
+      return null;
+    }
+  });
+
+  const setLastOrderDetails = (details: any) => {
+    setLastOrderDetailsState(details);
+    if (details) {
+      try {
+        localStorage.setItem("spinel_last_order", JSON.stringify(details));
+      } catch (e) {
+        console.error("Failed to save last order details", e);
+      }
+    } else {
+      try {
+        localStorage.removeItem("spinel_last_order");
+      } catch (e) {
+        // ignore
+      }
+    }
+  };
 
   // Sync cart adjustments to cache storage
   useEffect(() => {
@@ -335,8 +360,8 @@ export default function App() {
           />
         )}
 
-        {currentView === "thank-you" && lastOrderDetails && (
-          <ThankYou
+        {(currentView === "invoice" || currentView === "thank-you") && (
+          <Invoice
             orderDetails={lastOrderDetails}
             currency={currency}
             setCurrentView={setCurrentView}

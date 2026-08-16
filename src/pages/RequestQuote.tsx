@@ -69,8 +69,8 @@ export default function RequestQuote({ currency, setCurrentView, quotePrefill }:
           <CheckCircle2 className="w-12 h-12" />
         </div>
         <div className="space-y-2">
-          <h1 className="text-2xl font-black text-gray-900 tracking-tight">Quotation Request Submitted Successfully!</h1>
-          <p className="text-gray-500 text-xs sm:text-sm">We will contact you shortly with a customized quotation and technical recommendations.</p>
+          <h1 className="text-2xl font-black text-gray-900 tracking-tight">RFQ Submitted Successfully!</h1>
+          <p className="text-gray-500 text-xs sm:text-sm">We will contact you shortly with a customized quotation and technical requirements.</p>
         </div>
         <button
           onClick={() => setCurrentView("store")}
@@ -185,7 +185,6 @@ export default function RequestQuote({ currency, setCurrentView, quotePrefill }:
                 name="sku"
                 value={formData.sku}
                 onChange={handleInputChange}
-                required
                 placeholder="Enter the product SKU (if known)"
                 className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 text-sm focus:outline-none focus:border-[#FF7A20]"
               />

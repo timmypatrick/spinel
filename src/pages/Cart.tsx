@@ -32,10 +32,10 @@ export default function Cart({ cart, setCart, currency, setCurrentView }: CartPr
         <p className="text-gray-400 text-sm font-semibold">Your shopping cart is currently empty.</p>
         <button
           onClick={() => setCurrentView("store")}
-          className="bg-[#FF7A20] text-white font-bold text-xs px-6 py-2.5 rounded-lg flex items-center space-x-1.5 mx-auto cursor-pointer"
+          className="bg-[#FF7A20] text-white font-bold text-sm px-6 py-2.5 rounded-lg flex items-center space-x-1.5 mx-auto cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Return to Store Catalog</span>
+          <span>Shop Products Now!</span>
         </button>
       </div>
     );

@@ -172,7 +172,7 @@ export default function Oems({ setCurrentView }: OemsProps) {
                   onClick={() => setCurrentView("store")}
                   className="w-full sm:w-auto bg-slate-800 hover:bg-slate-700 text-gray-200 border border-slate-700 font-bold px-6 sm:px-8 py-3.5 rounded-xl transition duration-200 cursor-pointer text-sm sm:text-base text-center"
                 >
-                  Explore Hardware Store
+                  Explore Our Catalogue
                 </button>
               </div>
             </div>

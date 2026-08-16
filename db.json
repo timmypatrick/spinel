@@ -1,6 +1,48 @@
 {
   "products": [
     {
+      "id": "sp-prod-1",
+      "sku": "SKU",
+      "name": "Name",
+      "slug": "name-sku",
+      "brand": "Accessories",
+      "category": "Electrical Systems",
+      "subcategory": "Accessories",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "description": "Description",
+      "images": [
+        "Image"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SKU"
+        },
+        {
+          "label": "Brand",
+          "value": "Accessories"
+        },
+        {
+          "label": "Category",
+          "value": "Accessories"
+        }
+      ],
+      "stock": 0,
+      "oem": "Accessories",
+      "productType": "Enterprise",
+      "featured": true,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "Name Technical Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
       "id": "sp-prod-2",
       "sku": "AC-HID-PIVCLASS-40HNKS-03-0004XR",
       "name": "HID SIGNO PIV RDR 40HNKS-03-0004XR",
@@ -2430,6 +2472,48 @@
       "downloads": [
         {
           "title": "AC-SAFR-RDR-SFR-SC100 Technical Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "sp-prod-60",
+      "sku": "AC-SW-ACM-DEMO-30D-6-P",
+      "name": "Access Control Manager 6 30 Day Demo License",
+      "slug": "access-control-manager-6-30-day-demo-license-ac-sw-acm-demo-30d-6-p",
+      "brand": "Accessories",
+      "category": "Electrical Systems",
+      "subcategory": "Accessories",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "description": "Access Control Manager 6 License 30 Day Demonstration: includes licensing for  Badging; Exacq; Milestone; one Bosch intrusion panel; ViRIDI BEManager integration; Replication; Hot Stand By Auto Failover; SQL collaboration; Oracle collaboration; LDAP collaboration; XML collaboration; REST collaboration",
+      "images": [
+        "http://avoweb1.s3-us-west-2.amazonaws.com/Prod/VS/eCommerce-Site_Generic-Image_Access-Control-Hardware-and-Accessories_070720.jpg"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "AC-SW-ACM-DEMO-30D-6-P"
+        },
+        {
+          "label": "Brand",
+          "value": "Accessories"
+        },
+        {
+          "label": "Category",
+          "value": "Accessories"
+        }
+      ],
+      "stock": 103,
+      "oem": "Accessories",
+      "productType": "Enterprise",
+      "featured": false,
+      "popular": false,
+      "downloads": [
+        {
+          "title": "Access Control Manager 6 30 Day Demo License Technical Datasheet",
           "type": "Data Sheet",
           "url": "#"
         }
@@ -23724,6 +23808,48 @@
       "downloads": [
         {
           "title": "AC-SAFR-RDR-SFR-SC100 Technical Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "sp-prod-568",
+      "sku": "AC-SW-ACM-DEMO-30D-6-P",
+      "name": "Access Control Manager 6 30 Day Demo License",
+      "slug": "access-control-manager-6-30-day-demo-license-ac-sw-acm-demo-30d-6-p",
+      "brand": "Accessories",
+      "category": "Electrical Systems",
+      "subcategory": "Accessories",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "description": "Access Control Manager 6 License 30 Day Demonstration: includes licensing for  Badging; Exacq; Milestone; one Bosch intrusion panel; ViRIDI BEManager integration; Replication; Hot Stand By Auto Failover; SQL collaboration; Oracle collaboration; LDAP collaboration; XML collaboration; REST collaboration",
+      "images": [
+        "http://avoweb1.s3-us-west-2.amazonaws.com/Prod/VS/eCommerce-Site_Generic-Image_Access-Control-Hardware-and-Accessories_070720.jpg"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "AC-SW-ACM-DEMO-30D-6-P"
+        },
+        {
+          "label": "Brand",
+          "value": "Accessories"
+        },
+        {
+          "label": "Category",
+          "value": "Accessories"
+        }
+      ],
+      "stock": 103,
+      "oem": "Accessories",
+      "productType": "Enterprise",
+      "featured": false,
+      "popular": false,
+      "downloads": [
+        {
+          "title": "Access Control Manager 6 30 Day Demo License Technical Datasheet",
           "type": "Data Sheet",
           "url": "#"
         }
@@ -52567,6 +52693,52 @@
       "reviews": []
     },
     {
+      "id": "sp-ups-pdu-srv5kilz",
+      "sku": "SRV5KILZ",
+      "name": "APC Essential SurgeArrest Tester",
+      "slug": "apc-essential-surgearrest-tester-srv5kilz",
+      "brand": "APC",
+      "category": "UPS & PDU",
+      "subcategory": "UPS & PDU",
+      "priceUSD": 0.67,
+      "priceNGN": 1000,
+      "description": "APC Essential SurgeArrest 5 outlets 230V UK - Protection Against Lightning & Power Surges for Computers and Electronics Tester",
+      "images": [
+        "https://i.ibb.co/VcKSgDdK/apc-essential-surgearrest-5-outlets-230v-pm5-uk-surge-protector.jpg"
+      ],
+      "specifications": [
+        {
+          "label": "SKU",
+          "value": "SRV5KILZ"
+        },
+        {
+          "label": "Brand",
+          "value": "APC"
+        },
+        {
+          "label": "Category",
+          "value": "UPS & PDU"
+        },
+        {
+          "label": "Subcategory",
+          "value": "UPS & PDU"
+        }
+      ],
+      "stock": 3289,
+      "oem": "APC",
+      "productType": "Enterprise",
+      "featured": false,
+      "popular": true,
+      "downloads": [
+        {
+          "title": "SRV5KILZ Datasheet",
+          "type": "Data Sheet",
+          "url": "#"
+        }
+      ],
+      "reviews": []
+    },
+    {
       "id": "sp-ups-pdu-04",
       "sku": "SRV6KIL",
       "name": "APC Smart-UPS C 1500VA LCD 230V",
@@ -52652,132 +52824,6 @@
       "downloads": [
         {
           "title": "SRT3000XLI Datasheet",
-          "type": "Data Sheet",
-          "url": "#"
-        }
-      ],
-      "reviews": []
-    },
-    {
-      "id": "sp-prod-1",
-      "sku": "SKU",
-      "name": "Name",
-      "slug": "name-sku",
-      "brand": "Accessories",
-      "category": "Electrical Systems",
-      "subcategory": "Accessories",
-      "priceUSD": 0,
-      "priceNGN": 0,
-      "description": "Description",
-      "images": [
-        "Image"
-      ],
-      "specifications": [
-        {
-          "label": "SKU",
-          "value": "SKU"
-        },
-        {
-          "label": "Brand",
-          "value": "Accessories"
-        },
-        {
-          "label": "Category",
-          "value": "Accessories"
-        }
-      ],
-      "stock": 0,
-      "oem": "Accessories",
-      "productType": "Enterprise",
-      "featured": true,
-      "popular": true,
-      "downloads": [
-        {
-          "title": "Name Technical Datasheet",
-          "type": "Data Sheet",
-          "url": "#"
-        }
-      ],
-      "reviews": []
-    },
-    {
-      "id": "sp-prod-60",
-      "sku": "AC-SW-ACM-DEMO-30D-6-P",
-      "name": "Access Control Manager 6 30 Day Demo License",
-      "slug": "access-control-manager-6-30-day-demo-license-ac-sw-acm-demo-30d-6-p",
-      "brand": "Accessories",
-      "category": "Electrical Systems",
-      "subcategory": "Accessories",
-      "priceUSD": 0,
-      "priceNGN": 0,
-      "description": "Access Control Manager 6 License 30 Day Demonstration: includes licensing for  Badging; Exacq; Milestone; one Bosch intrusion panel; ViRIDI BEManager integration; Replication; Hot Stand By Auto Failover; SQL collaboration; Oracle collaboration; LDAP collaboration; XML collaboration; REST collaboration",
-      "images": [
-        "http://avoweb1.s3-us-west-2.amazonaws.com/Prod/VS/eCommerce-Site_Generic-Image_Access-Control-Hardware-and-Accessories_070720.jpg"
-      ],
-      "specifications": [
-        {
-          "label": "SKU",
-          "value": "AC-SW-ACM-DEMO-30D-6-P"
-        },
-        {
-          "label": "Brand",
-          "value": "Accessories"
-        },
-        {
-          "label": "Category",
-          "value": "Accessories"
-        }
-      ],
-      "stock": 103,
-      "oem": "Accessories",
-      "productType": "Enterprise",
-      "featured": false,
-      "popular": false,
-      "downloads": [
-        {
-          "title": "Access Control Manager 6 30 Day Demo License Technical Datasheet",
-          "type": "Data Sheet",
-          "url": "#"
-        }
-      ],
-      "reviews": []
-    },
-    {
-      "id": "sp-prod-568",
-      "sku": "AC-SW-ACM-DEMO-30D-6-P",
-      "name": "Access Control Manager 6 30 Day Demo License",
-      "slug": "access-control-manager-6-30-day-demo-license-ac-sw-acm-demo-30d-6-p",
-      "brand": "Accessories",
-      "category": "Electrical Systems",
-      "subcategory": "Accessories",
-      "priceUSD": 0,
-      "priceNGN": 0,
-      "description": "Access Control Manager 6 License 30 Day Demonstration: includes licensing for  Badging; Exacq; Milestone; one Bosch intrusion panel; ViRIDI BEManager integration; Replication; Hot Stand By Auto Failover; SQL collaboration; Oracle collaboration; LDAP collaboration; XML collaboration; REST collaboration",
-      "images": [
-        "http://avoweb1.s3-us-west-2.amazonaws.com/Prod/VS/eCommerce-Site_Generic-Image_Access-Control-Hardware-and-Accessories_070720.jpg"
-      ],
-      "specifications": [
-        {
-          "label": "SKU",
-          "value": "AC-SW-ACM-DEMO-30D-6-P"
-        },
-        {
-          "label": "Brand",
-          "value": "Accessories"
-        },
-        {
-          "label": "Category",
-          "value": "Accessories"
-        }
-      ],
-      "stock": 103,
-      "oem": "Accessories",
-      "productType": "Enterprise",
-      "featured": false,
-      "popular": false,
-      "downloads": [
-        {
-          "title": "Access Control Manager 6 30 Day Demo License Technical Datasheet",
           "type": "Data Sheet",
           "url": "#"
         }
@@ -56588,52 +56634,6 @@
       "downloads": [
         {
           "title": "PS-YA-HA-106 Datasheet",
-          "type": "Data Sheet",
-          "url": "#"
-        }
-      ],
-      "reviews": []
-    },
-    {
-      "id": "sp-ups-pdu-srv5kilz",
-      "sku": "SRV5KILZ",
-      "name": "APC Essential SurgeArrest Tester",
-      "slug": "apc-essential-surgearrest-tester-srv5kilz",
-      "brand": "APC",
-      "category": "UPS & PDU",
-      "subcategory": "UPS & PDU",
-      "priceUSD": 0.67,
-      "priceNGN": 1000,
-      "description": "APC Essential SurgeArrest 5 outlets 230V UK - Protection Against Lightning & Power Surges for Computers and Electronics Tester",
-      "images": [
-        "https://i.ibb.co/VcKSgDdK/apc-essential-surgearrest-5-outlets-230v-pm5-uk-surge-protector.jpg"
-      ],
-      "specifications": [
-        {
-          "label": "SKU",
-          "value": "SRV5KILZ"
-        },
-        {
-          "label": "Brand",
-          "value": "APC"
-        },
-        {
-          "label": "Category",
-          "value": "UPS & PDU"
-        },
-        {
-          "label": "Subcategory",
-          "value": "UPS & PDU"
-        }
-      ],
-      "stock": 3289,
-      "oem": "APC",
-      "productType": "Enterprise",
-      "featured": false,
-      "popular": true,
-      "downloads": [
-        {
-          "title": "SRV5KILZ Datasheet",
           "type": "Data Sheet",
           "url": "#"
         }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Shield, Sun, Server, PhoneCall, Cpu, Network, Search, ShoppingCart, ArrowRight, Menu, X, User, ChevronDown, Check, Coins } from "lucide-react";
+import { Shield, Sun, Server, PhoneCall, Cpu, Network, Search, ShoppingCart, ArrowRight, X, User, ChevronDown, Check, Coins } from "lucide-react";
 import { Product, Category, UserSession, CartItem } from "../types";
 import { safeFetch } from "../lib/dataService";
 
@@ -379,35 +379,35 @@ export default function Header({
             </button>
           )}
 
-          {/* Cart Icon Badge */}
+          {/* Cart Icon Badge (Real Shopping Cart) */}
           <button
             onClick={() => setCurrentView("cart")}
-            className="text-gray-600 hover:text-[#FF7A20] relative p-1.5 transition duration-150 cursor-pointer"
+            className="text-gray-700 hover:text-[#FF7A20] relative p-2 rounded-lg hover:bg-gray-100/80 transition duration-150 cursor-pointer"
             id="btn-cart-view"
             title="View Shopping Cart"
           >
-            <ShoppingCart className="w-5 h-5" />
+            <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6" />
             {totalCartItems > 0 && (
-              <span className="absolute -top-1.5 -right-1.5 bg-[#FF7A20] text-white font-bold font-mono text-[10px] w-5 h-5 rounded-full flex items-center justify-center animate-pulse" id="cart-item-count">
+              <span className="absolute -top-1 -right-1 bg-[#FF7A20] text-white font-bold font-mono text-[10px] w-5 h-5 rounded-full flex items-center justify-center animate-pulse" id="cart-item-count">
                 {totalCartItems}
               </span>
             )}
           </button>
 
-          {/* User Account Icon - Placed directly after cart icon */}
+          {/* User Account / SignIn Icon - Full Classic User Icon */}
           <button
             onClick={() => setCurrentView("account")}
-            className={`relative p-1.5 transition duration-150 cursor-pointer ${
+            className={`relative p-2 rounded-lg transition duration-150 cursor-pointer ${
               currentView === "account"
-                ? "text-[#FF7A20]"
-                : "text-gray-600 hover:text-[#FF7A20]"
+                ? "text-[#FF7A20] bg-orange-50"
+                : "text-gray-700 hover:text-[#FF7A20] hover:bg-gray-100/80"
             }`}
             title={user ? `Account Profile (${user.name})` : "Sign In / Login"}
             id="btn-user-account"
           >
-            <User className="w-5 h-5" />
+            <User className="w-5 h-5 sm:w-6 sm:h-6" />
             {user && (
-              <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white" id="user-active-badge" />
+              <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white" id="user-active-badge" />
             )}
           </button>
 
@@ -445,13 +445,22 @@ export default function Header({
             </div>
           ) : null}
 
-          {/* Mobile Menu Icon */}
+          {/* Mobile Menu Icon with Equal Line Widths */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden text-gray-600 p-1.5 hover:text-[#FF7A20]"
+            className="lg:hidden text-gray-800 p-2 rounded-lg hover:bg-gray-100 hover:text-[#FF7A20] transition cursor-pointer"
             id="btn-mobile-menu-toggle"
+            title="Toggle Navigation Menu"
           >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMobileMenuOpen ? (
+              <X className="w-6 h-6 text-gray-900" />
+            ) : (
+              <svg className="w-6 h-6 text-gray-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <line x1="3" y1="12" x2="21" y2="12" />
+                <line x1="3" y1="18" x2="21" y2="18" />
+              </svg>
+            )}
           </button>
         </div>
       </div>

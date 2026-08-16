@@ -89,12 +89,14 @@ export default function Checkout({
       }
 
       const orderData = await res.json();
+      const now = new Date();
 
       const createdOrderObj = {
         id: orderData.orderId || orderData.id,
         orderNumber: orderData.invoiceNumber || orderData.orderNumber || orderData.id,
         invoiceNumber: orderData.invoiceNumber || orderData.orderNumber,
-        date: new Date().toISOString().split("T")[0],
+        date: now.toISOString().split("T")[0],
+        time: now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true }),
         customerName: formData.name,
         customerEmail: formData.email,
         shippingAddress: {
@@ -117,7 +119,7 @@ export default function Checkout({
         })),
         totalUSD: totalUSD,
         totalNGN: totalNGN,
-        status: (paymentMethod === "paystack" ? "Paid" : "Pending"),
+        status: "Pending",
         paymentMethod: (paymentMethod === "paystack" ? "Paystack" : "Bank Transfer"),
         paymentReference: orderData.paymentReference || orderData.invoiceNumber
       };
@@ -128,6 +130,8 @@ export default function Checkout({
         shippingDetails: formData,
         currency,
         items: cart,
+        totalUSD,
+        totalNGN,
         total: currency === "USD" ? totalUSD : totalNGN
       });
 
@@ -184,19 +188,19 @@ export default function Checkout({
             currency: currency,
             ref: orderData.invoiceNumber,
             callback: function () {
-              setCurrentView("thank-you");
+              setCurrentView("invoice");
             },
             onClose: function () {
-              setCurrentView("thank-you");
+              setCurrentView("invoice");
             }
           });
           handler.openIframe();
         } else {
-          // Navigates to Thank You view with pending payment instructions when public key is not set
-          setCurrentView("thank-you");
+          // Navigates to Invoice view with pending payment instructions when public key is not set
+          setCurrentView("invoice");
         }
       } else {
-        setCurrentView("thank-you");
+        setCurrentView("invoice");
       }
 
     } catch (err: any) {

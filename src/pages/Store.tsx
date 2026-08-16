@@ -320,14 +320,14 @@ export default function Store({
         {/* Divisions & Categories Section */}
         <div className="space-y-4">
           <h4 className="text-sm font-bold text-gray-900 uppercase tracking-wider flex items-center gap-1.5">
-            <span>Filter By Division</span>
+            <span>Filter By Category</span>
           </h4>
           <div className="flex flex-col space-y-3">
             <button
               onClick={() => setSelectedSubcategory("")}
               className={`text-left py-2.5 px-4 rounded-lg text-base font-bold transition flex items-center justify-between ${!selectedSubcategory ? "bg-[#FF7A20] text-white" : "bg-gray-50 text-gray-700 hover:bg-gray-100"}`}
             >
-              <span>All Products & Divisions</span>
+              <span>All Products & Categories</span>
             </button>
             
             {STORE_DIVISIONS.map((div) => {
@@ -373,7 +373,7 @@ export default function Store({
               </span>
             ) : (
               <span>
-                Showing <span className="text-gray-900 font-bold">{filteredProducts.length}</span> high-performance systems matches
+                Showing <span className="text-gray-900 font-bold">{filteredProducts.length}</span> high-performance products
               </span>
             )}
           </div>

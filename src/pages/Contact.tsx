@@ -101,14 +101,14 @@ export default function Contact() {
         {/* Right Contact Form (Cols 7) */}
         <div className="lg:col-span-7" id="contact-form-container">
           <div className="bg-white border border-gray-100 p-6 rounded-2xl space-y-6 text-sm">
-            <h3 className="font-bold text-base text-gray-900 uppercase tracking-wider pb-2 border-b border-gray-100">Send Technical Inquiry</h3>
+            <h3 className="font-bold text-base text-gray-900 uppercase tracking-wider pb-2 border-b border-gray-100">Discuss your needs with us </h3>
             
             {success ? (
               <div className="bg-emerald-50 border border-emerald-100 p-6 rounded-xl flex items-center space-x-3 text-emerald-800 text-sm">
                 <CheckCircle className="w-8 h-8 text-emerald-500 shrink-0" />
                 <div>
                   <p className="font-bold text-base">Message Sent Successfully!</p>
-                  <p className="text-emerald-600 mt-0.5">Thank you for contacting Spinel Distribution. Our sales or technical team will respond as soon as possible.</p>
+                  <p className="text-emerald-600 mt-0.5">Thank you for contacting Spinel Distribution. Our sales or support team will respond as soon as possible.</p>
                 </div>
               </div>
             ) : (
@@ -121,7 +121,7 @@ export default function Contact() {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       required
-                      placeholder="Name in full"
+                      placeholder="Enter your full name"
                       className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 text-sm focus:outline-none focus:border-[#FF7A20]"
                     />
                   </div>
@@ -132,7 +132,7 @@ export default function Contact() {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       required
-                      placeholder="Business Mail"
+                      placeholder="Enter your business email"
                       className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 text-sm focus:outline-none focus:border-[#FF7A20]"
                     />
                   </div>
@@ -145,7 +145,7 @@ export default function Contact() {
                       type="text"
                       value={formData.companyName}
                       onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                      placeholder="Name in full"
+                      placeholder="Add your company name"
                       className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 text-sm focus:outline-none focus:border-[#FF7A20]"
                     />
                   </div>
@@ -169,7 +169,7 @@ export default function Contact() {
                     value={formData.address}
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                     required
-                    placeholder="Company Location"
+                    placeholder="Enter your company address"
                     className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 text-sm focus:outline-none focus:border-[#FF7A20]"
                   />
                 </div>
@@ -182,7 +182,7 @@ export default function Contact() {
                       value={formData.state}
                       onChange={(e) => setFormData({ ...formData, state: e.target.value })}
                       required
-                      placeholder="State"
+                      placeholder="Enter your state"
                       className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 text-sm focus:outline-none focus:border-[#FF7A20]"
                     />
                   </div>
@@ -193,7 +193,7 @@ export default function Contact() {
                       value={formData.country}
                       onChange={(e) => setFormData({ ...formData, country: e.target.value })}
                       required
-                      placeholder="Country"
+                      placeholder="Enter your country"
                       className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 text-sm focus:outline-none focus:border-[#FF7A20]"
                     />
                   </div>
@@ -221,7 +221,7 @@ export default function Contact() {
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     required
                     rows={4}
-                    placeholder="Tell us about your product inquiry or the support needed in details"
+                    placeholder="Please describe your request and how we can assist you in details"
                     className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 text-sm focus:outline-none focus:border-[#FF7A20]"
                   />
                 </div>

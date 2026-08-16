@@ -352,7 +352,7 @@ export default function About({ setCurrentView }: AboutProps) {
             <div className="lg:col-span-7 space-y-6">
               <div className="inline-flex items-center space-x-2 bg-orange-500/10 border border-[#FF7A20]/30 rounded-full px-4 py-1.5 text-xs font-bold text-[#FF7A20] uppercase tracking-wider">
                 <Info className="w-4 h-4" />
-                <span>About Spinel Distribution</span>
+                <span>About Spinel Distribution Ltd</span>
               </div>
               <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
                 Engineering-Led ICT, Security & Infrastructure Distribution
@@ -360,21 +360,6 @@ export default function About({ setCurrentView }: AboutProps) {
               <p className="text-base sm:text-lg text-gray-300 font-normal leading-relaxed">
                 Spinel is a leading ICT and engineering distribution company, delivering high-quality ICT products, renewable energy systems, industrial communication systems, networking equipment, and power distribution infrastructure through strategic partnerships with globally recognized OEMs across Africa.
               </p>
-              <div className="flex flex-wrap gap-4 pt-2">
-                <button
-                  onClick={() => setCurrentView ? setCurrentView("request-quote") : null}
-                  className="bg-[#FF7A20] hover:bg-orange-600 text-white font-bold px-8 py-3.5 rounded-xl shadow-lg transition duration-200 cursor-pointer flex items-center space-x-2 text-sm sm:text-base"
-                >
-                  <span>Request Custom Architecture</span>
-                  <ArrowRight className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={() => setCurrentView ? setCurrentView("oems") : null}
-                  className="bg-slate-800 hover:bg-slate-700 text-gray-200 border border-slate-700 font-bold px-8 py-3.5 rounded-xl transition duration-200 cursor-pointer text-sm sm:text-base"
-                >
-                  Explore OEM Partners
-                </button>
-              </div>
             </div>
 
             <div className="flex lg:col-span-5 justify-center lg:justify-end mt-4 lg:mt-0 w-full">

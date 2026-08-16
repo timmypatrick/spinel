@@ -92,13 +92,13 @@ export default function ProductDetails({
     <div className="max-w-[1536px] mx-auto px-4 md:px-[100px] lg:px-[100px] py-10 space-y-12" id="product-details-view">
       {/* Breadcrumb Row */}
       <nav className="flex items-center space-x-2 text-xs text-gray-500 font-semibold" id="product-breadcrumbs">
-        <button onClick={() => setCurrentView("home")} className="hover:text-[#FF7A20]">Home</button>
+        <button onClick={() => setCurrentView("home")} className="hover:text-[#FF7A20] cursor-pointer">Home</button>
         <ChevronRight className="w-3 h-3 text-gray-400" />
-        <button onClick={() => setCurrentView("store")} className="hover:text-[#FF7A20]">Store</button>
+        <button onClick={() => setCurrentView("store")} className="hover:text-[#FF7A20] cursor-pointers">Store</button>
         <ChevronRight className="w-3 h-3 text-gray-400" />
-        <span className="text-gray-400 select-none">Division: {product.category}</span>
+        <span className="text-gray-400 select-none">{product.category}</span>
         <ChevronRight className="w-3 h-3 text-gray-400" />
-        <span className="text-gray-900 truncate max-w-64 font-bold">{product.name}</span>
+        <span className="text-gray-400 truncate max-w-64 font-bold">{product.name}</span>
       </nav>
 
       {/* Main product display box */}
@@ -157,7 +157,7 @@ export default function ProductDetails({
             <div className="flex items-center space-x-4 text-xs font-semibold text-gray-500">
               <span>Brand: {product.brand}</span>
               <span>|</span>
-              <span>Division: {product.category}</span>
+              <span>Category: {product.category}</span>
             </div>
           </div>
 
@@ -229,7 +229,7 @@ export default function ProductDetails({
                   className="bg-gray-900 text-white hover:bg-[#FF7A20] font-bold text-xs px-6 py-3 rounded-xl h-11 transition flex items-center space-x-2 cursor-pointer shadow-sm"
                 >
                   <ShoppingCart className="w-4 h-4" />
-                  <span>Add to Quote Cart</span>
+                  <span>Add to Cart</span>
                 </button>
                 <button
                   onClick={handleBuyNow}
@@ -290,13 +290,13 @@ export default function ProductDetails({
 
         {/* Submit review */}
         <div className="lg:col-span-5 space-y-6 bg-gray-50 p-6 rounded-xl border border-gray-100">
-          <h3 className="font-bold text-sm text-gray-900">Write a Technical Review</h3>
+          <h3 className="font-bold text-sm text-gray-900">Write a Product Review</h3>
           <form onSubmit={handleReviewSubmit} className="space-y-4 text-xs">
             <div className="space-y-1.5">
               <label className="text-gray-500 font-bold">Your Name / Title</label>
               <input
                 type="text"
-                placeholder="Engr. John Doe"
+                placeholder="Engr. Timmy Patrick"
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
                 required
@@ -304,7 +304,7 @@ export default function ProductDetails({
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-gray-500 font-bold">Model Rating</label>
+              <label className="text-gray-500 font-bold">Product Rating</label>
               <select
                 value={rating}
                 onChange={(e) => setRating(Number(e.target.value))}
@@ -316,9 +316,9 @@ export default function ProductDetails({
               </select>
             </div>
             <div className="space-y-1.5">
-              <label className="text-gray-500 font-bold">Engineering Evaluation</label>
+              <label className="text-gray-500 font-bold">Product Evaluation</label>
               <textarea
-                placeholder="Describe your site installation, performance limits and build feedback..."
+                placeholder="Describe your experience, performance limits and build feedback..."
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 required

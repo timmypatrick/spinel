@@ -20217,3 +20217,55 @@ export const ACCESSORIES_PRODUCTS: Product[] = [
   ...PAGA_SYSTEM_PRODUCTS
 ];
 
+export function getOrderProductImage(item: any): string {
+  if (!item) return "https://i.ibb.co/5WPKmPXS/Avigilon-Generic-500x500-1.png";
+
+  const prod = item.product || item;
+
+  // 1. Direct images on item or item.product
+  const directImages = prod.images || item.images || prod.image || item.image;
+  if (Array.isArray(directImages) && directImages.length > 0) {
+    const first = directImages[0];
+    if (typeof first === "string" && first.trim() && first.trim().startsWith("http")) {
+      return first.trim();
+    }
+  }
+  if (typeof directImages === "string" && directImages.trim()) {
+    const trimmed = directImages.trim();
+    if (trimmed.startsWith("[")) {
+      try {
+        const parsed = JSON.parse(trimmed);
+        if (Array.isArray(parsed) && parsed.length > 0 && typeof parsed[0] === "string" && parsed[0].startsWith("http")) {
+          return parsed[0];
+        }
+      } catch (e) {
+        // ignore
+      }
+    }
+    if (trimmed.startsWith("http")) {
+      return trimmed;
+    }
+  }
+
+  // 2. Lookup in ACCESSORIES_PRODUCTS master catalog
+  const targetId = prod.id || prod.productId || item.productId;
+  const targetSku = prod.sku || item.sku;
+  const targetName = prod.name || prod.productName || item.productName;
+
+  if (targetId || targetSku || targetName) {
+    const match = ACCESSORIES_PRODUCTS.find(p =>
+      (targetId && p.id === targetId) ||
+      (targetSku && p.sku && p.sku.toLowerCase() === targetSku.toLowerCase()) ||
+      (targetName && p.name && p.name.toLowerCase() === targetName.toLowerCase())
+    );
+    if (match && match.images && Array.isArray(match.images) && match.images.length > 0) {
+      if (typeof match.images[0] === "string" && match.images[0].startsWith("http")) {
+        return match.images[0];
+      }
+    }
+  }
+
+  return "https://i.ibb.co/5WPKmPXS/Avigilon-Generic-500x500-1.png";
+}
+
+
