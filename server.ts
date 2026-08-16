@@ -17,16 +17,113 @@ function getSupabaseClient() {
   if (!supabaseUrl || !supabaseAnonKey) {
     return null;
   }
-  return createClient(supabaseUrl, supabaseAnonKey);
+  return createClient(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false
+    }
+  });
 }
 
 function getSupabaseAdminClient() {
   const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const serviceKey =
+    process.env.SUPABASE_SERVICE_ROLE_KEY ||
+    process.env.SUPABASE_SERVICE_KEY ||
+    process.env.VITE_SUPABASE_SERVICE_ROLE_KEY ||
+    process.env.SERVICE_ROLE_KEY ||
+    process.env.SUPABASE_SECRET_KEY;
   if (!supabaseUrl || !serviceKey) {
     return null;
   }
-  return createClient(supabaseUrl, serviceKey);
+  return createClient(supabaseUrl, serviceKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false
+    }
+  });
+}
+
+// Synchronize user profile into any existing Supabase database tables
+async function syncUserToSupabaseTables(user: { id?: string; name: string; email: string; password?: string; phone?: string; companyName?: string; role?: string }) {
+  const adminSb = getSupabaseAdminClient();
+  const anonSb = getSupabaseClient();
+  const sb = adminSb || anonSb;
+  if (!sb) return;
+
+  const nowIso = new Date().toISOString();
+  const nowFormatted = new Date().toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short" });
+
+  const candidatePayloads = [
+    {
+      table: "Registered Users",
+      record: {
+        "Representative_Name": user.name,
+        "Email_Address": user.email,
+        "Phone_Number": user.phone || "",
+        "Company_Name": user.companyName || "Customer Account",
+        "Password": user.password || "",
+        "Role": user.role || "customer",
+        "Date & Time": nowFormatted
+      }
+    },
+    {
+      table: "Users",
+      record: {
+        name: user.name,
+        email: user.email,
+        phone: user.phone || "",
+        company_name: user.companyName || "Customer Account",
+        password: user.password || "",
+        role: user.role || "customer",
+        created_at: nowIso
+      }
+    },
+    {
+      table: "users",
+      record: {
+        name: user.name,
+        email: user.email,
+        phone: user.phone || "",
+        company_name: user.companyName || "Customer Account",
+        password: user.password || "",
+        role: user.role || "customer",
+        created_at: nowIso
+      }
+    },
+    {
+      table: "profiles",
+      record: {
+        id: user.id,
+        full_name: user.name,
+        email: user.email,
+        phone: user.phone || "",
+        company_name: user.companyName || "Customer Account",
+        created_at: nowIso
+      }
+    },
+    {
+      table: "Customer Details",
+      record: {
+        "Representative_Name": user.name,
+        "Email_Address": user.email,
+        "Phone_Number": user.phone || "",
+        "Company_Name": user.companyName || "Customer Account",
+        "Date & Time": nowFormatted
+      }
+    }
+  ];
+
+  for (const item of candidatePayloads) {
+    try {
+      const { error } = await sb.from(item.table).insert([item.record]);
+      if (!error) {
+        console.log(`Successfully synced registered user ${user.email} to Supabase table '${item.table}'`);
+      }
+    } catch (e) {
+      // Ignore if table does not exist in schema cache
+    }
+  }
 }
 
 // Ensure the dev server runs on port 3000
@@ -858,6 +955,13 @@ app.post("/api/user/profile", async (req, res) => {
 
   saveDb();
 
+  // Sync updated profile to Supabase database tables
+  try {
+    await syncUserToSupabaseTables(userInDb);
+  } catch (syncErr) {
+    console.warn("Supabase table sync notice:", syncErr);
+  }
+
   return res.json({
     success: true,
     message: "Profile updated successfully!",
@@ -1399,13 +1503,22 @@ app.post("/api/auth/signup", async (req, res) => {
   const anonSupabase = getSupabaseClient();
   let createdSupabaseId: string | null = null;
 
-  // 1. Try Supabase Admin API first if service key is configured
+  // 1. Try Supabase Admin API first (registers user in Supabase Auth auth.users with all metadata)
   if (adminSupabase) {
     try {
+      // Format clean E.164 phone if possible for top-level phone field
+      let cleanE164Phone: string | undefined = undefined;
+      if (phoneTrimmed) {
+        const digitsOnly = phoneTrimmed.replace(/\D/g, "");
+        if (digitsOnly.length >= 10) {
+          cleanE164Phone = phoneTrimmed.startsWith("+") ? `+${digitsOnly}` : `+${digitsOnly}`;
+        }
+      }
+
       const { data: createData, error: createError } = await adminSupabase.auth.admin.createUser({
         email: emailLower,
         password,
-        phone: phoneTrimmed || undefined,
+        phone: cleanE164Phone,
         email_confirm: true,
         user_metadata: {
           full_name: nameTrimmed,
@@ -1452,12 +1565,12 @@ app.post("/api/auth/signup", async (req, res) => {
         if (msg.includes("already been registered") || msg.includes("already exists") || msg.includes("already registered")) {
           return res.status(400).json({ error: "An account with this email address has already been registered. Please sign in instead." });
         }
-        console.warn("Supabase Anon signUp notice (proceeding with local registration):", anonError.message);
+        console.warn("Supabase Anon signUp notice (proceeding with registration):", anonError.message);
       } else if (anonData?.user?.id) {
         createdSupabaseId = anonData.user.id;
       }
     } catch (err: any) {
-      console.warn("Supabase Anon signUp exception (proceeding with local registration):", err?.message || err);
+      console.warn("Supabase Anon signUp exception (proceeding with registration):", err?.message || err);
     }
   }
 
@@ -1475,6 +1588,13 @@ app.post("/api/auth/signup", async (req, res) => {
 
   db.users.push(newUser);
   saveDb();
+
+  // 4. Synchronize user profile into any Supabase database tables (Users, Registered Users, profiles, etc.)
+  try {
+    await syncUserToSupabaseTables(newUser);
+  } catch (syncErr) {
+    console.warn("Supabase table sync notice:", syncErr);
+  }
 
   return res.status(201).json({
     success: true,
