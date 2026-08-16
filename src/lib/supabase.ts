@@ -56,17 +56,22 @@ export interface SignUpData {
 export async function handleSignUp({ name, email, password, phone }: SignUpData) {
   const emailLower = email.toLowerCase().trim();
 
-  // Try server signup endpoint first (uses Supabase Admin API to create user cleanly)
+  // Try server signup endpoint first (handles Supabase Admin/Anon + persistent DB seamlessly)
   try {
     const res = await fetch("/api/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email: emailLower, password, phone })
+      body: JSON.stringify({
+        name: name.trim(),
+        email: emailLower,
+        password,
+        phone: phone ? phone.trim() : ""
+      })
     });
 
     const data = await res.json();
     if (!res.ok) {
-      throw new Error(data.error || data.message || "Failed to create account");
+      throw new Error(data.error || data.message || "Failed to create account. Please check your details.");
     }
 
     return {
@@ -79,32 +84,36 @@ export async function handleSignUp({ name, email, password, phone }: SignUpData)
       throw new Error(parsedServerMsg);
     }
 
-    // Fallback: Client-side Supabase client call
+    // Direct fallback if network error reaching server API
     const client = getSupabase();
     if (client) {
-      const { data, error } = await client.auth.signUp({
-        email: emailLower,
-        password,
-        options: {
-          data: {
-            full_name: name,
-            name,
-            phone,
-            password,
-            company_name: "Customer Account"
-          },
-          emailRedirectTo: `${window.location.origin}/account`
+      try {
+        const { data, error } = await client.auth.signUp({
+          email: emailLower,
+          password,
+          options: {
+            data: {
+              full_name: name.trim(),
+              name: name.trim(),
+              phone: phone ? phone.trim() : "",
+              password: password,
+              company_name: "Customer Account"
+            },
+            emailRedirectTo: `${window.location.origin}/account`
+          }
+        });
+
+        if (error) {
+          throw new Error(extractErrorMessage(error, "Failed to create account. Please verify your details."));
         }
-      });
 
-      if (error) {
-        throw new Error(extractErrorMessage(error, "Failed to create account with Supabase. Please verify your details."));
+        return {
+          message: `Account created successfully! You can now sign in with ${emailLower}.`,
+          user: data.user
+        };
+      } catch (clientErr: any) {
+        throw new Error(extractErrorMessage(clientErr, "Failed to create account. Please verify your details."));
       }
-
-      return {
-        message: `Account created successfully! A confirmation notification has been sent to ${emailLower}.`,
-        user: data.user
-      };
     }
 
     throw new Error(parsedServerMsg || "Failed to create account. Please check your connection and try again.");
@@ -112,59 +121,10 @@ export async function handleSignUp({ name, email, password, phone }: SignUpData)
 }
 
 export async function handleSignIn({ email, password }: { email: string; password: string }): Promise<UserSession> {
-  const client = getSupabase();
   const emailLower = email.toLowerCase().trim();
 
-  if (client) {
-    const { data, error } = await client.auth.signInWithPassword({
-      email: emailLower,
-      password
-    });
-
-    if (error) {
-      // Fallback to server login API route
-      try {
-        const res = await fetch("/api/auth/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: emailLower, password })
-        });
-        const dataJson = await res.json();
-        if (res.ok) {
-          const userSession: UserSession = {
-            email: dataJson.email || emailLower,
-            name: dataJson.name || emailLower.split("@")[0].toUpperCase(),
-            role: dataJson.role || "customer",
-            companyName: dataJson.companyName || ""
-          };
-          localStorage.setItem("spinel_user", JSON.stringify(userSession));
-          if (dataJson.token) localStorage.setItem("spinel_token", dataJson.token);
-          return userSession;
-        }
-      } catch (e) {
-        console.warn("Server login fallback notice:", e);
-      }
-
-      throw new Error(extractErrorMessage(error, "Invalid login credentials. Please check your email and password."));
-    }
-
-    const userMeta = data.user?.user_metadata || {};
-    const userSession: UserSession = {
-      email: emailLower,
-      name: userMeta.full_name || userMeta.name || emailLower.split("@")[0].toUpperCase(),
-      role: "customer",
-      companyName: userMeta.company_name || ""
-    };
-
-    // Save local session
-    localStorage.setItem("spinel_user", JSON.stringify(userSession));
-    if (data.session?.access_token) {
-      localStorage.setItem("spinel_token", data.session.access_token);
-    }
-
-    return userSession;
-  } else {
-    // Server API login
+  // 1. Primary: Authenticate via server login API (handles Supabase Auth + local DB seamlessly)
+  try {
     const res = await fetch("/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -172,24 +132,61 @@ export async function handleSignIn({ email, password }: { email: string; passwor
     });
 
     const data = await res.json();
-    if (!res.ok) {
-      throw new Error(extractErrorMessage(data, "Sign in failed. Please verify your credentials."));
+    if (res.ok) {
+      const userSession: UserSession = {
+        email: data.email || emailLower,
+        name: data.name || emailLower.split("@")[0].toUpperCase(),
+        phone: data.phone || "",
+        role: data.role || "customer",
+        companyName: data.companyName || ""
+      };
+
+      localStorage.setItem("spinel_user", JSON.stringify(userSession));
+      if (data.token) {
+        localStorage.setItem("spinel_token", data.token);
+      }
+      return userSession;
+    } else {
+      if (data.error && !data.error.includes("Failed to fetch") && !data.error.includes("NetworkError")) {
+        throw new Error(data.error);
+      }
+    }
+  } catch (err: any) {
+    if (err.message && !err.message.includes("Failed to fetch") && !err.message.includes("NetworkError")) {
+      throw err;
+    }
+  }
+
+  // 2. Client-side Supabase direct login fallback if server was unreachable
+  const client = getSupabase();
+  if (client) {
+    const { data, error } = await client.auth.signInWithPassword({
+      email: emailLower,
+      password
+    });
+
+    if (error) {
+      throw new Error(extractErrorMessage(error, "Invalid login credentials. Please check your email and password."));
     }
 
+    const userMeta = data.user?.user_metadata || {};
     const userSession: UserSession = {
-      email: data.email || emailLower,
-      name: data.name || emailLower.split("@")[0].toUpperCase(),
-      role: data.role || "customer",
-      companyName: data.companyName || ""
+      email: emailLower,
+      name: userMeta.full_name || userMeta.name || emailLower.split("@")[0].toUpperCase(),
+      phone: userMeta.phone || "",
+      role: "customer",
+      companyName: userMeta.company_name || ""
     };
 
     localStorage.setItem("spinel_user", JSON.stringify(userSession));
-    if (data.token) {
-      localStorage.setItem("spinel_token", data.token);
+    if (data.session?.access_token) {
+      localStorage.setItem("spinel_token", data.session.access_token);
     }
 
     return userSession;
   }
+
+  throw new Error("Unable to sign in. Please check your connection and credentials.");
 }
 
 export async function handleForgotPassword(email: string) {

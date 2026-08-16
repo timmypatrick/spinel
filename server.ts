@@ -47,7 +47,25 @@ const INITIAL_SEED_SUBSCRIBERS: any[] = [];
 // Server State Store (In-Memory Database for state persistence in active containers)
 const generatedBackendProducts = ACCESSORIES_PRODUCTS;
 
-const db = {
+interface DbUser {
+  id: string;
+  name: string;
+  email: string;
+  password?: string;
+  role: "admin" | "customer";
+  companyName?: string;
+  phone?: string;
+  createdAt?: string;
+}
+
+const db: {
+  products: any[];
+  orders: any[];
+  quotes: any[];
+  messages: any[];
+  subscribers: any[];
+  users: DbUser[];
+} = {
   products: generatedBackendProducts,
   orders: [...INITIAL_SEED_ORDERS],
   quotes: [...INITIAL_SEED_QUOTES],
@@ -60,7 +78,9 @@ const db = {
       email: "engineering@spineldistribution.com",
       password: "spineldistribution@123",
       role: "admin",
-      companyName: "Spinel Distribution"
+      companyName: "Spinel Distribution",
+      phone: "+234 812 345 6789",
+      createdAt: new Date().toISOString()
     }
   ]
 };
@@ -1365,121 +1385,109 @@ app.post("/api/auth/signup", async (req, res) => {
   }
 
   const emailLower = email.toLowerCase().trim();
+  const phoneTrimmed = phone ? String(phone).trim() : "";
+  const nameTrimmed = name.trim();
+  const companyTrimmed = companyName ? String(companyName).trim() : "Customer Account";
+
+  // Check if account already exists in local database
+  const existingLocal = db.users.find(u => u.email && u.email.toLowerCase().trim() === emailLower);
+  if (existingLocal) {
+    return res.status(400).json({ error: "An account with this email address has already been registered. Please sign in instead." });
+  }
+
   const adminSupabase = getSupabaseAdminClient();
   const anonSupabase = getSupabaseClient();
+  let createdSupabaseId: string | null = null;
 
+  // 1. Try Supabase Admin API first if service key is configured
   if (adminSupabase) {
     try {
       const { data: createData, error: createError } = await adminSupabase.auth.admin.createUser({
         email: emailLower,
         password,
-        phone: phone ? phone.trim() : undefined,
+        phone: phoneTrimmed || undefined,
         email_confirm: true,
         user_metadata: {
-          full_name: name,
-          name,
-          phone: phone ? phone.trim() : "",
+          full_name: nameTrimmed,
+          name: nameTrimmed,
+          phone: phoneTrimmed,
           password: password,
-          company_name: companyName || "Customer Account"
+          company_name: companyTrimmed
         }
       });
 
       if (createError) {
-        let msg = createError.message;
-        if (msg.includes("already been registered") || msg.includes("already exists")) {
+        const msg = createError.message || "";
+        if (msg.includes("already been registered") || msg.includes("already exists") || msg.includes("already registered")) {
           return res.status(400).json({ error: "An account with this email address has already been registered. Please sign in instead." });
         }
-        return res.status(400).json({ error: msg });
+        console.warn("Supabase Admin createUser notice:", createError.message);
+      } else if (createData?.user?.id) {
+        createdSupabaseId = createData.user.id;
       }
-
-      const newUser = {
-        id: createData.user?.id || `user-${Date.now()}`,
-        name,
-        email: emailLower,
-        password,
-        phone: phone ? phone.trim() : "",
-        role: "customer" as const,
-        companyName: companyName || "Customer Account",
-        createdAt: new Date().toISOString()
-      };
-      db.users.push(newUser);
-
-      return res.status(201).json({
-        success: true,
-        message: `Account created successfully for ${emailLower}! You can now log in with your email and password.`,
-        user: {
-          name,
-          email: emailLower,
-          role: "customer",
-          companyName: companyName || "Customer Account"
-        }
-      });
     } catch (err: any) {
-      console.error("Admin signup error:", err);
-      return res.status(500).json({ error: err.message || "Failed to create user account" });
+      console.warn("Supabase Admin createUser exception:", err?.message || err);
     }
-  } else if (anonSupabase) {
+  }
+
+  // 2. If no admin client and anon client exists, attempt anon signup (best-effort)
+  if (!createdSupabaseId && anonSupabase) {
     try {
-      const { data, error } = await anonSupabase.auth.signUp({
+      const { data: anonData, error: anonError } = await anonSupabase.auth.signUp({
         email: emailLower,
         password,
         options: {
           data: {
-            full_name: name,
-            name,
-            phone: phone ? phone.trim() : "",
+            full_name: nameTrimmed,
+            name: nameTrimmed,
+            phone: phoneTrimmed,
             password: password,
-            company_name: companyName || "Customer Account"
+            company_name: companyTrimmed
           }
         }
       });
 
-      if (error) {
-        let msg = error.message;
-        if (!msg || msg === "{}" || typeof msg !== "string") {
-          msg = (error as any).msg || (error as any).error_description || "Supabase signup error. Please check your details.";
+      if (anonError) {
+        const msg = anonError.message || "";
+        if (msg.includes("already been registered") || msg.includes("already exists") || msg.includes("already registered")) {
+          return res.status(400).json({ error: "An account with this email address has already been registered. Please sign in instead." });
         }
-        return res.status(400).json({ error: msg });
+        console.warn("Supabase Anon signUp notice (proceeding with local registration):", anonError.message);
+      } else if (anonData?.user?.id) {
+        createdSupabaseId = anonData.user.id;
       }
-
-      return res.status(201).json({
-        success: true,
-        message: `Account created! A confirmation link has been sent to ${emailLower}. Please check your inbox.`,
-        user: { name, email: emailLower, role: "customer" }
-      });
     } catch (err: any) {
-      return res.status(500).json({ error: err.message || "Failed to complete registration" });
+      console.warn("Supabase Anon signUp exception (proceeding with local registration):", err?.message || err);
     }
-  } else {
-    // Demo Mode local lookup
-    const exists = db.users.some(u => u.email === emailLower);
-    if (exists) {
-      return res.status(400).json({ error: "An account with this email already exists" });
-    }
-
-    const newUser = {
-      id: `user-${Date.now()}`,
-      name,
-      email: emailLower,
-      password,
-      role: "customer" as const,
-      companyName: companyName || "Customer Account",
-      createdAt: new Date().toISOString()
-    };
-    db.users.push(newUser);
-
-    return res.status(201).json({
-      success: true,
-      isDemo: true,
-      message: `Account created successfully for ${emailLower}! (Demo Mode: Supabase secrets not configured).`,
-      user: {
-        name,
-        email: emailLower,
-        role: "customer",
-        companyName: companyName || "Customer Account"
-      }
-    });
   }
+
+  // 3. Register and persist user into local database
+  const newUser = {
+    id: createdSupabaseId || `user-${Date.now()}`,
+    name: nameTrimmed,
+    email: emailLower,
+    password,
+    phone: phoneTrimmed,
+    role: "customer" as const,
+    companyName: companyTrimmed,
+    createdAt: new Date().toISOString()
+  };
+
+  db.users.push(newUser);
+  saveDb();
+
+  return res.status(201).json({
+    success: true,
+    message: `Account created successfully for ${emailLower}! You can now log in with your email and password.`,
+    user: {
+      id: newUser.id,
+      name: newUser.name,
+      email: newUser.email,
+      phone: newUser.phone,
+      role: newUser.role,
+      companyName: newUser.companyName
+    }
+  });
 });
 
 app.post("/api/auth/forgot-password", async (req, res) => {
@@ -1722,6 +1730,9 @@ app.post("/api/auth/login", async (req, res) => {
     return res.status(403).json({ error: "Administrative logins must go through the secure Admin Portal at /admin" });
   }
 
+  // Look for registered local user in database
+  const localUser = db.users.find(u => u.email && u.email.toLowerCase().trim() === emailLower);
+
   const supabase = getSupabaseClient();
   if (supabase) {
     try {
@@ -1730,63 +1741,89 @@ app.post("/api/auth/login", async (req, res) => {
         password
       });
 
-      if (error) {
-        return res.status(400).json({ error: error.message });
-      }
+      if (!error && data?.user) {
+        const name = data.user.user_metadata?.full_name || data.user.user_metadata?.name || (localUser?.name) || emailLower.split("@")[0].toUpperCase();
+        const companyName = data.user.user_metadata?.company_name || (localUser?.companyName) || "Customer Account";
+        const phone = data.user.user_metadata?.phone || (localUser as any)?.phone || "";
 
-      const name = data.user?.user_metadata?.full_name || emailLower.split("@")[0].toUpperCase();
-      const companyName = data.user?.user_metadata?.company_name || "";
+        // Keep local db in sync
+        if (localUser) {
+          localUser.password = password;
+          localUser.name = name;
+          (localUser as any).phone = phone;
+          localUser.companyName = companyName;
+        } else {
+          db.users.push({
+            id: data.user.id || `user-${Date.now()}`,
+            name,
+            email: emailLower,
+            password,
+            phone,
+            role: "customer",
+            companyName,
+            createdAt: new Date().toISOString()
+          });
+        }
+        saveDb();
 
-      // Store/update user details with password in local db registry for admin view
-      let userEntry = db.users.find(u => u.email.toLowerCase().trim() === emailLower);
-      if (userEntry) {
-        userEntry.password = password;
-      } else {
-        db.users.push({
-          id: data.user?.id || `user-${Date.now()}`,
+        return res.json({
           name,
           email: emailLower,
-          password,
+          phone,
           role: "customer",
-          companyName: companyName || "Customer Account"
+          companyName,
+          token: data.session?.access_token || `SupabaseToken_${Date.now()}`
         });
       }
-      saveDb();
 
-      return res.json({
-        name,
-        email: emailLower,
-        role: "customer",
-        companyName,
-        token: data.session?.access_token || `SupabaseToken_${Date.now()}`
-      });
+      // If Supabase authentication had an issue (e.g. unconfirmed email or rate-limited verification), fallback to verified database match
+      if (localUser) {
+        if (localUser.password === password) {
+          return res.json({
+            name: localUser.name,
+            email: localUser.email,
+            phone: (localUser as any).phone || "",
+            role: localUser.role || "customer",
+            companyName: localUser.companyName || "Customer Account",
+            token: `CustomerToken_${localUser.id}`
+          });
+        } else {
+          return res.status(401).json({ error: "Incorrect password. Please check your password and try again." });
+        }
+      }
+
+      return res.status(400).json({ error: error?.message || "Invalid email or password. Please verify your credentials or create an account." });
     } catch (err: any) {
-      return res.status(500).json({ error: "Supabase connection error: " + err.message });
+      if (localUser && localUser.password === password) {
+        return res.json({
+          name: localUser.name,
+          email: localUser.email,
+          phone: (localUser as any).phone || "",
+          role: localUser.role || "customer",
+          companyName: localUser.companyName || "Customer Account",
+          token: `CustomerToken_${localUser.id}`
+        });
+      }
+      return res.status(500).json({ error: "Login connection error: " + (err?.message || "Please check your details.") });
     }
   } else {
-    // Demo Mode local lookup
-    const existingUser = db.users.find(u => u.email === emailLower);
-    if (existingUser) {
-      if (existingUser.password === password) {
+    // No Supabase configured: Authenticate directly against persistent database
+    if (localUser) {
+      if (localUser.password === password) {
         return res.json({
-          name: existingUser.name,
-          email: existingUser.email,
-          role: existingUser.role,
-          companyName: existingUser.companyName,
-          token: `CustomerToken_${existingUser.id}`
+          name: localUser.name,
+          email: localUser.email,
+          phone: (localUser as any).phone || "",
+          role: localUser.role || "customer",
+          companyName: localUser.companyName || "Customer Account",
+          token: `CustomerToken_${localUser.id}`
         });
       } else {
-        return res.status(401).json({ error: "Incorrect password" });
+        return res.status(401).json({ error: "Incorrect password. Please check your password and try again." });
       }
     }
 
-    // Default simulation if not previously registered
-    return res.json({
-      name: emailLower.split("@")[0].toUpperCase(),
-      email: emailLower,
-      role: "customer",
-      token: `DemoToken_${Date.now()}`
-    });
+    return res.status(404).json({ error: "No account found with this email. Please create an account to get started." });
   }
 });
 

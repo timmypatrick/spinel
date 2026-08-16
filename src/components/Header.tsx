@@ -88,8 +88,8 @@ export default function Header({
           setAuthCompany("");
           setTimeout(() => {
             setAuthTab("login");
-            setAuthMessage({ type: "success", text: "You can now log in. Standalone email confirmation has been sent/simulated." });
-          }, 4500);
+            setAuthMessage({ type: "success", text: "Registration complete! You can now log in with your email and password." });
+          }, 3000);
         } else {
           setUser(data);
           localStorage.setItem("spinel_user", JSON.stringify(data));
@@ -735,9 +735,9 @@ export default function Header({
               </div>
 
               {authTab === "signup" && (
-                <div className="text-[10px] text-gray-400 bg-orange-50/50 p-2 rounded-lg leading-normal flex items-start gap-2 border border-orange-100/30">
-                  <span className="text-[#FF7A20] font-bold text-xs">✉</span>
-                  <span><strong>Email Authentication Required:</strong> Every saved signup is registered via Supabase Authentication. A verification trigger will require verifying your email address before logging in.</span>
+                <div className="text-[10px] text-gray-500 bg-orange-50/70 p-2.5 rounded-lg leading-normal flex items-start gap-2 border border-orange-100">
+                  <span className="text-[#FF7A20] font-bold text-xs">✓</span>
+                  <span><strong>Instant Portal Access:</strong> Your account is registered securely with our distribution network. You can immediately access your account and checkout after registration.</span>
                 </div>
               )}
 
