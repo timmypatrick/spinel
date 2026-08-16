@@ -9,6 +9,7 @@ import { Product, QuoteRequest, Order, ContactMessage, UserSession } from "../ty
 import { safeFetch } from "../lib/dataService";
 import * as XLSX from "xlsx";
 import { ACCESSORIES_PRODUCTS, getOrderProductImage } from "../data/productsData";
+import { inferBrand, inferProductType, convertUsdToNgn, parseIsQuoteOnly } from "../lib/productInference";
 
 interface AdminDashboardProps {
   user: UserSession | null;
@@ -213,30 +214,24 @@ export default function AdminDashboard({
       {
         SKU: "SP-CAM-2026-X",
         Name: "SpinelShield ATEX Explosion-Proof Camera 4K",
-        Brand: "Spinel Hardware",
         Category: "Electronic Security",
         Subcategory: "Ex-CCTV Camera",
         PriceUSD: 1850,
-        PriceNGN: 2775000,
         IsQuoteOnly: "FALSE",
         Stock: 25,
         Image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=600&auto=format&fit=crop",
-        Description: "Industrial ATEX certified 4K optical camera for Zone 1 hazardous environments.",
-        ProductType: "Hazardous Area"
+        Description: "Industrial ATEX certified 4K optical camera for Zone 1 hazardous environments."
       },
       {
         SKU: "SP-EX-PAGA-101",
-        Name: "Spinel PAGA Station Control Unit",
-        Brand: "FHF",
+        Name: "FHF Ex-Proof PAGA Station Control Unit",
         Category: "Ex-Proof Equipments",
         Subcategory: "PAGA System",
         PriceUSD: 0,
-        PriceNGN: 0,
         IsQuoteOnly: "TRUE",
         Stock: 100,
         Image: "https://i.ibb.co/RT6kr8S4/60f7bec3-c7f5-4e00-aa4e-5b1358894f82.png",
-        Description: "Heavy-duty explosionproof station control unit for offshore oil rigs. Request a custom quote.",
-        ProductType: "Enterprise"
+        Description: "Heavy-duty explosionproof station control unit for offshore oil rigs. Request a custom quote."
       }
     ];
 
@@ -2355,7 +2350,12 @@ export default function AdminDashboard({
               <FileText className="w-8 h-8 text-[#FF7A20] mx-auto" />
               <div>
                 <p className="font-bold text-gray-900 text-sm sm:text-base">Select your CSV File (.csv)</p>
-                <p className="text-xs text-gray-600 mt-1">Expected columns: SKU, Name, Brand, Category, Subcategory, PriceUSD, PriceNGN, IsQuoteOnly, Stock, Image, Description, ProductType</p>
+                <p className="text-xs text-gray-600 mt-1">
+                  Required columns (9): <span className="font-mono font-semibold text-gray-900">SKU, Name, Category, Subcategory, PriceUSD, IsQuoteOnly, Stock, Image, Description</span>
+                </p>
+                <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-800">
+                  <span>💡 <strong>Brand</strong>, <strong>ProductType</strong>, and <strong>Price (NGN)</strong> (₦1,500/$) are automatically figured out by the app.</span>
+                </div>
               </div>
 
               <input
@@ -2380,12 +2380,13 @@ export default function AdminDashboard({
                   Parsed Product Preview ({csvPreview.length} items found)
                 </h4>
 
-                <div className="max-h-60 overflow-y-auto border border-gray-200 rounded-xl overflow-x-auto">
+                <div className="max-h-64 overflow-y-auto border border-gray-200 rounded-xl overflow-x-auto">
                   <table className="w-full text-left text-xs sm:text-sm">
                     <thead className="bg-gray-100 font-extrabold text-gray-700 border-b border-gray-200">
                       <tr>
                         <th className="p-2.5">SKU</th>
                         <th className="p-2.5">Name</th>
+                        <th className="p-2.5">Auto Brand / Type</th>
                         <th className="p-2.5">Category</th>
                         <th className="p-2.5">Price (USD)</th>
                         <th className="p-2.5">Price (NGN)</th>
@@ -2396,17 +2397,40 @@ export default function AdminDashboard({
                     </thead>
                     <tbody className="divide-y divide-gray-100">
                       {csvPreview.slice(0, 50).map((row: any, idx: number) => {
+                        const sku = row.SKU || row.sku || `SP-HARDWARE-${idx}`;
+                        const name = row.Name || row.name || "Hardware Model";
+                        const cat = row.Category || row.category || "Electronic Security";
+                        const subcat = row.Subcategory || row.subcategory || "";
+                        const desc = row.Description || row.description || "";
+                        const priceUSD = Number(row.PriceUSD || row.priceUSD || row.Price || row.price || 0);
+                        const priceNGN = row.PriceNGN !== undefined && row.PriceNGN !== null && Number(row.PriceNGN) > 0
+                          ? Number(row.PriceNGN)
+                          : convertUsdToNgn(priceUSD);
+
                         const isQuoteRaw = row.IsQuoteOnly ?? row.isQuoteOnly ?? row["Is Quote Only"] ?? row.RequestQuote ?? row["Request Quote"];
-                        const isQuote = String(isQuoteRaw).toLowerCase() === "true" || String(isQuoteRaw) === "1" || isQuoteRaw === true || (Number(row.PriceUSD || row.priceUSD || 0) === 0 && Number(row.PriceNGN || row.priceNGN || 0) === 0);
+                        const isQuote = parseIsQuoteOnly(isQuoteRaw, priceUSD, priceNGN);
                         const imgUrl = row.Image || row.image || row.Images || row.images || row["Image Link"] || row["Image URL"] || "No Image Link";
+
+                        // Auto-derived Brand and ProductType preview
+                        const autoBrand = row.Brand || row.brand || inferBrand(name, desc, sku, cat, subcat);
+                        const autoType = row.ProductType || row.productType || inferProductType(cat, subcat, name, desc, sku);
 
                         return (
                           <tr key={idx} className="hover:bg-gray-50 font-mono text-gray-800 text-xs sm:text-sm">
-                            <td className="p-2.5 font-bold">{row.SKU || row.sku || `SP-HARDWARE-${idx}`}</td>
-                            <td className="p-2.5 font-sans font-medium text-gray-900">{row.Name || row.name || "Hardware Model"}</td>
-                            <td className="p-2.5 font-sans text-gray-600">{row.Category || row.category || "Electronic Security"}</td>
-                            <td className="p-2.5">${row.PriceUSD || row.priceUSD || 0}</td>
-                            <td className="p-2.5">₦{row.PriceNGN || row.priceNGN || 0}</td>
+                            <td className="p-2.5 font-bold">{sku}</td>
+                            <td className="p-2.5 font-sans font-medium text-gray-900">{name}</td>
+                            <td className="p-2.5 font-sans">
+                              <div className="flex flex-col gap-0.5">
+                                <span className="font-semibold text-gray-900">{autoBrand}</span>
+                                <span className="text-[10px] text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded w-fit">{autoType}</span>
+                              </div>
+                            </td>
+                            <td className="p-2.5 font-sans text-gray-600">
+                              <div>{cat}</div>
+                              {subcat && <div className="text-[10px] text-gray-400">{subcat}</div>}
+                            </td>
+                            <td className="p-2.5">${priceUSD.toLocaleString()}</td>
+                            <td className="p-2.5 text-emerald-700 font-semibold">₦{priceNGN.toLocaleString()}</td>
                             <td className="p-2.5 font-sans">
                               {isQuote ? (
                                 <span className="bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded text-xs">YES (Quote)</span>
@@ -2414,7 +2438,7 @@ export default function AdminDashboard({
                                 <span className="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded text-xs">NO (Priced)</span>
                               )}
                             </td>
-                            <td className="p-2.5 font-bold">{row.Stock || row.stock || 10}</td>
+                            <td className="p-2.5 font-bold">{row.Stock || row.stock || 20}</td>
                             <td className="p-2.5 font-mono text-xs text-gray-500 max-w-[140px] truncate">{String(imgUrl)}</td>
                           </tr>
                         );

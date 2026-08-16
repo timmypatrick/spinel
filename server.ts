@@ -135,6 +135,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 import { ACCESSORIES_PRODUCTS } from "./src/data/productsData";
+import { inferBrand, inferProductType, convertUsdToNgn, parseIsQuoteOnly } from "./src/lib/productInference";
 
 const INITIAL_SEED_ORDERS: any[] = [];
 const INITIAL_SEED_QUOTES: any[] = [];
@@ -1078,24 +1079,31 @@ app.post("/api/products/bulk-csv", verifyAdminToken, (req, res) => {
     );
 
     const priceUSD = Number(item.PriceUSD || item.priceUSD || item.price || item.Price || 0);
-    const priceNGN = Number(item.PriceNGN || item.priceNGN || (priceUSD > 0 ? priceUSD * 1500 : 0));
+    // Automatically convert USD to NGN at standard rate (1500) if PriceNGN is not explicitly provided
+    const priceNGN = item.PriceNGN !== undefined && item.PriceNGN !== null && Number(item.PriceNGN) > 0
+      ? Number(item.PriceNGN)
+      : convertUsdToNgn(priceUSD);
     const stock = Number(item.Stock || item.stock || 20);
+
+    const category = String(item.Category || item.category || "Electronic Security").trim();
+    const subcategory = String(item.Subcategory || item.subcategory || "").trim();
+    const description = String(item.Description || item.description || `${name} industrial hardware product.`).trim();
+
+    // Auto-figure Brand if not provided
+    const rawBrand = item.Brand || item.brand;
+    const brand = rawBrand && String(rawBrand).trim().length > 0
+      ? String(rawBrand).trim()
+      : inferBrand(name, description, skuStr, category, subcategory);
+
+    // Auto-figure ProductType (Hazardous Area | Industrial | Commercial | Enterprise) if not provided
+    const rawProductType = item.ProductType || item.productType || item["Product Type"];
+    const productType = rawProductType && ["Enterprise", "Hazardous Area", "Industrial", "Commercial"].includes(rawProductType)
+      ? rawProductType
+      : inferProductType(category, subcategory, name, description, skuStr);
 
     // Parse IsQuoteOnly / Request Quote flag
     const isQuoteOnlyRaw = item.IsQuoteOnly ?? item.isQuoteOnly ?? item["Is Quote Only"] ?? item.RequestQuote ?? item["Request Quote"] ?? item.IsQuote;
-    let isQuoteOnly = false;
-    if (isQuoteOnlyRaw !== undefined && isQuoteOnlyRaw !== null) {
-      const valStr = String(isQuoteOnlyRaw).trim().toLowerCase();
-      if (["true", "yes", "1"].includes(valStr)) {
-        isQuoteOnly = true;
-      } else if (["false", "no", "0"].includes(valStr)) {
-        isQuoteOnly = false;
-      } else {
-        isQuoteOnly = Boolean(isQuoteOnlyRaw);
-      }
-    } else if (priceUSD === 0 && priceNGN === 0) {
-      isQuoteOnly = true;
-    }
+    const isQuoteOnly = parseIsQuoteOnly(isQuoteOnlyRaw, priceUSD, priceNGN);
 
     // Parse Image URL link
     let imageUrls: string[] = [];
@@ -1110,32 +1118,26 @@ app.post("/api/products/bulk-csv", verifyAdminToken, (req, res) => {
       imageUrls = ["https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=600&auto=format&fit=crop"];
     }
 
-    const brand = item.Brand || item.brand || "Spinel Hardware";
-    const category = item.Category || item.category || "Electronic Security";
-    const subcategory = item.Subcategory || item.subcategory || "";
-    const description = item.Description || item.description || `${name} industrial hardware product.`;
-    const productType = item.ProductType || item.productType || item["Product Type"] || "Enterprise";
-
     const newObj = {
       id: existingIndex >= 0 ? db.products[existingIndex].id : `sp-csv-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
       sku: skuStr,
       name: String(name).trim(),
       slug: String(name).toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-      brand: String(brand).trim(),
-      category: String(category).trim(),
-      subcategory: String(subcategory).trim(),
+      brand,
+      category,
+      subcategory,
       priceUSD,
       priceNGN,
       stock,
       isQuoteOnly,
-      description: String(description).trim(),
+      description,
       images: imageUrls,
       specifications: Array.isArray(item.specifications) ? item.specifications : [
         { label: "IP Standard", value: item.ipRating || "IP66" },
         { label: "SKU Reference", value: skuStr }
       ],
-      oem: item.oem || String(brand).trim(),
-      productType: ["Enterprise", "Hazardous Area", "Industrial", "Commercial"].includes(productType) ? productType : "Enterprise",
+      oem: item.oem || brand,
+      productType,
       featured: !!(item.featured || item.Featured),
       popular: !!(item.popular || item.Popular),
       downloads: [],

@@ -1,6 +1,72 @@
 {
   "products": [
     {
+      "id": "sp-csv-1786917068237-h25h2",
+      "sku": "TEST-FHF-PAGA-02",
+      "name": "FHF Hazardous Area Intercom Master Station",
+      "slug": "fhf-hazardous-area-intercom-master-station",
+      "brand": "FHF",
+      "category": "Ex-Proof Equipments",
+      "subcategory": "PAGA System",
+      "priceUSD": 0,
+      "priceNGN": 0,
+      "stock": 8,
+      "isQuoteOnly": true,
+      "description": "Heavy-duty explosionproof intercom unit.",
+      "images": [
+        "https://i.ibb.co/RT6kr8S4/60f7bec3-c7f5-4e00-aa4e-5b1358894f82.png"
+      ],
+      "specifications": [
+        {
+          "label": "IP Standard",
+          "value": "IP66"
+        },
+        {
+          "label": "SKU Reference",
+          "value": "TEST-FHF-PAGA-02"
+        }
+      ],
+      "oem": "FHF",
+      "productType": "Hazardous Area",
+      "featured": false,
+      "popular": false,
+      "downloads": [],
+      "reviews": []
+    },
+    {
+      "id": "sp-csv-1786917068236-s6f53",
+      "sku": "TEST-HIK-4K-01",
+      "name": "Hikvision Explosion-Proof Stainless Dome Camera",
+      "slug": "hikvision-explosion-proof-stainless-dome-camera",
+      "brand": "Hikvision",
+      "category": "Electronic Security",
+      "subcategory": "Ex-CCTV Camera",
+      "priceUSD": 1200,
+      "priceNGN": 1800000,
+      "stock": 15,
+      "isQuoteOnly": false,
+      "description": "Zone 1 ATEX certified stainless dome camera.",
+      "images": [
+        "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=600&auto=format&fit=crop"
+      ],
+      "specifications": [
+        {
+          "label": "IP Standard",
+          "value": "IP66"
+        },
+        {
+          "label": "SKU Reference",
+          "value": "TEST-HIK-4K-01"
+        }
+      ],
+      "oem": "Hikvision",
+      "productType": "Hazardous Area",
+      "featured": false,
+      "popular": false,
+      "downloads": [],
+      "reviews": []
+    },
+    {
       "id": "sp-prod-1",
       "sku": "SKU",
       "name": "Name",
