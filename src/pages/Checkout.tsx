@@ -159,6 +159,7 @@ export default function Checkout({
               amount: currency === "USD" ? totalUSD : totalNGN,
               currency: currency,
               reference: orderData.invoiceNumber,
+              callback_url: `${window.location.origin}/invoice?reference=${encodeURIComponent(orderData.invoiceNumber)}&orderId=${encodeURIComponent(orderData.id || orderData.orderId || "")}`,
               metadata: {
                 custom_fields: [
                   { display_name: "Customer Name", variable_name: "customer_name", value: formData.name },

@@ -10,6 +10,22 @@ interface InvoiceProps {
 
 export default function Invoice({ orderDetails, currency, setCurrentView }: InvoiceProps) {
   const [isDownloading, setIsDownloading] = useState(false);
+  const [downloadSuccess, setDownloadSuccess] = useState(false);
+
+  // Keep invoice cached in localStorage so user can always return to it
+  React.useEffect(() => {
+    if (orderDetails) {
+      try {
+        localStorage.setItem("spinel_last_order", JSON.stringify(orderDetails));
+        // Update URL path without full reload
+        if (window.location.pathname !== "/invoice") {
+          window.history.pushState(null, "", "/invoice");
+        }
+      } catch (e) {
+        // ignore
+      }
+    }
+  }, [orderDetails]);
 
   if (!orderDetails) {
     return (
@@ -97,10 +113,8 @@ export default function Invoice({ orderDetails, currency, setCurrentView }: Invo
       forceUnlockDOM();
       setTimeout(forceUnlockDOM, 50);
       setTimeout(forceUnlockDOM, 300);
-      // Auto refresh page after downloading and saving invoice PDF
-      setTimeout(() => {
-        window.location.reload();
-      }, 700);
+      setDownloadSuccess(true);
+      setTimeout(() => setDownloadSuccess(false), 5000);
     }
   };
 
@@ -354,17 +368,31 @@ export default function Invoice({ orderDetails, currency, setCurrentView }: Invo
 
           {/* Total row with status & summary */}
           <div className="flex flex-col sm:flex-row justify-between items-center pt-5 border-t border-gray-200 gap-4">
-            <div className="border border-amber-300 bg-amber-50/70 text-amber-950 p-3.5 rounded-xl flex items-center space-x-3 max-w-md">
-              <FileText className="w-5 h-5 text-amber-600 shrink-0" />
-              <div>
-                <p className="font-bold text-xs text-amber-900">
-                  Payment Status: <span className="text-amber-800 font-extrabold uppercase">Pending</span>
-                </p>
-                <p className="text-[11px] text-amber-900 mt-0.5 leading-relaxed font-medium">
-                  Ensure to complete your pending transaction, while we acknowledge your payment
-                </p>
+            {orderDetails.status === "Completed" || orderDetails.status === "Paid" || orderDetails.paymentStatus === "Paid" ? (
+              <div className="border border-emerald-300 bg-emerald-50/80 text-emerald-950 p-3.5 rounded-xl flex items-center space-x-3 max-w-md">
+                <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0" />
+                <div>
+                  <p className="font-bold text-xs text-emerald-900">
+                    Payment Status: <span className="text-emerald-700 font-extrabold uppercase">Paid / Completed</span>
+                  </p>
+                  <p className="text-[11px] text-emerald-800 mt-0.5 leading-relaxed font-medium">
+                    Payment confirmed and acknowledged successfully. Your order is being processed for fulfillment.
+                  </p>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="border border-amber-300 bg-amber-50/70 text-amber-950 p-3.5 rounded-xl flex items-center space-x-3 max-w-md">
+                <FileText className="w-5 h-5 text-amber-600 shrink-0" />
+                <div>
+                  <p className="font-bold text-xs text-amber-900">
+                    Payment Status: <span className="text-amber-800 font-extrabold uppercase">{orderDetails.status || "Pending"}</span>
+                  </p>
+                  <p className="text-[11px] text-amber-900 mt-0.5 leading-relaxed font-medium">
+                    Ensure to complete your pending transaction, while we acknowledge your payment.
+                  </p>
+                </div>
+              </div>
+            )}
             <div className="text-right min-w-40">
               <span className="font-bold text-gray-500 text-[10px] uppercase tracking-wider">Total Invoice Amount</span>
               <p className="text-xl sm:text-2xl font-black text-[#FF7A20] font-mono leading-none mt-0.5">
@@ -376,6 +404,14 @@ export default function Invoice({ orderDetails, currency, setCurrentView }: Invo
           </div>
         </div>
       </div>
+
+      {/* Download Success Notice */}
+      {downloadSuccess && (
+        <div className="max-w-xl mx-auto bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-xl flex items-center justify-center space-x-2 text-xs font-semibold animate-fade-in shadow-xs">
+          <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
+          <span>Invoice PDF downloaded successfully! You can keep this page open or browse more items.</span>
+        </div>
+      )}
 
       {/* Control Buttons (Web UI only) */}
       <div className="flex flex-wrap justify-center items-center gap-3 relative z-10" id="invoice-control-buttons">

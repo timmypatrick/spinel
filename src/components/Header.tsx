@@ -365,7 +365,7 @@ export default function Header({
         </nav>
 
         {/* Header Action Buttons */}
-        <div className="flex items-center space-x-4 lg:space-x-6" id="header-actions">
+        <div className="flex items-center ml-auto pl-2 sm:pl-4 space-x-2 sm:space-x-4 lg:space-x-6" id="header-actions">
           {/* Compare list link */}
           {compareList.length > 0 && (
             <button
@@ -379,37 +379,59 @@ export default function Header({
             </button>
           )}
 
-          {/* Cart Icon Badge (Real Shopping Cart) */}
+          {/* Cart Icon Badge with Continuous Attention-Grabbing Slow Pulse */}
           <button
             onClick={() => setCurrentView("cart")}
-            className="text-gray-700 hover:text-[#FF7A20] relative p-2 rounded-lg hover:bg-gray-100/80 transition duration-150 cursor-pointer"
+            className="text-gray-700 hover:text-[#FF7A20] relative p-2 rounded-lg hover:bg-gray-100/80 transition duration-150 cursor-pointer mr-0.5 sm:mr-1"
             id="btn-cart-view"
             title="View Shopping Cart"
           >
             <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6" />
-            {totalCartItems > 0 && (
-              <span className="absolute -top-1 -right-1 bg-[#FF7A20] text-white font-bold font-mono text-[10px] w-5 h-5 rounded-full flex items-center justify-center animate-pulse" id="cart-item-count">
-                {totalCartItems}
-              </span>
-            )}
+            <span
+              className="absolute -top-1 -right-1 bg-[#FF7A20] text-white font-bold font-mono text-[10px] w-5 h-5 rounded-full flex items-center justify-center shadow-xs animate-pulse"
+              id="cart-item-count"
+            >
+              {totalCartItems}
+            </span>
           </button>
 
-          {/* User Account / SignIn Icon - Full Classic User Icon */}
-          <button
-            onClick={() => setCurrentView("account")}
-            className={`relative p-2 rounded-lg transition duration-150 cursor-pointer ${
-              currentView === "account"
-                ? "text-[#FF7A20] bg-orange-50"
-                : "text-gray-700 hover:text-[#FF7A20] hover:bg-gray-100/80"
-            }`}
-            title={user ? `Account Profile (${user.name})` : "Sign In / Login"}
-            id="btn-user-account"
-          >
-            <User className="w-5 h-5 sm:w-6 sm:h-6" />
-            {user && (
-              <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white" id="user-active-badge" />
-            )}
-          </button>
+          {/* User Account and Hamburger Menu closely grouped on mobile with 5px right offset */}
+          <div className="flex items-center space-x-1 sm:space-x-2" id="user-mobile-nav-group">
+            {/* User Account / SignIn Icon - Full Classic User Icon */}
+            <button
+              onClick={() => setCurrentView("account")}
+              className={`relative p-2 rounded-lg transition duration-150 cursor-pointer translate-x-[5px] sm:translate-x-0 ${
+                currentView === "account"
+                  ? "text-[#FF7A20] bg-orange-50"
+                  : "text-gray-700 hover:text-[#FF7A20] hover:bg-gray-100/80"
+              }`}
+              title={user ? `Account Profile (${user.name})` : "Sign In / Login"}
+              id="btn-user-account"
+            >
+              <User className="w-5 h-5 sm:w-6 sm:h-6" />
+              {user && (
+                <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white" id="user-active-badge" />
+              )}
+            </button>
+
+            {/* Mobile Menu Icon with Equal Line Widths */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden text-gray-800 p-2 rounded-lg hover:bg-gray-100 hover:text-[#FF7A20] transition cursor-pointer translate-x-[5px] sm:translate-x-0"
+              id="btn-mobile-menu-toggle"
+              title="Toggle Navigation Menu"
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6 text-gray-900" />
+              ) : (
+                <svg className="w-6 h-6 text-gray-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                  <line x1="3" y1="6" x2="21" y2="6" />
+                  <line x1="3" y1="12" x2="21" y2="12" />
+                  <line x1="3" y1="18" x2="21" y2="18" />
+                </svg>
+              )}
+            </button>
+          </div>
 
           {/* Request Quote Button */}
           {currentView !== "admin" && (
@@ -422,7 +444,7 @@ export default function Header({
             </button>
           )}
 
-          {/* User Account / Auth Trigger */}
+          {/* User Account / Auth Trigger for Admin */}
           {user && user.role === "admin" ? (
             <div className="flex items-center space-x-3 border-l border-gray-100 pl-4" id="user-profile-menu">
               <div className="flex items-center space-x-2">
@@ -444,24 +466,6 @@ export default function Header({
               </div>
             </div>
           ) : null}
-
-          {/* Mobile Menu Icon with Equal Line Widths */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden text-gray-800 p-2 rounded-lg hover:bg-gray-100 hover:text-[#FF7A20] transition cursor-pointer"
-            id="btn-mobile-menu-toggle"
-            title="Toggle Navigation Menu"
-          >
-            {isMobileMenuOpen ? (
-              <X className="w-6 h-6 text-gray-900" />
-            ) : (
-              <svg className="w-6 h-6 text-gray-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                <line x1="3" y1="6" x2="21" y2="6" />
-                <line x1="3" y1="12" x2="21" y2="12" />
-                <line x1="3" y1="18" x2="21" y2="18" />
-              </svg>
-            )}
-          </button>
         </div>
       </div>
 

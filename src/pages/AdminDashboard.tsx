@@ -258,10 +258,10 @@ export default function AdminDashboard({
 
       const data = await res.json();
       if (!res.ok) {
-        throw new Error(data.error || "CSV Bulk Import failed.");
+        throw new Error(data.error || "Product Upload failed.");
       }
 
-      alert(data.message || "CSV Bulk Import completed successfully!");
+      alert(data.message || "Product Upload completed successfully!");
       setIsCsvModalOpen(false);
       setCsvPreview([]);
       setCsvImportMessage(null);

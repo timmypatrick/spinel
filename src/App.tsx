@@ -46,6 +46,11 @@ function getViewForPath(pathname: string, search: string, hash: string): { view:
   const path = pathname.toLowerCase().replace(/\/$/, "") || "/";
   const params = new URLSearchParams(search);
 
+  // Instant check for Paystack payment return or invoice path
+  if (params.get("reference") || params.get("trxref") || path === "/invoice" || path === "/thank-you" || path === "/thankyou") {
+    return { view: "invoice", productId: null };
+  }
+
   const isCleanAdmin = path === "/admin" || path === "/admin/dashboard" || path.startsWith("/admin");
   const isHashAdmin = hash === "#admin" || hash === "admin" || hash.includes("admin");
   if (isCleanAdmin || isHashAdmin) {
@@ -218,6 +223,29 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem("spinel_cart", JSON.stringify(cart));
   }, [cart]);
+
+  // Handle Paystack callback parameter verification and auto-retrieve completed invoice
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get("reference") || params.get("trxref");
+    const orderId = params.get("orderId") || "";
+    if (ref) {
+      fetch("/api/paystack/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reference: ref, orderId })
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.order) {
+            setLastOrderDetails(data.order);
+            setCurrentView("invoice");
+          }
+        })
+        .catch((err) => console.warn("Paystack verification error:", err));
+    }
+  }, []);
 
   // Global Cart Manipulation helpers
   const handleAddToCart = (product: Product, quantity = 1) => {

@@ -123,14 +123,30 @@ export default function Home({
     return [...STATIC_FLYERS].sort(() => Math.random() - 0.5);
   });
 
-  // Auto-rotate background carousel of flyers every 5 seconds
+  // Auto-rotate background carousel of flyers every 7 seconds
   useEffect(() => {
     if (shuffledFlyers.length === 0) return;
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % shuffledFlyers.length);
-    }, 5000);
+    }, 7000);
     return () => clearInterval(timer);
   }, [shuffledFlyers]);
+
+  // Auto-slide New Arrivals carousel every 7 seconds
+  useEffect(() => {
+    if (newArrivals.length === 0) return;
+    const interval = setInterval(() => {
+      if (newArrivalsRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = newArrivalsRef.current;
+        if (scrollLeft + clientWidth >= scrollWidth - 20) {
+          newArrivalsRef.current.scrollTo({ left: 0, behavior: "smooth" });
+        } else {
+          newArrivalsRef.current.scrollBy({ left: clientWidth * 0.75, behavior: "smooth" });
+        }
+      }
+    }, 7000);
+    return () => clearInterval(interval);
+  }, [newArrivals]);
 
   useEffect(() => {
     // Load products and filter featured
