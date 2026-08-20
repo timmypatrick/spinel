@@ -899,13 +899,13 @@ export default function AdminDashboard({
       {isSidebarOpen && (
         <div
           onClick={() => setIsSidebarOpen(false)}
-          className="fixed inset-0 bg-black/60 backdrop-blur-xs z-25 md:hidden"
+          className="fixed inset-0 bg-black/60 backdrop-blur-xs z-45 md:hidden"
         />
       )}
 
       {/* ADMIN SIDEBAR - FIXED, REQUISITE HEIGHT BELOW HEADER */}
       <aside
-        className={`fixed top-20 sm:top-[96px] left-0 bottom-0 w-64 lg:w-72 bg-gray-950 text-white flex flex-col justify-between z-30 transition-transform duration-300 shrink-0 border-r border-gray-800 ${
+        className={`fixed top-20 sm:top-[96px] left-0 bottom-0 w-64 lg:w-72 bg-gray-950 text-white flex flex-col justify-between z-50 transition-transform duration-300 shrink-0 border-r border-gray-800 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         }`}
       >
@@ -1025,7 +1025,7 @@ export default function AdminDashboard({
       </aside>
 
       {/* MAIN CONTENT AREA */}
-      <main className="flex-1 md:ml-64 lg:ml-72 min-w-0 p-4 md:p-8 lg:p-10 space-y-8 overflow-y-auto">
+      <main className="flex-1 md:ml-64 lg:ml-72 min-w-0 p-4 md:p-8 lg:p-10 pb-48 md:pb-12 space-y-8 overflow-y-auto">
         {/* Top Content Header Bar */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-2xl border border-gray-200 shadow-2xs">
           <div>
@@ -1055,33 +1055,24 @@ export default function AdminDashboard({
             </p>
           </div>
 
-          <div className="flex items-center space-x-3 shrink-0">
-            {activeTab === "products" && (
-              <>
-                <button
-                  onClick={() => setIsCsvModalOpen(true)}
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition cursor-pointer flex items-center space-x-2 shadow-xs"
-                >
-                  <UploadCloud className="w-4 h-4" />
-                  <span>Massive CSV Upload</span>
-                </button>
-                <button
-                  onClick={handleOpenCreateForm}
-                  className="bg-gray-950 hover:bg-[#FF7A20] text-white font-bold text-xs px-4 py-2.5 rounded-xl transition cursor-pointer flex items-center space-x-2 shadow-xs"
-                >
-                  <Plus className="w-4 h-4" />
-                  <span>Add Product</span>
-                </button>
-              </>
-            )}
-            <button
-              onClick={loadCockpitData}
-              className="p-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl transition cursor-pointer"
-              title="Refresh Data"
-            >
-              <RefreshCw className="w-4 h-4" />
-            </button>
-          </div>
+          {activeTab === "products" && (
+            <div className="flex items-center space-x-3 shrink-0">
+              <button
+                onClick={() => setIsCsvModalOpen(true)}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition cursor-pointer flex items-center space-x-2 shadow-xs"
+              >
+                <UploadCloud className="w-4 h-4" />
+                <span>Massive CSV Upload</span>
+              </button>
+              <button
+                onClick={handleOpenCreateForm}
+                className="bg-gray-950 hover:bg-[#FF7A20] text-white font-bold text-xs px-4 py-2.5 rounded-xl transition cursor-pointer flex items-center space-x-2 shadow-xs"
+              >
+                <Plus className="w-4 h-4" />
+                <span>Add Product</span>
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Tab Content Display */}

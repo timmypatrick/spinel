@@ -223,8 +223,8 @@ export default function Footer({
       </div>
 
       {/* Dynamic Currency Toggle Widget */}
-      <div className={`fixed bottom-[46px] z-40 bg-gray-900 border border-gray-800 p-1.5 rounded-full shadow-2xl flex items-center space-x-1 ${
-        currentView === "admin" ? "left-4 md:left-[280px] lg:left-[310px]" : "left-4"
+      <div className={`fixed z-40 bg-gray-900 border border-gray-800 p-1.5 rounded-full shadow-2xl flex items-center space-x-1 ${
+        currentView === "admin" ? "bottom-[110px] md:bottom-[46px] left-4 md:left-[280px] lg:left-[310px]" : "bottom-[46px] left-4"
       }`}>
         <button
           onClick={() => setCurrency("USD")}

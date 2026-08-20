@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Shield, Sun, Server, PhoneCall, Cpu, Network, Search, ShoppingCart, ArrowRight, X, User, ChevronDown, Check, Coins } from "lucide-react";
+import { Shield, Sun, Server, PhoneCall, Cpu, Network, Search, ShoppingCart, ArrowRight, X, User, ChevronDown, Coins } from "lucide-react";
 import { Product, Category, UserSession, CartItem } from "../types";
 import { safeFetch } from "../lib/dataService";
 
@@ -366,19 +366,6 @@ export default function Header({
 
         {/* Header Action Buttons */}
         <div className="flex items-center ml-auto pl-2 sm:pl-4 space-x-2 sm:space-x-4 lg:space-x-6" id="header-actions">
-          {/* Compare list link */}
-          {compareList.length > 0 && (
-            <button
-              onClick={() => setCurrentView("store")}
-              className="text-gray-500 hover:text-[#FF7A20] text-xs font-semibold hidden md:flex items-center space-x-1"
-              title="Compare selected products"
-              id="compare-badge"
-            >
-              <Check className="w-4 h-4 text-[#FF7A20]" />
-              <span>Compare ({compareList.length})</span>
-            </button>
-          )}
-
           {/* Cart Icon Badge with Continuous Attention-Grabbing Slow Pulse */}
           <button
             onClick={() => setCurrentView("cart")}

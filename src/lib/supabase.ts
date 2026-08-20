@@ -247,9 +247,23 @@ export async function getUserOrders(email: string): Promise<Order[]> {
   if (!email) return [];
   const emailLower = email.toLowerCase().trim();
 
-  let orders: Order[] = [];
+  const ordersMap = new Map<string, Order>();
 
-  // 1. Fetch from server API (Source of truth)
+  // 1. Read existing local cache first
+  try {
+    const local = localStorage.getItem(`spinel_user_orders_${emailLower}`);
+    if (local) {
+      const parsed: Order[] = JSON.parse(local);
+      if (Array.isArray(parsed)) {
+        parsed.forEach(o => {
+          const key = o.id || o.orderNumber || (o as any).invoiceNumber;
+          if (key) ordersMap.set(key, o);
+        });
+      }
+    }
+  } catch (e) {}
+
+  // 2. Fetch from server API (Source of truth)
   try {
     const res = await fetch(`/api/orders/user?email=${encodeURIComponent(emailLower)}`, {
       headers: {
@@ -259,25 +273,26 @@ export async function getUserOrders(email: string): Promise<Order[]> {
     if (res.ok) {
       const serverOrders: Order[] = await res.json();
       if (Array.isArray(serverOrders)) {
-        orders = serverOrders;
-        // Keep local cache in sync with server state
-        localStorage.setItem(`spinel_user_orders_${emailLower}`, JSON.stringify(serverOrders));
+        serverOrders.forEach(o => {
+          const key = o.id || o.orderNumber || (o as any).invoiceNumber;
+          if (key) ordersMap.set(key, o);
+        });
       }
     }
   } catch (err) {
-    console.warn("Server user orders fetch failed, falling back to local storage:", err);
-    try {
-      const local = localStorage.getItem(`spinel_user_orders_${emailLower}`);
-      if (local) {
-        orders = JSON.parse(local);
-      }
-    } catch (e) {}
+    console.warn("Server user orders fetch notice, falling back to local storage:", err);
   }
 
+  const merged = Array.from(ordersMap.values());
   // Sort orders descending by date
-  orders.sort((a, b) => new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime());
+  merged.sort((a, b) => new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime());
 
-  return orders;
+  // Save merged permanent list to localStorage
+  try {
+    localStorage.setItem(`spinel_user_orders_${emailLower}`, JSON.stringify(merged));
+  } catch (e) {}
+
+  return merged;
 }
 
 export function saveOrderToAccount(orderData: any, userEmail: string) {

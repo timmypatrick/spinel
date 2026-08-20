@@ -210,67 +210,41 @@ function loadDb() {
           parsed.products.forEach(p => map.set(p.id, p));
           db.products = Array.from(map.values());
         }
-        // Load and sanitize orders
-        const purgedOrderEmails = ["engineering@spineldistribution.com", "spineldistribution@gmail.com"];
-        const purgedOrderNames = ["engr. patrick timi", "spinel distribution client"];
-        if (Array.isArray(parsed.orders) && parsed.orders.length > 0) {
-          db.orders = parsed.orders.filter((o: any) => {
-            const email = (o.customerEmail || o.billingAddress?.email || o.shippingAddress?.email || "").toLowerCase().trim();
-            const name = (o.customerName || o.billingAddress?.fullName || o.shippingAddress?.fullName || "").toLowerCase().trim();
-            return !purgedOrderEmails.includes(email) && !purgedOrderNames.includes(name);
-          });
-        } else {
-          db.orders = [];
+        // Load orders permanently without purging
+        if (Array.isArray(parsed.orders)) {
+          db.orders = parsed.orders;
         }
 
-        // Load and sanitize quotes / RFQs
-        const purgedQuoteEmails = ["d.okon@chevron.com", "engineering@spineldistribution.com"];
-        const purgedQuoteNames = ["david okon", "engr. patrick timi"];
-        if (Array.isArray(parsed.quotes) && parsed.quotes.length > 0) {
-          db.quotes = parsed.quotes.filter((q: any) => {
-            const email = (q.email || "").toLowerCase().trim();
-            const name = (q.contactName || q.name || "").toLowerCase().trim();
-            return !purgedQuoteEmails.includes(email) && !purgedQuoteNames.includes(name);
-          });
-        } else {
-          db.quotes = [];
+        // Load quotes / RFQs permanently without purging
+        if (Array.isArray(parsed.quotes)) {
+          db.quotes = parsed.quotes;
         }
 
-        // Load and sanitize messages / contact details
-        const purgedMsgEmails = ["bisi.adebayo@dangltd.com", "engineering@spineldistribution.com"];
-        const purgedMsgNames = ["bisi adebayo", "engr. patrick timi"];
-        if (Array.isArray(parsed.messages) && parsed.messages.length > 0) {
-          db.messages = parsed.messages.filter((m: any) => {
-            const email = (m.email || "").toLowerCase().trim();
-            const name = (m.name || "").toLowerCase().trim();
-            return !purgedMsgEmails.includes(email) && !purgedMsgNames.includes(name);
-          });
-        } else {
-          db.messages = [];
+        // Load messages / contact details permanently without purging
+        if (Array.isArray(parsed.messages)) {
+          db.messages = parsed.messages;
         }
 
-        // Load and sanitize subscribers
-        const purgedSubEmails = ["engineering@spineldistribution.com", "spineldistribution@gmail.com", "procurement@chevron.com"];
-        if (Array.isArray(parsed.subscribers) && parsed.subscribers.length > 0) {
-          db.subscribers = parsed.subscribers.filter((s: any) => {
-            const email = (s.email || "").toLowerCase().trim();
-            return !purgedSubEmails.includes(email);
-          });
-        } else {
-          db.subscribers = [];
+        // Load subscribers permanently without purging
+        if (Array.isArray(parsed.subscribers)) {
+          db.subscribers = parsed.subscribers;
         }
         
-        // Load users and purge blacklisted demo accounts if any
-        const excludedEmails = ["customer@spineldistribution.com", "user_e2e_1786494440924@spineldistribution.com", "timi.patrick@dataset.ng"];
-        if (Array.isArray(parsed.users)) {
-          db.users = parsed.users.filter((u: any) => u.email && !excludedEmails.includes(u.email.toLowerCase().trim()));
-        } else {
-          db.users = db.users.filter((u: any) => u.email && !excludedEmails.includes(u.email.toLowerCase().trim()));
+        // Load registered users permanently
+        if (Array.isArray(parsed.users) && parsed.users.length > 0) {
+          const userMap = new Map<string, DbUser>();
+          db.users.forEach(u => userMap.set(u.email.toLowerCase().trim(), u));
+          parsed.users.forEach((u: any) => {
+            if (u && u.email) {
+              userMap.set(u.email.toLowerCase().trim(), u);
+            }
+          });
+          db.users = Array.from(userMap.values());
         }
         
-        // Save the cleaned database back to db.json
+        // Save database state
         saveDb();
-        console.log("Successfully loaded and synced database from db.json (Orders, RFQs, Messages, Subscribers preserved)");
+        console.log("Successfully loaded and synced database from db.json (All Orders, RFQs, Messages, Subscribers, and Users permanently preserved)");
       }
     } else {
       saveDb();
@@ -541,6 +515,7 @@ app.post("/api/quotes", async (req, res) => {
   }
 
   db.quotes.unshift(newQuote);
+  saveDb();
   res.status(201).json(newQuote);
 });
 
@@ -571,13 +546,20 @@ app.put("/api/quotes/:id", verifyAdminToken, (req, res) => {
       totalNGN: q.items.reduce((acc, it) => acc + (it.productId ? (db.products.find(p => p.id === it.productId)?.priceNGN || 75000) * it.quantity : 75000 * it.quantity), 0),
       items: q.items.map(it => {
         const p = db.products.find(prod => prod.id === it.productId);
+        const itemImages = (p?.images && Array.isArray(p.images) && p.images.length > 0)
+          ? p.images
+          : (p?.image ? [p.image] : []);
         return {
           productId: it.productId || "custom",
           productName: it.productName,
           sku: p?.sku || "SP-CUSTOM",
+          brand: p?.brand || "",
+          category: p?.category || "",
           quantity: it.quantity,
           priceUSD: p?.priceUSD || 500,
-          priceNGN: p?.priceNGN || 750000
+          priceNGN: p?.priceNGN || 750000,
+          images: itemImages,
+          image: itemImages[0] || ""
         };
       }),
       billingAddress: { fullName: q.contactName, email: q.email, phone: q.phone, addressLine1: q.companyName, city: "Project Site", state: "Contract State", country: q.country },
@@ -642,13 +624,39 @@ app.post("/api/orders", async (req, res) => {
     subtotalUSD += itemTotalUSD;
     subtotalNGN += itemTotalNGN;
 
+    const itemImages = (Array.isArray(prod.images) && prod.images.length > 0)
+      ? prod.images
+      : (Array.isArray(item.images) && item.images.length > 0)
+        ? item.images
+        : (item.product?.images && Array.isArray(item.product.images) && item.product.images.length > 0)
+          ? item.product.images
+          : (typeof prod.image === "string" && prod.image)
+            ? [prod.image]
+            : (typeof item.image === "string" && item.image)
+              ? [item.image]
+              : [];
+
     processedItems.push({
       productId: prod.id,
       productName: prod.name,
       sku: prod.sku,
+      brand: prod.brand || item.brand || item.product?.brand || "",
+      category: prod.category || item.category || item.product?.category || "",
       quantity: item.quantity,
       priceUSD: prod.priceUSD,
-      priceNGN: prod.priceNGN
+      priceNGN: prod.priceNGN,
+      images: itemImages,
+      image: itemImages[0] || "",
+      product: {
+        id: prod.id,
+        name: prod.name,
+        sku: prod.sku,
+        brand: prod.brand,
+        category: prod.category,
+        priceUSD: prod.priceUSD,
+        priceNGN: prod.priceNGN,
+        images: itemImages
+      }
     });
   }
 
@@ -689,6 +697,7 @@ app.post("/api/orders", async (req, res) => {
   };
 
   db.orders.unshift(newOrder);
+  saveDb();
 
   // Sync to Supabase in a secure, server-side, production-ready manner
   const supabase = getSupabaseClient();
@@ -1194,6 +1203,7 @@ app.post("/api/contact", async (req, res) => {
 
   // Always persist locally first for maximum reliability
   db.messages.unshift(newMessage);
+  saveDb();
 
   // Sync to Supabase in a secure, server-side, production-ready manner
   const supabase = getSupabaseClient();
@@ -1365,6 +1375,7 @@ app.post("/api/newsletter", async (req, res) => {
       subscribedAt: new Date().toISOString().split("T")[0]
     };
     db.subscribers.push(newSub);
+    saveDb();
   } else {
     newSub = db.subscribers.find(s => s.email.toLowerCase() === emailLower);
   }

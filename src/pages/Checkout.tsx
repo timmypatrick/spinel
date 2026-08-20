@@ -112,10 +112,14 @@ export default function Checkout({
           productId: item.product.id,
           productName: item.product.name,
           sku: item.product.sku,
+          brand: item.product.brand || "",
+          category: item.product.category || "",
           quantity: item.quantity,
           priceUSD: item.product.priceUSD,
           priceNGN: item.product.priceNGN,
-          images: item.product.images
+          images: item.product.images || [],
+          image: (Array.isArray(item.product.images) && item.product.images[0]) || (item.product as any).image || "",
+          product: item.product
         })),
         totalUSD: totalUSD,
         totalNGN: totalNGN,

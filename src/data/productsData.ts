@@ -20222,46 +20222,102 @@ export function getOrderProductImage(item: any): string {
 
   const prod = item.product || item;
 
-  // 1. Direct images on item or item.product
-  const directImages = prod.images || item.images || prod.image || item.image;
-  if (Array.isArray(directImages) && directImages.length > 0) {
-    const first = directImages[0];
-    if (typeof first === "string" && first.trim() && first.trim().startsWith("http")) {
-      return first.trim();
-    }
-  }
-  if (typeof directImages === "string" && directImages.trim()) {
-    const trimmed = directImages.trim();
-    if (trimmed.startsWith("[")) {
-      try {
-        const parsed = JSON.parse(trimmed);
-        if (Array.isArray(parsed) && parsed.length > 0 && typeof parsed[0] === "string" && parsed[0].startsWith("http")) {
-          return parsed[0];
-        }
-      } catch (e) {
-        // ignore
+  // 1. Direct images on item, item.product, or direct image fields
+  const candidates = [
+    prod.images,
+    item.images,
+    prod.image,
+    item.image,
+    prod.imageUrl,
+    item.imageUrl,
+    item.product?.images,
+    item.product?.image,
+    item.product?.imageUrl
+  ];
+
+  for (const c of candidates) {
+    if (!c) continue;
+    if (Array.isArray(c) && c.length > 0) {
+      const first = c[0];
+      if (typeof first === "string" && first.trim()) {
+        const url = first.trim();
+        if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("data:")) return url;
+        if (url.startsWith("//")) return `https:${url}`;
       }
     }
-    if (trimmed.startsWith("http")) {
-      return trimmed;
+    if (typeof c === "string" && c.trim()) {
+      const trimmed = c.trim();
+      if (trimmed.startsWith("[") && trimmed.endsWith("]")) {
+        try {
+          const parsed = JSON.parse(trimmed);
+          if (Array.isArray(parsed) && parsed.length > 0 && typeof parsed[0] === "string" && parsed[0].trim()) {
+            const url = parsed[0].trim();
+            if (url.startsWith("http") || url.startsWith("data:")) return url;
+            if (url.startsWith("//")) return `https:${url}`;
+          }
+        } catch (e) {
+          // ignore
+        }
+      }
+      if (trimmed.startsWith("http://") || trimmed.startsWith("https://") || trimmed.startsWith("data:")) {
+        return trimmed;
+      }
+      if (trimmed.startsWith("//")) {
+        return `https:${trimmed}`;
+      }
     }
   }
 
-  // 2. Lookup in ACCESSORIES_PRODUCTS master catalog
-  const targetId = prod.id || prod.productId || item.productId;
-  const targetSku = prod.sku || item.sku;
-  const targetName = prod.name || prod.productName || item.productName;
+  // 2. Lookup in ACCESSORIES_PRODUCTS master catalog by ID, SKU, or Exact Name
+  const targetId = String(prod.id || prod.productId || item.productId || "").trim();
+  const targetSku = String(prod.sku || item.sku || "").trim().toLowerCase();
+  const targetName = String(prod.name || prod.productName || item.productName || item.name || "").trim().toLowerCase();
 
   if (targetId || targetSku || targetName) {
     const match = ACCESSORIES_PRODUCTS.find(p =>
-      (targetId && p.id === targetId) ||
-      (targetSku && p.sku && p.sku.toLowerCase() === targetSku.toLowerCase()) ||
-      (targetName && p.name && p.name.toLowerCase() === targetName.toLowerCase())
+      (targetId && String(p.id).trim() === targetId) ||
+      (targetSku && p.sku && p.sku.toLowerCase().trim() === targetSku) ||
+      (targetName && p.name && p.name.toLowerCase().trim() === targetName)
     );
     if (match && match.images && Array.isArray(match.images) && match.images.length > 0) {
-      if (typeof match.images[0] === "string" && match.images[0].startsWith("http")) {
-        return match.images[0];
+      const img = match.images[0];
+      if (typeof img === "string" && (img.startsWith("http") || img.startsWith("//"))) {
+        return img.startsWith("//") ? `https:${img}` : img;
       }
+    }
+  }
+
+  // 3. Lookup in local storage caches (for newly uploaded CSV or custom catalog items)
+  if (typeof window !== "undefined" && window.localStorage) {
+    try {
+      const storageKeys = ["spinel_custom_products", "spinel_products_cache", "spinel_cart"];
+      for (const key of storageKeys) {
+        const raw = localStorage.getItem(key);
+        if (raw) {
+          const list = JSON.parse(raw);
+          if (Array.isArray(list)) {
+            for (const entry of list) {
+              const p = entry.product || entry;
+              const pId = String(p.id || "").trim();
+              const pSku = String(p.sku || "").trim().toLowerCase();
+              const pName = String(p.name || "").trim().toLowerCase();
+
+              if (
+                (targetId && pId === targetId) ||
+                (targetSku && pSku && pSku === targetSku) ||
+                (targetName && pName && pName === targetName)
+              ) {
+                const img = (Array.isArray(p.images) && p.images[0]) || p.image || p.imageUrl;
+                if (typeof img === "string" && (img.startsWith("http") || img.startsWith("//"))) {
+                  return img.startsWith("//") ? `https:${img}` : img;
+                }
+              }
+            }
+          }
+        }
+      }
+    } catch (e) {
+      // ignore
     }
   }
 
