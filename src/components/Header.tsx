@@ -40,6 +40,8 @@ export default function Header({
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
 
+  const isAdminDashboard = currentView === "admin" && user && user.role === "admin";
+
   const handleNavigate = (view: string, clearSearch = true) => {
     if (clearSearch) {
       setSearchQuery("");
@@ -369,7 +371,7 @@ export default function Header({
           {/* Cart Icon Badge with Continuous Attention-Grabbing Slow Pulse */}
           <button
             onClick={() => setCurrentView("cart")}
-            className="text-gray-700 hover:text-[#FF7A20] relative p-2 rounded-lg hover:bg-gray-100/80 transition duration-150 cursor-pointer mr-0.5 sm:mr-1"
+            className="text-gray-700 hover:text-[#FF7A20] relative p-2 rounded-lg hover:bg-gray-100/80 transition duration-150 cursor-pointer mr-0.5 sm:mr-1 lg:-translate-x-5"
             id="btn-cart-view"
             title="View Shopping Cart"
           >
@@ -421,7 +423,7 @@ export default function Header({
           </div>
 
           {/* Request Quote Button */}
-          {currentView !== "admin" && (
+          {!isAdminDashboard && (
             <button
               onClick={() => setCurrentView("request-quote")}
               className="hidden sm:inline-block bg-gray-900 text-white hover:bg-[#FF7A20] px-4 py-2 rounded-lg text-xs font-semibold transition duration-150 cursor-pointer shadow-xs"
@@ -590,7 +592,7 @@ export default function Header({
             <button onClick={() => { handleNavigate("oems"); setIsMobileMenuOpen(false); }} className="text-left py-1.5 font-bold hover:text-[#FF7A20] border-b border-gray-100 pb-2">Our OEMs</button>
             <button onClick={() => { handleNavigate("about"); setIsMobileMenuOpen(false); }} className="text-left py-1.5 font-bold hover:text-[#FF7A20] border-b border-gray-100 pb-2">About Us</button>
             <button onClick={() => { handleNavigate("contact"); setIsMobileMenuOpen(false); }} className="text-left py-1.5 font-bold hover:text-[#FF7A20] border-b border-gray-100 pb-2">Contact Us</button>
-            {currentView !== "admin" && (
+            {!isAdminDashboard && (
               <button onClick={() => { handleNavigate("request-quote"); setIsMobileMenuOpen(false); }} className="text-left text-[#FF7A20] py-1.5 font-bold">Request Quote</button>
             )}
           </nav>

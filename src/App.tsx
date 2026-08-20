@@ -433,6 +433,7 @@ export default function App() {
         setCurrentView={setCurrentView}
         currency={currency}
         setCurrency={setCurrency}
+        user={user}
       />
     </div>
   );

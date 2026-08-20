@@ -1,23 +1,28 @@
 import React, { useState } from "react";
 import { Mail, ShieldCheck, FileCheck, Globe, Linkedin, MessageSquare, Phone, Facebook, Instagram, Youtube } from "lucide-react";
+import { UserSession } from "../types";
 
 interface FooterProps {
   currentView: string;
   setCurrentView: (view: string) => void;
   currency: "USD" | "NGN";
   setCurrency: (currency: "USD" | "NGN") => void;
+  user?: UserSession | null;
 }
 
 export default function Footer({
   currentView,
   setCurrentView,
   currency,
-  setCurrency
+  setCurrency,
+  user
 }: FooterProps) {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showCookie, setShowCookie] = useState(true);
+
+  const isAdminDashboard = currentView === "admin" && user && user.role === "admin";
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,14 +46,14 @@ export default function Footer({
     }
   };
 
-  const containerPadding = currentView === "admin"
+  const containerPadding = isAdminDashboard
     ? "px-4 md:px-8 lg:px-10"
     : "px-4 md:px-[100px] lg:px-[100px]";
 
   return (
     <footer
       className={`bg-gradient-to-r from-gray-900 to-gray-800 text-gray-400 text-sm border-t border-gray-800 transition-all ${
-        currentView === "admin" ? "md:ml-64 lg:ml-72" : "w-full"
+        isAdminDashboard ? "md:ml-64 lg:ml-72" : "w-full"
       }`}
       id="main-footer"
     >
@@ -224,7 +229,7 @@ export default function Footer({
 
       {/* Dynamic Currency Toggle Widget */}
       <div className={`fixed z-40 bg-gray-900 border border-gray-800 p-1.5 rounded-full shadow-2xl flex items-center space-x-1 ${
-        currentView === "admin" ? "bottom-[80px] md:bottom-[46px] left-4 md:left-[280px] lg:left-[310px]" : "bottom-[46px] left-4"
+        isAdminDashboard ? "bottom-[80px] md:bottom-[46px] left-4 md:left-[280px] lg:left-[310px]" : "bottom-[46px] left-4"
       }`}>
         <button
           onClick={() => setCurrency("USD")}
