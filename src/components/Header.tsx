@@ -430,29 +430,6 @@ export default function Header({
               Request Quote
             </button>
           )}
-
-          {/* User Account / Auth Trigger for Admin */}
-          {user && user.role === "admin" ? (
-            <div className="flex items-center space-x-3 border-l border-gray-100 pl-4" id="user-profile-menu">
-              <div className="flex items-center space-x-2">
-                <label className="flex items-center cursor-pointer select-none" title="Admin Toggle">
-                  <input
-                    type="checkbox"
-                    checked={currentView === "admin"}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setCurrentView("admin");
-                      } else {
-                        handleSignOut();
-                      }
-                    }}
-                    className="w-5 h-5 rounded border-gray-300 text-[#FF7A20] focus:ring-[#FF7A20] cursor-pointer accent-[#FF7A20] transition-colors"
-                    id="admin-dashboard-toggle"
-                  />
-                </label>
-              </div>
-            </div>
-          ) : null}
         </div>
       </div>
 
