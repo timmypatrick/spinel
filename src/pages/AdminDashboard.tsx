@@ -159,6 +159,18 @@ export default function AdminDashboard({
     setLoading(true);
     const token = localStorage.getItem("spinel_token") || "";
 
+    // Pre-populate with locally persisted data if available to prevent any temporary empty states
+    try {
+      const cachedOrders = localStorage.getItem("spinel_admin_orders");
+      if (cachedOrders) setOrders(JSON.parse(cachedOrders));
+      const cachedQuotes = localStorage.getItem("spinel_admin_quotes");
+      if (cachedQuotes) setQuotes(JSON.parse(cachedQuotes));
+      const cachedMessages = localStorage.getItem("spinel_admin_messages");
+      if (cachedMessages) setMessages(JSON.parse(cachedMessages));
+      const cachedSubscribers = localStorage.getItem("spinel_admin_subscribers");
+      if (cachedSubscribers) setSubscribers(JSON.parse(cachedSubscribers));
+    } catch (e) {}
+
     try {
       const headers = { "Authorization": token };
       
@@ -171,10 +183,26 @@ export default function AdminDashboard({
       ]);
 
       if (prodRes.ok) setProducts(await prodRes.json());
-      if (quoteRes.ok) setQuotes(await quoteRes.json());
-      if (orderRes.ok) setOrders(await orderRes.json());
-      if (msgRes.ok) setMessages(await msgRes.json());
-      if (subRes.ok) setSubscribers(await subRes.json());
+      if (quoteRes.ok) {
+        const data = await quoteRes.json();
+        setQuotes(data);
+        try { localStorage.setItem("spinel_admin_quotes", JSON.stringify(data)); } catch(e){}
+      }
+      if (orderRes.ok) {
+        const data = await orderRes.json();
+        setOrders(data);
+        try { localStorage.setItem("spinel_admin_orders", JSON.stringify(data)); } catch(e){}
+      }
+      if (msgRes.ok) {
+        const data = await msgRes.json();
+        setMessages(data);
+        try { localStorage.setItem("spinel_admin_messages", JSON.stringify(data)); } catch(e){}
+      }
+      if (subRes.ok) {
+        const data = await subRes.json();
+        setSubscribers(data);
+        try { localStorage.setItem("spinel_admin_subscribers", JSON.stringify(data)); } catch(e){}
+      }
 
     } catch (err) {
       console.error("Cockpit loading error", err);

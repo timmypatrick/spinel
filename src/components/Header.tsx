@@ -422,16 +422,14 @@ export default function Header({
             </button>
           </div>
 
-          {/* Request Quote Button */}
-          {!isAdminDashboard && (
-            <button
-              onClick={() => setCurrentView("request-quote")}
-              className="hidden sm:inline-block bg-gray-900 text-white hover:bg-[#FF7A20] px-4 py-2 rounded-lg text-xs font-semibold transition duration-150 cursor-pointer shadow-xs"
-              id="btn-nav-request-quote"
-            >
-              Request Quote
-            </button>
-          )}
+          {/* Request Quote Button - Always Displayed */}
+          <button
+            onClick={() => setCurrentView("request-quote")}
+            className="hidden sm:inline-block bg-gray-900 text-white hover:bg-[#FF7A20] px-4 py-2 rounded-lg text-xs font-semibold transition duration-150 cursor-pointer shadow-xs"
+            id="btn-nav-request-quote"
+          >
+            Request Quote
+          </button>
         </div>
       </div>
 
@@ -692,7 +690,22 @@ export default function Header({
               </div>
 
               <div className="space-y-1">
-                <label className="text-gray-500 font-semibold uppercase tracking-wider text-[10px]">Secure Password</label>
+                <div className="flex items-center justify-between">
+                  <label className="text-gray-500 font-semibold uppercase tracking-wider text-[10px]">Secure Password</label>
+                  {authTab === "login" && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsAuthModalOpen(false);
+                        setCurrentView("forgot-password");
+                      }}
+                      className="text-[10px] font-bold text-[#FF7A20] hover:underline cursor-pointer"
+                      id="btn-modal-forgot-password"
+                    >
+                      Forgot Password?
+                    </button>
+                  )}
+                </div>
                 <input
                   type="password"
                   required

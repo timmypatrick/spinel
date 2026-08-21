@@ -18,6 +18,8 @@ import SecuritySolutions from "./pages/SecuritySolutions";
 import TelecomSolutions from "./pages/TelecomSolutions";
 import MultimediaSolutions from "./pages/MultimediaSolutions";
 import AccountPage from "./pages/AccountPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 import { Product, CartItem, UserSession } from "./types";
 
@@ -37,7 +39,9 @@ function getPathForView(view: string, productId?: string | null): string {
   if (view === "solution-multimedia") return "/solutions/multimedia";
   if (view === "invoice" || view === "thank-you") return "/invoice";
   if (view === "admin") return "/admin";
-  if (view === "account") return "/account";
+  if (view === "account" || view === "login" || view === "signup") return "/account";
+  if (view === "forgot-password") return "/forgot-password";
+  if (view === "reset-password") return "/reset-password";
   if (view.startsWith("category-")) return `/category/${encodeURIComponent(view.substring(9))}`;
   return "/";
 }
@@ -45,6 +49,15 @@ function getPathForView(view: string, productId?: string | null): string {
 function getViewForPath(pathname: string, search: string, hash: string): { view: string; productId: string | null } {
   const path = pathname.toLowerCase().replace(/\/$/, "") || "/";
   const params = new URLSearchParams(search);
+
+  // Recovery token detection from Supabase email link in hash or query
+  if (hash.includes("type=recovery") || hash.includes("access_token") || path === "/reset-password" || path.startsWith("/reset-password")) {
+    return { view: "reset-password", productId: null };
+  }
+
+  if (path === "/forgot-password") {
+    return { view: "forgot-password", productId: null };
+  }
 
   // Instant check for Paystack payment return or invoice path
   if (params.get("reference") || params.get("trxref") || path === "/invoice" || path === "/thank-you" || path === "/thankyou") {
@@ -69,7 +82,7 @@ function getViewForPath(pathname: string, search: string, hash: string): { view:
   if (path === "/solutions/telecom" || path === "/telecom") return { view: "solution-telecom", productId: null };
   if (path === "/solutions/multimedia" || path === "/multimedia") return { view: "solution-multimedia", productId: null };
   if (path === "/invoice" || path === "/thank-you" || path === "/thankyou") return { view: "invoice", productId: null };
-  if (path === "/account" || path === "/login" || path === "/signup" || path === "/forgot-password") return { view: "account", productId: null };
+  if (path === "/account" || path === "/login" || path === "/signup") return { view: "account", productId: null };
 
   if (path.startsWith("/product/")) {
     const rawId = pathname.substring(9);
@@ -412,6 +425,18 @@ export default function App() {
             currency={currency}
             setCurrentView={setCurrentView}
             setSelectedProductId={setSelectedProductId}
+          />
+        )}
+
+        {currentView === "forgot-password" && (
+          <ForgotPasswordPage
+            setCurrentView={setCurrentView}
+          />
+        )}
+
+        {currentView === "reset-password" && (
+          <ResetPasswordPage
+            setCurrentView={setCurrentView}
           />
         )}
 

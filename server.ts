@@ -519,7 +519,58 @@ app.post("/api/quotes", async (req, res) => {
   res.status(201).json(newQuote);
 });
 
-app.get("/api/quotes", verifyAdminToken, (req, res) => {
+app.get("/api/quotes", verifyAdminToken, async (req, res) => {
+  const supabase = getSupabaseClient();
+  if (supabase) {
+    try {
+      const { data, error } = await supabase
+        .from("Request Quote")
+        .select("*");
+
+      if (!error && Array.isArray(data) && data.length > 0) {
+        const mappedQuotes = data.map((item: any, idx: number) => ({
+          id: item.id || `rfq-supa-${idx}`,
+          quoteNumber: item.quoteNumber || `SP-RFQ-2026-${String(idx + 1).padStart(4, "0")}`,
+          name: item.Representative_Name || item.name || "Enterprise Representative",
+          email: item.Email_Address || item.email || "",
+          company: item.Company_Name || item.company || "Enterprise Client",
+          phone: item.Phone_Number || item.phone || "",
+          address: item.Location_Address || item.address || "",
+          state: item.State || item.state || "",
+          country: item.Country || item.country || "Nigeria",
+          productName: item.Product_Name || item.productName || "Hardware Request",
+          sku: item.SKU || item.sku || "SP-GEN-001",
+          quantity: item.Quantity ? Number(item.Quantity) : (item.quantity ? Number(item.quantity) : 1),
+          projectDetails: item.Description || item.projectDetails || "No additional description provided",
+          createdAt: item.created_at ? item.created_at.split("T")[0] : new Date().toISOString().split("T")[0],
+          status: item.status || "Pending",
+          internalNotes: item.internalNotes || ""
+        }));
+
+        const quoteMap = new Map<string, any>();
+        // First put existing db.quotes
+        db.quotes.forEach(q => quoteMap.set(q.id, q));
+        // Then merge Supabase quotes (matching by id or quoteNumber or email+created)
+        mappedQuotes.forEach(sq => {
+          const existingKey = Array.from(quoteMap.keys()).find(k => {
+            const q = quoteMap.get(k);
+            return q.id === sq.id || q.quoteNumber === sq.quoteNumber;
+          });
+          if (existingKey) {
+            quoteMap.set(existingKey, { ...quoteMap.get(existingKey), ...sq });
+          } else {
+            quoteMap.set(sq.id, sq);
+          }
+        });
+
+        db.quotes = Array.from(quoteMap.values());
+        saveDb();
+      }
+    } catch (err: any) {
+      console.warn("Supabase Request Quote retrieval notice:", err?.message || err);
+    }
+  }
+
   res.json(db.quotes);
 });
 
@@ -802,15 +853,195 @@ app.post("/api/paystack/initialize", async (req, res) => {
   }
 });
 
-app.get("/api/orders", verifyAdminToken, (req, res) => {
+app.get("/api/orders", verifyAdminToken, async (req, res) => {
+  const supabase = getSupabaseClient();
+  if (supabase) {
+    try {
+      // Query Orders and Placed Orders
+      const [resOrders, resPlaced] = await Promise.all([
+        supabase.from("Orders").select("*"),
+        supabase.from("Placed Orders").select("*")
+      ]);
+
+      const rawOrders = [
+        ...(Array.isArray(resOrders.data) ? resOrders.data : []),
+        ...(Array.isArray(resPlaced.data) ? resPlaced.data : [])
+      ];
+
+      if (rawOrders.length > 0) {
+        const mappedOrders = rawOrders.map((item: any, idx: number) => {
+          let parsedItems = [];
+          if (item.Items_Detail) {
+            try {
+              parsedItems = typeof item.Items_Detail === "string" ? JSON.parse(item.Items_Detail) : item.Items_Detail;
+            } catch (e) {
+              parsedItems = [];
+            }
+          }
+
+          const fullName = item.Representative_Name || item.customerName || "Customer";
+          const email = item.Email_Address || item.customerEmail || "";
+          const phone = item.Phone_Number || item.phone || "";
+          const address = item.Location_Address || "";
+          const state = item.State || "";
+          const country = item.Country || "Nigeria";
+          const totalUSD = Number(item.Total_Amount_USD) || Number(item.totalUSD) || 0;
+          const totalNGN = Number(item.Total_Amount_NGN) || Number(item.totalNGN) || 0;
+
+          return {
+            id: item.id || `ord-supa-${idx}`,
+            orderNumber: item.orderNumber || `SP-ORD-2026-${String(idx + 1000).padStart(5, "0")}`,
+            date: item.created_at ? item.created_at.split("T")[0] : new Date().toISOString().split("T")[0],
+            customerName: fullName,
+            customerEmail: email,
+            billingAddress: {
+              fullName,
+              email,
+              phone,
+              addressLine1: address,
+              city: state,
+              state,
+              country,
+              postalCode: "100001"
+            },
+            shippingAddress: {
+              fullName,
+              email,
+              phone,
+              addressLine1: address,
+              city: state,
+              state,
+              country,
+              postalCode: "100001"
+            },
+            items: Array.isArray(parsedItems) ? parsedItems : [],
+            subtotalUSD: totalUSD,
+            subtotalNGN: totalNGN,
+            taxUSD: 0,
+            taxNGN: 0,
+            shippingUSD: 0,
+            shippingNGN: 0,
+            totalUSD,
+            totalNGN,
+            status: item.status || "Completed",
+            paymentMethod: item.Payment_Method || item.paymentMethod || "Paystack",
+            paymentReference: item.Payment_Reference || item.paymentReference || `REF-${item.id || idx}`
+          };
+        });
+
+        const orderMap = new Map<string, any>();
+        db.orders.forEach(o => orderMap.set(o.id, o));
+        mappedOrders.forEach(so => {
+          const existingKey = Array.from(orderMap.keys()).find(k => {
+            const o = orderMap.get(k);
+            return o.id === so.id || o.orderNumber === so.orderNumber || (o.customerEmail === so.customerEmail && o.totalUSD === so.totalUSD && o.date === so.date);
+          });
+          if (existingKey) {
+            orderMap.set(existingKey, { ...orderMap.get(existingKey), ...so });
+          } else {
+            orderMap.set(so.id, so);
+          }
+        });
+
+        db.orders = Array.from(orderMap.values());
+        saveDb();
+      }
+    } catch (err: any) {
+      console.warn("Supabase orders query exception:", err?.message || err);
+    }
+  }
+
   res.json(db.orders);
 });
 
 // Endpoint for customer to retrieve all their orders (Pending and Completed)
-app.get("/api/orders/user", (req, res) => {
+app.get("/api/orders/user", async (req, res) => {
   const email = (req.query.email as string || "").toLowerCase().trim();
   if (!email) {
     return res.status(400).json({ error: "Email parameter required" });
+  }
+
+  const supabase = getSupabaseClient();
+  if (supabase) {
+    try {
+      const [resOrders, resPlaced] = await Promise.all([
+        supabase.from("Orders").select("*").ilike("Email_Address", email),
+        supabase.from("Placed Orders").select("*").ilike("Email_Address", email)
+      ]);
+
+      const rawOrders = [
+        ...(Array.isArray(resOrders.data) ? resOrders.data : []),
+        ...(Array.isArray(resPlaced.data) ? resPlaced.data : [])
+      ];
+
+      if (rawOrders.length > 0) {
+        rawOrders.forEach((item: any, idx: number) => {
+          let parsedItems = [];
+          if (item.Items_Detail) {
+            try {
+              parsedItems = typeof item.Items_Detail === "string" ? JSON.parse(item.Items_Detail) : item.Items_Detail;
+            } catch (e) {
+              parsedItems = [];
+            }
+          }
+
+          const fullName = item.Representative_Name || item.customerName || "Customer";
+          const userEmail = item.Email_Address || item.customerEmail || email;
+          const phone = item.Phone_Number || item.phone || "";
+          const address = item.Location_Address || "";
+          const state = item.State || "";
+          const country = item.Country || "Nigeria";
+          const totalUSD = Number(item.Total_Amount_USD) || Number(item.totalUSD) || 0;
+          const totalNGN = Number(item.Total_Amount_NGN) || Number(item.totalNGN) || 0;
+
+          const exists = db.orders.some(o => o.id === item.id || (o.customerEmail?.toLowerCase() === email && o.totalUSD === totalUSD && o.date === (item.created_at?.split("T")[0])));
+          if (!exists) {
+            db.orders.push({
+              id: item.id || `ord-supa-usr-${idx}`,
+              orderNumber: item.orderNumber || `SP-ORD-2026-${String(idx + 1000).padStart(5, "0")}`,
+              date: item.created_at ? item.created_at.split("T")[0] : new Date().toISOString().split("T")[0],
+              customerName: fullName,
+              customerEmail: userEmail,
+              billingAddress: {
+                fullName,
+                email: userEmail,
+                phone,
+                addressLine1: address,
+                city: state,
+                state,
+                country,
+                postalCode: "100001"
+              },
+              shippingAddress: {
+                fullName,
+                email: userEmail,
+                phone,
+                addressLine1: address,
+                city: state,
+                state,
+                country,
+                postalCode: "100001"
+              },
+              items: Array.isArray(parsedItems) ? parsedItems : [],
+              subtotalUSD: totalUSD,
+              subtotalNGN: totalNGN,
+              taxUSD: 0,
+              taxNGN: 0,
+              shippingUSD: 0,
+              shippingNGN: 0,
+              totalUSD,
+              totalNGN,
+              status: item.status || "Completed",
+              paymentMethod: item.Payment_Method || item.paymentMethod || "Paystack",
+              paymentReference: item.Payment_Reference || item.paymentReference || `REF-${item.id || idx}`
+            });
+          }
+        });
+        saveDb();
+      }
+    } catch (err: any) {
+      console.warn("Supabase user orders query notice:", err?.message || err);
+    }
   }
 
   const userOrders = db.orders.filter(o => {
@@ -1647,11 +1878,12 @@ app.post("/api/auth/forgot-password", async (req, res) => {
       }
 
       // Generate recovery link via Supabase Admin API
+      const redirectTarget = req.body.redirectTo || `${req.protocol}://${req.get("host")}/reset-password`;
       const { data: linkData, error: linkError } = await adminSupabase.auth.admin.generateLink({
         type: "recovery",
         email: emailLower,
         options: {
-          redirectTo: `${req.protocol}://${req.get("host")}/account`
+          redirectTo: redirectTarget
         }
       });
 
@@ -1663,7 +1895,7 @@ app.post("/api/auth/forgot-password", async (req, res) => {
 
       return res.json({
         success: true,
-        message: `Password reset request generated for ${emailLower}! If customized SMTP is active in your Supabase project, check your inbox. You may also click below to proceed with password reset.`,
+        message: `Password reset request generated for ${emailLower}! Please check your email inbox for instructions.`,
         recoveryUrl
       });
     } catch (err: any) {
@@ -1672,8 +1904,9 @@ app.post("/api/auth/forgot-password", async (req, res) => {
     }
   } else if (anonSupabase) {
     try {
+      const redirectTarget = req.body.redirectTo || `${req.protocol}://${req.get("host")}/reset-password`;
       const { error } = await anonSupabase.auth.resetPasswordForEmail(emailLower, {
-        redirectTo: `${req.protocol}://${req.get("host")}/account`
+        redirectTo: redirectTarget
       });
 
       if (error) {
@@ -1699,6 +1932,23 @@ app.post("/api/auth/forgot-password", async (req, res) => {
       message: `A password reset link has been dispatched via Supabase email service to ${emailLower}. Your account security remains intact.`
     });
   }
+});
+
+// Update password endpoint to keep local records synchronized
+app.post("/api/auth/update-password", async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return res.status(400).json({ error: "Email and password are required" });
+  }
+
+  const emailLower = email.toLowerCase().trim();
+  const user = db.users.find(u => u.email && u.email.toLowerCase().trim() === emailLower);
+  if (user) {
+    user.password = password;
+    saveDb();
+  }
+
+  return res.json({ success: true, message: "Password updated successfully in database." });
 });
 
 app.post("/api/auth/admin/login", async (req, res) => {
